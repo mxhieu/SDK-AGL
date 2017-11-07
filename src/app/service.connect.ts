@@ -77,7 +77,6 @@ export class ConnectService {
 
     try {
       tempJson = JSON.parse(data);
-      console.log(tempJson);
     } catch(e) {}
 
     if (alert) {

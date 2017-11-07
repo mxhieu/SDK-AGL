@@ -6,6 +6,8 @@ import { DashboardComponent } from './dashboard.component';
 import { AppComponent } from './app.component';
 import { CampaignComponent } from './campaign.component';
 import { AdreportComponent } from './adreport.component';
+import { TrackingComponent } from './tracking.component';
+import { PlayerComponent } from './player.component';
 
 const routes: Routes = [
   {
@@ -33,35 +35,49 @@ const routes: Routes = [
     path: 'app',
     component: AppComponent,
     data: {
-      title: 'App Manage'
+      title: 'App Manager'
     }
   },
   {
     path: 'campaign',
     component: CampaignComponent,
     data: {
-      title: 'Campaign Manage'
+      title: 'Campaign Manager'
+    }
+  },
+  {
+    path: 'tracking',
+    component: TrackingComponent,
+    data: {
+      title: 'Tracking Manager'
     }
   },
   {
     path: 'user',
     component: DashboardComponent,
     data: {
-      title: 'User Manage'
+      title: 'User Manager'
+    }
+  },
+  {
+    path: 'player',
+    component: PlayerComponent,
+    data: {
+      title: 'Player Manager'
     }
   },
   {
     path: 'role',
     component: DashboardComponent,
     data: {
-      title: 'Role Manage'
+      title: 'Role Manager'
     }
   },
   {
     path: 'permission',
     component: DashboardComponent,
     data: {
-      title: 'Permission Manage'
+      title: 'Permission Manager'
     }
   }
 ];

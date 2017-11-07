@@ -8,9 +8,9 @@ import { ConfigService } from '../service.config';
 import { ConnectService } from '../service.connect';
 
 @Component({
-  templateUrl: 'app.component.html'
+  templateUrl: 'tracking.component.html'
 })
-export class AppComponent implements OnInit {
+export class TrackingComponent implements OnInit {
 
   rout: any;
   data: any;
@@ -24,7 +24,6 @@ export class AppComponent implements OnInit {
   state : any;
   search: any;
 
-
   constructor(_rout: Router, _conf: ConfigService, _conn: ConnectService) { 
     this.rout = _rout;
     this.conf = _conf;
@@ -36,7 +35,13 @@ export class AppComponent implements OnInit {
     this.isnext = true;
     this.search = {field: 'name', term: ''};
     this.paging = {pg_page: 1, pg_size: 10, st_col: 'created_at', st_type: -1};    
-    this.header = [{id: 'name', name: 'Name', is_search: 1}, {id: 'desc', name: 'Description', is_search: 1}, {id: 'created_at', name: 'Created time'}, {id: 'status', name: 'Status'}];
+    this.header = [
+      {id: 'app_id', name: 'AppId', is_search: 1},
+      {id: 'app_key', name: 'AppKey', is_search: 1},
+      {id: 'user_id', name: 'UserId', is_search: 1},
+      {id: 'event_type', name: 'EventType', is_search: 1},
+      {id: 'data', name: 'Data'},
+      {id: 'created_at', name: 'Created time'}];
 
     this.helpFetchData();
   }
@@ -48,12 +53,14 @@ export class AppComponent implements OnInit {
 
   // Create
   add() {
-    this.onerow = {created_at: 1}
+    this.onerow = {name: 'Application', platform: 'android', is_active: 1, is_instore: 1, created_at: 1}
   }
 
   addSubmit() {
+    if (this.onerow._id) { this.onerow.name = this.onerow.name + '_clone'; }
+
     this.conn.request('post', this.conf.api_app_add, this.onerow, 
-    data=> { this.helpFetchData(); this.helpReset(); })
+    data=> { if (data.success == 1) { this.helpFetchData(); this.helpReset(); } })
   }
 
   // Read 
@@ -107,7 +114,7 @@ export class AppComponent implements OnInit {
 
   editSubmit() {
     this.conn.request('post', this.conf.api_app_edit, this.onerow, 
-    data=> { this.helpFetchData(); this.helpReset(); })
+    data=> { if (data.success == 1) { this.helpFetchData(); this.helpReset(); } })
   }
 
   restore(_onerow) {
@@ -119,6 +126,11 @@ export class AppComponent implements OnInit {
   delete(_onerow) {
     this.conn.request('get', this.conf.api_app_del, {_id: _onerow._id},
     data=> { this.helpFetchData(); }) 
+  }
+
+  // Handle
+  onChangeImg($event, imageName) {
+    this.onerow[imageName] = $event;
   }
 
   ///////////////////
@@ -133,13 +145,33 @@ export class AppComponent implements OnInit {
     var params = {}; Object.assign(params, this.paging);
     if (this.search.term.length > 0) { params['search_' + this.search.field] = this.search.term; }
 
-    this.conn.request('get', this.conf.api_app_get, params, 
+    this.conn.request('get', this.conf.api_tracking_get, params, 
     data=> {      
       this.data = Array.isArray(data.data)? data.data : [];
       this.isnext = (this.data.length >= this.paging.pg_size)? true: false;
     });
   }
+  getTrackingStatus(type: string) : string {
+      
+      var res: string;
 
+      if(type == '0'){
+        res = 'Install';
+      } else if (type == '1'){
+        res = 'Open';
+      } else if (type == '2'){
+        res = 'Login';
+      } else if (type == '3'){
+        res = 'Create character';
+      } else if (type == '4'){
+        res = 'Select Item';
+      } else if (type == '5'){
+        res = 'Open payment';
+      } else if (type == '6'){
+        res = 'Done payment';
+      }
+      return res;
+  }
   helpUpperCaseAfterCommas = function(str) {
     return str.replace(/,\s*([a-z])/g, function(d,e) { return ", "+e.toUpperCase() });
   }    

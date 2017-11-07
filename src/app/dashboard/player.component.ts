@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { Http, URLSearchParams } from '@angular/http';
 import 'rxjs/Rx';
 
@@ -8,9 +8,9 @@ import { ConfigService } from '../service.config';
 import { ConnectService } from '../service.connect';
 
 @Component({
-  templateUrl: 'app.component.html'
+  templateUrl: 'player.component.html'
 })
-export class AppComponent implements OnInit {
+export class PlayerComponent implements OnInit {
 
   rout: any;
   data: any;
@@ -35,30 +35,30 @@ export class AppComponent implements OnInit {
     this.isnext = true;
     this.search = {field: 'name', term: ''};
     this.paging = {pg_page: 1, pg_size: 10, st_col: 'created_at', st_type: -1};    
-    this.header = [{id: 'name', name: 'Name', is_search: 1}, {id: '_id', name: 'App Id', is_search: 0}, {id: 'platform', name: 'Platform', is_search: 1},  {id: 'created_at', name: 'Created time'}, {id: 'status', name: 'Status'}];
+    this.header = [
+      {id: '_id', name: 'PlayerId', is_search: 1}, 
+      {id: 'username', name: 'User Name', is_search: 1},
+      {id: 'created_at', name: 'Created time'}, 
+      {id: 'status', name: 'Status'}];
 
     this.helpFetchData();
   }
-  ngOnInit(): void {}
 
-  /////////////
-  // C R U D //
-  /////////////
+  ngOnInit(): void {}
 
   // Create
   add() {
-    this.onerow = {name: 'Application', platform: 'android', is_active: 1, is_instore: 1, created_at: 1}
+    this.onerow = {username: 'User', password:"Password", is_active: 1, created_at: 1}
   }
 
   addSubmit() {
     if (this.onerow._id) { this.onerow.name = this.onerow.name + '_clone'; }
-
-    this.conn.request('post', this.conf.api_app_add, this.onerow, 
+    this.conn.request('post', this.conf.api_player_add, this.onerow, 
     data=> { if (data.success == 1) { this.helpFetchData(); this.helpReset(); } })
   }
 
   // Read 
-  viewDetail(_onerow) {       
+  viewDetail(_onerow) {    
     this.onerow = _onerow;
     this.onerow.isview = true;
   }
@@ -112,20 +112,16 @@ export class AppComponent implements OnInit {
   }
 
   restore(_onerow) {
-    this.conn.request('get', this.conf.api_app_restore, {_id: _onerow._id}, 
+    this.conn.request('get', this.conf.api_player_restore, {_id: _onerow._id}, 
     data=> { this.helpFetchData(); })
   }
 
   // Delete  
   delete(_onerow) {
-    this.conn.request('get', this.conf.api_app_del, {_id: _onerow._id},
+    this.conn.request('get', this.conf.api_player_delete, {_id: _onerow._id},
     data=> { this.helpFetchData(); }) 
   }
 
-  // Handle
-  onChangeImg($event, imageName) {
-    this.onerow[imageName] = $event;
-  }
 
   ///////////////////
   // H E L P E R S //
@@ -139,9 +135,9 @@ export class AppComponent implements OnInit {
     var params = {}; Object.assign(params, this.paging);
     if (this.search.term.length > 0) { params['search_' + this.search.field] = this.search.term; }
 
-    this.conn.request('get', this.conf.api_app_get, params, 
+    this.conn.request('get', this.conf.api_player_get, params, 
     data=> {      
-      this.data = Array.isArray(data.data)? data.data : [];
+      this.data = Array.isArray(data.data)? data.data : [];      
       this.isnext = (this.data.length >= this.paging.pg_size)? true: false;
     });
   }

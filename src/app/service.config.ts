@@ -10,6 +10,7 @@ export class ConfigService {
   api_suggestion_get = this.api_url + 'suggestion';
   api_suggestion_search = this.api_url + 'suggestion/search/';
 
+  // Application
   api_app_get  = this.api_url + 'app'; 
   api_app_del  = this.api_url + 'app/delete';
   api_app_add  = this.api_url + 'app/index';
@@ -17,6 +18,19 @@ export class ConfigService {
   api_app_restore = this.api_url + 'app/restore';
   api_app_get_recycle = this.api_url + 'app/recycle';
 
+  // Tracking
+  api_tracking_get =  this.api_url + 'tracking';
+
+
+  // Player
+  api_player_get       = this.api_url + 'player';
+  api_player_add       = this.api_url + 'player';
+  api_player_edit      = this.api_url + 'player/edit';
+  api_player_delete    = this.api_url + 'player/delete';
+  api_player_restore   = this.api_url + 'player/restore';
+ 
+
+  // Campaign
   api_campaign_get  = this.api_url + 'campaign'; 
   api_campaign_del  = this.api_url + 'campaign/delete';
   api_campaign_add  = this.api_url + 'campaign/index';
@@ -29,7 +43,7 @@ export class ConfigService {
   
   // App links
   lik_dashboard_index = '/dashboard/index';
-
+  lik_dashboard_app = '/dashboard/app';
   // App others
   app_token = 'accesstoken';
   

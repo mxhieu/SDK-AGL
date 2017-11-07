@@ -17,7 +17,9 @@
                             </div>
                             <div class="row">
                                 <div class="col-6">
-                                    <button type="button" class="btn btn-primary px-2" (click)="clicked()">Login</button>
+                                    <button type="button" 
+                                    (keyup.enter)="onKey($event)"
+                                    class="btn btn-primary px-2" (click)="clicked()">Login</button>
                                 </div>
                                 <div class="col-6 text-right">
                                     <button type="button" class="btn btn-link px-0">Forgot password?</button>
@@ -29,7 +31,7 @@
                         <div class="card-block text-center">
                             <div>
                                 <h2>Sign up</h2>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                <p>CoreSDK is the world's leading mobile attribution & marketing analytics platform, helping app marketers around the world make better decisions.</p>
                                 <button type="button" class="btn btn-primary active mt-1" routerLinkActive="active" [routerLink]="['/pages/register']">Register Now!</button>
                             </div>
                         </div>

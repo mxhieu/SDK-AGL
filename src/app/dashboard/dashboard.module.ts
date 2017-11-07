@@ -14,6 +14,8 @@ import { AdreportComponent } from './adreport.component';
 
 import { RxselectComponent } from './components/rxselect.component';
 import { RxuploadComponent } from './components/rxupload.component';
+import { TrackingComponent } from './tracking.component';
+import { PlayerComponent } from './player.component';
 
 @NgModule({
   imports: [
@@ -24,6 +26,6 @@ import { RxuploadComponent } from './components/rxupload.component';
     FormsModule,
     AmChartsModule
   ],
-  declarations: [ DashboardComponent,  AppComponent, CampaignComponent, RxselectComponent, RxuploadComponent, AdreportComponent ]
+  declarations: [ DashboardComponent,  AppComponent, CampaignComponent, RxselectComponent, RxuploadComponent, AdreportComponent, TrackingComponent, PlayerComponent ]
 })
 export class DashboardModule { }

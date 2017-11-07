@@ -82,7 +82,7 @@
       <!-- Title bar -->
       <div class="row">
         <div class="col-md-4">
-          <h4 class="card-title">Campaign manage</h4>
+          <h4 class="card-title">Campaign manager</h4>
           <div class="card-subtitle">List of campaigns</div>      
         </div>
         <div class="col-md-8">
@@ -105,7 +105,7 @@
       <table class="table table-hover table-outline mb-0 hidden-sm-down">
         <thead class="thead-default">
           <tr>
-            <th class="text-center rx-table-ico-head"><i class="icon-game-controller"></i></th>            
+            <th class="text-center rx-table-ico-head"><i class="icon-paper-plane"></i></th>            
             <th *ngFor="let perheader of header" (click)="sort($event)" [attr.rxdata]="perheader.id" class="{{(perheader.id == paging.st_col)? 'rxsorting' : ''}} {{(paging.st_type == 1)? 'rxup' : 'rxdown'}}">{{perheader.name}}</th>
             <th class="rx-table-action-head">Action</th>
           </tr>
@@ -113,7 +113,7 @@
         <tbody>
           <tr *ngFor="let perdata of data">                  
             <td class="text-center">
-                <div class="avatar"><img src="{{ (perdata.appobj.icons)? conf.api_image_directory + perdata.appobj.icons : '/assets/img/ico_app_default.png'  }}" class="img-avatar"></div>
+                <div class="avatar"><img src="{{ (perdata.appobj.icons)? conf.api_image_directory + perdata.appobj.icons : '/assets/img/avatar/1.jpg'  }}" class="img-avatar"></div>
             </td>
             <td> <div class="small"><strong>{{perdata.name}}</strong></div> </td>
             <td>

@@ -1,19 +1,17 @@
 <div class="animated fadeIn rx-relative">
   <!-- Form -->
-  <div class="rx-floathide-form" [hidden]="!(onerow.created_at || 0)">    
+  <div class="rx-floathide-form rx-isview" [hidden]="!(onerow.created_at || 0)">
     <div class="card rx-card-form">
       <div class="card-header">
-        <h4 class="card-title">App {{(onerow._id)? 'edit': 'create'}}</h4>          
+        <h4 class="card-title">{{(onerow._id)? 'Edit': 'New app'}}</h4>
       </div>
       <div class="card-block card-block-form">
         <form action="" class="form-horizontal col-md-10 col-sx-12 row" method="post">
-
           <div class="form-group col-md-6 rx-form-group">
             <label class="form-control-label">Platform</label><br/>
-            <input type="radio" [(ngModel)]="onerow.platform" name="platform" value="android"> Android 
+            <input type="radio" [(ngModel)]="onerow.platform" name="platform" value="android"> Android
             <input type="radio" [(ngModel)]="onerow.platform" name="platform" value="ios"> Ios
           </div>
-
           <div class="form-group col-md-6 rx-form-group">
             <label class="form-control-label">In store yet</label><br/>
             <select class="form-control" name="is_instore" [(ngModel)]="onerow.is_instore">
@@ -21,23 +19,19 @@
               <option value="0">Not instore yet</option>
             </select>
           </div>
-
           <div class="form-group col-md-6 rx-form-group">
             <label class="form-control-label">Application Name</label>
             <input class="form-control" name="name" placeholder="Application Name ..." type="text" [(ngModel)]="onerow.name">
           </div>
-
           <div class="form-group col-md-6 rx-form-group">
             <label class="form-control-label">Store Url</label>
             <input class="form-control" name="storeurl" placeholder="Store Url ..." type="text" [(ngModel)]="onerow.storeurl">
           </div>
-
           <div class="form-group col-md-6 rx-form-group">
-            <label class="form-control-label">Add Icons</label>            
+            <label class="form-control-label">Add Icons</label>
             <rxupload [uploadapi]="conf.api_upload_image" [imgpath]="conf.api_image_directory" [disabled]="onerow.is_instore == 1"
-                      [curfile]="onerow.icons" (sharedChange)="onChangeImg($event, 'icons')"></rxupload>
+            [curfile]="onerow.icons" (sharedChange)="onChangeImg($event, 'icons')"></rxupload>
           </div>
-
           <div class="form-group col-md-6 rx-form-group">
             <label class="form-control-label">Status</label>
             <select class="form-control" name="status" [(ngModel)]="onerow.is_active">
@@ -45,107 +39,107 @@
               <option value="0">Inactive</option>
             </select>
           </div>
-          <!--<div class="form-group col-md-6 rx-form-group">
-            <label class="form-control-label">Categories</label>
-            <input class="form-control" name="categories" placeholder="Categories ..." type="text" [disabled]="!onerow.instoreyet" [(ngModel)]="onerow.categories">
-          </div>-->
-
         </form>
-      </div>          
+      </div>
       <div class="card-footer">
         <button class="btn btn-sm btn-primary" type="submit" (click)="addSubmit()">
-          <i class="fa fa-dot-circle-o"></i> {{onerow._id? 'Clone': 'Create'}}</button>
+        <i class="fa fa-dot-circle-o"></i> {{onerow._id? 'Clone': 'Create'}}</button>
         <button class="btn btn-sm btn-primary" type="submit" (click)="editSubmit()" [hidden]="!onerow._id">
-          <i class="fa fa-dot-circle-o"></i> Update</button>        
+        <i class="fa fa-dot-circle-o"></i> Update</button>
         <button class="btn btn-sm btn-danger" type="reset" (click)="helpReset()"><i class="fa fa-ban"></i> Cancel</button>
       </div>
     </div>
   </div>
   <!-- End form -->
-
   <div class="card">
     <div class="card-block">
       
       <!-- Title bar -->
       <div class="row">
         <div class="col-md-4">
-          <h4 class="card-title">App manage</h4>
-          <div class="card-subtitle">List of applications</div>      
+          <h4 class="card-title">Application manager</h4>
+          <div class="card-subtitle">List of applications</div>
         </div>
         <div class="col-md-8">
-          <div class="card-tools">            
-            <select class="sel-search" [(ngModel)]="search.field"><option *ngFor="let perheader of header" [hidden]="!perheader.is_search" value="{{perheader.id}}">{{perheader.name}}</option></select><i class="icon-arrow-down sel-ico"></i>
+          <div class="card-tools">
+            <select class="sel-search" [(ngModel)]="search.field">
+              <option *ngFor="let perheader of header" [hidden]="!perheader.is_search"
+                value="{{perheader.id}}">{{perheader.name}}
+              </option>
+            </select>
+            <i class="icon-arrow-down sel-ico"></i>
+            
             <input type="text" class="rx-cur input-search" [(ngModel)]="search.term">
             <button class="btn btn-sm btn-default btn-search" (click)="jumpPage(1)"><i class="icon-magnifier"></i></button>
             
             <button class="btn btn-sm btn-primary" (click)="add()"><i class="icon-plus"></i> Create</button>
             <button class="btn btn-sm btn-default" (click)="viewRecycle()" [hidden]="(paging.search_is_deleted || 0) == 1">
-              <i class="icon-trash"></i> Trash</button>
+            <i class="icon-trash"></i> Trash</button>
             <button class="btn btn-sm btn-info" (click)="viewDefault()" [hidden]="(paging.search_is_deleted || 0) == 0">
-              <i class="icon-list"></i> Listall</button>
+            <i class="icon-list"></i> Listall</button>
           </div>
         </div>
       </div>
       <!-- End title bar -->
-
       <!-- Table -->
       <table class="table table-hover table-outline mb-0 hidden-sm-down">
         <thead class="thead-default">
           <tr>
-            <th class="text-center rx-table-ico-head"><i class="icon-game-controller"></i></th>            
+            <th class="text-center rx-table-ico-head"><i class="icon-game-controller"></i></th>
             <th *ngFor="let perheader of header" (click)="sort($event)" [attr.rxdata]="perheader.id" class="{{(perheader.id == paging.st_col)? 'rxsorting' : ''}} {{(paging.st_type == 1)? 'rxup' : 'rxdown'}}">{{perheader.name}}</th>
             <th class="rx-table-action-head">Action</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let perdata of data">            
+          <tr *ngFor="let perdata of data">
             <td class="text-center">
-                <div class="avatar"><img src="{{ (perdata.icons)? conf.api_image_directory + perdata.icons : '/assets/img/ico_app_default.png'  }}" class="img-avatar"></div>
+              <div class="avatar"><img src="{{ (perdata.icons)? conf.api_image_directory + perdata.icons : '/assets/img/ico_app_default.png'  }}" class="img-avatar"></div>
             </td>
             <td>
-                <strong>{{perdata.name}}</strong>
-                <div class="small text-muted"><a href="{{perdata.storeurl}}" target="_blank" >{{perdata.storeurl}}</a></div>
+              <strong>{{perdata.name}}</strong>
+              <div class="small text-muted"><a href="{{perdata.storeurl}}" target="_blank" >{{perdata.storeurl}}</a></div>
             </td>
-            <td>
-                <strong>{{perdata._id}}</strong>                
+            <td align="center">
+              <i class="icon-layers" data-toggle="tooltip" title="{{perdata._id}}"></i>
             </td>
             <td><i [hidden]="perdata.platform != 'android'" class="fa fa-android fa-lg m-t-2 rx-android"></i>
-                <i [hidden]="perdata.platform == 'android'" class="fa fa-apple fa-lg m-t-2 rx-apple"></i>  {{perdata.platform}}
+              <i [hidden]="perdata.platform == 'android'" class="fa fa-apple fa-lg m-t-2 rx-apple"></i>  {{perdata.platform}}
             </td>
-            <td>{{perdata.categories}}</td>
             <td><div class="small">{{perdata.created_at * 1000 | date:'dd/MM/yyyy HH:mm:ss'}}</div></td>
-            <td>              
+            <td>
               <span class="tag tag-success" [hidden]="!(perdata.is_active || 0)">Active</span>
               <span class="tag tag-default" [hidden]="(perdata.is_active || 0)">Inactive</span>
               <span class="tag tag-danger"  [hidden]="!(perdata.is_deleted || 0)">Deleted</span>
-            </td>            
+            </td>
             <td>
               <div [hidden]="(paging.search_is_deleted || 0) == 1">
-                <div class="rx-view" (click)="viewDetail(perdata)"><i class="icon-eye"></i></div>
-                <div class="rx-edit" (click)="edit(perdata)"><i class="icon-pencil"></i></div>
-                <div class="rx-del"  (click)="delete(perdata)"><i class="icon-close"></i></div>
+                <div class="rx-view" (click)="viewDetail(perdata)" style="cursor: pointer;">
+                  <i class="icon-eye"></i>
+                </div>
+                <div class="rx-edit" (click)="edit(perdata)" style="cursor: pointer;">
+                  <i class="icon-pencil"></i>
+                </div>
+                <div class="rx-del"  (click)="delete(perdata)" style="cursor: pointer;">
+                  <i class="icon-close"></i>
+                </div>
               </div>
               <div [hidden]="(paging.search_is_deleted || 0) == 0">
-                <div class="rx-restore" (click)="restore(perdata)"><i class="icon-refresh"></i> Recycle</div>
+                <div class="rx-restore" (click)="restore(perdata)" style="cursor: pointer;"><i class="icon-refresh"></i> Recycle</div>
               </div>
             </td>
           </tr>
-
           <!-- Pagination -->
           <tr><td colspan="100%" class="rx-pagin">
             <button class="rx-back" [disabled]="paging.pg_page <= 1" (click)="jumpPage(paging.pg_page - 1)"><</button>
             <input type="number" class="rx-cur" [(ngModel)]="paging.pg_page">
             <button class="rx-next" [disabled]="!isnext" (click)="jumpPage(paging.pg_page + 1)">></button>
             <span class="rx-jump" (click)="jumpPage(paging.pg_page)"><i class="icon-rocket"></i></span>
-
             <select type="number" class="rx-pg-size" (ngModelChange)="resizePage($event)" [(ngModel)]="paging.pg_size">
               <option value="10" selected>10</option><option value="50" selected>50</option><option value="100" selected>100</option>
             </select> / page
           </td></tr>
-        </tbody>                 
+        </tbody>
       </table>
-      <!-- End table -->
-
-    </div>      
-  </div>  
+    </div>
+  </div>
 </div>

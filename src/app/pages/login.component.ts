@@ -31,16 +31,21 @@ export class LoginComponent {
   ngOnInit() {}
   
   doLogin() {    
+    
   }
-
+  onKey(event: KeyboardEvent) {
+    if (event.keyCode == 13) {
+      console.log("Enter");
+    }
+  }
   clicked(event, _http: Http) {
     this.connect.request('post', this.config.api_authorize, {'username': this.model.username, 'password': this.model.password}, 
     data => {      
       this.login = data;
       if (this.login.success == 1 && typeof(this.login.data.authorization) !== 'undefined') {          
         Cookie.set(this.config.app_token, this.login.data.authorization);
-        this.router.navigate([this.config.lik_dashboard_index]);
-      }      
+        this.router.navigate([this.config.lik_dashboard_app]);
+      }
     });
   }
 }
