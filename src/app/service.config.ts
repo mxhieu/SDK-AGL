@@ -30,6 +30,8 @@ export class ConfigService {
   api_player_delete = this.api_url + 'player/delete';
   api_player_restore = this.api_url + 'player/restore';
 
+  // User
+  api_user_register = this.api_url + "user";
 
   // Campaign
   api_campaign_get = this.api_url + 'campaign';
@@ -45,25 +47,35 @@ export class ConfigService {
   // App links
   lik_dashboard_index = '/dashboard/index';
   lik_dashboard_app = '/dashboard/app';
-  
+
   route_login = '/pages/login';
 
-  // App others
-  app_token = 'accesstoken';
+  // user privacy
+  app_token = 'ftoken';
+  USER_FULLNAME = 'fname';
 
   // App messages
   msg_login_success = 'Login request complete';
 
-  public logout(){
+  public logout() {
     Cookie.delete(this.app_token);
+    Cookie.delete(this.USER_FULLNAME);
   }
-
+  public setFullname(fullname: string) {
+    Cookie.set(this.USER_FULLNAME, fullname);
+  }
   public isExpired(): boolean {
     if (Cookie.get(this.app_token))
       return false;
     return true;
   }
-  public setCookie(cookie: string){
+  public getFullName() : string{
+    var name : string = Cookie.get(this.USER_FULLNAME);
+    if(!name)
+      name = 'User';
+    return name;
+  }
+  public setCookie(cookie: string) {
     Cookie.set(this.app_token, cookie);
   }
 }

@@ -10,13 +10,18 @@ export class FullLayoutComponent implements OnInit {
 
   router: any;
   config: any;
+  fullname : string;
 
   constructor(_router: Router, _config: ConfigService) { 
     this.router = _router;
-    this.config = _config;
+    this.config = _config;    
   }
 
-  ngOnInit(): void {}  
+  ngOnInit(): void {
+
+    this.fullname = this.config.getFullName();
+
+  }  
  
 
   public disabled:boolean = false;

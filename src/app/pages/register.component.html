@@ -4,50 +4,34 @@
             <div class="col-md-6">
                 <div class="card mx-2">
                     <div class="card-block p-2">
-                        <h1>Register</h1>
-                        <p class="text-muted">Create your account</p>
+                        <img src="../assets/img/favicon.png" alt="../assets/img/favicon.png"
+                        style="height: 72px; width: 72px; margin-left: auto; margin-right: auto; display: block;">
+                        <h2 align="center">CoreSDK</h2>
+                        <p class="text-muted" align="center">Create your account. It's free and always will be.</p>
                         <div class="input-group mb-1">
                             <span class="input-group-addon"><i class="icon-user"></i>
                             </span>
                             <input type="text" class="form-control" placeholder="Username" [(ngModel)]="model.username">
                         </div>
-
                         <div class="input-group mb-1">
                             <span class="input-group-addon">@</span>
-                            <input type="text" class="form-control" placeholder="Email" [(ngModel)]="model.email">
+                            <input type="text" class="form-control" placeholder="Email address" [(ngModel)]="model.email">
                         </div>
-
                         <div class="input-group mb-1">
-                            <span class="input-group-addon"><i class="icon-lock"></i>
+                            <span class="input-group-addon"><i class="icon-lock-open"></i>
                             </span>
                             <input type="password" class="form-control" placeholder="Password" [(ngModel)]="model.password">
                         </div>
-
                         <div class="input-group mb-2">
                             <span class="input-group-addon"><i class="icon-lock"></i>
                             </span>
-                            <input type="password" class="form-control" placeholder="Repeat password" [(ngModel)]="model.repassword">
+                            <input type="password" class="form-control" placeholder="Confirm password" [(ngModel)]="model.repassword">
                         </div>
-
-                        <button type="button" class="btn btn-block btn-success" (click)=register() >Create Account</button>
-                        <button type="button" class="btn btn-block btn-info" routerLinkActive="active">Login</button>
-                    </div>
-                    <div class="card-footer p-2">
-                        <div class="row">
-                            <div class="col-6">
-                                <button class="btn btn-block btn-facebook" type="button">
-                                    <span>facebook</span>
-                                </button>
-                            </div>
-                            <div class="col-6">
-                                <button class="btn btn-block btn-twitter" type="button">
-                                    <span>twitter</span>
-                                </button>
-                            </div>
-                        </div>
+                        <button type="button" class="btn btn-block btn-success" (click)=register() >Create an account</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<app-footer></app-footer>

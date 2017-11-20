@@ -35,12 +35,13 @@ export class LoginComponent {
     }
   }
 
-  clicked(event, _http: Http) {
+  clicked(event) {
     this.connect.request('post', this.config.api_authorize, { 'username': this.model.username, 'password': this.model.password },
       data => {
         this.login = data;
         if (this.login.success == 1 && typeof (this.login.data.authorization) !== 'undefined') {
           this.config.setCookie(this.login.data.authorization);
+          this.config.setFullname(this.login.data.fullname);
           this.router.navigate([this.config.lik_dashboard_app]);
         }
       });
