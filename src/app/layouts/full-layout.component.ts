@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ConfigService } from '../service.config';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,20 +9,21 @@ import { Router } from '@angular/router';
 export class FullLayoutComponent implements OnInit {
 
   router: any;
-  
-  constructor(_router: Router) { 
+  config: any;
+
+  constructor(_router: Router, _config: ConfigService) { 
     this.router = _router;
+    this.config = _config;
   }
 
-  login(event) {
-    this.router.navigate(['/pages/login']); 
-  }
+  ngOnInit(): void {}  
+ 
 
   public disabled:boolean = false;
   public status:{isopen:boolean} = {isopen: false};  
 
   public toggled(open:boolean):void {
-    console.log('Dropdown is now: ', open);
+    
   }
 
   public toggleDropdown($event:MouseEvent):void {
@@ -30,5 +32,8 @@ export class FullLayoutComponent implements OnInit {
     this.status.isopen = !this.status.isopen;
   }
 
-  ngOnInit(): void {}  
+  logout(){
+    this.config.logout();
+    this.router.navigate(['/pages/login']); 
+  }
 }

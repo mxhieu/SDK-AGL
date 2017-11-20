@@ -5,8 +5,10 @@
                 <div class="card-group mb-0">
                     <div class="card p-2">
                         <div class="card-block">
-                            <h1>Login</h1>
-                            <p class="text-muted">Sign In to your account</p>
+                            <img src="../assets/img/favicon.png" alt="../assets/img/favicon.png" 
+                                style="height: 72px; width: 72px; margin-left: auto; margin-right: auto; display: block;">
+                            <h2 align="center">Welcome</h2>
+                            <p class="text-muted" align="center">Sign In to your account</p>
                             <div class="input-group mb-1">
                                 <span class="input-group-addon"><i class="icon-user"></i></span>
                                 <input type="text" class="form-control" placeholder="Username" [(ngModel)]="model.username">
@@ -16,13 +18,8 @@
                                 <input type="password" class="form-control" placeholder="Password" [(ngModel)]="model.password">
                             </div>
                             <div class="row">
-                                <div class="col-6">
-                                    <button type="button" 
-                                    (keyup.enter)="onKey($event)"
-                                    class="btn btn-primary px-2" (click)="clicked()">Login</button>
-                                </div>
-                                <div class="col-6 text-right">
-                                    <button type="button" class="btn btn-link px-0">Forgot password?</button>
+                                <div class="col-12">
+                                    <button type="button" class="btn btn-primary px-2" (click)="clicked()">Login</button>
                                 </div>
                             </div>
                         </div>
@@ -41,3 +38,10 @@
         </div>
     </div>
 </div>
+<footer class="app-footer blue center-on-small-only">
+    <div class="container">
+        <p class="text-muted" style="text-align:center">
+            <a href=""> Forgot password? </a> | <a href=""> Privacy Policy </a> | <a href=""> Terms of Use </a> | &copy; CoreSDK 2017
+        </p>
+    </div>
+</footer>
