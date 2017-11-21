@@ -44,9 +44,13 @@ export class ConfigService {
   api_upload_image = this.api_url + 'upload';
   api_image_directory = this.api_url + 'upload/image/';
 
-  // App links
+  // ROUTER LINK
   lik_dashboard_index = '/dashboard/index';
-  lik_dashboard_app = '/dashboard/app';
+  link_to_dashboard_app = '/admin/dashboard/app';
+
+  LINK_TO_APPS = '/apps';
+  LINK_TO_LOGIN = '/login';
+  LINK_TO_APPS_OVERVIEW = '/apps/admin';
 
   route_login = '/pages/login';
 

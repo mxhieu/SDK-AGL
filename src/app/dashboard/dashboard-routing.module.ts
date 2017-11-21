@@ -1,28 +1,23 @@
 import { NgModule } from '@angular/core';
-import { Routes,
-     RouterModule } from '@angular/router';
-
+import { Routes, RouterModule } from '@angular/router';
 import { DashboardComponent } from './dashboard.component';
 import { AppComponent } from './app.component';
 import { CampaignComponent } from './campaign.component';
 import { AdreportComponent } from './adreport.component';
 import { TrackingComponent } from './tracking.component';
 import { PlayerComponent } from './player.component';
+import { AppSettingComponent } from './app-setting/app-setting.component';
+import { SdkInformationComponent } from './sdk-information/sdk-information.component';
+import { OverviewComponent } from './overview/overview.component';
 
 const routes: Routes = [
   {
-    path: 'index',
-    component: DashboardComponent,
-    data: {
-      title: 'Dashboard'
-    }    
+    path: 'sdk',
+    component: SdkInformationComponent
   },
   {
-    path: 'keyword',
-    component: DashboardComponent,
-    data: {
-      title: 'keywords'
-    }
+    path: 'overview',
+    component: OverviewComponent
   },
   {
     path: 'adreport',
@@ -40,31 +35,19 @@ const routes: Routes = [
   },
   {
     path: 'campaign',
-    component: CampaignComponent,
-    data: {
-      title: 'Campaign Manager'
-    }
-  },
+    component: CampaignComponent
+      },
   {
-    path: 'tracking',
-    component: TrackingComponent,
-    data: {
-      title: 'Tracking Manager'
-    }
+    path: 'event',
+    component: TrackingComponent
   },
   {
     path: 'user',
-    component: DashboardComponent,
-    data: {
-      title: 'User Manager'
-    }
+    component: DashboardComponent
   },
   {
     path: 'player',
-    component: PlayerComponent,
-    data: {
-      title: 'Player Manager'
-    }
+    component: PlayerComponent
   },
   {
     path: 'role',
@@ -79,6 +62,9 @@ const routes: Routes = [
     data: {
       title: 'Permission Manager'
     }
+  },{
+    path: 'setting',
+    component: AppSettingComponent
   }
 ];
 

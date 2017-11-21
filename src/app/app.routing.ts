@@ -1,25 +1,32 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-
-// Layouts
 import { FullLayoutComponent } from './layouts/full-layout.component';
-import { SimpleLayoutComponent }  from './layouts/simple-layout.component';
+import { SimpleLayoutComponent } from './layouts/simple-layout.component';
+import { LoginComponent } from './user/login.component';
+import { RegisterComponent } from './user/register.component';
+import { p404Component } from './shared/404.component';
+import { p500Component } from './shared/500.component';
+import { AppsComponent } from './apps/apps.component';
 
 export const routes: Routes = [
   {
-    path: '',
-    redirectTo: 'pages',
-    pathMatch: 'full',
+    path: 'login',
+    component: LoginComponent
   },
   {
-    path: '',
-    component: FullLayoutComponent,
-    data: {
-      title: 'Home'
-    },
+    path: 'register',
+    component: RegisterComponent
+  },
+  {
+    path: 'apps',
+    component: AppsComponent
+  },
+  {
+    path: 'apps',    
+    component: FullLayoutComponent,    
     children: [
       {
-        path: 'dashboard',
+        path: 'admin',
         loadChildren: './dashboard/dashboard.module#DashboardModule'
       },
       {
@@ -41,22 +48,22 @@ export const routes: Routes = [
     ]
   },
   {
-    path: 'pages',
-    component: SimpleLayoutComponent,
-    data: {
-      title: 'Pages'
-    },
-    children: [
-      {
-        path: '',
-        loadChildren: './pages/pages.module#PagesModule',
-      }
-    ]
+    path: '**',
+    component: p404Component
+  }, {
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full'
+  },
+  {
+    path: '#',
+    redirectTo: 'login',
+    pathMatch: 'full'
   }
 ];
 
 @NgModule({
-  imports: [ RouterModule.forRoot(routes) ],
-  exports: [ RouterModule ]
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

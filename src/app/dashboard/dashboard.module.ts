@@ -11,11 +11,13 @@ import { DashboardComponent } from './dashboard.component';
 import { AppComponent } from './app.component';
 import { CampaignComponent } from './campaign.component';
 import { AdreportComponent } from './adreport.component';
-
 import { RxselectComponent } from './components/rxselect.component';
 import { RxuploadComponent } from './components/rxupload.component';
 import { TrackingComponent } from './tracking.component';
 import { PlayerComponent } from './player.component';
+import { AppSettingComponent } from './app-setting/app-setting.component';
+import { SdkInformationComponent } from './sdk-information/sdk-information.component';
+import { OverviewComponent } from './overview/overview.component';
 
 @NgModule({
   imports: [
@@ -26,6 +28,7 @@ import { PlayerComponent } from './player.component';
     FormsModule,
     AmChartsModule
   ],
-  declarations: [ DashboardComponent,  AppComponent, CampaignComponent, RxselectComponent, RxuploadComponent, AdreportComponent, TrackingComponent, PlayerComponent ]
+  declarations: [ DashboardComponent,  AppComponent, CampaignComponent, RxselectComponent, RxuploadComponent, AdreportComponent,
+   TrackingComponent, PlayerComponent, AppSettingComponent, SdkInformationComponent, OverviewComponent ]
 })
 export class DashboardModule { }

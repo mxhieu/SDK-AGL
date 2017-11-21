@@ -1,0 +1,19 @@
+<header class="app-header navbar">
+    <button class="navbar-toggler mobile-sidebar-toggler hidden-lg-up" type="button">&#9776;</button>
+    <a class="navbar-brand" routerLinkActive="active" [routerLink]="['/apps']"></a>
+    <ul class="nav navbar-nav ml-auto">
+        <li class="nav-item dropdown" dropdown>
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle>
+                <img src="assets/img/avatars/6.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
+                <span class="hidden-md-down">{{fullname}}</span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" dropdownMenu aria-labelledby="simple-dropdown">
+                <a class="dropdown-item" style="cursor: pointer;"><i class="icon-lock"></i> Change password</a>
+                <a class="dropdown-item" style="cursor: pointer;" (click)="logout()"><i class="icon-logout"></i> Logout</a>
+            </div>
+        </li>
+        <li class="nav-item hidden-md-down">
+            
+        </li>
+    </ul>
+</header>

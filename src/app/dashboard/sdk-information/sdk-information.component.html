@@ -1,0 +1,41 @@
+<div class="animated fadeIn">
+  <div class="card">
+      <div class="card-header">
+        SDK Information
+      </div>
+      <div class="card-block">          
+          <div class="row">
+            <div class="col-md-12">
+	            <h5 class="card-title">Users by App Version</h5>
+	            <div class="chart-wrapper">
+                    <canvas baseChart class="chart" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColours" [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+                </div>
+            </div>
+          </div>
+          <div class="row" style="margin-top: 2%">
+            <div class="col-md-12">
+	            <h5 class="card-title">Users by SDK Version</h5>
+	            <div class="chart-wrapper">
+                    <canvas baseChart class="chart" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColours" [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+                </div>
+            </div>
+          </div>
+          <div class="row" style="margin-top: 2%">
+            <div class="col-md-12">
+	            <h5 class="card-title">Users by Device</h5>
+	            <div class="chart-wrapper">
+                    <canvas baseChart class="chart" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColours" [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+                </div>
+            </div>
+          </div>
+          <div class="row" style="margin-top: 2%">
+            <div class="col-md-12">
+	            <h5 class="card-title">Users by OS Version</h5>
+	            <div class="chart-wrapper">
+                    <canvas baseChart class="chart" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColours" [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+                </div>
+            </div>
+          </div>
+      </div>
+  </div>
+</div>

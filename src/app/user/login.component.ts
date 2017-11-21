@@ -9,8 +9,7 @@ import { ConfigService } from '../service.config';
 import { ConnectService } from '../service.connect';
 
 @Component({
-  templateUrl: 'login.component.html',
-  styleUrls: ['login.component.scss']
+  templateUrl: 'login.component.html'
 })
 
 export class LoginComponent {
@@ -31,7 +30,7 @@ export class LoginComponent {
 
   ngOnInit() {
     if (!this.config.isExpired()) {
-      this.router.navigate([this.config.lik_dashboard_app]);
+      this.router.navigate([this.config.LINK_TO_APPS]);
     }
   }
 
@@ -42,7 +41,7 @@ export class LoginComponent {
         if (this.login.success == 1 && typeof (this.login.data.authorization) !== 'undefined') {
           this.config.setCookie(this.login.data.authorization);
           this.config.setFullname(this.login.data.fullname);
-          this.router.navigate([this.config.lik_dashboard_app]);
+          this.router.navigate([this.config.LINK_TO_APPS]);
         }
       });
   }

@@ -25,6 +25,13 @@ import { ConnectService } from './service.connect';
 // Layouts
 import { FullLayoutComponent } from './layouts/full-layout.component';
 import { SimpleLayoutComponent } from './layouts/simple-layout.component';
+import { LoginComponent }  from './user/login.component';
+import { FooterComponent } from './shared/footer.component';
+import { p404Component } from './shared/404.component';
+import { p500Component } from './shared/500.component';
+import { RegisterComponent } from './user/register.component';
+import { AppsComponent } from './apps/apps.component';
+import { HeaderComponent } from './shared/header.component';
 
 @NgModule({
   imports: [    
@@ -44,7 +51,14 @@ import { SimpleLayoutComponent } from './layouts/simple-layout.component';
     NAV_DROPDOWN_DIRECTIVES,
     BreadcrumbsComponent,
     SIDEBAR_TOGGLE_DIRECTIVES,
-    AsideToggleDirective
+    AsideToggleDirective,
+    LoginComponent,
+    FooterComponent,
+    p404Component,
+    p500Component,
+    RegisterComponent,
+    AppsComponent,
+    HeaderComponent
   ],
   providers: [
     ConnectService,
