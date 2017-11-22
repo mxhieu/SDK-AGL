@@ -32,6 +32,8 @@ import { p500Component } from './shared/500.component';
 import { RegisterComponent } from './user/register.component';
 import { AppsComponent } from './apps/apps.component';
 import { HeaderComponent } from './shared/header.component';
+import { WidgetsComponent } from './widgets/widgets.component';
+import { ContactComponent } from './contact/contact.component';
 
 @NgModule({
   imports: [    
@@ -58,7 +60,9 @@ import { HeaderComponent } from './shared/header.component';
     p500Component,
     RegisterComponent,
     AppsComponent,
-    HeaderComponent
+    HeaderComponent,
+    WidgetsComponent,
+    ContactComponent
   ],
   providers: [
     ConnectService,

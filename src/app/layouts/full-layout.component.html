@@ -68,6 +68,8 @@
         <nav class="sidebar-nav">
             <ul class="nav">
 
+                <li class="nav-title"> Your app </li>
+
                 <li class="divider"></li>
 
                 <li class="nav-title"> Dashboard </li>
@@ -79,11 +81,17 @@
                 </li>
                 
                 <li class="divider"></li>
-                <li class="nav-title"> Report </li>
+                <li class="nav-title"> Analytics </li>
                 <li class="nav-item">
                     <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/event']">
                         <i class="icon-event"></i> 
                         Events
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/overview']">
+                        <i class="icon-docs"></i> 
+                        Export
                     </a>
                 </li>
 
@@ -102,6 +110,21 @@
                     <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/sdk']">
                         <i class="icon-pie-chart"></i> 
                         SDK Information
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/setting']">
+                        <i class="icon-puzzle"></i> 
+                        Integration Tests
+                    </a>
+                </li>
+
+                <li class="divider"></li>
+                <li class="nav-title"> Grow </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/overview']">
+                        <i class="icon-fire"></i> 
+                        Remote config
                     </a>
                 </li>
             </ul>

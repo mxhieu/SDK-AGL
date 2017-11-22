@@ -14,19 +14,16 @@ export class AppsComponent implements OnInit {
 
 	apps: any;
 	onerow: any;
+	paging: any;
 
 	constructor(
-		private config: ConfigService,
 		private router: Router,
+		private config: ConfigService,
 		private connect: ConnectService) { }
 
 	ngOnInit() {
 		this.reset();
 		this.getAppByUser();
-	}
-
-	public logout() {
-
 	}
 
 	toggle() {
@@ -35,19 +32,26 @@ export class AppsComponent implements OnInit {
 
 	reset() {
 		this.isHidden = true;
-		this.onerow = { 'platform': 'android' };
+		this.onerow = {
+			'platform': 'android',
+			'name': 'app' + new Date().getMilliseconds(),
+			'bundle_id': 'com.coresdk.sampleapp'
+		};
+		this.paging = { pg_page: 1, pg_size: 100};
 	}
 	save() {
-		this.reset();
+		this.connect.request('post', this.config.api_app_add, this.onerow,
+			data => { if (data.success == 1) { this.getAppByUser(); this.reset(); } })
 	}
 	getAppByUser() {
-		this.connect.request('get', this.config.api_app_get, null,
+		var params = {}; Object.assign(params, this.paging);
+		this.connect.request('get', this.config.api_app_get, params,
 			data => {
 				this.apps = Array.isArray(data.data) ? data.data : [];
 				console.log(this.apps);
 			});
 	}
-	onRowClick(){
-		this.router.navigate([this.config.LINK_TO_APPS_OVERVIEW]); 
+	onRowClick() {
+		this.router.navigate([this.config.LINK_TO_APPS_OVERVIEW]);
 	}
 }

@@ -18,9 +18,7 @@ export class FullLayoutComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.fullname = this.config.getFullName();
-
   }  
  
 
@@ -39,6 +37,6 @@ export class FullLayoutComponent implements OnInit {
 
   logout(){
     this.config.logout();
-    this.router.navigate(['/pages/login']); 
+    this.router.navigate([this.config.LINK_TO_LOGIN]); 
   }
 }

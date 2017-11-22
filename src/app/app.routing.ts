@@ -7,6 +7,8 @@ import { RegisterComponent } from './user/register.component';
 import { p404Component } from './shared/404.component';
 import { p500Component } from './shared/500.component';
 import { AppsComponent } from './apps/apps.component';
+import { WidgetsComponent } from './widgets/widgets.component';
+import { ContactComponent } from './contact/contact.component';
 
 export const routes: Routes = [
   {
@@ -22,8 +24,12 @@ export const routes: Routes = [
     component: AppsComponent
   },
   {
-    path: 'apps',    
-    component: FullLayoutComponent,    
+    path: 'widgets',
+    component: WidgetsComponent
+  },
+  {
+    path: 'apps',
+    component: FullLayoutComponent,
     children: [
       {
         path: 'admin',
@@ -48,17 +54,17 @@ export const routes: Routes = [
     ]
   },
   {
-    path: '**',
-    component: p404Component
-  }, {
+    path: 'contact',
+    component: ContactComponent
+  },
+  {
     path: '',
     redirectTo: 'login',
     pathMatch: 'full'
   },
   {
-    path: '#',
-    redirectTo: 'login',
-    pathMatch: 'full'
+    path: '**',
+    component: p404Component
   }
 ];
 

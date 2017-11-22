@@ -12,12 +12,17 @@ import { OverviewComponent } from './overview/overview.component';
 
 const routes: Routes = [
   {
-    path: 'sdk',
-    component: SdkInformationComponent
+    path: '',
+    redirectTo: 'overview',
+    pathMatch: 'full'
   },
   {
     path: 'overview',
     component: OverviewComponent
+  },
+  {
+    path: 'sdk',
+    component: SdkInformationComponent
   },
   {
     path: 'adreport',
@@ -28,15 +33,12 @@ const routes: Routes = [
   },
   {
     path: 'app',
-    component: AppComponent,
-    data: {
-      title: 'App Manager'
-    }
+    component: AppComponent
   },
   {
     path: 'campaign',
     component: CampaignComponent
-      },
+  },
   {
     path: 'event',
     component: TrackingComponent
@@ -62,7 +64,7 @@ const routes: Routes = [
     data: {
       title: 'Permission Manager'
     }
-  },{
+  }, {
     path: 'setting',
     component: AppSettingComponent
   }
@@ -72,4 +74,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class DashboardRoutingModule {}
+export class DashboardRoutingModule { }

@@ -36,12 +36,10 @@ export class TrackingComponent implements OnInit {
     this.search = {field: 'name', term: ''};
     this.paging = {pg_page: 1, pg_size: 10, st_col: 'created_at', st_type: -1};    
     this.header = [
-      {id: 'app_id', name: 'AppId', is_search: 1},
-      {id: 'app_key', name: 'AppKey', is_search: 1},
       {id: 'user_id', name: 'UserId', is_search: 1},
-      {id: 'event_type', name: 'EventType', is_search: 1},
-      {id: 'data', name: 'Data'},
-      {id: 'created_at', name: 'Created time'}];
+      {id: 'event_type', name: 'Type', is_search: 1},
+      {id: 'data', name: 'Data', is_search: 0, st_type: -1},
+      {id: 'created_at', name: 'Updated'}];
 
     this.helpFetchData();
   }
@@ -60,7 +58,7 @@ export class TrackingComponent implements OnInit {
     if (this.onerow._id) { this.onerow.name = this.onerow.name + '_clone'; }
 
     this.conn.request('post', this.conf.api_app_add, this.onerow, 
-    data=> { if (data.success == 1) { this.helpFetchData(); this.helpReset(); } })
+    data=> { if (data.success == 1) { this.helpFetchData(); this.reset(); } })
   }
 
   // Read 
@@ -114,7 +112,7 @@ export class TrackingComponent implements OnInit {
 
   editSubmit() {
     this.conn.request('post', this.conf.api_app_edit, this.onerow, 
-    data=> { if (data.success == 1) { this.helpFetchData(); this.helpReset(); } })
+    data=> { if (data.success == 1) { this.helpFetchData(); this.reset(); } })
   }
 
   restore(_onerow) {
@@ -133,10 +131,7 @@ export class TrackingComponent implements OnInit {
     this.onerow[imageName] = $event;
   }
 
-  ///////////////////
-  // H E L P E R S //
-  ///////////////////
-  helpReset() {
+  reset() {
     this.onerow = {};    
   }
 
