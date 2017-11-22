@@ -34,6 +34,11 @@ import { AppsComponent } from './apps/apps.component';
 import { HeaderComponent } from './shared/header.component';
 import { WidgetsComponent } from './widgets/widgets.component';
 import { ContactComponent } from './contact/contact.component';
+import { BlogsComponent } from './blogs/blogs.component';
+import { DocumentsComponent } from './documents/documents.component';
+import { PrivacyComponent } from './privacy/privacy.component';
+import { HelpComponent } from './help/help.component';
+import { ResourceComponent } from './resource/resource.component';
 
 @NgModule({
   imports: [    
@@ -62,7 +67,12 @@ import { ContactComponent } from './contact/contact.component';
     AppsComponent,
     HeaderComponent,
     WidgetsComponent,
-    ContactComponent
+    ContactComponent,
+    BlogsComponent,
+    DocumentsComponent,
+    PrivacyComponent,
+    HelpComponent,
+    ResourceComponent
   ],
   providers: [
     ConnectService,

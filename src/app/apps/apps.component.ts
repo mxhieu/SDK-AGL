@@ -22,8 +22,12 @@ export class AppsComponent implements OnInit {
 		private connect: ConnectService) { }
 
 	ngOnInit() {
-		this.reset();
-		this.getAppByUser();
+		if (this.config.isExpired()) {
+			this.router.navigate([this.config.LINK_TO_LOGIN]);
+		} else {
+			this.reset();
+			this.getAppByUser();
+		}
 	}
 
 	toggle() {
@@ -37,7 +41,7 @@ export class AppsComponent implements OnInit {
 			'name': 'app' + new Date().getMilliseconds(),
 			'bundle_id': 'com.coresdk.sampleapp'
 		};
-		this.paging = { pg_page: 1, pg_size: 100};
+		this.paging = { pg_page: 1, pg_size: 100 };
 	}
 	save() {
 		this.connect.request('post', this.config.api_app_add, this.onerow,

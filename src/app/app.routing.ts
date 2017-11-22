@@ -9,6 +9,11 @@ import { p500Component } from './shared/500.component';
 import { AppsComponent } from './apps/apps.component';
 import { WidgetsComponent } from './widgets/widgets.component';
 import { ContactComponent } from './contact/contact.component';
+import { BlogsComponent } from './blogs/blogs.component';
+import { DocumentsComponent } from './documents/documents.component';
+import { PrivacyComponent } from './privacy/privacy.component';
+import { HelpComponent } from './help/help.component';
+import { ResourceComponent } from './resource/resource.component';
 
 export const routes: Routes = [
   {
@@ -56,6 +61,26 @@ export const routes: Routes = [
   {
     path: 'contact',
     component: ContactComponent
+  },
+  {
+    path: 'blogs',
+    component: BlogsComponent
+  },
+  {
+    path: 'document',
+    component: DocumentsComponent
+  },
+  {
+    path: 'privacy',
+    component: PrivacyComponent
+  },
+  {
+    path: 'help',
+    component: HelpComponent
+  },
+  {
+    path: 'resources',
+    component: ResourceComponent
   },
   {
     path: '',

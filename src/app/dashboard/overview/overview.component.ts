@@ -44,8 +44,12 @@ export class OverviewComponent implements OnInit {
 		private connect: ConnectService) { }
 
 	ngOnInit() {
-		this.reset();
-		this.getData();
+		if (this.config.isExpired()) {
+			this.router.navigate([this.config.LINK_TO_LOGIN]);
+		} else {
+			this.reset();
+			this.getData();
+		}
 	}
 
 	reset(){

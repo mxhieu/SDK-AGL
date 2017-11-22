@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ConfigService } from '../../service.config';
+import { ConnectService } from '../../service.connect';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'app-sdk-information',
@@ -45,11 +48,17 @@ export class SdkInformationComponent implements OnInit {
 	];
 	public lineChartLegend: boolean = true;
 	public lineChartType: string = 'line';
-	constructor() { }
-
+	
+	constructor(private router: Router,
+		private config: ConfigService,
+		private connect: ConnectService) { }
 
 	ngOnInit() {
+		if (this.config.isExpired()) {
+			this.router.navigate([this.config.LINK_TO_LOGIN]);
+		}
 	}
+
 	// events
 	public chartClicked(e: any): void {
 		console.log(e);

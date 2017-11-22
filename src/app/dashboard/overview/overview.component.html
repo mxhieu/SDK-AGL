@@ -72,15 +72,45 @@
                 </div>
             </div>
         </div>
-        <div class="card-block">
-            <h5 class="card-title">USER ACQUISITION TREND</h5>
-            <div class="chart-wrapper">
-                <canvas baseChart class="chart" [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+        <div class="card-columns cols-2">
+            <div class="card">
+                <div class="card-header">
+                    USER ACQUISITION TREND
+                </div>
+                <div class="card-body">
+                    <div class="chart-wrapper" style="margin: 4%">
+                        <canvas baseChart class="chart" [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="card-block col-md-6">
-            <h5 class="card-title">DAILY ACTIVE</h5>
-            <div class="chart-wrapper">
-                <canvas baseChart class="chart" [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+            <div class="card">
+                <div class="card-header">
+                    DAILY ACTIVE
+                </div>
+                <div class="card-body">
+                    <div class="chart-wrapper" style="margin: 4%">
+                        <canvas baseChart class="chart" [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    USER ACQUISITION TREND
+                </div>
+                <div class="card-body">
+                    <div class="chart-wrapper" style="margin: 4%">
+                        <canvas baseChart class="chart" [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    DAILY ACTIVE
+                </div>
+                <div class="card-body">
+                    <div class="chart-wrapper" style="margin: 4%">
+                        <canvas baseChart class="chart" [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+                    </div>
+                </div>
             </div>
         </div>
