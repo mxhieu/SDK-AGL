@@ -1,11 +1,16 @@
 import { Component, OnInit } from '@angular/core';
+import { ConfigService } from '../../service.config';
+import { ConnectService } from '../../service.connect';
+import { Router } from '@angular/router';
+
 @Component({
 	selector: 'app-overview',
 	templateUrl: './overview.component.html',
 	styleUrls: ['./overview.component.scss']
 })
 export class OverviewComponent implements OnInit {
-	// barChart
+
+	// Bar chart
 	public barChartOptions: any = {
 		scaleShowVerticalLines: false,
 		responsive: true
@@ -18,7 +23,7 @@ export class OverviewComponent implements OnInit {
 		{ data: [28, 48, 40, 19, 86, 27], label: 'Clicks' }
 	];
 
-	public doughnutChartLabels: string[] = ['Intalls', 'Open', 'Login', 'Register', 'Create character', 'Done payment'];
+	public doughnutChartLabels: string[] = ['Installs', 'Open', 'Login', 'Register', 'Create character', 'Done payment'];
 	public doughnutChartData: number[] = [350, 450, 100, 50, 100, 400];
 	public doughnutChartType: string = 'doughnut';
 
@@ -29,11 +34,59 @@ export class OverviewComponent implements OnInit {
 
 	public polarAreaChartType: string = 'polarArea';
 
-	constructor() { }
+	data : any;
+	statistics : any;
+	trends :any[];
+
+	constructor(
+		private router: Router,
+		private config: ConfigService,
+		private connect: ConnectService) { }
 
 	ngOnInit() {
+		this.reset();
+		this.getData();
 	}
 
+	reset(){
+		this.data = {};
+		this.statistics = {
+			'touch_points':'0', 
+			'total_installs':'0', 
+			'conversion_rate':'0', 
+			'total_revenue':'0', 
+			'returning_visitors':'0'
+		};
+	}
+
+	getData(){
+		this.connect.request('get', this.config.API_APP_OVERVIEW, null,
+			data => {
+				this.data = data.data;
+				this.statistics = this.data.statistics;
+				this.doughnutChartData = [
+					this.data.daily_active.installs,
+					this.data.daily_active.open,
+					this.data.daily_active.login,
+					this.data.daily_active.register,
+					this.data.daily_active.create_character,
+					0
+				];
+				this.trends =  this.data.user_acquisition_trend;
+				this.getTrends();
+		});
+	}
+
+	getTrends(){
+		this.barChartLabels = [];
+		this.barChartData[0].data = [];
+		this.barChartData[1].data = [];
+		for (var i = 0; i < this.trends.length; i++) {
+		   	this.barChartLabels.push(this.trends[i].date);
+		   	this.barChartData[0].data.push(this.trends[i].impressions);
+		   	this.barChartData[1].data.push(this.trends[i].clicks);
+		}
+	}
 	// events
 	public chartClicked(e: any): void {
 		console.log(e);

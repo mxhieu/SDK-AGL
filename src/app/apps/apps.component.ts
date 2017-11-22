@@ -48,7 +48,6 @@ export class AppsComponent implements OnInit {
 		this.connect.request('get', this.config.api_app_get, params,
 			data => {
 				this.apps = Array.isArray(data.data) ? data.data : [];
-				console.log(this.apps);
 			});
 	}
 	onRowClick() {

@@ -1,11 +1,10 @@
 <header class="app-header navbar">
     <button class="navbar-toggler mobile-sidebar-toggler hidden-lg-up" type="button">&#9776;</button>
     <a class="navbar-brand" href="#"></a>
-
     <ul class="nav navbar-nav hidden-md-down">
         <li class="nav-item">
             <a class="nav-link navbar-toggler sidebar-toggler" href="#">&#9776;</a>
-        </li>        
+        </li>
         <!--<li class="nav-item px-1">
             <a class="nav-link" [routerLink]="['/dashboard/index']">Dashboard</a>
         </li>
@@ -32,7 +31,6 @@
                 <span class="hidden-md-down">{{fullname}}</span>
             </a>
             <div class="dropdown-menu dropdown-menu-right" dropdownMenu aria-labelledby="simple-dropdown">
-
                 <!-- <div class="dropdown-header text-center">
                     <strong>Account</strong>
                 </div>
@@ -52,26 +50,26 @@
                 <a class="dropdown-item" href="#"><i class="fa fa-file"></i> Projects<span class="badge badge-primary">42</span></a>
                 <div class="divider"></div>
                 -->
-                <a class="dropdown-item" style="cursor: pointer;"><i class="icon-lock"></i> Change password</a> 
+                <a class="dropdown-item" style="cursor: pointer;"><i class="icon-lock"></i> Change password</a>
                 <a class="dropdown-item" style="cursor: pointer;" (click)="logout()"><i class="icon-logout"></i> Logout</a>
             </div>
         </li>
         <li class="nav-item hidden-md-down">
-            
         </li>
     </ul>
-
 </header>
-
 <div class="app-body">
     <div class="sidebar">
         <nav class="sidebar-nav">
             <ul class="nav">
-
                 <li class="nav-title"> Your app </li>
-
+                <div class="col-md-12">
+                    <div class="avatar">
+                        <img src="/assets/img/ico_app_default.png" style="width: 24px; height: 24px;">
+                    </div>
+                    <p class="text-muted">{{getAppPackageName()}}</p>
+                </div>
                 <li class="divider"></li>
-
                 <li class="nav-title"> Dashboard </li>
                 <li class="nav-item">
                     <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/overview']">
@@ -79,7 +77,6 @@
                         Overview
                     </a>
                 </li>
-                
                 <li class="divider"></li>
                 <li class="nav-title"> Analytics </li>
                 <li class="nav-item">
@@ -94,7 +91,6 @@
                         Export
                     </a>
                 </li>
-
                 <li class="divider"></li>
                 <li class="nav-title"> Configuration </li>
                 <li class="nav-item">
@@ -103,7 +99,6 @@
                         App settings
                     </a>
                 </li>
-                
                 <li class="divider"></li>
                 <li class="nav-title"> Integration </li>
                 <li class="nav-item">
@@ -118,7 +113,6 @@
                         Integration Tests
                     </a>
                 </li>
-
                 <li class="divider"></li>
                 <li class="nav-title"> Grow </li>
                 <li class="nav-item">
@@ -130,24 +124,18 @@
             </ul>
         </nav>
     </div>
-
     <!-- Main content -->
     <main class="main">
-
         <!-- Breadcrumb -->
         <ol class="breadcrumb">
             <breadcrumbs></breadcrumbs>
-
-
         </ol>
-
         <div class="container-fluid">
             <router-outlet></router-outlet>
         </div>
         <!-- /.conainer-fluid -->
     </main>
 </div>
-
 <footer class="app-footer">
     &copy; CoreSDK 2017 <span class="float-right">Powered by <a href="http://ecdc.vn/">CoreSDK</a> </span>
 </footer>

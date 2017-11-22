@@ -34,7 +34,9 @@ export class FullLayoutComponent implements OnInit {
     $event.stopPropagation();
     this.status.isopen = !this.status.isopen;
   }
-
+  getAppPackageName() : string {
+    return 'com.coresdk.sampleapp';
+  }
   logout(){
     this.config.logout();
     this.router.navigate([this.config.LINK_TO_LOGIN]); 

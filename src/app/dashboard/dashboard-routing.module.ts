@@ -4,7 +4,7 @@ import { DashboardComponent } from './dashboard.component';
 import { AppComponent } from './app.component';
 import { CampaignComponent } from './campaign.component';
 import { AdreportComponent } from './adreport.component';
-import { TrackingComponent } from './tracking.component';
+import { EventComponent } from './event/event.component';
 import { PlayerComponent } from './player.component';
 import { AppSettingComponent } from './app-setting/app-setting.component';
 import { SdkInformationComponent } from './sdk-information/sdk-information.component';
@@ -41,7 +41,7 @@ const routes: Routes = [
   },
   {
     path: 'event',
-    component: TrackingComponent
+    component: EventComponent
   },
   {
     path: 'user',

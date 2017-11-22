@@ -4,11 +4,11 @@ import { Http, URLSearchParams } from '@angular/http';
 import 'rxjs/Rx';
 
 // In app component
-import { ConfigService } from '../service.config';
-import { ConnectService } from '../service.connect';
+import { ConfigService } from '../../service.config';
+import { ConnectService } from '../../service.connect';
 
 @Component({
-  templateUrl: 'tracking.component.html'
+  templateUrl: 'event.component.html'
 })
 export class EventComponent implements OnInit {
 

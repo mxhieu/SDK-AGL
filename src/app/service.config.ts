@@ -44,6 +44,10 @@ export class ConfigService {
   api_upload_image = this.api_url + 'upload';
   api_image_directory = this.api_url + 'upload/image/';
 
+  // Analytics
+  API_APP_OVERVIEW = this.api_url + 'app/overview';
+  
+  // Router
   LINK_TO_APPS = '/apps';
   LINK_TO_LOGIN = '/login';
   LINK_TO_APPS_OVERVIEW = '/apps/admin';
