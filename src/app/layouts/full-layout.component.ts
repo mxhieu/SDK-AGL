@@ -11,6 +11,7 @@ export class FullLayoutComponent implements OnInit {
   router: any;
   config: any;
   fullname : string;
+  appInfo: any;
 
   constructor(_router: Router, _config: ConfigService) { 
     this.router = _router;
@@ -19,6 +20,8 @@ export class FullLayoutComponent implements OnInit {
 
   ngOnInit(): void {
     this.fullname = this.config.getFullName();
+    console.log('Full');
+    this.appInfo = this.config.getAppInfo();
   }  
  
 
@@ -33,9 +36,6 @@ export class FullLayoutComponent implements OnInit {
     $event.preventDefault();
     $event.stopPropagation();
     this.status.isopen = !this.status.isopen;
-  }
-  getAppPackageName() : string {
-    return 'com.coresdk.sampleapp';
   }
   logout(){
     this.config.logout();

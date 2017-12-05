@@ -137,7 +137,8 @@ export class EventComponent implements OnInit {
 
   helpFetchData() {
     // Make search params 
-    var params = {}; Object.assign(params, this.paging);
+    var params = {'search_app_id':this.conf.getAppId()};
+    Object.assign(params, this.paging);
     if (this.search.term.length > 0) { params['search_' + this.search.field] = this.search.term; }
 
     this.conn.request('get', this.conf.api_tracking_get, params, 

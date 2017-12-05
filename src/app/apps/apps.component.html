@@ -7,11 +7,11 @@
                     <div class="row justify-content-center">
                         <div class="input-prepend input-group">
                             <span class="input-group-addon"><i class="fa fa-search"></i>
-						</span>
+                        </span>
                             <input id="prependedInput" class="form-control" size="16" type="text" placeholder="App Name, Package name, Bundle Id">
                             <span class="input-group-btn">
-							<button class="btn btn-info" type="button"> <i class="icon-magnifier"></i> Search</button>
-						</span>
+                            <button class="btn btn-info" type="button"> <i class="icon-magnifier"></i> Search</button>
+                        </span>
                         </div>
                     </div>
                 </div>
@@ -19,7 +19,7 @@
         </div>
         <div class="col-md-6">
             <button class="btn btn-primary" type="button" style="float: right;" (click)=(toggle())>
-                <i class="icon-plus"></i> Add app
+                <i class="icon-plus"></i> New app
             </button>
         </div>
     </div>
@@ -37,13 +37,11 @@
                     <form action="" class="form-horizontal col-md-10 col-sx-12 row" method="post">
                         <div class="form-group col-md-6 rx-form-group">
                             <label class="form-control-label">App Name</label>
-                            <input class="form-control" name="name" placeholder="App Name ..." type="text" 
-                            [(ngModel)]="onerow.name">
+                            <input class="form-control" name="name" placeholder="App Name ..." type="text" [(ngModel)]="onerow.name">
                         </div>
                         <div class="form-group col-md-6 rx-form-group">
                             <label class="form-control-label">Description</label>
-                            <input class="form-control" name="desc" placeholder="Description ..." type="text"
-                            [(ngModel)]="onerow.desc">
+                            <input class="form-control" name="desc" placeholder="Description ..." type="text" [(ngModel)]="onerow.desc">
                         </div>
                         <div class="form-group col-md-6 rx-form-group">
                             <label class="form-control-label">
@@ -56,42 +54,43 @@
                             <label class="form-control-label">
                                 Package name/ Bundle Id</label>
                             <br/>
-                            <input class="form-control" name="storeurl" placeholder="Package Name/ Bundle Id ..." type="text"
-                            [(ngModel)]="onerow.bundle_id">
+                            <input class="form-control" name="storeurl" placeholder="Package Name/ Bundle Id ..." type="text" [(ngModel)]="onerow.bundle_id">
                         </div>
                         <div class="form-group col-md-6 rx-form-group">
                             <label class="form-control-label">Store Url</label>
-                            <input class="form-control" name="storeurl" placeholder="Store Url ..." type="text"
-                            [(ngModel)]="onerow.storeUrl">
+                            <input class="form-control" name="storeurl" placeholder="Store Url ..." type="text" [(ngModel)]="onerow.storeUrl">
                         </div>
                     </form>
                 </div>
                 <div class="card-footer">
                     <button class="btn btn-sm btn-primary" type="submit" (click)=(save())>
                         <i class="fa fa-dot-circle-o"></i> Save </button>
-                    <button class="btn btn-sm btn-danger" type="reset" (click)=(reset())><i class="fa fa-ban"></i> Cancel</button>
+                    <button class="btn btn-sm btn-danger" type="reset" (click)=(cancel())><i class="fa fa-ban"></i> Cancel</button>
                 </div>
             </div>
         </div>
         <!-- End form -->
     </div>
 </div>
-<div class="card-block animated fadeIn rx-relative" style="margin-left:5%; margin-right: 5%; z-index: 0; min-height: 1280px;">
+<div class="card-block animated fadeIn rx-relative" style="z-index: 0; min-height: 1280px;">
     <h5> Your apps </h5>
     <p class="text-muted">Click to see more details</p>
-    <table class="table table-hover table-outline mb-0 hidden-sm-down table-striped">
+    <table class="table table-hover table-outline mb-0 hidden-sm-down table-striped" [hidden]="apps.length < 1">
         <thead class="thead-default">
             <tr>
-                <th class="text-center rx-table-ico-head"><i class="icon-game-controller"></i></th>
-                <th class="rx-table-ico-head">App Name</th>
-                <th class="text-center rx-table-ico-head">App Id</th>
-                <th class="text-center rx-table-ico-head">Platform</th>
-                <th class="text-center rx-table-ico-head">Created</th>
-                <th class="text-center rx-table-ico-head">Status</th>
+                <th class="text-center rx-table-ico-head" style="vertical-align:middle;"><i class="icon-game-controller"></i></th>
+                <th class="rx-table-ico-head" style="vertical-align:middle;">App Name</th>
+                <th class="text-center rx-table-ico-head" style="vertical-align:middle;">App Id</th>
+                <th class="text-center rx-table-ico-head" style="vertical-align:middle;">Bundle Id
+                    <br/>Package Name</th>
+                <th class="text-center rx-table-ico-head" style="vertical-align:middle;">App Key</th>
+                <th class="text-center rx-table-ico-head" style="vertical-align:middle;">Platform</th>
+                <th class="text-center rx-table-ico-head" style="vertical-align:middle;">Created</th>
+                <th class="text-center rx-table-ico-head" style="vertical-align:middle;">Status</th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let app of apps" style="cursor: pointer;" (click)=(onRowClick())>
+            <tr *ngFor="let app of apps" style="cursor: pointer;" (click)=(onRowClick(app))>
                 <td class="text-center">
                     <div class="avatar"><img src="{{ (app.icons)? conf.api_image_directory + app.icons : '/assets/img/ico_app_default.png'  }}" class="img-avatar"></div>
                 </td>
@@ -100,6 +99,12 @@
                 </td>
                 <td align="center">
                     {{app._id}}
+                </td>
+                <td align="center">
+                    {{app.bundle_id}}
+                </td>
+                <td align="center">
+                    {{app.key}}
                 </td>
                 <td align="center"><i [hidden]="app.platform != 'android'" class="fa fa-android fa-lg m-t-2 rx-android"></i>
                     <i [hidden]="app.platform == 'android'" class="fa fa-apple fa-lg m-t-2 rx-apple"></i> {{app.platform}}
@@ -115,5 +120,13 @@
             </tr>
         </tbody>
     </table>
+    <div class="card" [hidden]="apps.length > 0">
+        <div class="card-header">
+            There are no apps
+        </div>
+        <div class="card-body" style="margin:2%">
+            Make new app to join big CoreSDK society
+        </div>
+    </div>
 </div>
 <app-footer></app-footer>

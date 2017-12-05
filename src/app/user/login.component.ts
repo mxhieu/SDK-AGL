@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'
 import { Http, URLSearchParams } from '@angular/http';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
+
 import 'rxjs/Rx';
 
 // In app component

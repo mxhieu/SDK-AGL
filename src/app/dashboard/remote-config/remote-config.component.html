@@ -1,0 +1,85 @@
+<div class="animated fadeIn">
+    <div class="card-block animated fadeIn rx-relative" style="margin-left:10%; margin-right: 10%; z-index: 1; padding: 0px;">
+        <div class="card">
+            <!-- Form -->
+            <div class="rx-floathide-form rx-isview" [hidden]="isHidden">
+                <div class="card rx-card-form">
+                    <div class="card-header">
+                        <h4 class="card-title">New message</h4>
+                    </div>
+                    <div class="card-block card-block-form">
+                        <form action="" class="form-horizontal col-md-12 col-sx-12 row" method="post">
+                            <div class="form-group col-md-12 rx-form-group">
+                                <label class="form-control-label">Message</label>
+                                <textarea name="textarea-input" rows="9" class="form-control" placeholder="Message.." [(ngModel)]="onerow.message"></textarea>
+                            </div>
+                            <div class="form-group col-md-12 rx-form-group">
+                                <label class="form-control-label">Segment</label>
+                                <select id="select" name="select" class="form-control">
+                                    <option value="0">[Please select]</option>
+                                    <option value="1">100 most active users</option>
+                                    <option value="2">All users</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-sm btn-primary" type="submit" (click)=(send()) [hidden]="isEdit">
+                            <i class="icon-cursor"></i> Send
+                        </button>
+                        <button class="btn btn-sm btn-secondary" type="reset" (click)=(cancel())>
+                            <i class="icon-close"></i> Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- End form -->
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-block">
+            <h4>Push notification
+			<button class="btn btn-sm btn-primary" style="float: right;" (click)=(toggle())>
+			<i class="icon-plus"></i> New message
+			</button>
+			</h4>
+            <p class="text-muted">Manage notification campaigns and send messages to engage the right users at the right moment</p>
+            <table class="table table-hover table-outline mb-0 hidden-sm-down table-striped">
+                <thead class="thead-default">
+                    <tr>
+                        <th class="rx-table-ico-head">Message</th>
+                        <th class="text-center rx-table-ico-head">Status <i class="icon-question"></i> </th>
+                        <th class="text-center rx-table-ico-head">Delivery date <i class="icon-question"></i> </th>
+                        <th class="text-center rx-table-ico-head">Target estimate <i class="icon-question"></i> </th>
+                        <th class="text-center rx-table-ico-head">Open rate <i class="icon-question"></i></th>
+                        <th class="text-center rx-table-ico-head">##</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let msg of msgs">
+                        <td>
+                            {{msg.message}}
+                        </td>
+                        <td align="center">
+                            <span class="tag tag-success" *ngIf="msgs.status">Sent</span>
+                            <span class="tag tag-danger" *ngIf="!msg.status">Waiting</span>
+                        </td>
+                        <td align="center">
+                            <div class="small">{{msg.created_at * 1000 | date:'dd/MM/yyyy HH:mm:ss'}}</div>
+                        </td>
+                        <td align="center">
+                            {{msg.target}}
+                        </td>
+                        <td align="center">
+                            {{msg.open}}
+                        </td>
+                        <td align="center">
+                            <button class="btn btn-sm btn-danger" type="submit" (click)=(delete())>
+                                <i class="icon-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>

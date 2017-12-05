@@ -75,7 +75,7 @@
         <div class="card-columns cols-2">
             <div class="card">
                 <div class="card-header">
-                    USER ACQUISITION TREND
+                    IMPRESSIONS
                 </div>
                 <div class="card-body">
                     <div class="chart-wrapper" style="margin: 4%">
@@ -85,7 +85,7 @@
             </div>
             <div class="card">
                 <div class="card-header">
-                    DAILY ACTIVE
+                    USER ENGAGEMENT
                 </div>
                 <div class="card-body">
                     <div class="chart-wrapper" style="margin: 4%">
@@ -95,11 +95,11 @@
             </div>
             <div class="card">
                 <div class="card-header">
-                    USER ACQUISITION TREND
+                    ACTIVES USER
                 </div>
                 <div class="card-body">
                     <div class="chart-wrapper" style="margin: 4%">
-                        <canvas baseChart class="chart" [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+                        <canvas baseChart class="chart" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColours" [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
                     </div>
                 </div>
             </div>

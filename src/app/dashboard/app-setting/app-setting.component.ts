@@ -10,6 +10,9 @@ import { Router } from '@angular/router';
 })
 export class AppSettingComponent implements OnInit {
 
+
+	appInfo: any;
+
 	constructor(private router: Router,
 		private config: ConfigService,
 		private connect: ConnectService) { }
@@ -18,6 +21,9 @@ export class AppSettingComponent implements OnInit {
 		if (this.config.isExpired()) {
 			this.router.navigate([this.config.LINK_TO_LOGIN]);
 		}
+		else
+		{
+			this.appInfo = this.config.getAppInfo();
+		}
 	}
-
 }

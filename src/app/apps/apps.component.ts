@@ -12,7 +12,7 @@ export class AppsComponent implements OnInit {
 
 	isHidden: boolean;
 
-	apps: any;
+	apps: any[];
 	onerow: any;
 	paging: any;
 
@@ -34,6 +34,14 @@ export class AppsComponent implements OnInit {
 		this.isHidden = !this.isHidden;
 	}
 
+	cancel() {
+		if (this.config.isExpired()) {
+			this.router.navigate([this.config.LINK_TO_LOGIN]);
+		} else {
+			this.reset();
+			this.getAppByUser();
+		}
+	}
 	reset() {
 		this.isHidden = true;
 		this.onerow = {
@@ -41,6 +49,7 @@ export class AppsComponent implements OnInit {
 			'name': 'app' + new Date().getMilliseconds(),
 			'bundle_id': 'com.coresdk.sampleapp'
 		};
+		this.apps = [];
 		this.paging = { pg_page: 1, pg_size: 100 };
 	}
 	save() {
@@ -54,7 +63,8 @@ export class AppsComponent implements OnInit {
 				this.apps = Array.isArray(data.data) ? data.data : [];
 			});
 	}
-	onRowClick() {
+	onRowClick(app: any) {
+		this.config.setAppInfo(app);
 		this.router.navigate([this.config.LINK_TO_APPS_OVERVIEW]);
 	}
 }

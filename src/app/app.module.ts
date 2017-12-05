@@ -24,7 +24,6 @@ import { ConnectService } from './service.connect';
 
 // Layouts
 import { FullLayoutComponent } from './layouts/full-layout.component';
-import { SimpleLayoutComponent } from './layouts/simple-layout.component';
 import { LoginComponent }  from './user/login.component';
 import { FooterComponent } from './shared/footer.component';
 import { p404Component } from './shared/404.component';
@@ -40,6 +39,10 @@ import { PrivacyComponent } from './privacy/privacy.component';
 import { HelpComponent } from './help/help.component';
 import { ResourceComponent } from './resource/resource.component';
 
+// Cookie
+import { CookieService } from 'angular2-cookie/services/cookies.service';
+
+
 @NgModule({
   imports: [    
     BrowserModule,
@@ -54,7 +57,6 @@ import { ResourceComponent } from './resource/resource.component';
   declarations: [
     AppComponent,    
     FullLayoutComponent,
-    SimpleLayoutComponent,
     NAV_DROPDOWN_DIRECTIVES,
     BreadcrumbsComponent,
     SIDEBAR_TOGGLE_DIRECTIVES,
@@ -77,6 +79,7 @@ import { ResourceComponent } from './resource/resource.component';
   providers: [
     ConnectService,
     ConfigService,
+    CookieService,
     PrivateService,
     {    
       provide: LocationStrategy,

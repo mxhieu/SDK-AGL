@@ -60,6 +60,15 @@
                     <h4 class="card-title">Events</h4>
                     <div class="card-subtitle">List of events</div>
                 </div>
+                <div class="col-md-8">
+                    <div class="card-tools">
+                        <select class="sel-search" [(ngModel)]="search.field">
+                            <option *ngFor="let perheader of header" [hidden]="!perheader.is_search" value="{{perheader.id}}">{{perheader.name}}</option>
+                        </select><i class="icon-arrow-down sel-ico"></i>
+                        <input type="text" class="rx-cur input-search" [(ngModel)]="search.term">
+                        <button class="btn btn-sm btn-default btn-search" (click)="jumpPage(1)"><i class="icon-magnifier"></i></button>
+                    </div>
+                </div>
             </div>
             <!-- End title bar -->
             <div style="width: 100%; overflow-x: scroll;">

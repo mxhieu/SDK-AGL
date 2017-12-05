@@ -9,7 +9,7 @@
     <ul class="nav navbar-nav ml-auto">
         <li class="nav-item dropdown" dropdown (onToggle)="toggled($event)">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle>
-                <img src="assets/img/avatars/6.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
+                <img src="assets/img/avatars/6.jpg" class="img-avatar">
                 <span class="hidden-md-down">{{fullname}}</span>
             </a>
             <div class="dropdown-menu dropdown-menu-right" dropdownMenu aria-labelledby="simple-dropdown">
@@ -28,9 +28,9 @@
                 <li class="nav-title"> Your app </li>
                 <div class="col-md-12">
                     <div class="avatar">
-                        <img src="/assets/img/ico_app_default.png" style="width: 24px; height: 24px;">
+                        <img src="/assets/img/ico_app_default.png" style="height: 24px;">
                     </div>
-                    <p class="text-muted">{{getAppPackageName()}}</p>
+                    <p class="text-muted">{{appInfo.bundle_id}}</p>
                 </div>
                 <li class="divider"></li>
                 <li class="nav-title"> Dashboard </li>
@@ -49,6 +49,12 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/player']">
+                        <i class="icon-user"></i> 
+                        Users
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/overview']">
                         <i class="icon-docs"></i> 
                         Export
@@ -60,6 +66,12 @@
                     <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/setting']">
                         <i class="icon-settings"></i> 
                         App settings
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/payment']">
+                        <i class="icon-basket-loaded"></i> 
+                        Payment
                     </a>
                 </li>
                 <li class="divider"></li>
@@ -79,7 +91,7 @@
                 <li class="divider"></li>
                 <li class="nav-title"> Grow </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/overview']">
+                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/remote']">
                         <i class="icon-fire"></i> 
                         Remote config
                     </a>

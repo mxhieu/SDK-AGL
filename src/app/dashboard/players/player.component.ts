@@ -1,16 +1,16 @@
-import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { Http, URLSearchParams } from '@angular/http';
 import 'rxjs/Rx';
 
 // In app component
-import { ConfigService } from '../service.config';
-import { ConnectService } from '../service.connect';
+import { ConfigService } from '../../service.config';
+import { ConnectService } from '../../service.connect';
 
 @Component({
-  templateUrl: 'tracking.component.html'
+  templateUrl: 'player.component.html'
 })
-export class EventComponent implements OnInit {
+export class PlayerComponent implements OnInit {
 
   rout: any;
   data: any;
@@ -36,29 +36,25 @@ export class EventComponent implements OnInit {
     this.search = {field: 'name', term: ''};
     this.paging = {pg_page: 1, pg_size: 10, st_col: 'created_at', st_type: -1};    
     this.header = [
-      {id: 'user_id', name: 'UserId', is_search: 1},
-      {id: 'event_type', name: 'Type', is_search: 1},
-      {id: 'data', name: 'Data', is_search: 0, st_type: -1},
-      {id: 'created_at', name: 'Updated'}];
+      {id: '_id', name: 'User Id', is_search: 1}, 
+      {id: 'username', name: 'User Name', is_search: 1},
+      {id: 'created_at', name: 'Created'}, 
+      {id: 'status', name: 'Status'}];
 
     this.helpFetchData();
   }
-  ngOnInit(): void {}
 
-  /////////////
-  // C R U D //
-  /////////////
+  ngOnInit(): void {}
 
   // Create
   add() {
-    this.onerow = {name: 'Application', platform: 'android', is_active: 1, is_instore: 1, created_at: 1}
+    this.onerow = {username: 'User', password:"Password", is_active: 1, created_at: 1}
   }
 
   addSubmit() {
     if (this.onerow._id) { this.onerow.name = this.onerow.name + '_clone'; }
-
-    this.conn.request('post', this.conf.api_app_add, this.onerow, 
-    data=> { if (data.success == 1) { this.helpFetchData(); this.reset(); } })
+    this.conn.request('post', this.conf.api_player_add, this.onerow, 
+    data=> { if (data.success == 1) { this.helpFetchData(); this.helpReset(); } })
   }
 
   // Read 
@@ -112,61 +108,41 @@ export class EventComponent implements OnInit {
 
   editSubmit() {
     this.conn.request('post', this.conf.api_app_edit, this.onerow, 
-    data=> { if (data.success == 1) { this.helpFetchData(); this.reset(); } })
+    data=> { if (data.success == 1) { this.helpFetchData(); this.helpReset(); } })
   }
 
   restore(_onerow) {
-    this.conn.request('get', this.conf.api_app_restore, {_id: _onerow._id}, 
+    this.conn.request('get', this.conf.api_player_restore, {_id: _onerow._id}, 
     data=> { this.helpFetchData(); })
   }
 
   // Delete  
   delete(_onerow) {
-    this.conn.request('get', this.conf.api_app_del, {_id: _onerow._id},
+    this.conn.request('get', this.conf.api_player_delete, {_id: _onerow._id},
     data=> { this.helpFetchData(); }) 
   }
 
-  // Handle
-  onChangeImg($event, imageName) {
-    this.onerow[imageName] = $event;
-  }
 
-  reset() {
+  ///////////////////
+  // H E L P E R S //
+  ///////////////////
+  helpReset() {
     this.onerow = {};    
   }
 
   helpFetchData() {
     // Make search params 
-    var params = {}; Object.assign(params, this.paging);
+    var params = {'search_app_id':this.conf.getAppId()};
+    Object.assign(params, this.paging);
     if (this.search.term.length > 0) { params['search_' + this.search.field] = this.search.term; }
 
-    this.conn.request('get', this.conf.api_tracking_get, params, 
+    this.conn.request('get', this.conf.api_player_get, params, 
     data=> {      
-      this.data = Array.isArray(data.data)? data.data : [];
+      this.data = Array.isArray(data.data)? data.data : [];      
       this.isnext = (this.data.length >= this.paging.pg_size)? true: false;
     });
   }
-  getTrackingStatus(type: string) : string {
-      
-      var res: string;
 
-      if(type == '0'){
-        res = 'Installs';
-      } else if (type == '1'){
-        res = 'Open';
-      } else if (type == '2'){
-        res = 'Login';
-      } else if (type == '3'){
-        res = 'Register';
-      } else if (type == '4'){
-        res = 'Create character';
-      } else if (type == '5'){
-        res = 'Done payment';
-      } else {
-        res = 'Unknown';
-      }
-      return res;
-  }
   helpUpperCaseAfterCommas = function(str) {
     return str.replace(/,\s*([a-z])/g, function(d,e) { return ", "+e.toUpperCase() });
   }    
