@@ -10,7 +10,7 @@
         <li class="nav-item dropdown" dropdown (onToggle)="toggled($event)">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle>
                 <img src="assets/img/avatars/6.jpg" class="img-avatar">
-                <span class="hidden-md-down">{{fullname}}</span>
+                <span class="hidden-md-down">{{getFullName()}}</span>
             </a>
             <div class="dropdown-menu dropdown-menu-right" dropdownMenu aria-labelledby="simple-dropdown">
                 <a class="dropdown-item" style="cursor: pointer;"><i class="icon-lock"></i> Change password</a>
@@ -27,12 +27,8 @@
             <ul class="nav">
                 <li class="nav-title"> Your app </li>
                 <div class="col-md-12">
-                    <div class="avatar">
-                        <img src="/assets/img/ico_app_default.png" style="height: 24px;">
-                    </div>
-                    <p class="text-muted">{{appInfo.bundle_id}}</p>
+                    <p >{{appInfo.bundle_id}}</p>
                 </div>
-                <li class="divider"></li>
                 <li class="nav-title"> Dashboard </li>
                 <li class="nav-item">
                     <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/overview']">

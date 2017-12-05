@@ -22,25 +22,23 @@ export class AppsComponent implements OnInit {
 		private connect: ConnectService) { }
 
 	ngOnInit() {
-		if (this.config.isExpired()) {
-			this.router.navigate([this.config.LINK_TO_LOGIN]);
-		} else {
-			this.reset();
-			this.getAppByUser();
-		}
+		this.refresh();
 	}
 
 	toggle() {
 		this.isHidden = !this.isHidden;
 	}
 
-	cancel() {
+	refresh() {
 		if (this.config.isExpired()) {
 			this.router.navigate([this.config.LINK_TO_LOGIN]);
 		} else {
 			this.reset();
 			this.getAppByUser();
 		}
+	}
+	cancel() {
+		this.refresh();
 	}
 	reset() {
 		this.isHidden = true;
@@ -54,7 +52,7 @@ export class AppsComponent implements OnInit {
 	}
 	save() {
 		this.connect.request('post', this.config.api_app_add, this.onerow,
-			data => { if (data.success == 1) { this.getAppByUser(); this.reset(); } })
+			data => { if (data.success == 1) { this.refresh();}})
 	}
 	getAppByUser() {
 		var params = {}; Object.assign(params, this.paging);
@@ -63,7 +61,7 @@ export class AppsComponent implements OnInit {
 				this.apps = Array.isArray(data.data) ? data.data : [];
 			});
 	}
-	onRowClick(app: any) {
+	onItemClick(app: any) {
 		this.config.setAppInfo(app);
 		this.router.navigate([this.config.LINK_TO_APPS_OVERVIEW]);
 	}

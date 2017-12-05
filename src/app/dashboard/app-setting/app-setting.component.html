@@ -25,11 +25,11 @@
                         </form>
                     </div>
                     <div class="col-md-12" style="margin-top: 2%">
-                        <label>BundleId/Package name <i class="icon-info"></i></label>
-                        <p class="small text-muted"> <a href="">Learn more about BundleId/Package name</a>
+                        <label>BundleId/Package name <i class="icon-info"></i></label>                        
                         <form class="form-inline">
-                            <input class="form-control mb-2 mr-sm-2 mb-sm-0 key-class" type="text" value="{{appInfo.bundle_id}}">
-                            <button class="btn btn-success mb-2 mr-sm-2 mb-sm-0" type="submit">
+                            <input class="form-control mb-2 mr-sm-2 mb-sm-0 key-class" type="text"  name ="bundle_id"
+                            [(ngModel)] = "appInfo.bundle_id">
+                            <button class="btn btn-success mb-2 mr-sm-2 mb-sm-0" type="submit" (click)=(update())>
                             <i class="icon-check"></i> Update
                             </button>
                         </form>
@@ -38,7 +38,7 @@
                         <label>Name</label>
                         <form class="form-inline">
                             <input class="form-control mb-2 mr-sm-2 mb-sm-0 key-class" type="text" value="{{appInfo.name}}">
-                            <button class="btn btn-success mb-2 mr-sm-2 mb-sm-0" type="submit">
+                            <button class="btn btn-success mb-2 mr-sm-2 mb-sm-0" type="submit" (click)=(update())>
                             <i class="icon-check"></i> Update
                             </button>
                         </form>
@@ -47,7 +47,7 @@
                         <label>Description</label>
                         <form class="form-inline">
                             <input class="form-control mb-2 mr-sm-2 mb-sm-0 key-class" type="text" value="{{appInfo.desc}}">
-                            <button class="btn btn-success mb-2 mr-sm-2 mb-sm-0" type="submit">
+                            <button class="btn btn-success mb-2 mr-sm-2 mb-sm-0" type="submit" (click)=(update())>
                             <i class="icon-check"></i> Update
                             </button>
                         </form>

@@ -8,37 +8,40 @@ import { ConfigService } from '../service.config';
 })
 export class FullLayoutComponent implements OnInit {
 
-  router: any;
-  config: any;
-  fullname : string;
   appInfo: any;
+  disabled: boolean = false;
+  status: { isopen: boolean } = { isopen: false };
 
-  constructor(_router: Router, _config: ConfigService) { 
-    this.router = _router;
-    this.config = _config;    
+  constructor(private router: Router, private config: ConfigService) {
+    this.appInfo = {};
   }
 
   ngOnInit(): void {
-    this.fullname = this.config.getFullName();
-    console.log('Full');
-    this.appInfo = this.config.getAppInfo();
-  }  
- 
-
-  public disabled:boolean = false;
-  public status:{isopen:boolean} = {isopen: false};  
-
-  public toggled(open:boolean):void {
-    
+    if (this.config.isExpired()) {
+      this.router.navigate([this.config.LINK_TO_LOGIN]);
+    }
+    else {
+      this.appInfo = this.config.getAppInfo();
+    }
   }
 
-  public toggleDropdown($event:MouseEvent):void {
+  getFullName(): string {
+    return this.config.getFullName();
+  }
+
+
+
+  toggled(open: boolean): void {
+
+  }
+
+  toggleDropdown($event: MouseEvent): void {
     $event.preventDefault();
     $event.stopPropagation();
     this.status.isopen = !this.status.isopen;
   }
-  logout(){
+  logout() {
     this.config.logout();
-    this.router.navigate([this.config.LINK_TO_LOGIN]); 
+    this.router.navigate([this.config.LINK_TO_LOGIN]);
   }
 }

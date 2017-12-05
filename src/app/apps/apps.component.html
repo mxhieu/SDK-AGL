@@ -54,11 +54,11 @@
                             <label class="form-control-label">
                                 Package name/ Bundle Id</label>
                             <br/>
-                            <input class="form-control" name="storeurl" placeholder="Package Name/ Bundle Id ..." type="text" [(ngModel)]="onerow.bundle_id">
+                            <input class="form-control" name="bundle_id" placeholder="Package Name/ Bundle Id ..." type="text" [(ngModel)]="onerow.bundle_id">
                         </div>
                         <div class="form-group col-md-6 rx-form-group">
                             <label class="form-control-label">Store Url</label>
-                            <input class="form-control" name="storeurl" placeholder="Store Url ..." type="text" [(ngModel)]="onerow.storeUrl">
+                            <input class="form-control" name="storeUrl" placeholder="Store Url ..." type="text" [(ngModel)]="onerow.storeUrl">
                         </div>
                     </form>
                 </div>
@@ -79,7 +79,7 @@
         <thead class="thead-default">
             <tr>
                 <th class="text-center rx-table-ico-head" style="vertical-align:middle;"><i class="icon-game-controller"></i></th>
-                <th class="rx-table-ico-head" style="vertical-align:middle;">App Name</th>
+                <th class="text-center rx-table-ico-head" style="vertical-align:middle;">App Name</th>
                 <th class="text-center rx-table-ico-head" style="vertical-align:middle;">App Id</th>
                 <th class="text-center rx-table-ico-head" style="vertical-align:middle;">Bundle Id
                     <br/>Package Name</th>
@@ -90,12 +90,12 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let app of apps" style="cursor: pointer;" (click)=(onRowClick(app))>
+            <tr *ngFor="let app of apps" style="cursor: pointer;" (click)=(onItemClick(app))>
                 <td class="text-center">
                     <div class="avatar"><img src="{{ (app.icons)? conf.api_image_directory + app.icons : '/assets/img/ico_app_default.png'  }}" class="img-avatar"></div>
                 </td>
-                <td>
-                    <strong>{{app.name}}</strong>
+                <td align="center">
+                    {{app.name}}
                 </td>
                 <td align="center">
                     {{app._id}}

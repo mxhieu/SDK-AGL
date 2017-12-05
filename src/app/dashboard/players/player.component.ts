@@ -12,10 +12,7 @@ import { ConnectService } from '../../service.connect';
 })
 export class PlayerComponent implements OnInit {
 
-  rout: any;
   data: any;
-  conf: any;
-  conn: any;
 
   onerow: any;
   paging: any;
@@ -24,10 +21,7 @@ export class PlayerComponent implements OnInit {
   state : any;
   search: any;
 
-  constructor(_rout: Router, _conf: ConfigService, _conn: ConnectService) { 
-    this.rout = _rout;
-    this.conf = _conf;
-    this.conn = _conn;
+  constructor(private rout: Router, private conf: ConfigService, private conn: ConnectService) { 
     
     this.state  = 'listall';
     this.onerow = {};
@@ -132,7 +126,7 @@ export class PlayerComponent implements OnInit {
 
   helpFetchData() {
     // Make search params 
-    var params = {'search_app_id':this.conf.getAppId()};
+    var params = {'search_app_id':this.conf.getAppInfo()._id};
     Object.assign(params, this.paging);
     if (this.search.term.length > 0) { params['search_' + this.search.field] = this.search.term; }
 

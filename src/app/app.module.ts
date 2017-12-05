@@ -39,9 +39,6 @@ import { PrivacyComponent } from './privacy/privacy.component';
 import { HelpComponent } from './help/help.component';
 import { ResourceComponent } from './resource/resource.component';
 
-// Cookie
-import { CookieService } from 'angular2-cookie/services/cookies.service';
-
 
 @NgModule({
   imports: [    
@@ -52,7 +49,7 @@ import { CookieService } from 'angular2-cookie/services/cookies.service';
     TabsModule.forRoot(),
     ChartsModule,
     HttpModule,
-    FlashMessagesModule    
+    FlashMessagesModule
   ],
   declarations: [
     AppComponent,    
@@ -79,7 +76,6 @@ import { CookieService } from 'angular2-cookie/services/cookies.service';
   providers: [
     ConnectService,
     ConfigService,
-    CookieService,
     PrivateService,
     {    
       provide: LocationStrategy,

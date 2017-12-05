@@ -1,12 +1,11 @@
-import { Component, OnInit , Input } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ConfigService } from '../../service.config';
 import { ConnectService } from '../../service.connect';
 import { Router } from '@angular/router';
 
 @Component({
 	selector: 'app-overview',
-	templateUrl: './overview.component.html',
-	styleUrls: ['./overview.component.scss']
+	templateUrl: './overview.component.html'
 })
 export class OverviewComponent implements OnInit {
 
@@ -73,16 +72,18 @@ export class OverviewComponent implements OnInit {
 
 	public polarAreaChartType: string = 'polarArea';
 
-	data : any;
-	statistics : any;
-	trends :any[];
-
-	@Input('id') appId: string;
+	data: any;
+	trends: any[];
+	statistics: any;
 
 	constructor(
 		private router: Router,
 		private config: ConfigService,
-		private connect: ConnectService) { }
+		private connect: ConnectService) { 
+		this.data = {};
+		this.trends = [];
+		this.statistics = {};
+	}
 
 	ngOnInit() {
 		if (this.config.isExpired()) {
@@ -93,20 +94,20 @@ export class OverviewComponent implements OnInit {
 		}
 	}
 
-	reset(){
+	reset() {
 		this.data = {};
 		this.statistics = {
-			'touch_points':'0', 
-			'total_installs':'0', 
-			'conversion_rate':'0', 
-			'total_revenue':'0', 
-			'returning_visitors':'0'
+			'touch_points': '0',
+			'total_installs': '0',
+			'conversion_rate': '0',
+			'total_revenue': '0',
+			'returning_visitors': '0'
 		};
 	}
 
-	getData(){
-		
-		var params = {'search_app_id':this.config.getAppInfo()._id};
+	getData() {
+
+		var params = { 'search_app_id': this.config.getAppInfo()._id };
 
 		this.connect.request('get', this.config.API_APP_OVERVIEW, params,
 			data => {
@@ -120,19 +121,19 @@ export class OverviewComponent implements OnInit {
 					this.data.daily_active.create_character,
 					0
 				];
-				this.trends =  this.data.user_acquisition_trend;
+				this.trends = this.data.user_acquisition_trend;
 				this.getTrends();
-		});
+			});
 	}
 
-	getTrends(){
+	getTrends() {
 		this.barChartLabels = [];
 		this.barChartData[0].data = [];
 		this.barChartData[1].data = [];
 		for (var i = 0; i < this.trends.length; i++) {
-		   	this.barChartLabels.push(this.trends[i].date);
-		   	this.barChartData[0].data.push(this.trends[i].impressions);
-		   	this.barChartData[1].data.push(this.trends[i].clicks);
+			this.barChartLabels.push(this.trends[i].date);
+			this.barChartData[0].data.push(this.trends[i].impressions);
+			this.barChartData[1].data.push(this.trends[i].clicks);
 		}
 	}
 	// events

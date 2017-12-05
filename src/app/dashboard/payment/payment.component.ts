@@ -5,8 +5,7 @@ import { Router } from '@angular/router';
 
 @Component({
 	selector: 'app-payment',
-	templateUrl: './payment.component.html',
-	styleUrls: ['./payment.component.scss']
+	templateUrl: './payment.component.html'
 })
 export class PaymentComponent implements OnInit {
 
@@ -25,7 +24,7 @@ export class PaymentComponent implements OnInit {
 	}
 
 	getData() {
-		var params = { 'search_app_id': ''};
+		var params = { 'search_app_id': this.config.getAppInfo()._id};
 		this.connect.request('get', this.config.API_PAYMENT_GET_ITEMS, params,
 			data => {
 				this.items = Array.isArray(data.data) ? data.data : [];

@@ -7,17 +7,15 @@ import { ConfigService } from './service.config';
 export class ConnectService {
 
   http: any;
-  flash: any;
-  config: any;
 
-  constructor(_http: Http, _flash: FlashMessagesService, _config: ConfigService) {
+  constructor(_http: Http,
+    private flash: FlashMessagesService,
+    private config: ConfigService) {
     this.http = _http;
-    this.flash = _flash;
-    this.config = _config;
   }
 
   request(method, api, data, callback) {
-    this.beforeRequest();
+
 
     // Default parameters    
     api = api || '';
@@ -33,12 +31,12 @@ export class ConnectService {
     if (tempMethod == 'get') {
       let params = this.prepareGet(data);
       returnData = this.http.get(api + '?' + params).map(this.requestMap)
-        .subscribe(data => { callback(this.requestSuccess(data, false)); }, err => console.log(err));
+        .subscribe(data => { callback(this.requestSuccess(data, false)); }, error => this.requestError(error));
     }
     else if (tempMethod == 'post') {
       let params = this.preparePost(data);
       returnData = this.http.post(api, params).map(this.requestMap)
-        .subscribe(data => { callback(this.requestSuccess(data, true)); }, err => console.log(err));
+        .subscribe(data => { callback(this.requestSuccess(data, true)); }, error => this.requestError(error));
     }
     else if (tempMethod == 'delete') {
       let params = this.preparePost(data);
@@ -54,7 +52,6 @@ export class ConnectService {
     for (var perdata in data) {
       tempReturn += perdata + '=' + data[perdata] + '&';
     }
-
     return tempReturn;
   }
 
@@ -105,7 +102,4 @@ export class ConnectService {
     return console.log(err);
   }
 
-  beforeRequest() {
-
-  }
 }
