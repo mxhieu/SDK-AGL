@@ -23,7 +23,7 @@ import { ConfigService } from './service.config';
 import { ConnectService } from './service.connect';
 
 // Layouts
-import { FullLayoutComponent } from './layouts/full-layout.component';
+import { FullLayoutComponent } from './dashboard/full-layout.component';
 import { LoginComponent }  from './user/login.component';
 import { FooterComponent } from './shared/footer.component';
 import { p404Component } from './shared/404.component';
@@ -34,10 +34,11 @@ import { HeaderComponent } from './shared/header.component';
 import { WidgetsComponent } from './widgets/widgets.component';
 import { ContactComponent } from './contact/contact.component';
 import { BlogsComponent } from './blogs/blogs.component';
-import { DocumentsComponent } from './documents/documents.component';
+import { DocumentsComponent } from './document/documents.component';
 import { PrivacyComponent } from './privacy/privacy.component';
 import { HelpComponent } from './help/help.component';
 import { ResourceComponent } from './resource/resource.component';
+import { ForgotPasswordComponent } from './forgotpassword/forgotpassword.component';
 
 
 @NgModule({
@@ -71,7 +72,8 @@ import { ResourceComponent } from './resource/resource.component';
     DocumentsComponent,
     PrivacyComponent,
     HelpComponent,
-    ResourceComponent
+    ResourceComponent,
+    ForgotPasswordComponent
   ],
   providers: [
     ConnectService,

@@ -9,16 +9,18 @@
                     <label>Your App Id <i class="icon-info"></i></label>
                     <p class="small text-muted">Use the SDK Key to setup the CoreSDK
                         <form class="form-inline">
-                            <input class="form-control mb-2 mr-sm-2 mb-sm-0 key-class" type="text"
-                            disabled value="{{appInfo._id}}" readonly="readonly">
+                            <input class="form-control mb-2 mr-sm-2 mb-sm-0 key-class" type="text" name="id"
+                            disabled 
+                            [(ngModel)] = "appInfo._id" readonly="readonly">
                         </form>
                     </div>
                     <div class="col-md-12" style="margin-top: 2%">
                         <label>Your App Key <i class="icon-info"></i></label>
                         <p class="small text-muted"> <a href="">Learn more about App Key </a>
                         <form class="form-inline">
-                            <input class="form-control mb-2 mr-sm-2 mb-sm-0 key-class" type="text"
-                            disabled value="{{appInfo.key}}" readonly="readonly">
+                            <input class="form-control mb-2 mr-sm-2 mb-sm-0 key-class" type="text" name="key"
+                            disabled 
+                            [(ngModel)] = "appInfo.key" readonly="readonly">
                             <button class="btn btn-danger mb-2 mr-sm-2 mb-sm-0" type="submit">
                             <i class="icon-refresh"></i> Reset
                             </button>
@@ -37,7 +39,8 @@
                     <div class="col-md-12" style="margin-top: 2%">
                         <label>Name</label>
                         <form class="form-inline">
-                            <input class="form-control mb-2 mr-sm-2 mb-sm-0 key-class" type="text" value="{{appInfo.name}}">
+                            <input class="form-control mb-2 mr-sm-2 mb-sm-0 key-class" type="text" name="name"
+                            [(ngModel)] = "appInfo.name">
                             <button class="btn btn-success mb-2 mr-sm-2 mb-sm-0" type="submit" (click)=(update())>
                             <i class="icon-check"></i> Update
                             </button>
@@ -46,7 +49,8 @@
                     <div class="col-md-12" style="margin-top: 2%">
                         <label>Description</label>
                         <form class="form-inline">
-                            <input class="form-control mb-2 mr-sm-2 mb-sm-0 key-class" type="text" value="{{appInfo.desc}}">
+                            <input class="form-control mb-2 mr-sm-2 mb-sm-0 key-class" type="text"  name="desc"
+                            [(ngModel)] = "appInfo.desc">
                             <button class="btn btn-success mb-2 mr-sm-2 mb-sm-0" type="submit" (click)=(update())>
                             <i class="icon-check"></i> Update
                             </button>

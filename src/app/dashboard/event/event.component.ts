@@ -104,7 +104,7 @@ export class EventComponent implements OnInit {
   }
 
   editSubmit() {
-    this.conn.request('post', this.conf.api_app_edit, this.onerow, 
+    this.conn.request('post', this.conf.API_APP_EDIT, this.onerow, 
     data=> { if (data.success == 1) { this.helpFetchData(); this.reset(); } })
   }
 

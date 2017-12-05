@@ -4,25 +4,26 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  templateUrl: './header.component.html'
 })
 export class HeaderComponent implements OnInit {
 
   constructor(
-  				private config: ConfigService, 
-  				private router: Router) { }
+    private config: ConfigService,
+    private router: Router) { }
 
   ngOnInit() {
 
   }
 
-  getFullName():string{
-	return this.config.getFullName();
+  getFullName(): string {
+    return this.config.getFullName();
   }
-
-  logout(){
+  forgotPassword() {
+    this.router.navigate([this.config.LINK_TO_FORGOT_PASSWORD]);
+  }
+  logout() {
     this.config.logout();
-    this.router.navigate([this.config.LINK_TO_LOGIN]); 
+    this.router.navigate([this.config.LINK_TO_LOGIN]);
   }
 }

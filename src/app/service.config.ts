@@ -18,6 +18,7 @@ export class ConfigService {
   api_app_add = this.api_url + 'app/index';
   
   API_APP_EDIT = this.api_url + 'app/edit';
+  API_APP_DETAIL = this.api_url + 'app/details';
 
   api_app_restore = this.api_url + 'app/restore';
   api_app_get_recycle = this.api_url + 'app/recycle';
@@ -48,6 +49,7 @@ export class ConfigService {
   LINK_TO_APPS = '/apps';
   LINK_TO_LOGIN = '/login';
   LINK_TO_APPS_OVERVIEW = '/apps/admin';
+  LINK_TO_FORGOT_PASSWORD = '/forgot-password';
 
   // User privacy
   USER_TOKEN = 'ftoken';

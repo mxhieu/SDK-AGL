@@ -34,7 +34,9 @@ export class FullLayoutComponent implements OnInit {
   toggled(open: boolean): void {
 
   }
-
+  forgotPassword() {
+    this.router.navigate([this.config.LINK_TO_FORGOT_PASSWORD]);
+  }
   toggleDropdown($event: MouseEvent): void {
     $event.preventDefault();
     $event.stopPropagation();

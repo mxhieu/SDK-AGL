@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { FullLayoutComponent } from './layouts/full-layout.component';
+import { FullLayoutComponent } from './dashboard/full-layout.component';
 import { LoginComponent } from './user/login.component';
 import { RegisterComponent } from './user/register.component';
 import { p404Component } from './shared/404.component';
@@ -9,10 +9,11 @@ import { AppsComponent } from './apps/apps.component';
 import { WidgetsComponent } from './widgets/widgets.component';
 import { ContactComponent } from './contact/contact.component';
 import { BlogsComponent } from './blogs/blogs.component';
-import { DocumentsComponent } from './documents/documents.component';
+import { DocumentsComponent } from './document/documents.component';
 import { PrivacyComponent } from './privacy/privacy.component';
 import { HelpComponent } from './help/help.component';
 import { ResourceComponent } from './resource/resource.component';
+import { ForgotPasswordComponent } from './forgotpassword/forgotpassword.component';
 
 export const routes: Routes = [
   {
@@ -76,6 +77,10 @@ export const routes: Routes = [
   {
     path: 'resources',
     component: ResourceComponent
+  },
+  {
+    path: 'forgot-password',
+    component: ForgotPasswordComponent
   },
   {
     path: '',
