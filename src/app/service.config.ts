@@ -14,11 +14,13 @@ export class ConfigService {
   
   // Application
   api_app_get = this.api_url + 'app';
-  api_app_del = this.api_url + 'app/delete';
+  
   api_app_add = this.api_url + 'app/index';
   
   API_APP_EDIT = this.api_url + 'app/edit';
   API_APP_DETAIL = this.api_url + 'app/details';
+  API_APP_KEY_RESET = this.api_url + 'app/resetkey';
+  API_APP_DELETE = this.api_url + 'app/delete';
 
   api_app_restore = this.api_url + 'app/restore';
   api_app_get_recycle = this.api_url + 'app/recycle';

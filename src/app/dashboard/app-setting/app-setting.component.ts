@@ -10,8 +10,8 @@ import { Router } from '@angular/router';
 })
 export class AppSettingComponent implements OnInit {
 
-	appInfo: {};
-	appId : string;
+	appInfo: any;
+	appId: string;
 
 	constructor(private router: Router,
 		private config: ConfigService,
@@ -19,7 +19,10 @@ export class AppSettingComponent implements OnInit {
 
 	ngOnInit() {
 		this.appId = this.config.getAppInfo()._id;
-		this.refresh();
+		if (this.appId)
+			this.refresh();
+		else
+			this.router.navigate([this.config.LINK_TO_APPS]);
 	}
 
 	update() {
@@ -28,14 +31,37 @@ export class AppSettingComponent implements OnInit {
 				this.getAppData();
 			});
 	}
-
+	reset() {
+		if (!this.appId)
+			this.router.navigate([this.config.LINK_TO_APPS]);
+		else {
+			var params = { 'id': this.appId };
+			this.connect.request('get', this.config.API_APP_KEY_RESET, params,
+				data => {
+					this.getAppData();
+				});
+		}
+	}
 	refresh() {
 		if (this.config.isExpired())
 			this.router.navigate([this.config.LINK_TO_LOGIN]);
-		else
+		else {
 			this.appInfo = this.config.getAppInfo();
+		}
 	}
+	delete() {
+		var params = { 'id': this.appId };
+		this.connect.request('get', this.config.API_APP_DELETE, params,
+			data => {
+				this.router.navigate([this.config.LINK_TO_APPS]);
 
+			});
+	}
+	onStatusChange() {
+		this.appInfo.is_active = (this.appInfo.is_active == 1 ? 0 : 1);
+		this.update();
+	}
+	
 	getAppData() {
 		var params = { 'id': this.appId };
 		this.connect.request('get', this.config.API_APP_DETAIL, params,
@@ -43,5 +69,9 @@ export class AppSettingComponent implements OnInit {
 				this.config.setAppInfo(data);
 				this.appInfo = data.data;
 			});
+	}
+	saveSetting() {
+		console.log(this.appInfo);
+		this.update();
 	}
 }

@@ -16,7 +16,6 @@ export class ConnectService {
 
   request(method, api, data, callback) {
 
-
     // Default parameters    
     api = api || '';
     method = method || 'get';
@@ -59,10 +58,14 @@ export class ConnectService {
     let tempReturn = new URLSearchParams();
     data['authorization'] = this.config.getToken();
     for (var perdata in data) {
+      if (typeof (data[perdata]) == 'object') {
+        data[perdata] = JSON.stringify(data[perdata]);
+      }
       tempReturn.append(perdata, data[perdata]);
     }
     return tempReturn;
   }
+
 
   requestMap(res) {
     return res.text();

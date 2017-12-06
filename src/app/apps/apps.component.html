@@ -83,7 +83,6 @@
                 <th class="text-center rx-table-ico-head" style="vertical-align:middle;">App Id</th>
                 <th class="text-center rx-table-ico-head" style="vertical-align:middle;">Bundle Id
                     <br/>Package Name</th>
-                <th class="text-center rx-table-ico-head" style="vertical-align:middle;">App Key</th>
                 <th class="text-center rx-table-ico-head" style="vertical-align:middle;">Platform</th>
                 <th class="text-center rx-table-ico-head" style="vertical-align:middle;">Created</th>
                 <th class="text-center rx-table-ico-head" style="vertical-align:middle;">Status</th>
@@ -102,9 +101,6 @@
                 </td>
                 <td align="center">
                     {{app.bundle_id}}
-                </td>
-                <td align="center">
-                    {{app.key}}
                 </td>
                 <td align="center"><i [hidden]="app.platform != 'android'" class="fa fa-android fa-lg m-t-2 rx-android"></i>
                     <i [hidden]="app.platform == 'android'" class="fa fa-apple fa-lg m-t-2 rx-apple"></i> {{app.platform}}
