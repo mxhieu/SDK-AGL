@@ -4,9 +4,7 @@ import { Http, URLSearchParams } from '@angular/http';
 import 'rxjs/Rx';
 
 // In app component
-import { ConfigService } from '../service.config';
-import { ConnectService } from '../service.connect';
-
+import { ConfigService } from '../service/service.config';
 import { Service } from '../service/service';
 
 @Component({
@@ -28,9 +26,9 @@ export class LoginComponent {
   }
 
   clicked() {
-    let params = new URLSearchParams();
-    params.append('username', this.model.username);
-    params.append('password', this.model.password);
-    this.service.login(params);
+    this.service.login({
+      'username': this.model.username,
+      'password': this.model.password
+    });
   }
 }

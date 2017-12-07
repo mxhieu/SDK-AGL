@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ConfigService } from '../../service.config';
+import { ConfigService } from '../../service/service.config';
 import { Service } from '../../service/service';
-import { URLSearchParams } from '@angular/http';
 
 @Component({
 	selector: 'app-payment',
@@ -24,12 +23,11 @@ export class PaymentComponent implements OnInit {
 	}
 
 	getData() {
-		let params = new URLSearchParams();
-		params.append('search_app_id', this.service.getAppId());
-		this.service.get(this.config.API_PAYMENT_GET_ITEMS, params,
-			data => {
-				this.items = Array.isArray(data) ? data : [];
-			});
+		this.service.get(this.config.API_PAYMENT_GET_ITEMS, {
+			'search_app_id': this.service.getAppId()
+		}, data => {
+			this.items = Array.isArray(data) ? data : [];
+		});
 	}
 
 	refresh() {

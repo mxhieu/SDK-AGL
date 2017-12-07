@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ConfigService } from '../service.config';
-import { ConnectService } from '../service.connect';
-import { Router } from '@angular/router';
+import { Service } from '../service/service';
 
 @Component({
 	selector: 'app-forgotpassword',
@@ -9,17 +7,15 @@ import { Router } from '@angular/router';
 })
 export class ForgotPasswordComponent implements OnInit {
 	
-	constructor(private router: Router,
-		private config: ConfigService,
-		private connect: ConnectService) { }
+	constructor(private service: Service) { }
 
 	ngOnInit() {
 
 	}
 	clicked() {
-		this.router.navigate([this.config.LINK_TO_LOGIN]);
+		this.login();
 	}
 	login(){
-		this.router.navigate([this.config.LINK_TO_LOGIN]);	
+		this.service.moveToLogin();
 	}
 }

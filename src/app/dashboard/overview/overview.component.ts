@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ConfigService } from '../../service.config';
+import { ConfigService } from '../../service/service.config';
 import { Service } from '../../service/service';
-import { URLSearchParams } from "@angular/http";
 
 @Component({
 	selector: 'app-overview',
@@ -103,21 +102,23 @@ export class OverviewComponent implements OnInit {
 	}
 
 	getData() {
-		let params = new URLSearchParams();
-		params.append('search_app_id', this.service.getAppId());
-		this.service.get(this.config.API_APP_OVERVIEW, params, data => {
-			this.data = data;
-			this.statistics = this.data.statistics;
-			this.doughnutChartData = [
-				this.data.daily_active.installs,
-				this.data.daily_active.open,
-				this.data.daily_active.login,
-				this.data.daily_active.register,
-				this.data.daily_active.create_character, 0
-			];
-			this.trends = this.data.user_acquisition_trend;
-			this.getTrends();
-		});
+		this.service.get(this.config.API_APP_OVERVIEW,
+			{
+				'search_app_id': this.service.getAppId()
+			},
+			data => {
+				this.data = data;
+				this.statistics = this.data.statistics;
+				this.doughnutChartData = [
+					this.data.daily_active.installs,
+					this.data.daily_active.open,
+					this.data.daily_active.login,
+					this.data.daily_active.register,
+					this.data.daily_active.create_character, 0
+				];
+				this.trends = this.data.user_acquisition_trend;
+				this.getTrends();
+			});
 	}
 
 	getTrends() {

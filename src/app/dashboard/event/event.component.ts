@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
 import 'rxjs/Rx';
 import { Service } from '../../service/service';
-import { ConfigService } from '../../service.config';
-
+import { ConfigService } from '../../service/service.config';
 @Component({
   templateUrl: 'event.component.html'
 })
@@ -111,23 +109,15 @@ export class EventComponent implements OnInit {
   }
 
   restore(_onerow) {
-    let params = new URLSearchParams();
-    params.append('_id', _onerow._id);
-    this.service.get(this.configService.api_app_restore, params,
+    this.service.get(this.configService.api_app_restore, { '_id': _onerow._id },
       data => { this.helpFetchData(); })
   }
 
   // Delete  
   delete(_onerow) {
-    let params = new URLSearchParams();
-    params.append('_id', _onerow._id);
-    this.service.get(this.configService.API_APP_DELETE, params,
-      data => { this.helpFetchData(); })
-  }
 
-  // Handle
-  onChangeImg($event, imageName) {
-    this.onerow[imageName] = $event;
+    this.service.get(this.configService.API_APP_DELETE, { '_id': _onerow._id },
+      data => { this.helpFetchData(); })
   }
 
   reset() {
@@ -136,16 +126,18 @@ export class EventComponent implements OnInit {
 
   helpFetchData() {
 
-    let params = new URLSearchParams();
-    params.append('search_app_id', this.service.getAppId());
-    params.append('pg_page', this.paging.pg_page);
-    params.append('pg_size', this.paging.pg_size);
-
+    var key: string;
     if (this.search.term.length > 0) {
-      params.append('search_' + this.search.field, this.search.term);
+      key = 'search_' + this.search.field;
     }
 
-    this.service.get(this.configService.api_tracking_get, params,
+    this.service.get(this.configService.api_tracking_get,
+      {
+        'search_app_id': this.service.getAppId(),
+        'pg_page': this.paging.pg_page,
+        'pg_size': this.paging.pg_size,
+        key: this.search.term
+      },
       data => {
         this.data = Array.isArray(data) ? data : [];
         this.isnext = (this.data.length >= this.paging.pg_size) ? true : false;

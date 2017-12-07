@@ -19,9 +19,7 @@ import { BreadcrumbsComponent } from './shared/breadcrumb.component';
 // Routing Module
 import { AppRoutingModule } from './app.routing';
 import { PrivateService } from './service/service.private';
-import { ConfigService } from './service.config';
-import { ConnectService } from './service.connect';
-
+import { ConfigService } from './service/service.config';
 import { Service } from './service/service';
 import { RoutingService } from './service/routing.service';
 
@@ -79,7 +77,6 @@ import { ForgotPasswordComponent } from './forgotpassword/forgotpassword.compone
         ForgotPasswordComponent
     ],
     providers: [
-        ConnectService,
         ConfigService,
         Service,
         RoutingService,

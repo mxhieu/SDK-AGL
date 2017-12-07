@@ -7,11 +7,6 @@ import { FormsModule } from '@angular/forms';
 import { AmChartsModule } from "@amcharts/amcharts3-angular";
 
 import { DashboardRoutingModule } from './dashboard-routing.module';
-import { DashboardComponent } from './dashboard.component';
-import { AppComponent } from './app.component';
-import { CampaignComponent } from './campaign.component';
-import { RxselectComponent } from './components/rxselect.component';
-import { RxuploadComponent } from './components/rxupload.component';
 import { EventComponent } from './event/event.component';
 import { PlayerComponent } from './players/player.component';
 import { AppSettingComponent } from './app-setting/app-setting.component';
@@ -29,7 +24,7 @@ import { RemoteConfigComponent } from './remote-config/remote-config.component';
     FormsModule,
     AmChartsModule
   ],
-  declarations: [ DashboardComponent,  AppComponent, CampaignComponent, RxselectComponent, RxuploadComponent,
+  declarations: [ 
    EventComponent, PlayerComponent, AppSettingComponent, SdkInformationComponent, OverviewComponent, PaymentComponent, RemoteConfigComponent ]
 })
 export class DashboardModule { }

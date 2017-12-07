@@ -1,8 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { DashboardComponent } from './dashboard.component';
-import { AppComponent } from './app.component';
-import { CampaignComponent } from './campaign.component';
 import { EventComponent } from './event/event.component';
 import { PlayerComponent } from './players/player.component';
 import { AppSettingComponent } from './app-setting/app-setting.component';
@@ -25,9 +22,6 @@ const routes: Routes = [
   }, {
     path: 'event',
     component: EventComponent
-  }, {
-    path: 'user',
-    component: DashboardComponent
   }, {
     path: 'player',
     component: PlayerComponent

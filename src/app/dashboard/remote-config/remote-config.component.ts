@@ -1,7 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ConfigService } from '../../service.config';
-import { ConnectService } from '../../service.connect';
-import { Router } from '@angular/router';
 import { Service } from '../../service/service';
 
 @Component({
@@ -9,35 +6,33 @@ import { Service } from '../../service/service';
 	templateUrl: './remote-config.component.html'
 })
 export class RemoteConfigComponent implements OnInit {
-	
+
 	msgs: any[];
 	isHidden: boolean;
 	onerow: any;
 	paging: any;
 
-	constructor(private router: Router,
-		private config: ConfigService,
-		private service: Service,
-		private connect: ConnectService) { }
+	constructor(
+		private service: Service) { }
 	ngOnInit() {
 		this.refresh();
 	}
 	refresh() {
 		if (this.service.isExpired()) {
-			this.router.navigate([this.config.LINK_TO_LOGIN]);
+			this.service.moveToLogin();
 		} else {
 			this.reset();
 			this.getData();
 		}
 	}
-	send(){
+	send() {
 		this.refresh();
 	}
-	cancel(){
+	cancel() {
 		this.refresh();
 	}
-	delete(){
-		
+	delete() {
+
 	}
 	reset() {
 		this.isHidden = true;
@@ -48,7 +43,7 @@ export class RemoteConfigComponent implements OnInit {
 			'target': '1000',
 			'app_id': '',
 			'is_active': 1,
-			'created_at':'0'
+			'created_at': '0'
 		};
 		this.msgs = [];
 		this.paging = { pg_page: 1, pg_size: 100 };
@@ -61,7 +56,7 @@ export class RemoteConfigComponent implements OnInit {
 			'target': '1000',
 			'app_id': '',
 			'is_active': 1,
-			'created_at':'0'
+			'created_at': '0'
 		});
 	}
 	toggle() {

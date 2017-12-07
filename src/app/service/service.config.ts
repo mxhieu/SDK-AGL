@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { PrivateService } from './service/service.private';
+import { PrivateService } from './service.private';
 import { Cookie } from 'ng2-cookies';
 
 

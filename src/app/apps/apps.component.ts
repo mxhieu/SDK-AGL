@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { URLSearchParams } from "@angular/http";
 import { Service } from '../service/service';
 
 @Component({
@@ -47,10 +46,10 @@ export class AppsComponent implements OnInit {
 		this.service.newApp(this.onerow, data => { this.refresh(); });
 	}
 	getApps() {
-		let params = new URLSearchParams();
-		params.append('pg_page', '1');
-		params.append('pg_size', '100');
-		this.service.getApps(params, data => {
+		this.service.getApps({
+			'pg_page' : 1,
+			'pg_size': 100
+		}, data => {
 			this.apps = Array.isArray(data) ? data : [];
 		});
 	}

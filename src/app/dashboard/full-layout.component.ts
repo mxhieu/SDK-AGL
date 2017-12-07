@@ -11,7 +11,6 @@ export class FullLayoutComponent implements OnInit {
   status: { isopen: boolean } = { isopen: false };
 
   fullname: string = '';
-  bundleId: string = '';
 
   constructor(private service: Service) {
 
@@ -20,7 +19,6 @@ export class FullLayoutComponent implements OnInit {
   ngOnInit(): void {
     if (!this.service.isExpired()) {
       this.fullname = this.service.getAuth().fullname;
-      this.bundleId = this.service.getAuth().bundle_id;
     }
   }
 

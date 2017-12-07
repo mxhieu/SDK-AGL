@@ -3,7 +3,7 @@ import { FlashMessagesService } from 'angular2-flash-messages';
 import { Http, Response, RequestOptions, Headers, URLSearchParams, Request, RequestOptionsArgs, RequestMethod } from "@angular/http";
 import { Cookie } from 'ng2-cookies';
 import { RoutingService } from './routing.service';
-import { ConfigService } from '../service.config';
+import { ConfigService } from './service.config';
 
 @Injectable()
 export class Service {
@@ -25,12 +25,16 @@ export class Service {
 		return headers;
 	}
 
-	get(url: string, params: URLSearchParams, callback) {
+	get(url: string, dParams, callback) {
 
-		if (!params)
-			params = new URLSearchParams();
+		let params = new URLSearchParams();
 		params.append('authorization', this.getToken());
 
+		if (dParams) {
+			for (var key in dParams) {
+				params.append(key, dParams[key]);
+			}
+		}
 		var options: RequestOptionsArgs = {
 			search: params,
 			headers: this.makeHeaders()
@@ -54,12 +58,17 @@ export class Service {
 				this.failure(err);
 			});
 	}
-	post(url: string, body: any, params: URLSearchParams, callback) {
 
-		if (!params)
-			params = new URLSearchParams();
+	post(url: string, body: any, dParams, callback) {
+
+		let params = new URLSearchParams();
 		params.append('authorization', this.getToken());
 
+		if (dParams) {
+			for (var key in dParams) {
+				params.append(key, dParams[key]);
+			}
+		}
 		var options: RequestOptionsArgs = {
 			search: params,
 			headers: this.makeHeaders()
@@ -122,7 +131,7 @@ export class Service {
 		return true;
 	}
 
-	login(params: URLSearchParams) {
+	login(params) {
 		this.post(this.config.API_LOGIN, null, params, data => {
 			this.setToken(data.authorization);
 			this.setAuth(JSON.stringify(data));
@@ -136,13 +145,13 @@ export class Service {
 				callback(data);
 			});
 	}
-	getApps(params: URLSearchParams, callback) {
+	getApps(params, callback) {
 		this.get(this.config.API_APP_GET, params,
 			data => {
 				callback(data);
 			});
 	}
-	
+
 	/* Router */
 	moveToLogin() {
 		this.router.moveToLogin();
