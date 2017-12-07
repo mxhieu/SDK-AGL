@@ -10,7 +10,7 @@
         <li class="nav-item dropdown" dropdown (onToggle)="toggled($event)">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle>
                 <img src="assets/img/avatars/6.jpg" class="img-avatar">
-                <span class="hidden-md-down">{{getFullName()}}</span>
+                <span class="hidden-md-down">{{fullname}}</span>
             </a>
             <div class="dropdown-menu dropdown-menu-right" dropdownMenu aria-labelledby="simple-dropdown">
                 
@@ -32,7 +32,7 @@
             <ul class="nav">
                 <li class="nav-title"> Your app </li>
                 <div class="col-md-12">
-                    <p >{{appInfo.bundle_id}}</p>
+                    <p >{{bundleId}}</p>
                 </div>
                 <li class="nav-title"> Dashboard </li>
                 <li class="nav-item">
@@ -46,13 +46,13 @@
                 <li class="nav-item">
                     <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/event']">
                         <i class="icon-event"></i> 
-                        Events
+                        Event
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/player']">
                         <i class="icon-user"></i> 
-                        Users
+                        User
                     </a>
                 </li>
                 <li class="nav-item">
@@ -66,7 +66,7 @@
                 <li class="nav-item">
                     <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/setting']">
                         <i class="icon-settings"></i> 
-                        App settings
+                        Apps setting
                     </a>
                 </li>
                 <li class="nav-item">

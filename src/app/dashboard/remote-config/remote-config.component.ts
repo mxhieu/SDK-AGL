@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ConfigService } from '../../service.config';
 import { ConnectService } from '../../service.connect';
 import { Router } from '@angular/router';
+import { Service } from '../../service/service';
+
 @Component({
 	selector: 'app-remote-config',
-	templateUrl: './remote-config.component.html',
-	styleUrls: ['./remote-config.component.scss']
+	templateUrl: './remote-config.component.html'
 })
 export class RemoteConfigComponent implements OnInit {
 	
@@ -16,12 +17,13 @@ export class RemoteConfigComponent implements OnInit {
 
 	constructor(private router: Router,
 		private config: ConfigService,
+		private service: Service,
 		private connect: ConnectService) { }
 	ngOnInit() {
 		this.refresh();
 	}
 	refresh() {
-		if (this.config.isExpired()) {
+		if (this.service.isExpired()) {
 			this.router.navigate([this.config.LINK_TO_LOGIN]);
 		} else {
 			this.reset();

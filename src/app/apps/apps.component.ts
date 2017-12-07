@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ConfigService } from '../service.config';
-import { ConnectService } from '../service.connect';
-import { Router } from '@angular/router';
+import { URLSearchParams } from "@angular/http";
+import { Service } from '../service/service';
 
 @Component({
 	selector: 'app-apps',
-	templateUrl: './apps.component.html',
-	styleUrls: ['./apps.component.scss']
+	templateUrl: './apps.component.html'
 })
 export class AppsComponent implements OnInit {
 
@@ -14,12 +12,8 @@ export class AppsComponent implements OnInit {
 
 	apps: any[];
 	onerow: any;
-	paging: any;
 
-	constructor(
-		private router: Router,
-		private config: ConfigService,
-		private connect: ConnectService) { }
+	constructor(private service: Service) { }
 
 	ngOnInit() {
 		this.refresh();
@@ -30,11 +24,11 @@ export class AppsComponent implements OnInit {
 	}
 
 	refresh() {
-		if (this.config.isExpired()) {
-			this.router.navigate([this.config.LINK_TO_LOGIN]);
+		if (this.service.isExpired()) {
+			this.service.moveToLogin();
 		} else {
 			this.reset();
-			this.getAppByUser();
+			this.getApps();
 		}
 	}
 	cancel() {
@@ -48,21 +42,19 @@ export class AppsComponent implements OnInit {
 			'bundle_id': 'com.coresdk.sampleapp'
 		};
 		this.apps = [];
-		this.paging = { pg_page: 1, pg_size: 100 };
 	}
-	save() {
-		this.connect.request('post', this.config.api_app_add, this.onerow,
-			data => { if (data.success == 1) { this.refresh();}})
+	newApp() {
+		this.service.newApp(this.onerow, data => { this.refresh(); });
 	}
-	getAppByUser() {
-		var params = {}; Object.assign(params, this.paging);
-		this.connect.request('get', this.config.api_app_get, params,
-			data => {
-				this.apps = Array.isArray(data.data) ? data.data : [];
-			});
+	getApps() {
+		let params = new URLSearchParams();
+		params.append('pg_page', '1');
+		params.append('pg_size', '100');
+		this.service.getApps(params, data => {
+			this.apps = Array.isArray(data) ? data : [];
+		});
 	}
 	onItemClick(app: any) {
-		this.config.setAppInfo(app);
-		this.router.navigate([this.config.LINK_TO_APPS_OVERVIEW]);
+		this.service.moveToAppDetail(app._id);
 	}
 }

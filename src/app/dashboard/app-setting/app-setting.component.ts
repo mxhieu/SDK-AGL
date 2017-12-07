@@ -2,76 +2,75 @@ import { Component, OnInit } from '@angular/core';
 import { ConfigService } from '../../service.config';
 import { ConnectService } from '../../service.connect';
 import { Router } from '@angular/router';
+import { Http, Response, RequestOptions, Headers, URLSearchParams, Request, RequestOptionsArgs } from "@angular/http";
+import { Observable } from "rxjs";
+
+import { Service } from '../../service/service';
 
 @Component({
 	selector: 'app-app-setting',
 	templateUrl: './app-setting.component.html',
+	providers: [Service],
 	styleUrls: ['./app-setting.component.scss']
 })
 export class AppSettingComponent implements OnInit {
 
 	appInfo: any;
-	appId: string;
 
-	constructor(private router: Router,
-		private config: ConfigService,
-		private connect: ConnectService) { }
+	constructor(
+		private http: Http,
+		private api: Service,
+		private router: Router,
+		private config: ConfigService) {
+
+		this.appInfo = {
+			'settings': {}
+		};
+	}
 
 	ngOnInit() {
-		this.appId = this.config.getAppInfo()._id;
-		if (this.appId)
-			this.refresh();
-		else
-			this.router.navigate([this.config.LINK_TO_APPS]);
+		this.refresh();
 	}
 
-	update() {
-		this.connect.request('post', this.config.API_APP_EDIT, this.appInfo,
-			data => {
-				this.getAppData();
-			});
-	}
-	reset() {
-		if (!this.appId)
-			this.router.navigate([this.config.LINK_TO_APPS]);
+	refresh() {
+		if (this.api.isExpired())
+			this.router.navigate([this.config.LINK_TO_LOGIN]);
 		else {
-			var params = { 'id': this.appId };
-			this.connect.request('get', this.config.API_APP_KEY_RESET, params,
+			let params = new URLSearchParams();
+			params.append('id', this.config.getAppId());
+			this.api.get(this.config.API_APP_DETAIL, params,
 				data => {
-					this.getAppData();
+					this.appInfo = data;
 				});
 		}
 	}
-	refresh() {
-		if (this.config.isExpired())
-			this.router.navigate([this.config.LINK_TO_LOGIN]);
-		else {
-			this.appInfo = this.config.getAppInfo();
-		}
+	resetKey(){
+		let params = new URLSearchParams();
+		params.append('id', this.config.getAppId());
+		this.api.get(this.config.API_APP_KEY_RESET, params,
+			data => {
+				this.appInfo.key=  data;
+			});
+	}
+	update() {
+		let params = new URLSearchParams();
+		params.append('id', this.config.getAppId());
+		this.api.post(this.config.API_APP_EDIT, JSON.stringify(this.appInfo), params,
+			data => {
+				
+			});
 	}
 	delete() {
-		var params = { 'id': this.appId };
-		this.connect.request('get', this.config.API_APP_DELETE, params,
+		let params = new URLSearchParams();
+		params.append('id', this.config.getAppId());
+		this.api.get(this.config.API_APP_DELETE, params,
 			data => {
 				this.router.navigate([this.config.LINK_TO_APPS]);
-
 			});
 	}
 	onStatusChange() {
 		this.appInfo.is_active = (this.appInfo.is_active == 1 ? 0 : 1);
 		this.update();
 	}
-	
-	getAppData() {
-		var params = { 'id': this.appId };
-		this.connect.request('get', this.config.API_APP_DETAIL, params,
-			data => {
-				this.config.setAppInfo(data);
-				this.appInfo = data.data;
-			});
-	}
-	saveSetting() {
-		console.log(this.appInfo);
-		this.update();
-	}
+
 }

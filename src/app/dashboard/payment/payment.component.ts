@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfigService } from '../../service.config';
-import { ConnectService } from '../../service.connect';
-import { Router } from '@angular/router';
+import { Service } from '../../service/service';
+import { URLSearchParams } from '@angular/http';
 
 @Component({
 	selector: 'app-payment',
@@ -15,25 +15,26 @@ export class PaymentComponent implements OnInit {
 	paging: any;
 	isEdit: boolean;
 
-	constructor(private router: Router,
+	constructor(
 		private config: ConfigService,
-		private connect: ConnectService) { }
+		private service: Service) { }
 
 	ngOnInit() {
 		this.refresh();
 	}
 
 	getData() {
-		var params = { 'search_app_id': this.config.getAppInfo()._id};
-		this.connect.request('get', this.config.API_PAYMENT_GET_ITEMS, params,
+		let params = new URLSearchParams();
+		params.append('search_app_id', this.service.getAppId());
+		this.service.get(this.config.API_PAYMENT_GET_ITEMS, params,
 			data => {
-				this.items = Array.isArray(data.data) ? data.data : [];
+				this.items = Array.isArray(data) ? data : [];
 			});
 	}
 
 	refresh() {
-		if (this.config.isExpired()) {
-			this.router.navigate([this.config.LINK_TO_LOGIN]);
+		if (this.service.isExpired()) {
+			this.service.moveToLogin();
 		} else {
 			this.reset();
 			this.getData();
@@ -49,19 +50,19 @@ export class PaymentComponent implements OnInit {
 		this.isEdit = true;
 	}
 	update() {
-		this.connect.request('post', this.config.API_PAYMENT_EDIT, this.onerow,
+		this.service.post(this.config.API_PAYMENT_EDIT, this.onerow, null,
 			data => {
 				this.refresh();
 			});
 	}
 	save() {
-		this.connect.request('post', this.config.API_PAYMENT_ADD_IN_APPS, this.onerow,
+		this.service.post(this.config.API_PAYMENT_ADD_IN_APPS, this.onerow, null,
 			data => {
 				this.refresh();
 			});
 	}
 	delete() {
-		this.connect.request('get', this.config.API_PAYMENT_DELETE, this.onerow,
+		this.service.get(this.config.API_PAYMENT_DELETE, this.onerow,
 			data => {
 				this.refresh();
 			});
@@ -73,7 +74,7 @@ export class PaymentComponent implements OnInit {
 			'price': 1000,
 			'name': 'items' + new Date().getMilliseconds(),
 			'desc': 'New in-app items',
-			'app_id': '',
+			'app_id': this.service.getAppId(),
 			'is_active': 1
 		};
 		this.items = [];

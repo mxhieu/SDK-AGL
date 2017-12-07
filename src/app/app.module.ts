@@ -18,13 +18,16 @@ import { BreadcrumbsComponent } from './shared/breadcrumb.component';
 
 // Routing Module
 import { AppRoutingModule } from './app.routing';
-import { PrivateService } from './service.private';
+import { PrivateService } from './service/service.private';
 import { ConfigService } from './service.config';
 import { ConnectService } from './service.connect';
 
+import { Service } from './service/service';
+import { RoutingService } from './service/routing.service';
+
 // Layouts
 import { FullLayoutComponent } from './dashboard/full-layout.component';
-import { LoginComponent }  from './user/login.component';
+import { LoginComponent } from './user/login.component';
 import { FooterComponent } from './shared/footer.component';
 import { p404Component } from './shared/404.component';
 import { p500Component } from './shared/500.component';
@@ -42,48 +45,50 @@ import { ForgotPasswordComponent } from './forgotpassword/forgotpassword.compone
 
 
 @NgModule({
-  imports: [    
-    BrowserModule,
-    FormsModule,
-    AppRoutingModule,
-    DropdownModule.forRoot(),
-    TabsModule.forRoot(),
-    ChartsModule,
-    HttpModule,
-    FlashMessagesModule
-  ],
-  declarations: [
-    AppComponent,    
-    FullLayoutComponent,
-    NAV_DROPDOWN_DIRECTIVES,
-    BreadcrumbsComponent,
-    SIDEBAR_TOGGLE_DIRECTIVES,
-    AsideToggleDirective,
-    LoginComponent,
-    FooterComponent,
-    p404Component,
-    p500Component,
-    RegisterComponent,
-    AppsComponent,
-    HeaderComponent,
-    WidgetsComponent,
-    ContactComponent,
-    BlogsComponent,
-    DocumentsComponent,
-    PrivacyComponent,
-    HelpComponent,
-    ResourceComponent,
-    ForgotPasswordComponent
-  ],
-  providers: [
-    ConnectService,
-    ConfigService,
-    PrivateService,
-    {    
-      provide: LocationStrategy,
-      useClass: HashLocationStrategy
-    }
-  ],
-  bootstrap: [ AppComponent ]
+    imports: [
+        BrowserModule,
+        FormsModule,
+        AppRoutingModule,
+        DropdownModule.forRoot(),
+        TabsModule.forRoot(),
+        ChartsModule,
+        HttpModule,
+        FlashMessagesModule
+    ],
+    declarations: [
+        AppComponent,
+        FullLayoutComponent,
+        NAV_DROPDOWN_DIRECTIVES,
+        BreadcrumbsComponent,
+        SIDEBAR_TOGGLE_DIRECTIVES,
+        AsideToggleDirective,
+        LoginComponent,
+        FooterComponent,
+        p404Component,
+        p500Component,
+        RegisterComponent,
+        AppsComponent,
+        HeaderComponent,
+        WidgetsComponent,
+        ContactComponent,
+        BlogsComponent,
+        DocumentsComponent,
+        PrivacyComponent,
+        HelpComponent,
+        ResourceComponent,
+        ForgotPasswordComponent
+    ],
+    providers: [
+        ConnectService,
+        ConfigService,
+        Service,
+        RoutingService,
+        PrivateService,
+        {
+            provide: LocationStrategy,
+            useClass: HashLocationStrategy
+        }
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

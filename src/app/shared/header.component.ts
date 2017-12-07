@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ConfigService } from '../service.config';
-import { Router } from '@angular/router';
+import { Service } from '../service/service';
 
 @Component({
   selector: 'app-header',
@@ -8,22 +7,17 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(
-    private config: ConfigService,
-    private router: Router) { }
+  constructor(private serice: Service) { }
+
+  fullname: string = '';
 
   ngOnInit() {
-
-  }
-
-  getFullName(): string {
-    return this.config.getFullName();
+    this.fullname = this.serice.getAuth().fullname;
   }
   forgotPassword() {
-    this.router.navigate([this.config.LINK_TO_FORGOT_PASSWORD]);
+    this.serice.moveToForgotPassword();
   }
   logout() {
-    this.config.logout();
-    this.router.navigate([this.config.LINK_TO_LOGIN]);
+    this.serice.logout();
   }
 }

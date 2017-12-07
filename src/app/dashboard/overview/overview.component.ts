@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ConfigService } from '../../service.config';
-import { ConnectService } from '../../service.connect';
-import { Router } from '@angular/router';
+import { Service } from '../../service/service';
+import { URLSearchParams } from "@angular/http";
 
 @Component({
 	selector: 'app-overview',
@@ -76,18 +76,15 @@ export class OverviewComponent implements OnInit {
 	trends: any[];
 	statistics: any;
 
-	constructor(
-		private router: Router,
-		private config: ConfigService,
-		private connect: ConnectService) { 
+	constructor(private config: ConfigService, private service: Service) {
 		this.data = {};
 		this.trends = [];
 		this.statistics = {};
 	}
 
 	ngOnInit() {
-		if (this.config.isExpired()) {
-			this.router.navigate([this.config.LINK_TO_LOGIN]);
+		if (this.service.isExpired()) {
+			this.service.moveToLogin();
 		} else {
 			this.reset();
 			this.getData();
@@ -106,24 +103,21 @@ export class OverviewComponent implements OnInit {
 	}
 
 	getData() {
-
-		var params = { 'search_app_id': this.config.getAppInfo()._id };
-
-		this.connect.request('get', this.config.API_APP_OVERVIEW, params,
-			data => {
-				this.data = data.data;
-				this.statistics = this.data.statistics;
-				this.doughnutChartData = [
-					this.data.daily_active.installs,
-					this.data.daily_active.open,
-					this.data.daily_active.login,
-					this.data.daily_active.register,
-					this.data.daily_active.create_character,
-					0
-				];
-				this.trends = this.data.user_acquisition_trend;
-				this.getTrends();
-			});
+		let params = new URLSearchParams();
+		params.append('search_app_id', this.service.getAppId());
+		this.service.get(this.config.API_APP_OVERVIEW, params, data => {
+			this.data = data;
+			this.statistics = this.data.statistics;
+			this.doughnutChartData = [
+				this.data.daily_active.installs,
+				this.data.daily_active.open,
+				this.data.daily_active.login,
+				this.data.daily_active.register,
+				this.data.daily_active.create_character, 0
+			];
+			this.trends = this.data.user_acquisition_trend;
+			this.getTrends();
+		});
 	}
 
 	getTrends() {

@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Http, URLSearchParams } from '@angular/http';
+import { URLSearchParams } from '@angular/http';
 import 'rxjs/Rx';
-
-// In app component
+import { Service } from '../../service/service';
 import { ConfigService } from '../../service.config';
-import { ConnectService } from '../../service.connect';
 
 @Component({
   templateUrl: 'event.component.html'
@@ -20,7 +17,7 @@ export class EventComponent implements OnInit {
   state: any;
   search: any;
 
-  constructor(private rout: Router, private conf: ConfigService, private conn: ConnectService) {
+  constructor(private service: Service, private configService: ConfigService) {
 
     this.state = 'listall';
     this.onerow = {};
@@ -50,8 +47,10 @@ export class EventComponent implements OnInit {
   addSubmit() {
     if (this.onerow._id) { this.onerow.name = this.onerow.name + '_clone'; }
 
-    this.conn.request('post', this.conf.API_APP_DELETE, this.onerow,
-      data => { if (data.success == 1) { this.helpFetchData(); this.reset(); } })
+    this.service.post(this.configService.API_APP_DELETE, this.onerow, null, data => {
+      this.helpFetchData();
+      this.reset();
+    })
   }
 
   // Read 
@@ -104,18 +103,25 @@ export class EventComponent implements OnInit {
   }
 
   editSubmit() {
-    this.conn.request('post', this.conf.API_APP_EDIT, this.onerow,
-      data => { if (data.success == 1) { this.helpFetchData(); this.reset(); } })
+    this.service.post(this.configService.API_APP_EDIT, this.onerow, null,
+      data => {
+        this.helpFetchData();
+        this.reset();
+      });
   }
 
   restore(_onerow) {
-    this.conn.request('get', this.conf.api_app_restore, { _id: _onerow._id },
+    let params = new URLSearchParams();
+    params.append('_id', _onerow._id);
+    this.service.get(this.configService.api_app_restore, params,
       data => { this.helpFetchData(); })
   }
 
   // Delete  
   delete(_onerow) {
-    this.conn.request('get', this.conf.API_APP_DELETE, { _id: _onerow._id },
+    let params = new URLSearchParams();
+    params.append('_id', _onerow._id);
+    this.service.get(this.configService.API_APP_DELETE, params,
       data => { this.helpFetchData(); })
   }
 
@@ -129,14 +135,19 @@ export class EventComponent implements OnInit {
   }
 
   helpFetchData() {
-    // Make search params 
-    var params = { 'search_app_id': this.conf.getAppInfo()._id };
-    Object.assign(params, this.paging);
-    if (this.search.term.length > 0) { params['search_' + this.search.field] = this.search.term; }
 
-    this.conn.request('get', this.conf.api_tracking_get, params,
+    let params = new URLSearchParams();
+    params.append('search_app_id', this.service.getAppId());
+    params.append('pg_page', this.paging.pg_page);
+    params.append('pg_size', this.paging.pg_size);
+
+    if (this.search.term.length > 0) {
+      params.append('search_' + this.search.field, this.search.term);
+    }
+
+    this.service.get(this.configService.api_tracking_get, params,
       data => {
-        this.data = Array.isArray(data.data) ? data.data : [];
+        this.data = Array.isArray(data) ? data : [];
         this.isnext = (this.data.length >= this.paging.pg_size) ? true : false;
       });
   }
