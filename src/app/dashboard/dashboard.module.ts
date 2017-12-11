@@ -13,7 +13,7 @@ import { AppSettingComponent } from './app-setting/app-setting.component';
 import { SdkInformationComponent } from './sdk-information/sdk-information.component';
 import { OverviewComponent } from './overview/overview.component';
 import { PaymentComponent } from './payment/payment.component';
-import { RemoteConfigComponent } from './remote-config/remote-config.component';
+import { NotificationComponent } from './notification/notification.component';
 
 @NgModule({
   imports: [
@@ -25,6 +25,7 @@ import { RemoteConfigComponent } from './remote-config/remote-config.component';
     AmChartsModule
   ],
   declarations: [ 
-   EventComponent, PlayerComponent, AppSettingComponent, SdkInformationComponent, OverviewComponent, PaymentComponent, RemoteConfigComponent ]
+   EventComponent, PlayerComponent, AppSettingComponent, SdkInformationComponent, OverviewComponent, PaymentComponent, 
+   NotificationComponent ]
 })
 export class DashboardModule { }

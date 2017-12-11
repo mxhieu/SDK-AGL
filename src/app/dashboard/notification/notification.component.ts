@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Service } from '../../service/service';
 
 @Component({
-	selector: 'app-remote-config',
-	templateUrl: './remote-config.component.html'
+	selector: 'app-notification',
+	templateUrl: './notification.component.html'
 })
-export class RemoteConfigComponent implements OnInit {
+export class NotificationComponent implements OnInit {
 
 	msgs: any[];
 	isHidden: boolean;

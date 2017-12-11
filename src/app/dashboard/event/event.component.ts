@@ -3,7 +3,8 @@ import 'rxjs/Rx';
 import { Service } from '../../service/service';
 import { ConfigService } from '../../service/service.config';
 @Component({
-  templateUrl: 'event.component.html'
+  templateUrl: 'event.component.html',
+  styleUrls: ['event.component.scss']
 })
 export class EventComponent implements OnInit {
 

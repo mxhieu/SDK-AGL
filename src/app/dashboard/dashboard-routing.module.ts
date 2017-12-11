@@ -6,7 +6,7 @@ import { AppSettingComponent } from './app-setting/app-setting.component';
 import { SdkInformationComponent } from './sdk-information/sdk-information.component';
 import { OverviewComponent } from './overview/overview.component';
 import { PaymentComponent } from './payment/payment.component';
-import { RemoteConfigComponent } from './remote-config/remote-config.component';
+import { NotificationComponent } from './notification/notification.component';
 
 const routes: Routes = [
   {
@@ -32,8 +32,8 @@ const routes: Routes = [
     path: 'payment',
     component: PaymentComponent
   }, {
-    path: 'remote',
-    component: RemoteConfigComponent
+    path: 'notification',
+    component: NotificationComponent
   }
 ];
 
