@@ -12,31 +12,35 @@
                         <form action="" class="form-horizontal col-md-10 col-sx-12 row" method="post">
                             <div class="form-group col-md-6 rx-form-group">
                                 <label class="form-control-label">Item Id</label>
-                                <input class="form-control" name="id" placeholder="Item Id ..." type="text"
-                                [disabled]="isEdit"
-                                [(ngModel)]="onerow.id">
+                                <input class="form-control" name="id" placeholder="Item Id ..." type="text" [disabled]="isEdit" [(ngModel)]="onerow.id">
                             </div>
                             <div class="form-group col-md-6 rx-form-group">
                                 <label class="form-control-label">Item Name</label>
-                                <input class="form-control" name="name" placeholder="Item Name ..." type="text"
-                                [(ngModel)]="onerow.name">
+                                <input class="form-control" name="name" placeholder="Item Name ..." type="text" [(ngModel)]="onerow.name">
                             </div>
                             <div class="form-group col-md-6 rx-form-group">
                                 <label class="form-control-label">Description</label>
-                                <input class="form-control" name="desc" placeholder="Description ..." type="text"
-                                [(ngModel)]="onerow.desc">
+                                <input class="form-control" name="desc" placeholder="Description ..." type="text" [(ngModel)]="onerow.desc">
                             </div>
                             <div class="form-group col-md-6 rx-form-group">
-                                <label class="form-control-label">Price (USD)</label>
-                                <input class="form-control" name="price" placeholder="Price ..." type="number"
-                                [(ngModel)]="onerow.price">
+                                <label class="form-control-label">In-App price (USD)</label>
+                                <input class="form-control" name="price" placeholder="Price ..." type="number" [(ngModel)]="onerow.inapp_price">
+                            </div>
+                            <div class="form-group col-md-6 rx-form-group">
+                                <label class="form-control-label">In-game gold</label>
+                                <input class="form-control" name="gold" placeholder="In-game gold ..." type="number" 
+                                [(ngModel)]="onerow.ingame_gold">
+                            </div>
+                            <div class="form-group col-md-6 rx-form-group">
+                                <label class="form-control-label">Card price</label>
+                                <input class="form-control" name="card-price" placeholder="Card price ..." type="number" 
+                                [(ngModel)]="onerow.card_price">
                             </div>
                             <div class="form-group col-md-6 rx-form-group">
                                 <label class="form-control-label">Status</label>
                                 <br/>
                                 <label class="switch switch-text switch-pill switch-primary">
-                                    <input type="checkbox" class="switch-input" [checked]="onerow.is_active" 
-                                        (change)= "onerow.is_active == 1 ? onerow.is_active = 0: onerow.is_active = 1">
+                                    <input type="checkbox" class="switch-input" [checked]="onerow.is_active" (change)="onerow.is_active == 1 ? onerow.is_active = 0: onerow.is_active = 1">
                                     <span class="switch-label" data-on="On" data-off="Off"></span>
                                     <span class="switch-handle"></span>
                                 </label>
@@ -45,18 +49,16 @@
                     </div>
                     <div class="card-footer">
                         <button class="btn btn-sm btn-primary" type="submit" (click)=(save()) [hidden]="isEdit">
-                        <i class="icon-plus"></i> OK
+                            <i class="icon-plus"></i> OK
                         </button>
-                        
                         <button class="btn btn-sm btn-primary" type="submit" (click)=(update()) [hidden]="!isEdit">
-                        <i class="icon-check"></i> Update
+                            <i class="icon-check"></i> Update
                         </button>
-                        <button class="btn btn-sm btn-danger" type="reset" (click)=(delete()) [hidden]="!isEdit"
-                        style="float: right;">
-                        <i class="icon-trash"></i> Delete
+                        <button class="btn btn-sm btn-danger" type="reset" (click)=(delete()) [hidden]="!isEdit" style="float: right;">
+                            <i class="icon-trash"></i> Delete
                         </button>
                         <button class="btn btn-sm btn-secondary" type="reset" (click)=(cancel())>
-                        <i class="icon-close"></i> Cancel
+                            <i class="icon-close"></i> Cancel
                         </button>
                     </div>
                 </div>
@@ -76,8 +78,11 @@
                 <thead class="thead-default">
                     <tr>
                         <th class="rx-table-ico-head">Id</th>
-                        <th class="text-center rx-table-ico-head">Name </th>
-                        <th class="text-center rx-table-ico-head">Price</th>
+                        <th class="text-center rx-table-ico-head">Name</th>
+                        <th class="text-center rx-table-ico-head">Description</th>
+                        <th class="text-center rx-table-ico-head">In-App price</th>
+                        <th class="text-center rx-table-ico-head">Card price</th>
+                        <th class="text-center rx-table-ico-head">In-Game gold</th>
                         <th class="text-center rx-table-ico-head">Created</th>
                         <th class="text-center rx-table-ico-head">Status</th>
                     </tr>
@@ -91,7 +96,16 @@
                             {{item.name}}
                         </td>
                         <td align="center">
-                            {{item.price}}
+                            {{item.desc}}
+                        </td>
+                        <td align="center">
+                            {{item.inapp_price}}
+                        </td>
+                        <td align="center">
+                            {{item.card_price}}
+                        </td>
+                        <td align="center">
+                            {{item.ingame_gold}}
                         </td>
                         <td align="center">
                             <div class="small">{{item.created_at * 1000 | date:'dd/MM/yyyy HH:mm:ss'}}</div>

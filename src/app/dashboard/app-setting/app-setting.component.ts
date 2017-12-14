@@ -18,7 +18,8 @@ export class AppSettingComponent implements OnInit {
 		private config: ConfigService) {
 
 		this.appInfo = {
-			'settings': {}
+			'settings': {},
+			'version': 1.0
 		};
 	}
 

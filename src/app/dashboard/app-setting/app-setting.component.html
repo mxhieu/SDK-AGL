@@ -30,6 +30,12 @@
                 <span class="switch-label" data-on="On" data-off="Off"></span>
                 <span class="switch-handle"></span>
             </label>
+            Force update
+            <label class="switch switch-text switch-pill switch-info" style="cursor: pointer; float: center;">
+                <input type="checkbox" class="switch-input" [checked]="appInfo.is_active" (change)=(onStatusChange())>
+                <span class="switch-label" data-on="On" data-off="Off"></span>
+                <span class="switch-handle"></span>
+            </label>
             <button class="btn btn-sm btn-danger" type="submit" style="float: right;" (click)=(delete())>
                 <i class="icon-trash"></i>Delete
             </button>
@@ -72,6 +78,15 @@
                     <label>Store URL</label>
                     <form class="form-inline">
                         <input class="form-control mb-2 mr-sm-2 mb-sm-0 key-class" type="text" name="storeurl" [(ngModel)]="appInfo.storeurl">
+                        <button class="btn btn-success mb-2 mr-sm-2 mb-sm-0" type="submit" (click)=(update())>
+                            <i class="icon-check"></i> Update
+                        </button>
+                    </form>
+                </div>
+                <div class="col-md-12" style="margin-top: 2%">
+                    <label>App version</label>
+                    <form class="form-inline">
+                        <input class="form-control mb-2 mr-sm-2 mb-sm-0 key-class" type="text" name="version" [(ngModel)]="appInfo.version">
                         <button class="btn btn-success mb-2 mr-sm-2 mb-sm-0" type="submit" (click)=(update())>
                             <i class="icon-check"></i> Update
                         </button>

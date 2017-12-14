@@ -36,7 +36,7 @@
                             <div>{{perdata.data}}</div>
                         </td>
                         <td>
-                            <div class="small">{{perdata.created_at * 1000 | date:'dd/MM/yyyy HH:mm:ss'}}</div>
+                            <div class="small">{{perdata.updated_at * 1000 | date:'dd/MM/yyyy HH:mm:ss'}}</div>
                         </td>
                         <td>
                             <div [hidden]="(paging.search_is_deleted || 0) == 0">
