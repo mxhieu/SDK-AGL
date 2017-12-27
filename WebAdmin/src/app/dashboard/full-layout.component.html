@@ -1,0 +1,113 @@
+<header class="app-header navbar">
+    <button class="navbar-toggler mobile-sidebar-toggler hidden-lg-up" type="button">&#9776;</button>
+    <a class="navbar-brand" href="#"></a>
+    <ul class="nav navbar-nav hidden-md-down">
+        <li class="nav-item">
+            <a class="nav-link navbar-toggler sidebar-toggler" href="#">&#9776;</a>
+        </li>
+    </ul>
+    <ul class="nav navbar-nav ml-auto">
+        <li class="nav-item dropdown" dropdown (onToggle)="toggled($event)">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle>
+                <img src="assets/img/avatars/6.jpg" class="img-avatar">
+                <span class="hidden-md-down">{{fullname}}</span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" dropdownMenu aria-labelledby="simple-dropdown">
+                
+                <a class="dropdown-item" style="cursor: pointer;" 
+                (click)=(forgotPassword())><i class="icon-lock"></i> Change password</a>
+
+                <a class="dropdown-item" style="cursor: pointer;"
+                (click)="logout()"><i class="icon-logout"></i> Logout</a>
+
+            </div>
+        </li>
+        <li class="nav-item hidden-md-down">
+        </li>
+    </ul>
+</header>
+<div class="app-body">
+    <div class="sidebar">
+        <nav class="sidebar-nav">
+            <ul class="nav">
+                <li class="nav-title"> Dashboard </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/overview']">
+                        <i class="icon-home"></i>
+                        Overview
+                    </a>
+                </li>
+                <li class="divider"></li>
+                <li class="nav-title"> Analytics </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/event']">
+                        <i class="icon-event"></i> 
+                        Event
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/player']">
+                        <i class="icon-user"></i> 
+                        Player
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/overview']">
+                        <i class="icon-docs"></i> 
+                        Export
+                    </a>
+                </li>
+                <li class="divider"></li>
+                <li class="nav-title"> Configuration </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/setting']">
+                        <i class="icon-settings"></i> 
+                        Setting
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/payment']">
+                        <i class="icon-basket-loaded"></i> 
+                        In-App
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/telco']">
+                        <i class="icon-credit-card"></i> 
+                        Telco
+                    </a>
+                </li>
+                <li class="divider"></li>
+                <li class="nav-title"> Integration </li>
+                <li class="nav-item open">
+                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/sdk']">
+                        <i class="icon-pie-chart"></i> 
+                        SDK Integration
+                    </a>
+                </li>
+                <li class="divider"></li>
+                <li class="nav-title"> Grow </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/notification']">
+                        <i class="icon-fire"></i> 
+                        Push notification
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <!-- Main content -->
+    <main class="main">
+        <!-- Breadcrumb -->
+        <ol class="breadcrumb">
+            <breadcrumbs></breadcrumbs>
+        </ol>
+        <div class="container-fluid">
+            <router-outlet></router-outlet>
+        </div>
+        <!-- /.conainer-fluid -->
+    </main>
+</div>
+<footer class="app-footer">
+    &copy; CoreSDK 2017 <span class="float-right">Powered by <a href="http://ecdc.vn/">CoreSDK</a> </span>
+</footer>

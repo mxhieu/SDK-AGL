@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+</head>
+
+<body>
+    <div class="rx-container">
+        <div class="rx-payment-body">
+            <div class="rx-payment-provider">
+                <div class="rx-provider-item rx-active" rxid="1" rxinput="VMS">
+                    <img src="logo-mobifone.png" />
+                </div>
+                <div class="rx-provider-item" rxid="2" rxinput="VTT">
+                    <img src="logo-viettel.png" />
+                </div>
+                <div class="rx-provider-item" rxid="3" rxinput="VNP">
+                    <img src="logo-vinaphone.png" />
+                </div>
+            </div>
+            <div class="rx-payment-form">
+                <img src="icon-price-red.png" />
+                <input id="amount" class="rx-payment-input" type="number" placeholder="Số tiền" />
+                <img src="icon-serial-red.png" />
+                <input id="serial" class="rx-payment-input" type="number" placeholder="Số serial thẻ" />
+                <img src="icon-pin-red.png" />
+                <input id="code" class="rx-payment-input" type="number" placeholder="Mã cào">
+            </div>
+            <div class="rx-payment-input-submit" style="cursor: pointer;">Thanh toán ngay</div>
+        </div>
+    </div>
+</body>
+<link rel="stylesheet" type="text/css" href="index.css">
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script>
+var apiUrl = 'http://apitracking.bonanhem.com/mobi-v1/payment/card';
+var provider = $('.rx-provider-item.rx-active').attr('rxinput');
+
+// Get parameters
+var getUrlParameter = function getUrlParameter(sParam) {
+    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : sParameterName[1];
+        }
+    }
+};
+
+// Click Event
+$('body').on('click', '.rx-provider-item', function() {
+    var ele = $(this);
+
+    // Deactive tab nav
+    ele.parent().find('.rx-provider-item').removeClass('rx-active');
+
+    // Open current tab
+    ele.addClass('rx-active')
+    provider = $('.rx-provider-item.rx-active').attr('rxinput');
+})
+
+
+var onSuccess = function onSuccess(){
+    console.log('success');
+    window.Android.onSuccess();
+}
+var onFailed = function onFailed(){
+    console.log('failed');
+    window.Android.onFailed();
+}
+
+window.$('body').on('click', '.rx-payment-input-submit', function() {
+    var ele = $(this);
+    var paramString =
+        '&card_serial=' + $('#serial').val() +
+        '&card_code=' + $('#code').val() +
+        '&card_provider=' + provider +
+        '&authorization=' + getUrlParameter('authorization') +
+        '&player_id=' + getUrlParameter('player_id') +
+        '&item_id=' + getUrlParameter('item_id') +
+        '&payload=' + getUrlParameter('payload');
+
+    var requestUrl = apiUrl + '?' + paramString;
+
+    var requestUrl2 = apiUrl + '?&authorization=' + getUrlParameter('authorization');
+
+    $.ajax({
+        url: requestUrl2,
+        method: 'post',
+        data: {
+            card_serial: $('#serial').val(),
+            card_code: $('#code').val(),
+            card_provider: provider,
+            player_id: getUrlParameter('player_id'),
+            item_id: getUrlParameter('item_id'),
+            payload: getUrlParameter('payload')
+        },
+        success: function(data) {
+            if (data.success == 1) {
+                onSuccess();
+            } else {
+                onFailed();
+            }
+        }
+    })
+})
+
+</script>
+
+</html>

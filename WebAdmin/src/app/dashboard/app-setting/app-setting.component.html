@@ -1,0 +1,174 @@
+<div class="animated fadeIn">
+    <div class="card">
+        <div class="card-header">
+            App Setting
+        </div>
+        <div class="card-block">
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Your App Id <i class="icon-info"></i></label>
+                    <form class="form-inline">
+                        <input class="form-control mb-2 mr-sm-2 mb-sm-0 key-class" type="text" name="id" disabled value="{{appInfo._id}}" readonly="readonly">
+                    </form>
+                </div>
+                <div class="col-md-6">
+                    <label>Your App Key <i class="icon-info"></i></label>
+                    <form class="form-inline">
+                        <input class="form-control mb-2 mr-sm-2 mb-sm-0 key-class" type="text" name="key" disabled [(ngModel)]="appInfo.key" readonly="readonly">
+                        <button class="btn btn-danger mb-2 mr-sm-2 mb-sm-0" type="submit" (click)=(resetKey())>
+                            <i class="icon-refresh"></i> Reset
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            Enable
+            <label class="switch switch-text switch-pill switch-info" style="cursor: pointer;">
+                <input type="checkbox" class="switch-input" [checked]="appInfo.is_active" (change)=(onStatusChange())>
+                <span class="switch-label" data-on="On" data-off="Off"></span>
+                <span class="switch-handle"></span>
+            </label>
+            Force update
+            <label class="switch switch-text switch-pill switch-info" style="cursor: pointer; float: center;">
+                <input type="checkbox" class="switch-input" [checked]="appInfo.settings.is_force_update" (change)=(onForceUpdateChante())>
+                <span class="switch-label" data-on="On" data-off="Off"></span>
+                <span class="switch-handle"></span>
+            </label>
+            <button class="btn btn-sm btn-danger" type="submit" style="float: right;" (click)=(delete())>
+                <i class="icon-trash"></i>Delete
+            </button>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            App Info
+        </div>
+        <div class="card-block">
+            <div class="row">
+                <div class="col-md-6">
+                    <label>BundleId/Package name <i class="icon-info"></i></label>
+                    <input class="form-control mb-2 mr-sm-2 mb-sm-0 key-class" type="text" name="bundle_id" [(ngModel)]="appInfo.bundle_id">
+                </div>
+                <div class="col-md-6">
+                    <label>Name</label>
+                    <input class="form-control mb-2 mr-sm-2 mb-sm-0 key-class" type="text" name="name" [(ngModel)]="appInfo.name">
+                </div>
+                <div class="col-md-6">
+                    <label>Description</label>
+                    <input class="form-control mb-2 mr-sm-2 mb-sm-0 key-class" placeholder="Description" type="text" name="desc" [(ngModel)]="appInfo.desc">
+                </div>
+                <div class="col-md-6">
+                    <label>Store URL</label>
+                    <input class="form-control mb-2 mr-sm-2 mb-sm-0 key-class" type="text" name="storeurl" placeholder="Storeurl" [(ngModel)]="appInfo.storeurl">
+                </div>
+                <div class="col-md-6">
+                    <label>App version</label>
+                    <input class="form-control mb-2 mr-sm-2 mb-sm-0 key-class" type="text" name="version" [(ngModel)]="appInfo.version">
+                </div>
+                <div class="col-md-12">
+                    App icon
+                    <input type="file" (change)="fileChange($event)" placeholder="Upload file" accept="*.*">
+                    <img [src]="getUrl(appInfo.icon)" onError="this.src='./assets/img/ico_app_default.png'" style="width: 64px; height: 64px;" />
+                </div>
+                <div class="col-md-12">
+                    App logo
+                    <input type="file" (change)="fileLogoChange($event)" placeholder="Upload file" accept="*.*">
+                    <img [src]="getUrl(appInfo.logo)" onError="this.src='./assets/img/ico_app_default.png'" style="width: 64px; height: 64px;" />
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <button class="btn btn-success mb-2 mr-sm-2 mb-sm-0" type="submit" (click)=(update()) style="float: right;">
+                <i class="icon-check"></i> Update
+            </button>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            Features setting
+        </div>
+        <div class="card-block">
+            <table class="table table-hover table-striped">
+                <tbody>
+                    <tr>
+                        <td align="center">
+                            Basic authorization
+                        </td>
+                        <td>
+                            <label class="switch switch-text switch-pill switch-danger">
+                                <input type="checkbox" class="switch-input" [(ngModel)]="appInfo.settings.is_formal_auth_enable">
+                                <span class="switch-label" data-on="On" data-off="Off"></span>
+                                <span class="switch-handle"></span>
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center">
+                            Facebook authorization
+                        </td>
+                        <td>
+                            <label class="switch switch-text switch-pill switch-danger">
+                                <input type="checkbox" class="switch-input" [(ngModel)]="appInfo.settings.is_facebook_auth_enable">
+                                <span class="switch-label" data-on="On" data-off="Off"></span>
+                                <span class="switch-handle"></span>
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center">
+                            Google authorization
+                        </td>
+                        <td>
+                            <label class="switch switch-text switch-pill switch-danger">
+                                <input type="checkbox" class="switch-input" [(ngModel)]="appInfo.settings.is_google_auth_enable">
+                                <span class="switch-label" data-on="On" data-off="Off"></span>
+                                <span class="switch-handle"></span>
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center">
+                            Quick play
+                        </td>
+                        <td>
+                            <label class="switch switch-text switch-pill switch-danger">
+                                <input type="checkbox" class="switch-input" [(ngModel)]="appInfo.settings.is_quickplay_enable">
+                                <span class="switch-label" data-on="On" data-off="Off"></span>
+                                <span class="switch-handle"></span>
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center">
+                            In-app purchase
+                        </td>
+                        <td>
+                            <label class="switch switch-text switch-pill switch-danger">
+                                <input type="checkbox" class="switch-input" [(ngModel)]="appInfo.settings.is_inapp_purchase_enable">
+                                <span class="switch-label" data-on="On" data-off="Off"></span>
+                                <span class="switch-handle"></span>
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center">
+                            Card purchase
+                        </td>
+                        <td>
+                            <label class="switch switch-text switch-pill switch-danger">
+                                <input type="checkbox" class="switch-input" [(ngModel)]="appInfo.settings.is_card_purchase_enable">
+                                <span class="switch-label" data-on="On" data-off="Off"></span>
+                                <span class="switch-handle"></span>
+                            </label>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer">
+            <button class="btn btn-success mb-2 mr-sm-2 mb-sm-0" style="float: right;" type="submit" (click)=(update())>
+                <i class="icon-check"></i> Save
+            </button>
+        </div>
+    </div>
