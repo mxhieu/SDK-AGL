@@ -8,6 +8,8 @@ import { OverviewComponent } from './overview/overview.component';
 import { PaymentComponent } from './payment/payment.component';
 import { NotificationComponent } from './notification/notification.component';
 import { TelcoComponent } from './telco/telco.component';
+import { ArmpdComponent } from './armpd/armpd.component';
+import { ArmComponent } from './arm/arm.component';
 
 const routes: Routes = [
   {
@@ -23,7 +25,16 @@ const routes: Routes = [
   }, {
     path: 'event',
     component: EventComponent
-  }, {
+  },
+  {
+    path: 'armpd',
+    component: ArmpdComponent
+  },
+  {
+    path: 'arm',
+    component: ArmComponent
+  }
+  , {
     path: 'player',
     component: PlayerComponent
   }, {

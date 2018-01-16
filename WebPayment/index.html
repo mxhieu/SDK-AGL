@@ -4,7 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link rel="icon" href="./images/favicon.ico">
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700&amp;subset=vietnamese" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="./style.css">
 </head>
 
 <body>
@@ -39,22 +41,30 @@
 var apiUrl = 'http://apitracking.bonanhem.com/mobi-v1/payment/card';
 var provider = $('.rx-provider-item.rx-active').attr('rxinput');
 
-// Get parameters
-var getUrlParameter = function getUrlParameter(sParam) {
-    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
-        sURLVariables = sPageURL.split('&'),
-        sParameterName,
-        i;
+// Price
+var price, authorization, player_id, item_id, payload;
 
-    for (i = 0; i < sURLVariables.length; i++) {
-        sParameterName = sURLVariables[i].split('=');
-
-        if (sParameterName[0] === sParam) {
-            return sParameterName[1] === undefined ? true : sParameterName[1];
-        }
-    }
-};
-
+var setPrice = function setPrice(params){
+    price = params;
+    console.log('[0] price:' + price);
+    $("#amount").val(price);
+}
+var setAuthorization = function setAuthorization(params){
+    authorization = params;
+    console.log('[0] authorization:' + authorization);
+}
+var setPlayerId = function setPlayerId(params){
+    player_id = params;
+    console.log('[0] player_id' + player_id);
+}
+var setItemId = function setItemId(params){
+    item_id = params;
+    console.log('[0] item_id: ' + item_id);
+}
+var setPayload = function setPayload(params){
+    payload = params;
+    console.log('[0] payload: ' + payload);
+}
 // Click Event
 $('body').on('click', '.rx-provider-item', function() {
     var ele = $(this);
@@ -67,41 +77,27 @@ $('body').on('click', '.rx-provider-item', function() {
     provider = $('.rx-provider-item.rx-active').attr('rxinput');
 })
 
-
-var onSuccess = function onSuccess(){
-    console.log('success');
+var onSuccess = function onSuccess() {
     window.Android.onSuccess();
 }
-var onFailed = function onFailed(){
-    console.log('failed');
+var onFailed = function onFailed() {
     window.Android.onFailed();
 }
 
 window.$('body').on('click', '.rx-payment-input-submit', function() {
+  
     var ele = $(this);
-    var paramString =
-        '&card_serial=' + $('#serial').val() +
-        '&card_code=' + $('#code').val() +
-        '&card_provider=' + provider +
-        '&authorization=' + getUrlParameter('authorization') +
-        '&player_id=' + getUrlParameter('player_id') +
-        '&item_id=' + getUrlParameter('item_id') +
-        '&payload=' + getUrlParameter('payload');
-
-    var requestUrl = apiUrl + '?' + paramString;
-
-    var requestUrl2 = apiUrl + '?&authorization=' + getUrlParameter('authorization');
-
+  
     $.ajax({
-        url: requestUrl2,
+        url: apiUrl + '?&authorization=' + authorization,
         method: 'post',
         data: {
             card_serial: $('#serial').val(),
             card_code: $('#code').val(),
             card_provider: provider,
-            player_id: getUrlParameter('player_id'),
-            item_id: getUrlParameter('item_id'),
-            payload: getUrlParameter('payload')
+            player_id: player_id,
+            item_id: item_id,
+            payload: payload
         },
         success: function(data) {
             if (data.success == 1) {
@@ -112,7 +108,6 @@ window.$('body').on('click', '.rx-payment-input-submit', function() {
         }
     })
 })
-
 </script>
 
 </html>

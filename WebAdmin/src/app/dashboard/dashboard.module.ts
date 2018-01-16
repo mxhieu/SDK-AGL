@@ -13,6 +13,8 @@ import { OverviewComponent } from './overview/overview.component';
 import { PaymentComponent } from './payment/payment.component';
 import { NotificationComponent } from './notification/notification.component';
 import { TelcoComponent } from './telco/telco.component';
+import { ArmpdComponent } from './armpd/armpd.component';
+import { ArmComponent } from './arm/arm.component';
 
 @NgModule({
   imports: [
@@ -26,6 +28,8 @@ import { TelcoComponent } from './telco/telco.component';
   declarations: [
     EventComponent, PlayerComponent, AppSettingComponent, SdkInformationComponent, OverviewComponent, PaymentComponent,
     NotificationComponent,
-    TelcoComponent]
+    TelcoComponent,
+    ArmpdComponent,
+    ArmComponent]
 })
 export class DashboardModule { }

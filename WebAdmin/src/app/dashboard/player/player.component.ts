@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import 'rxjs/Rx';
 import { Service } from '../../service/service';
-
-// In app component
 import { ConfigService } from '../../service/service.config';
+
 @Component({
   templateUrl: 'player.component.html'
 })
