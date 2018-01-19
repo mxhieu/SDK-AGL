@@ -13,13 +13,10 @@
                 <span class="hidden-md-down">{{fullname}}</span>
             </a>
             <div class="dropdown-menu dropdown-menu-right" dropdownMenu aria-labelledby="simple-dropdown">
-                
                 <a class="dropdown-item" style="cursor: pointer;" 
                 (click)=(forgotPassword())><i class="icon-lock"></i> Change password</a>
-
                 <a class="dropdown-item" style="cursor: pointer;"
                 (click)="logout()"><i class="icon-logout"></i> Logout</a>
-
             </div>
         </li>
         <li class="nav-item hidden-md-down">
@@ -63,24 +60,6 @@
                         ARM PD Report
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/event']">
-                        <i class="icon-event"></i> 
-                        Event
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/player']">
-                        <i class="icon-user"></i> 
-                        Player
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/overview']">
-                        <i class="icon-docs"></i> 
-                        Export
-                    </a>
-                </li>
                 <li class="divider"></li>
                 <li class="nav-title"> Configuration </li>
                 <li class="nav-item">
@@ -93,6 +72,18 @@
                     <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/payment']">
                         <i class="icon-basket-loaded"></i> 
                         In-App
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/event']">
+                        <i class="icon-event"></i> 
+                        Event
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/player']">
+                        <i class="icon-user"></i> 
+                        Player
                     </a>
                 </li>
                 <li class="nav-item">

@@ -22,10 +22,10 @@ export class ArmComponent implements OnInit {
 		responsive: true
 	};
 	public lineChartColours: Array<any> = [
-		{
-			backgroundColor: 'rgba(0, 0, 255, 0.2)',
-			borderColor: 'blue',
-			pointBackgroundColor: 'blue',
+		{ // grey
+			backgroundColor: 'rgba(148,159,177,0.2)',
+			borderColor: 'rgba(148,159,177,1)',
+			pointBackgroundColor: 'rgba(148,159,177,1)',
 			pointBorderColor: '#fff',
 			pointHoverBackgroundColor: '#fff',
 			pointHoverBorderColor: 'rgba(148,159,177,0.8)'
@@ -38,25 +38,9 @@ export class ArmComponent implements OnInit {
 			pointHoverBackgroundColor: '#fff',
 			pointHoverBorderColor: 'rgba(77,83,96,1)'
 		},
-		{
-			backgroundColor: 'rgba(255, 0, 0, 0.2)',
-			borderColor: 'pink',
-			pointBackgroundColor: 'rgba(148,159,177,1)',
-			pointBorderColor: '#fff',
-			pointHoverBackgroundColor: '#fff',
-			pointHoverBorderColor: 'rgba(148,159,177,0.8)'
-		},
-		{
-			backgroundColor: 'rgba(0, 255, 0, 0.2)',
-			borderColor: 'green',
-			pointBackgroundColor: 'rgba(148,159,177,1)',
-			pointBorderColor: '#fff',
-			pointHoverBackgroundColor: '#fff',
-			pointHoverBorderColor: 'rgba(148,159,177,0.8)'
-		},
-		{
+		{ // grey
 			backgroundColor: 'rgba(148,159,177,0.2)',
-			borderColor: 'orange',
+			borderColor: 'rgba(148,159,177,1)',
 			pointBackgroundColor: 'rgba(148,159,177,1)',
 			pointBorderColor: '#fff',
 			pointHoverBackgroundColor: '#fff',
@@ -113,20 +97,20 @@ export class ArmComponent implements OnInit {
 			{ id: 'date', name: 'Date', is_search: 1, st_col: 'data', st_type: 1 },
 			{ id: 'source', name: 'Source', is_search: 1, st_col: 'source', st_type: 1 },
 			{ id: 'os', name: 'Device Os', is_search: 1, st_col: 'os', st_type: 1 },
-			{ id: 'install', name: 'Install', is_search: 1, st_col: 'created_at', st_type: 1 },
-			{ id: 'nru0', name: 'NRU0', is_search: 1, st_col: 'created_at', st_type: 1 },
-			{ id: 'nru', name: 'NRU', is_search: 1, st_col: 'created_at', st_type: 1 },
-			{ id: 'nru0_install', name: 'NRU0/Install', is_search: 1, st_col: 'created_at', st_type: 1 },
-			{ id: 'cost', name: 'Cost(USD)', is_search: 1, st_col: 'created_at', st_type: 1 },
-			{ id: 'cpi', name: 'CPI', is_search: 1, st_col: 'created_at', st_type: 1 },
-			{ id: 'rr1', name: 'RR1', is_search: 1, st_col: 'created_at', st_type: 1 },
-			{ id: 'rr7', name: 'RR7', is_search: 1, st_col: 'created_at', st_type: 1 },
-			{ id: 'rr30', name: 'RR30', is_search: 1, st_col: 'created_at', st_type: 1 },
-			{ id: 'uv30', name: 'UV30', is_search: 1, st_col: 'created_at', st_type: 1 },
-			{ id: 'cr7', name: 'CR7', is_search: 1, st_col: 'created_at', st_type: 1 },
-			{ id: 'rev7', name: 'REV7', is_search: 1, st_col: 'created_at', st_type: 1 },
-			{ id: 'cr30', name: 'CR30', is_search: 1, st_col: 'created_at', st_type: 1 },
-			{ id: 'rev30', name: 'REV30', is_search: 1, st_col: 'created_at', st_type: 1 }
+			{ id: 'install', name: 'Install', is_search: 1, st_col: 'install', st_type: 1 },
+			{ id: 'nru0', name: 'NRU0', is_search: 1, st_col: 'nru0', st_type: 1 },
+			{ id: 'nru', name: 'NRU', is_search: 1, st_col: 'nru', st_type: 1 },
+			{ id: 'nru0_install', name: 'NRU0/Install', is_search: 1, st_col: 'nru0_install', st_type: 1 },
+			{ id: 'cost', name: 'Cost(USD)', is_search: 1, st_col: 'cost', st_type: 1 },
+			{ id: 'cpi', name: 'CPI', is_search: 1, st_col: 'cpi', st_type: 1 },
+			{ id: 'rr1', name: 'RR1', is_search: 1, st_col: 'rr1', st_type: 1 },
+			{ id: 'rr7', name: 'RR7', is_search: 1, st_col: 'rr7', st_type: 1 },
+			{ id: 'rr30', name: 'RR30', is_search: 1, st_col: 'rr30', st_type: 1 },
+			{ id: 'uv30', name: 'UV30', is_search: 1, st_col: 'uv30', st_type: 1 },
+			{ id: 'cr7', name: 'CR7', is_search: 1, st_col: 'cr7', st_type: 1 },
+			{ id: 'rev7', name: 'REV7', is_search: 1, st_col: 'rev7', st_type: 1 },
+			{ id: 'cr30', name: 'CR30', is_search: 1, st_col: 'cr30', st_type: 1 },
+			{ id: 'rev30', name: 'REV30', is_search: 1, st_col: 'rev30', st_type: 1 }
 		];
 
 		this.doAnalysis();
