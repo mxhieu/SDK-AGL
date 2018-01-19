@@ -116,7 +116,6 @@ export class EventComponent implements OnInit {
 
   // Delete  
   delete(_onerow) {
-
     this.service.get(this.configService.API_APP_DELETE, { '_id': _onerow._id },
       data => { this.helpFetchData(); })
   }
@@ -137,8 +136,8 @@ export class EventComponent implements OnInit {
         'search_app_id': this.service.getAppId(),
         'pg_page': this.paging.pg_page,
         'pg_size': this.paging.pg_size,
-        'st_col': 'updated_at',
-        'st_type': -1,
+        'st_col': this.paging.st_col,
+        'st_type': this.paging.st_type,
         key: this.search.term
       },
       data => {

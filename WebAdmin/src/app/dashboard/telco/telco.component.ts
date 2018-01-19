@@ -27,7 +27,9 @@ export class TelcoComponent implements OnInit {
 
 	getData() {
 		this.service.get(this.config.API_PAYMENT_GET_CARD_ITEMS, {
-			'search_app_id': this.service.getAppId()
+			'search_app_id': this.service.getAppId(),
+			'st_col': this.paging.st_col,
+      		'st_type': this.paging.st_type
 		}, data => {
 			this.items = Array.isArray(data) ? data : [];
 		});

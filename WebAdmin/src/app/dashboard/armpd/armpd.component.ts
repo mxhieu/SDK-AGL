@@ -154,12 +154,12 @@ export class ArmpdComponent implements OnInit {
 			'app_id': this.service.getAppId(),
 			'pg_page': this.paging.pg_page,
 			'pg_size': this.paging.pg_size,
-			'st_col': 'updated_at',
+			'st_col': this.paging.st_col,
 			'search_os': null,
 			'search_sourceid': null,
 			'startdate': this.dFrom.getTime(),
 			'enddate': this.dTo.getTime(),
-			'st_type': -1,
+			'st_type': this.paging.st_type,
 			key: this.search.term
 		};
 		if (this.platform.id != '-1')

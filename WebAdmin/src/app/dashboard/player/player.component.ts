@@ -96,6 +96,8 @@ export class PlayerComponent implements OnInit {
       'search_app_id': this.service.getAppId(),
       'pg_page': this.paging.pg_page,
       'pg_size': this.paging.pg_size,
+      'st_col': this.paging.st_col,
+      'st_type': this.paging.st_type,
       key: this.search.term
     },
       data => {
