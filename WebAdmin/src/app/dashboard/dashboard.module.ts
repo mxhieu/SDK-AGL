@@ -15,6 +15,8 @@ import { NotificationComponent } from './notification/notification.component';
 import { TelcoComponent } from './telco/telco.component';
 import { ArmpdComponent } from './armpd/armpd.component';
 import { ArmComponent } from './arm/arm.component';
+import { RoiComponent } from './roi/roi.component';
+import { RoipdComponent } from './roipd/roipd.component';
 
 @NgModule({
   imports: [
@@ -30,6 +32,8 @@ import { ArmComponent } from './arm/arm.component';
     NotificationComponent,
     TelcoComponent,
     ArmpdComponent,
-    ArmComponent]
+    ArmComponent,
+    RoiComponent,
+    RoipdComponent]
 })
 export class DashboardModule { }

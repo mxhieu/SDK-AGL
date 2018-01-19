@@ -10,6 +10,8 @@ import { NotificationComponent } from './notification/notification.component';
 import { TelcoComponent } from './telco/telco.component';
 import { ArmpdComponent } from './armpd/armpd.component';
 import { ArmComponent } from './arm/arm.component';
+import { RoiComponent } from './roi/roi.component';
+import { RoipdComponent } from './roipd/roipd.component';
 
 const routes: Routes = [
   {
@@ -33,8 +35,16 @@ const routes: Routes = [
   {
     path: 'arm',
     component: ArmComponent
+  },
+  {
+    path: 'roi',
+    component: RoiComponent
+  },
+  {
+    path: 'roipd',
+    component: RoipdComponent
   }
-  , {
+  ,{
     path: 'player',
     component: PlayerComponent
   }, {
@@ -43,7 +53,7 @@ const routes: Routes = [
   }, {
     path: 'payment',
     component: PaymentComponent
-  },{
+  }, {
     path: 'telco',
     component: TelcoComponent
   }, {
