@@ -6,46 +6,43 @@ import { Cookie } from 'ng2-cookies';
 @Injectable()
 export class ConfigService {
 
-  // Api links
-  api_url = PrivateService.api_url;
-
-  API_LOGIN = this.api_url + 'authorize';
+  API_LOGIN = PrivateService.BASE_URL + 'authorize';
   
-  API_APP_GET = this.api_url + 'app';
-  API_APP_NEW = this.api_url + 'app/index';
-  API_APP_EDIT = this.api_url + 'app/edit';
-  API_APP_DETAIL = this.api_url + 'app/details';
-  API_APP_KEY_RESET = this.api_url + 'app/resetkey';
-  API_APP_DELETE = this.api_url + 'app/delete';
+  API_APP_GET = PrivateService.BASE_URL + 'app';
+  API_APP_NEW = PrivateService.BASE_URL + 'app/index';
+  API_APP_EDIT = PrivateService.BASE_URL + 'app/edit';
+  API_APP_DETAIL = PrivateService.BASE_URL+ 'app/details';
+  API_APP_KEY_RESET = PrivateService.BASE_URL + 'app/resetkey';
+  API_APP_DELETE = PrivateService.BASE_URL + 'app/delete';
 
 
-  api_suggestion_get = this.api_url + 'suggestion';
-  api_suggestion_search = this.api_url + 'suggestion/search/';
+  api_suggestion_get = PrivateService.BASE_URL + 'suggestion';
+  api_suggestion_search = PrivateService.BASE_URL + 'suggestion/search/';
 
-  api_app_restore = this.api_url + 'app/restore';
-  api_app_get_recycle = this.api_url + 'app/recycle';
+  api_app_restore = PrivateService.BASE_URL + 'app/restore';
+  api_app_get_recycle = PrivateService.BASE_URL + 'app/recycle';
   // Tracking
-  api_tracking_get = this.api_url + 'tracking';
+  api_tracking_get = PrivateService.BASE_URL + 'tracking';
   // Player
-  api_player_get = this.api_url + 'player';
-  api_player_add = this.api_url + 'player';
-  api_player_edit = this.api_url + 'player/edit';
-  api_player_delete = this.api_url + 'player/delete';
-  api_player_restore = this.api_url + 'player/restore';
+  api_player_get = PrivateService.BASE_URL + 'player';
+  api_player_add = PrivateService.BASE_URL + 'player';
+  api_player_edit = PrivateService.BASE_URL + 'player/edit';
+  api_player_delete = PrivateService.BASE_URL + 'player/delete';
+  api_player_restore = PrivateService.BASE_URL + 'player/restore';
   // User
-  api_user_register = this.api_url + "user";
+  api_user_register = PrivateService.BASE_URL + "user";
   // Campaign
-  api_campaign_get = this.api_url + 'campaign';
-  api_campaign_del = this.api_url + 'campaign/delete';
-  api_campaign_add = this.api_url + 'campaign/index';
-  api_campaign_edit = this.api_url + 'campaign/edit';
-  api_campaign_restore = this.api_url + 'campaign/restore';
-  api_campaign_get_recycle = this.api_url + 'campaign/recycle';
-  api_upload_image = this.api_url + 'upload';
-  api_image_directory = this.api_url + 'upload/image/';
+  api_campaign_get = PrivateService.BASE_URL + 'campaign';
+  api_campaign_del = PrivateService.BASE_URL + 'campaign/delete';
+  api_campaign_add = PrivateService.BASE_URL + 'campaign/index';
+  api_campaign_edit = PrivateService.BASE_URL + 'campaign/edit';
+  api_campaign_restore = PrivateService.BASE_URL + 'campaign/restore';
+  api_campaign_get_recycle = PrivateService.BASE_URL + 'campaign/recycle';
+  api_upload_image = PrivateService.BASE_URL + 'upload';
+  api_image_directory = PrivateService.BASE_URL + 'upload/image/';
 
   // Analytics
-  API_APP_OVERVIEW = this.api_url + 'app/overview';
+  API_APP_OVERVIEW = PrivateService.BASE_URL + 'app/overview';
 
   // Router
   LINK_TO_APPS = '/apps';
@@ -60,17 +57,20 @@ export class ConfigService {
   APP_ID = 'fAppId';
 
   // Payment
-  API_PAYMENT_GET_ITEMS = this.api_url + 'inapp-item';
-  API_PAYMENT_ADD_IN_APPS = this.api_url + 'inapp-item';
-  API_PAYMENT_EDIT = this.api_url + 'inapp-item/edit';
-  API_PAYMENT_DELETE = this.api_url + 'inapp-item/delete';
+  API_PAYMENT_GET_ITEMS = PrivateService.BASE_URL + 'inapp-item';
+  API_PAYMENT_ADD_IN_APPS = PrivateService.BASE_URL + 'inapp-item';
+  API_PAYMENT_EDIT = PrivateService.BASE_URL + 'inapp-item/edit';
+  API_PAYMENT_DELETE = PrivateService.BASE_URL + 'inapp-item/delete';
 
   // Card
-  API_PAYMENT_CARD_EDIT = this.api_url + 'card-item/edit';
-  API_PAYMENT_GET_CARD_ITEMS = this.api_url + 'card-item';
-  API_PAYMENT_ADD_CARDS = this.api_url + 'card-item';
-  API_PAYMENT_CARD_ITEMS_DELETE = this.api_url + 'card-item/delete';
+  API_PAYMENT_CARD_EDIT = PrivateService.BASE_URL + 'card-item/edit';
+  API_PAYMENT_GET_CARD_ITEMS = PrivateService.BASE_URL + 'card-item';
+  API_PAYMENT_ADD_CARDS = PrivateService.BASE_URL + 'card-item';
+  API_PAYMENT_CARD_ITEMS_DELETE = PrivateService.BASE_URL + 'card-item/delete';
   
+  // Repport
+  API_REPORT_ARM = PrivateService.BASE_URL  + 'report-arm';
+
 
   public setFullname(fullname: string) {
     Cookie.set(this.USER_FULLNAME, fullname);
