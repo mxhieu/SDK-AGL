@@ -81,7 +81,7 @@ export class ArmpdComponent implements OnInit {
 
 	// Source list
 	sources = [];
-	source = { 'source': "all", 'source_id': '-1' };
+	source = { 'sourcename': "all", 'sourceid': '-1' };
 
 	// Platform
 	platforms = [
@@ -181,8 +181,8 @@ export class ArmpdComponent implements OnInit {
 		if (this.platform.id != '-1')
 			params.search_os = this.platform.name;
 
-		if (this.source.source_id != '-1')
-			params.search_sourceid = this.source.source_id;
+		if (this.source.sourceid != '-1')
+			params.search_sourceid = this.source.sourceid;
 
 		this.service.get(this.conf.API_REPORT_ARM_PD, params,
 			data => {
@@ -192,10 +192,8 @@ export class ArmpdComponent implements OnInit {
 	}
 	getSources() {
 		this.service.getSources(data => {
-			this.sources.push({ 'source': "all", 'source_id': '-1' });
-			console.log(this.sources);
+			this.sources.push({ 'sourcename': "all", 'sourceid': '-1' });
 			this.sources = this.sources.concat(data);
-			console.log(this.sources);
 			this.source = this.sources[0];
 		});
 	}
