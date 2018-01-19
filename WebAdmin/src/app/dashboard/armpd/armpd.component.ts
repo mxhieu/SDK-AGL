@@ -23,7 +23,7 @@ export class ArmpdComponent implements OnInit {
 		responsive: true
 	};
 	public lineChartColours: Array<any> = [
-		{ 
+		{
 			backgroundColor: 'rgba(0, 0, 255, 0.2)',
 			borderColor: 'blue',
 			pointBackgroundColor: 'blue',
@@ -47,7 +47,7 @@ export class ArmpdComponent implements OnInit {
 			pointHoverBackgroundColor: '#fff',
 			pointHoverBorderColor: 'rgba(148,159,177,0.8)'
 		},
-		{ 
+		{
 			backgroundColor: 'rgba(0, 255, 0, 0.2)',
 			borderColor: 'green',
 			pointBackgroundColor: 'rgba(148,159,177,1)',
@@ -55,7 +55,7 @@ export class ArmpdComponent implements OnInit {
 			pointHoverBackgroundColor: '#fff',
 			pointHoverBorderColor: 'rgba(148,159,177,0.8)'
 		},
-		{ 
+		{
 			backgroundColor: 'rgba(148,159,177,0.2)',
 			borderColor: 'orange',
 			pointBackgroundColor: 'rgba(148,159,177,1)',
@@ -67,24 +67,46 @@ export class ArmpdComponent implements OnInit {
 	public lineChartLegend: boolean = true;
 	public lineChartType: string = 'line';
 
-	dFrom: any;
-	dTo: any;
+	dFrom: Date;
+	dTo: Date;
 	dOrganic: any;
 
 	data: any;
 
-	onerow: any;
 	paging: any;
 	isnext: any;
 	header: any;
-	state: any;
+
 	search: any;
+
+	// Source list
+	sources = [];
+	source = { 'source': "all", 'source_id': '-1' };
+
+	// Platform
+	platforms = [
+		{
+			'id': '-1',
+			'name': 'all'
+		},
+		{
+			'id': 'android',
+			'name': 'android'
+		},
+		{
+			'id': 'ios',
+			'name': 'ios'
+		}
+	];
+	platform = { 'id': '-1', 'name': 'all' };
 
 	constructor(private conf: ConfigService, private service: Service) {
 
-		this.state = 'listall';
-		this.onerow = {};
+		// Timing
+		this.dTo = new Date();
+		this.dFrom = new Date(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate() - 1000);
 		this.data = [];
+		this.platform = this.platforms[0];
 		this.isnext = true;
 		this.search = { field: 'name', term: '' };
 		this.paging = { pg_page: 1, pg_size: 10, st_col: 'created_at', st_type: -1 };
@@ -92,7 +114,10 @@ export class ArmpdComponent implements OnInit {
 			{ id: 'date', name: 'Date', is_search: 1, st_col: 'data', st_type: 1 },
 			{ id: 'source', name: 'Source', is_search: 1, st_col: 'source', st_type: 1 },
 			{ id: 'os', name: 'Device Os', is_search: 1, st_col: 'os', st_type: 1 },
-			{ id: 'install', name: 'Install (GMT +7)', is_search: 1, st_col: 'created_at', st_type: 1 },
+			{ id: 'install', name: 'Install', is_search: 1, st_col: 'created_at', st_type: 1 },
+			{ id: 'nru0', name: 'NRU0', is_search: 1, st_col: 'created_at', st_type: 1 },
+			{ id: 'nru', name: 'NRU', is_search: 1, st_col: 'created_at', st_type: 1 },
+			{ id: 'nru0_install', name: 'NRU0/Install', is_search: 1, st_col: 'created_at', st_type: 1 },
 			{ id: 'cost', name: 'Cost(USD)', is_search: 1, st_col: 'created_at', st_type: 1 },
 			{ id: 'cpi', name: 'CPI', is_search: 1, st_col: 'created_at', st_type: 1 },
 			{ id: 'rr1', name: 'RR1', is_search: 1, st_col: 'created_at', st_type: 1 },
@@ -105,37 +130,19 @@ export class ArmpdComponent implements OnInit {
 			{ id: 'rev30', name: 'REV30', is_search: 1, st_col: 'created_at', st_type: 1 }
 		];
 
-		this.helpFetchData();
+		this.doAnalysis();
+		this.getSources();
 	}
 
 	ngOnInit(): void {
-		this.dFrom = new Date();
-		this.dTo = new Date();
-		this.dOrganic = new Date();
+
 	}
 
-	// Read 
-	viewDetail(_onerow) {
-		this.onerow = _onerow;
-		this.onerow.isview = true;
-	}
-
-	viewRecycle() {
-		this.state = 'recycle';
-		this.paging.search_is_deleted = 1;
-		this.helpFetchData();
-	}
-
-	viewDefault() {
-		this.state = 'listall';
-		this.paging.search_is_deleted = 0;
-		this.helpFetchData();
-	}
 
 	jumpPage(_page) {
 		_page = (_page <= 0) ? 1 : _page;
 		this.paging.pg_page = _page
-		this.helpFetchData();
+		this.doAnalysis();
 	}
 
 	resizePage($event) {
@@ -154,37 +161,43 @@ export class ArmpdComponent implements OnInit {
 				this.paging.st_col = tempcol;
 				this.paging.st_type = -1;
 			}
-			this.helpFetchData();
+			this.doAnalysis();
 		}
 	}
 
-	helpReset() {
-		this.onerow = {};
-	}
+	doAnalysis() {
+		var params = {
+			'app_id': this.service.getAppId(),
+			'pg_page': this.paging.pg_page,
+			'pg_size': this.paging.pg_size,
+			'st_col': 'updated_at',
+			'search_os': null,
+			'search_sourceid': null,
+			'startdate': this.dFrom.getTime(),
+			'enddate': this.dTo.getTime(),
+			'st_type': -1,
+			key: this.search.term
+		};
+		if (this.platform.id != '-1')
+			params.search_os = this.platform.name;
 
-	helpFetchData() {
-		for (var i = 0; i < 20; i++) {
-			this.data.push({
-				'date': new Date(),
-				'source': 'Mainsite',
-				'os': 'android',
-				'install': 128412,
-				'cost': 0,
-				'cpi': 0,
-				'rr1': '65.79%',
-				'rr7': '0%',
-				'rr30': '0%',
-				'uv30': '7105',
-				'cr7': '5.26%',
-				'rev7': '26000',
-				'cr30': '5.26%',
-				'rev30': '26000'
+		if (this.source.source_id != '-1')
+			params.search_sourceid = this.source.source_id;
+
+		this.service.get(this.conf.API_REPORT_ARM_PD, params,
+			data => {
+				this.data = Array.isArray(data) ? data : [];
+				this.isnext = (this.data.length >= this.paging.pg_size) ? true : false;
 			});
-		}
 	}
-
-	helpUpperCaseAfterCommas = function(str) {
-		return str.replace(/,\s*([a-z])/g, function(d, e) { return ", " + e.toUpperCase() });
+	getSources() {
+		this.service.getSources(data => {
+			this.sources.push({ 'source': "all", 'source_id': '-1' });
+			console.log(this.sources);
+			this.sources = this.sources.concat(data);
+			console.log(this.sources);
+			this.source = this.sources[0];
+		});
 	}
 
 }

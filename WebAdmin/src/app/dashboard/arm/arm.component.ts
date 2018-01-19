@@ -76,12 +76,12 @@ export class ArmComponent implements OnInit {
 	paging: any;
 	isnext: any;
 	header: any;
-	
+
 	search: any;
 
 	// Source list
 	sources = [];
-	source = {};
+	source = { 'source': "all", 'source_id': '-1' };
 
 	// Platform
 	platforms = [
@@ -98,7 +98,7 @@ export class ArmComponent implements OnInit {
 			'name': 'ios'
 		}
 	];
-	platform = {};
+	platform = { 'id': '-1', 'name': 'all' };
 
 	constructor(private conf: ConfigService, private service: Service) {
 
@@ -135,7 +135,7 @@ export class ArmComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		
+
 	}
 
 
@@ -171,27 +171,32 @@ export class ArmComponent implements OnInit {
 			'pg_page': this.paging.pg_page,
 			'pg_size': this.paging.pg_size,
 			'st_col': 'updated_at',
+			'search_os': null,
+			'search_sourceid': null,
 			'startdate': this.dFrom.getTime(),
 			'enddate': this.dTo.getTime(),
 			'st_type': -1,
 			key: this.search.term
 		};
+		if (this.platform.id != '-1')
+			params.search_os = this.platform.name;
+
+		if (this.source.source_id != '-1')
+			params.search_sourceid = this.source.source_id;
+
 		this.service.get(this.conf.API_REPORT_ARM, params,
 			data => {
 				this.data = Array.isArray(data) ? data : [];
 				this.isnext = (this.data.length >= this.paging.pg_size) ? true : false;
 			});
 	}
-	onPlatformChanged() {
-		console.log(this.platform);
-	}
-	onSourceChanged(){
-		console.log(this.source);	
-	}
 	getSources() {
 		this.service.getSources(data => {
-			this.sources = data;
-			this.source  = this.sources[0];
+			this.sources.push({ 'source': "all", 'source_id': '-1' });
+			console.log(this.sources);
+			this.sources = this.sources.concat(data);
+			console.log(this.sources);
+			this.source = this.sources[0];
 		});
 	}
 

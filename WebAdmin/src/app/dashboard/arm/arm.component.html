@@ -16,7 +16,7 @@
                     <label>Source</label>
                     <select class="form-control" 
                         [(ngModel)]="source" [ngModelOptions]="{standalone: true}"
-                        (ngModelChange)="onSourceChanged()">
+                        (ngModelChange)="doAnalysis()">
                         <option *ngFor="let s of sources" [ngValue]="s"> {{s.source}} </option>
                     </select>
                 </div>
@@ -24,7 +24,7 @@
                     <label>OS</label>
                     <select class="form-control" 
                         [(ngModel)]="platform" [ngModelOptions]="{standalone: true}"
-                        (ngModelChange)="onPlatformChanged()">
+                        (ngModelChange)="doAnalysis()">
                         <option *ngFor="let p of platforms" [ngValue]="p"> {{p.name}} </option>
                     </select>
                 </div>
