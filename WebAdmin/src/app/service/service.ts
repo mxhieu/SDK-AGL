@@ -38,7 +38,7 @@ export class Service {
 			(data) => {
 				try {
 					let json = JSON.parse(data.text());
-					if (json['success'] && json['success'] == 1) 
+					if (json['success'] && json['success'] == 1)
 						callback(json['data']);
 					else
 						this.failure(json['msg']);
@@ -194,8 +194,15 @@ export class Service {
 	moveToForgotPassword() {
 		this.router.moveToForgotPassword();
 	}
-	
-	getUrl(icon: string) : string{
+
+	getUrl(icon: string): string {
 		return 'http://apitracking.bonanhem.com/upload/image/' + icon;
+	}
+
+	getSources(callback) {
+		this.get(this.config.API_SOURCE_LIST, null,
+			data => {
+				callback(data);
+			});
 	}
 }

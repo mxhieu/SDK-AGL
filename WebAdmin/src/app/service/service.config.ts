@@ -68,9 +68,10 @@ export class ConfigService {
   API_PAYMENT_ADD_CARDS = PrivateService.BASE_URL + 'card-item';
   API_PAYMENT_CARD_ITEMS_DELETE = PrivateService.BASE_URL + 'card-item/delete';
   
-  // Repport
+  // Report
   API_REPORT_ARM = PrivateService.BASE_URL  + 'report-arm';
-
+  API_REPORT_ARM_PD = PrivateService.BASE_URL  + 'report-armPd';
+  API_SOURCE_LIST = PrivateService.BASE_URL + 'listsource';
 
   public setFullname(fullname: string) {
     Cookie.set(this.USER_FULLNAME, fullname);
@@ -100,4 +101,6 @@ export class ConfigService {
       name = 'User';
     return name;
   }
+
+ 
 }

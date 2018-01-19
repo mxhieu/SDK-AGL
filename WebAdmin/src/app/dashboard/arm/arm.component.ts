@@ -67,24 +67,46 @@ export class ArmComponent implements OnInit {
 	public lineChartLegend: boolean = true;
 	public lineChartType: string = 'line';
 
-	dFrom: any;
-	dTo: any;
+	dFrom: Date;
+	dTo: Date;
 	dOrganic: any;
 
 	data: any;
 
-	onerow: any;
 	paging: any;
 	isnext: any;
 	header: any;
-	state: any;
+	
 	search: any;
+
+	// Source list
+	sources = [];
+	source = {};
+
+	// Platform
+	platforms = [
+		{
+			'id': '-1',
+			'name': 'all'
+		},
+		{
+			'id': 'android',
+			'name': 'android'
+		},
+		{
+			'id': 'ios',
+			'name': 'ios'
+		}
+	];
+	platform = {};
 
 	constructor(private conf: ConfigService, private service: Service) {
 
-		this.state = 'listall';
-		this.onerow = {};
+		// Timing
+		this.dTo = new Date();
+		this.dFrom = new Date(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate() - 1000);
 		this.data = [];
+		this.platform = this.platforms[0];
 		this.isnext = true;
 		this.search = { field: 'name', term: '' };
 		this.paging = { pg_page: 1, pg_size: 10, st_col: 'created_at', st_type: -1 };
@@ -108,37 +130,19 @@ export class ArmComponent implements OnInit {
 			{ id: 'rev30', name: 'REV30', is_search: 1, st_col: 'created_at', st_type: 1 }
 		];
 
-		this.helpFetchData();
+		this.doAnalysis();
+		this.getSources();
 	}
 
 	ngOnInit(): void {
-		this.dFrom = new Date();
-		this.dTo = new Date();
-		this.dOrganic = new Date();
+		
 	}
 
-	// Read 
-	viewDetail(_onerow) {
-		this.onerow = _onerow;
-		this.onerow.isview = true;
-	}
-
-	viewRecycle() {
-		this.state = 'recycle';
-		this.paging.search_is_deleted = 1;
-		this.helpFetchData();
-	}
-
-	viewDefault() {
-		this.state = 'listall';
-		this.paging.search_is_deleted = 0;
-		this.helpFetchData();
-	}
 
 	jumpPage(_page) {
 		_page = (_page <= 0) ? 1 : _page;
 		this.paging.pg_page = _page
-		this.helpFetchData();
+		this.doAnalysis();
 	}
 
 	resizePage($event) {
@@ -157,40 +161,38 @@ export class ArmComponent implements OnInit {
 				this.paging.st_col = tempcol;
 				this.paging.st_type = -1;
 			}
-			this.helpFetchData();
+			this.doAnalysis();
 		}
 	}
 
-	helpReset() {
-		this.onerow = {};
-	}
-
-	helpFetchData() {
-		for (var i = 0; i < 20; i++) {
-			this.data.push({
-				'date': new Date(),
-				'source': 'AgencyNonIncentive',
-				'os': 'android',
-				'install': 15,
-				'cost': 3,
-				'nru0': 4,
-				'nru': 4,
-				'nru0_install': '26.67%',
-				'cpi': 0,
-				'rr1': '65.79%',
-				'rr7': '0%',
-				'rr30': '0%',
-				'uv30': '7105',
-				'cr7': '5.26%',
-				'rev7': '26000',
-				'cr30': '5.26%',
-				'rev30': '26000'
+	doAnalysis() {
+		var params = {
+			'app_id': this.service.getAppId(),
+			'pg_page': this.paging.pg_page,
+			'pg_size': this.paging.pg_size,
+			'st_col': 'updated_at',
+			'startdate': this.dFrom.getTime(),
+			'enddate': this.dTo.getTime(),
+			'st_type': -1,
+			key: this.search.term
+		};
+		this.service.get(this.conf.API_REPORT_ARM, params,
+			data => {
+				this.data = Array.isArray(data) ? data : [];
+				this.isnext = (this.data.length >= this.paging.pg_size) ? true : false;
 			});
-		}
 	}
-
-	helpUpperCaseAfterCommas = function(str) {
-		return str.replace(/,\s*([a-z])/g, function(d, e) { return ", " + e.toUpperCase() });
+	onPlatformChanged() {
+		console.log(this.platform);
+	}
+	onSourceChanged(){
+		console.log(this.source);	
+	}
+	getSources() {
+		this.service.getSources(data => {
+			this.sources = data;
+			this.source  = this.sources[0];
+		});
 	}
 
 }
