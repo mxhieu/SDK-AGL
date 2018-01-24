@@ -1,7 +1,9 @@
 <div class="animated fadeIn rx-relative">
     <div class="card">
         <div class="card-header">
-            <h4 class="card-title">ARM Report from {{dFrom | date: 'dd-MM-yyyy' }} to {{dTo |  date:'dd-MM-yyyy'}} </h4>
+            <h4
+            class="card-title">ROI PD Report from {{dFrom | date: 'dd-MM-yyyy' }} to {{dTo |  date:'dd-MM-yyyy'}}
+            </h4>
         </div>
         <div class="card-block">
             <div class="row">
@@ -64,51 +66,41 @@
             <table class="table table-hover mb-0 table-striped fixed table-bordered">
                 <thead class="thead-default">
                     <tr>
-                        <th colspan="3" class="rx-table-head-border"></th>
-                        <th colspan="6" class="rx-table-head-border">Acquisition</th>
-                        <th colspan="3" class="rx-table-head-border">Retention</th>
-                        <th colspan="5" class="rx-table-head-border">Monitization</th>
-                        <tr>
-                            <th *ngFor="let perheader of header" (click)="sort($event)" [attr.rxdata]="perheader.id" class="{{(perheader.id == paging.st_col)? 'rxsorting' : ''}} {{(paging.st_type == 1)? 'rxup' : 'rxdown'}}; rx-table-head-border">{{perheader.name}}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let d of data" style="cursor: pointer;">
-                            <td>{{d.date | date:'dd-MM-yyyy'}} </td>
-                            <td> {{d.source}} </td>
-                            <td> {{d.os }} </td>
-                            <td> {{d.install }} </td>
-                            <td> {{d.nru0 }} </td>
-                            <td> {{d.nru }} </td>
-                            <td> {{d.nru0_install }} </td>
-                            <td> {{d.cost }} </td>
-                            <td> {{d.cpi }} </td>
-                            <td> {{d.rr1 }} </td>
-                            <td> {{d.rr7 }} </td>
-                            <td> {{d.rr30 }} </td>
-                            <td> {{d.uv30 }} </td>
-                            <td> {{d.cr7 }} </td>
-                            <td> {{d.cr30 }} </td>
-                            <td> {{d.rev7 }} </td>
-                            <td> {{d.rev30 }} </td>
-                        </tr>
-                        <!-- Pagination -->
-                        <tr>
-                            <td colspan="100%" class="rx-pagin">
-                                <button class="rx-back" [disabled]="paging.pg_page <= 1" (click)="jumpPage(paging.pg_page - 1)">
-                                <</button>
-                                <input type="number" class="rx-cur" [(ngModel)]="paging.pg_page">
-                                <button class="rx-next" [disabled]="!isnext" (click)="jumpPage(paging.pg_page + 1)">></button>
-                                <span class="rx-jump" (click)="jumpPage(paging.pg_page)"><i class="icon-rocket"></i></span>
-                                <select type="number" class="rx-pg-size" (ngModelChange)="resizePage($event)" [(ngModel)]="paging.pg_size">
-                                    <option value="10" selected>10</option>
-                                    <option value="50" selected>50</option>
-                                    <option value="100" selected>100</option>
-                                </select> / page
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                        <th *ngFor="let perheader of header" (click)="sort($event)" [attr.rxdata]="perheader.id" class="{{(perheader.id == paging.st_col)? 'rxsorting' : ''}} {{(paging.st_type == 1)? 'rxup' : 'rxdown'}}; rx-table-head-border">{{perheader.name}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let d of data" style="cursor: pointer;">
+                        <td>{{d.date | date:'dd-MM-yyyy'}} </td>
+                        <td> {{d.appName}} </td>
+                        <td> {{d.source}} </td>
+                        <td> {{d.os }} </td>
+                        <td> {{d.install }} </td>
+                        <td> {{d.rr3 }} </td>
+                        <td> {{d.pd1 }} </td>
+                        <td> {{d.pd3 }} </td>
+                        <td> {{d.pd7 }} </td>
+                        <td> {{d.pd14 }} </td>
+                        <td> {{d.pd21 }} </td>
+                        <td> {{d.pd30 }} </td>
+                    </tr>
+                    <!-- Pagination -->
+                    <tr>
+                        <td colspan="100%" class="rx-pagin">
+                            <button class="rx-back" [disabled]="paging.pg_page <= 1" (click)="jumpPage(paging.pg_page - 1)">
+                            <</button>
+                            <input type="number" class="rx-cur" [(ngModel)]="paging.pg_page">
+                            <button class="rx-next" [disabled]="!isnext" (click)="jumpPage(paging.pg_page + 1)">></button>
+                            <span class="rx-jump" (click)="jumpPage(paging.pg_page)"><i class="icon-rocket"></i></span>
+                            <select type="number" class="rx-pg-size" (ngModelChange)="resizePage($event)" [(ngModel)]="paging.pg_size">
+                                <option value="10" selected>10</option>
+                                <option value="50" selected>50</option>
+                                <option value="100" selected>100</option>
+                            </select> / page
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
+</div>

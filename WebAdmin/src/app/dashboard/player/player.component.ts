@@ -106,7 +106,4 @@ export class PlayerComponent implements OnInit {
       });
   }
 
-  helpUpperCaseAfterCommas = function(str) {
-    return str.replace(/,\s*([a-z])/g, function(d, e) { return ", " + e.toUpperCase() });
-  }
 }

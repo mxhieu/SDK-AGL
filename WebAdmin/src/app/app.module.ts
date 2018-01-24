@@ -40,6 +40,7 @@ import { PrivacyComponent } from './privacy/privacy.component';
 import { HelpComponent } from './help/help.component';
 import { ResourceComponent } from './resource/resource.component';
 import { ForgotPasswordComponent } from './forgotpassword/forgotpassword.component';
+import { GamereportComponent } from './gamereport/gamereport.component';
 
 @NgModule({
     imports: [
@@ -74,6 +75,7 @@ import { ForgotPasswordComponent } from './forgotpassword/forgotpassword.compone
         HelpComponent,
         ResourceComponent,
         ForgotPasswordComponent,
+        GamereportComponent,
     ],
     providers: [
         ConfigService,

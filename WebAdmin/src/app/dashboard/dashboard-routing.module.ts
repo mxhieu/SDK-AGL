@@ -12,51 +12,50 @@ import { ArmpdComponent } from './armpd/armpd.component';
 import { ArmComponent } from './arm/arm.component';
 import { RoiComponent } from './roi/roi.component';
 import { RoipdComponent } from './roipd/roipd.component';
+import { GamereportComponent } from './gamereport/gamereport.component';
 
 const routes: Routes = [
   {
     path: '',
     redirectTo: 'overview',
     pathMatch: 'full'
-  }, {
+  },{
     path: 'overview',
     component: OverviewComponent
-  }, {
+  },{
     path: 'sdk',
     component: SdkInformationComponent
-  }, {
+  },{
     path: 'event',
     component: EventComponent
-  },
-  {
+  },{
     path: 'armpd',
     component: ArmpdComponent
-  },
-  {
+  },{
     path: 'arm',
     component: ArmComponent
-  },
-  {
+  },{
     path: 'roi',
     component: RoiComponent
-  },
-  {
+  },{
+    path: 'gamereport',
+    component: GamereportComponent
+  },{
     path: 'roipd',
     component: RoipdComponent
-  }
-  ,{
+  },{
     path: 'player',
     component: PlayerComponent
-  }, {
+  },{
     path: 'setting',
     component: AppSettingComponent
-  }, {
+  },{
     path: 'payment',
     component: PaymentComponent
-  }, {
+  },{
     path: 'telco',
     component: TelcoComponent
-  }, {
+  },{
     path: 'notification',
     component: NotificationComponent
   }

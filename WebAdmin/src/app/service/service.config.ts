@@ -74,6 +74,8 @@ export class ConfigService {
   API_SOURCE_LIST = PrivateService.BASE_URL + 'listsource';
   API_REPORT_ROI = PrivateService.BASE_URL + 'report-roi';
   API_REPORT_ROI_PD = PrivateService.BASE_URL + 'report-roiPd';
+  API_REPORT_GAME = PrivateService.BASE_URL + 'report-roiPd';
+  API_REPORT_PRODUCT = PrivateService.BASE_URL + 'report-roiPd';
 
   public setFullname(fullname: string) {
     Cookie.set(this.USER_FULLNAME, fullname);
