@@ -70,9 +70,9 @@ export class Service {
 			(data) => {
 				try {
 					let json = JSON.parse(data.text());
-					if (json['success'] && json['success'] == 1) {
+					if (json['success'] && (json['success'] == 1 || json['success'] == 100)) {
 						callback(json['data']);
-						this.successful(json['msg']);
+						this.successful(json['msg'], json['success']);
 					}
 					else
 						this.failure(json['msg']);
@@ -105,9 +105,9 @@ export class Service {
 			(data) => {
 				try {
 					let json = JSON.parse(data.text());
-					if (json['success'] && json['success'] == 1) {
+					if (json['success'] && (json['success'] == 1 || json['success'] == 100)) {
 						callback(json['data']);
-						this.successful(json['msg']);
+						this.successful(json['msg'], json['success']);
 					}
 					else
 						this.failure(json['msg']);
@@ -121,11 +121,11 @@ export class Service {
 	}
 
 	private failure(error: any) {
-		// this.flash.show('Request failed\n' + error, { cssClass: 'alert-warning' });
-
+		this.flash.show('Request failed\n' + error, { cssClass: 'alert-warning' });
 	}
-	private successful(msg: any) {
-		// this.flash.show(msg, { cssClass: 'alert-success' });
+	private successful(msg: any, code: any) {
+		if(code == 1)
+			this.flash.show(msg, { cssClass: 'alert-success' });
 	}
 
 	/* User */

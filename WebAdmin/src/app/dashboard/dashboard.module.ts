@@ -17,7 +17,6 @@ import { ArmpdComponent } from './armpd/armpd.component';
 import { ArmComponent } from './arm/arm.component';
 import { RoiComponent } from './roi/roi.component';
 import { RoipdComponent } from './roipd/roipd.component';
-import { GamereportComponent } from './gamereport/gamereport.component';
 
 @NgModule({
   imports: [
@@ -35,7 +34,6 @@ import { GamereportComponent } from './gamereport/gamereport.component';
     ArmpdComponent,
     ArmComponent,
     RoiComponent,
-    RoipdComponent,
-    GamereportComponent]
+    RoipdComponent]
 })
 export class DashboardModule { }

@@ -93,7 +93,7 @@ export class RoiComponent implements OnInit {
 		this.platform = this.platforms[0];
 		this.isnext = true;
 		this.search = { field: 'name', term: '' };
-		this.paging = { pg_page: 1, pg_size: 10, st_col: 'created_at', st_type: -1 };
+		this.paging = { pg_page: 1, pg_size: 10, st_col: 'date', st_type: -1 };
 		this.header = [
 			{ id: 'date', name: 'Date', is_search: 1, st_col: 'data', st_type: 1 },
 			{ id: 'source', name: 'Media Source', is_search: 1, st_col: 'source', st_type: 1 },

@@ -12,7 +12,6 @@ import { ArmpdComponent } from './armpd/armpd.component';
 import { ArmComponent } from './arm/arm.component';
 import { RoiComponent } from './roi/roi.component';
 import { RoipdComponent } from './roipd/roipd.component';
-import { GamereportComponent } from './gamereport/gamereport.component';
 
 const routes: Routes = [
   {
@@ -37,9 +36,6 @@ const routes: Routes = [
   },{
     path: 'roi',
     component: RoiComponent
-  },{
-    path: 'gamereport',
-    component: GamereportComponent
   },{
     path: 'roipd',
     component: RoipdComponent
