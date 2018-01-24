@@ -156,8 +156,8 @@ export class ArmComponent implements OnInit {
 			'st_col': this.paging.st_col,
 			'search_os': null,
 			'search_sourceid': null,
-			'startdate': this.dFrom.getTime(),
-			'enddate': this.dTo.getTime(),
+			'startdate': Math.round(this.dFrom.getTime() / 1000),
+			'enddate': Math.round(this.dTo.getTime() / 1000),
 			'st_type': this.paging.st_type,
 			key: this.search.term
 		};
