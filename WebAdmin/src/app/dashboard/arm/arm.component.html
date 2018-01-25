@@ -69,7 +69,7 @@
                         <th colspan="3" class="rx-table-head-border">Retention</th>
                         <th colspan="5" class="rx-table-head-border">Monitization</th>
                         <tr>
-                            <th *ngFor="let perheader of header" (click)="sort($event)" [attr.rxdata]="perheader.id" class="{{(perheader.id == paging.st_col)? 'rxsorting' : ''}} {{(paging.st_type == 1)? 'rxup' : 'rxdown'}}; rx-table-head-border">{{perheader.name}}</th>
+                            <th *ngFor="let perheader of header" (click)="sort($event)" [attr.rxdata]="perheader.id" class="{{(perheader.id == paging.st_col)? 'rxsorting' : ''}} {{(paging.st_type == 1)? 'rxup' : 'rxdown'}}">{{perheader.name}}</th>
                         </tr>
                     </thead>
                     <tbody>

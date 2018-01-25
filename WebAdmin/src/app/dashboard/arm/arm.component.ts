@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Service } from '../../service/service';
 import { ConfigService } from '../../service/service.config';
+import 'rxjs/Rx';
 
 @Component({
 	selector: 'app-arm',

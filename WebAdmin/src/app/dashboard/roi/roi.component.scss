@@ -4,9 +4,12 @@ th{
 tr > td {
 	text-align: right;	
 }
-.rx-table-head-border{
-	border-right: solid 1px #eee;
-}
 .card-title {
     margin-bottom: 0;
+}
+.rxsorting.rxdown:after {
+	right: 5%;
+}
+.rxsorting.rxup:after {
+	right: 5%;
 }
