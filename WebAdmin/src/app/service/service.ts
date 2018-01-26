@@ -121,11 +121,11 @@ export class Service {
 	}
 
 	private failure(error: any) {
-		this.flash.show('Request failed\n' + error, { cssClass: 'alert-warning' });
+		// this.flash.show('Request failed\n' + error, { cssClass: 'alert-warning' });
 	}
 	private successful(msg: any, code: any) {
-		if(code == 1)
-			this.flash.show(msg, { cssClass: 'alert-success' });
+		/*if(code == 1)
+			this.flash.show(msg, { cssClass: 'alert-success' });*/
 	}
 
 	/* User */
