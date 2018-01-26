@@ -4,7 +4,8 @@ import { Service } from '../../service/service';
 
 @Component({
 	selector: 'app-payment',
-	templateUrl: './payment.component.html'
+	templateUrl: './payment.component.html',
+	styleUrls: ['./payment.component.scss']
 })
 
 export class PaymentComponent implements OnInit {
@@ -17,14 +18,9 @@ export class PaymentComponent implements OnInit {
 	paging: any;
 	isEdit: boolean;
 
-	constructor(
-		private config: ConfigService,
-		private service: Service) {
-	}
+	constructor( private config: ConfigService, private service: Service) {}
 
-	ngOnInit() {
-		this.refresh();
-	}
+	ngOnInit() { this.refresh();}
 
 	getData() {
 		this.service.get(this.config.API_PAYMENT_GET_ITEMS, {

@@ -3,7 +3,7 @@
     <div class="rx-floathide-form" [hidden]="!(onerow.created_at || 0)">
         <div class="card rx-card-form">
             <div class="card-header">
-                <h4 class="card-title">{{(onerow._id)? 'Edit': 'New user'}}</h4>
+                <h5 class="card-title">{{(onerow._id)? 'Edit': 'New user'}}</h5>
             </div>
             <div class="card-block card-block-form">
                 <form action="" class="form-horizontal col-md-10 col-sx-12 row" method="post">
@@ -36,13 +36,11 @@
     <!-- End form -->
     <div class="card">
         <div class="card-block">
-            <!-- Title bar -->
             <div class="row">
-                <div class="col-md-4">
-                    <h4 class="card-title">Players manager</h4>
-                    <div class="card-subtitle">List of users</div>
+                <div class="col-md-4 col-lg-4">
+                    <h5 class="card-title">Players manager</h5>
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-8 col-lg-8">
                     <div class="card-tools">
                         <select class="sel-search" [(ngModel)]="search.field">
                             <option *ngFor="let perheader of header" [hidden]="!perheader.is_search" value="{{perheader.id}}">{{perheader.name}}</option>

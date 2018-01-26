@@ -6,7 +6,6 @@ import { FormsModule } from '@angular/forms';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { PlayerComponent } from './player/player.component';
 import { AppSettingComponent } from './app-setting/app-setting.component';
-import { SdkInformationComponent } from './sdk-information/sdk-information.component';
 import { PaymentComponent } from './payment/payment.component';
 import { NotificationComponent } from './notification/notification.component';
 import { TelcoComponent } from './telco/telco.component';
@@ -28,7 +27,7 @@ import { AmChartsModule } from "@amcharts/amcharts3-angular";
     AmChartsModule
   ],
   declarations: [
-    PlayerComponent, AppSettingComponent, SdkInformationComponent, PaymentComponent,
+    PlayerComponent, AppSettingComponent, PaymentComponent,
     NotificationComponent, TelcoComponent, ArmpdComponent, ArmComponent,
     RoiComponent, RoipdComponent]
 })

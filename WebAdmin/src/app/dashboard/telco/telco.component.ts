@@ -4,7 +4,8 @@ import { Service } from '../../service/service';
 
 @Component({
   selector: 'app-telco',
-  templateUrl: './telco.component.html'
+  templateUrl: './telco.component.html',
+  styleUrls: ['./telco.component.scss']
 })
 export class TelcoComponent implements OnInit {
 

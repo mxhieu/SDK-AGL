@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PlayerComponent } from './player/player.component';
 import { AppSettingComponent } from './app-setting/app-setting.component';
-import { SdkInformationComponent } from './sdk-information/sdk-information.component';
 import { PaymentComponent } from './payment/payment.component';
 import { NotificationComponent } from './notification/notification.component';
 import { TelcoComponent } from './telco/telco.component';
@@ -16,9 +15,6 @@ const routes: Routes = [
     path: '',
     redirectTo: 'arm',
     pathMatch: 'full'
-  },{
-    path: 'sdk',
-    component: SdkInformationComponent
   },{
     path: 'armpd',
     component: ArmpdComponent

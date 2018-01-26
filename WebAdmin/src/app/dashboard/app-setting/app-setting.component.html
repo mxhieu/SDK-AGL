@@ -1,20 +1,20 @@
 <div class="animated fadeIn">
     <div class="card">
         <div class="card-header">
-            <h5 class="card-title">Setting</h5>
+            <h5 class="card-title">Settings</h5>
         </div>
         <div class="card-block">
             <div class="form-group row">
                 <div class="col-lg-6 col-md-6">
-                    <label class="col-form-label">Your App Id</label>
+                    <label class="col-form-label">Application Id</label>
                     <input class="form-control" type="text" name="id" disabled value="{{appInfo._id}}" readonly="readonly">
                 </div>
                 <div class="col-lg-6 col-md-6">
-                    <label class="col-form-label">Your App Key</label>
+                    <label class="col-form-label">Application Key</label>
                     <div class="row">
                         <input class="form-control col-lg-8" type="text" name="key" disabled [(ngModel)]="appInfo.key" readonly="readonly">
                         <div class="col-lg-4">
-                            <button class="btn btn-warning" type="submit" (click)=(resetKey())>
+                            <button class="btn btn-danger" type="submit" (click)=(resetKey())>
                                 <i class="icon-refresh"></i> Reset
                             </button>
                         </div>
@@ -133,7 +133,7 @@
 </div>
 <div class="card">
     <div class="card-header">
-        <h5 class="card-title">Info</h5>
+        <h5 class="card-title">Infos</h5>
     </div>
     <div class="card-block">
         <div class="row">

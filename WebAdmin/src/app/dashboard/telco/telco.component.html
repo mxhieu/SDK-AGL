@@ -5,54 +5,55 @@
             <div class="rx-floathide-form rx-isview" [hidden]="isHidden">
                 <div class="card rx-card-form">
                     <div class="card-header">
-                        <h4 class="card-title">New In-app Item</h4>
-                        <p class="text-muted">Modified in-app items for your app <a href=""> Learn more </a> </p>
+                        <h5 class="card-title">Telco Item</h5>
                     </div>
-                    <div class="card-block card-block-form">
-                        <form action="" class="form-horizontal col-md-10 col-sx-12 row" method="post">
-                            <div class="form-group col-md-6 rx-form-group">
-                                <label class="form-control-label">Item Id</label>
+                    <div class="card-block">
+                        <div class="row">
+                            <div class="form-group col-md-6 col-lg-6">
+                                <label class="col-form-label-none">Item Id</label>
                                 <input class="form-control" name="id" placeholder="Item Id ..." type="text" [disabled]="isEdit" [(ngModel)]="onerow.id">
                             </div>
-                            <div class="form-group col-md-6 rx-form-group">
-                                <label class="form-control-label">Item Name</label>
+                            <div class="form-group col-md-6 col-lg-6">
+                                <label class="col-form-label-none">Item Name</label>
                                 <input class="form-control" name="name" placeholder="Item Name ..." type="text" [(ngModel)]="onerow.name">
                             </div>
-                            <div class="form-group col-md-6 rx-form-group">
-                                <label class="form-control-label">Description</label>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-6 col-md-6">
+                                <label class="col-form-label-none">Description</label>
                                 <input class="form-control" name="desc" placeholder="Description ..." type="text" [(ngModel)]="onerow.desc">
                             </div>
-                            <div class="form-group col-md-6 rx-form-group">
-                                <label class="form-control-label">Price (VNĐ)</label>
+                            <div class="form-group col-lg-6 col-md-6">
+                                <label class="col-form-label-none">Price (USD)</label>
                                 <input class="form-control" name="Price" placeholder="Price ..." type="number" [(ngModel)]="onerow.price">
                             </div>
-                            <div class="form-group col-md-6 rx-form-group">
-                                <label class="form-control-label">Status</label>
-                                <label class="switch switch-text switch-pill switch-primary">
-                                    <input type="checkbox" class="switch-input" [checked]="onerow.is_active" (change)="onerow.is_active == 1 ? onerow.is_active = 0: onerow.is_active = 1">
-                                    <span class="switch-label" data-on="On" data-off="Off"></span>
-                                    <span class="switch-handle"></span>
-                                </label>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-lg-6 col-md-6 row">
+                                <div class="col-lg-6 col-md-6">
+                                    <label class="col-form-label-none">Status</label>
+                                </div>
+                                <div class="col-lg-6 col-md-6">
+                                    <label class="switch switch-text switch-pill switch-primary tright">
+                                        <input type="checkbox" class="switch-input" [checked]="onerow.is_active" (change)="onerow.is_active == 1 ? onerow.is_active = 0: onerow.is_active = 1">
+                                        <span class="switch-label" data-on="On" data-off="Off"></span>
+                                        <span class="switch-handle"></span>
+                                    </label>
+                                </div>
                             </div>
-                            <div class="form-group col-md-6 rx-form-group">
-                                <input type="file" (change)="fileChange($event)" placeholder="Upload file" accept="*.*">
-                                <img [src]="onerow.icon" onError="this.src='./assets/img/ico_app_default.png'" style="width: 196px;" />
+                            <div class="col-lg-6 col-md-6">
+                                <div class="col-lg-6 col-md-6">
+                                    <input type="file" (change)="fileChange($event)" placeholder="Upload file" accept="*.*">
+                                </div>
+                                <img [src]="onerow.icon" onError="this.src='./assets/img/ico_app_default.png'" style="width: 128px;" />
                             </div>
-                        </form>
+                        </div>
                     </div>
                     <div class="card-footer">
-                        <button class="btn btn-sm btn-primary" type="submit" (click)=(save()) [hidden]="isEdit">
-                            <i class="icon-plus"></i> OK
-                        </button>
-                        <button class="btn btn-sm btn-primary" type="submit" (click)=(update()) [hidden]="!isEdit">
-                            <i class="icon-check"></i> Update
-                        </button>
-                        <button class="btn btn-sm btn-danger" type="reset" (click)=(delete()) [hidden]="!isEdit" style="float: right;">
-                            <i class="icon-trash"></i> Delete
-                        </button>
-                        <button class="btn btn-sm btn-secondary" type="reset" (click)=(cancel())>
-                            <i class="icon-close"></i> Cancel
-                        </button>
+                        <button class="btn btn-primary" (click)=(save()) [hidden]="isEdit"> <i class="icon-plus"></i> OK </button>
+                        <button class="btn btn-primary" (click)=(update()) [hidden]="!isEdit"><i class="icon-check"></i> Save</button>
+                        <button class="btn btn-danger tright" (click)=(delete()) [hidden]="!isEdit"><i class="icon-trash"></i> Delete</button>
+                        <button class="btn btn-secondary tright" (click)=(cancel())><i class="icon-close"></i> Cancel</button>
                     </div>
                 </div>
             </div>
@@ -61,19 +62,18 @@
     </div>
     <div class="card">
         <div class="card-block">
-            <h4>Telco items
-            <button class="btn btn-sm btn-primary" style="float: right;" (click)=(toggle())>
-            <i class="icon-plus"></i> Create
-            </button>
-            </h4>
-            <p class="text-muted">List of items</p>
+            <h5 class="card-title">Telco items
+                <button class="btn btn-primary tright" (click)=(toggle())>
+                <i class="icon-plus"></i> Create
+                </button>
+            </h5>
             <table class="table table-hover table-outline mb-0 hidden-sm-down table-striped">
                 <thead class="thead-default">
                     <tr>
                         <th class="text-center rx-table-ico-head">Id</th>
                         <th class="text-center rx-table-ico-head">Name</th>
                         <th class="text-center rx-table-ico-head">Description</th>
-                        <th class="text-center rx-table-ico-head">Price (VNĐ)</th>
+                        <th class="text-center rx-table-ico-head">Price (USD)</th>
                         <th class="text-center rx-table-ico-head">Image</th>
                         <th class="text-center rx-table-ico-head">Created</th>
                         <th class="text-center rx-table-ico-head">Status</th>

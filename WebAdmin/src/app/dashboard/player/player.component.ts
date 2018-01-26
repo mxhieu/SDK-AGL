@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import 'rxjs/Rx';
 import { Service } from '../../service/service';
 import { ConfigService } from '../../service/service.config';
 
 @Component({
-  templateUrl: 'player.component.html'
+  selector: 'app-player',
+  templateUrl: 'player.component.html',
+  styleUrls: ['./player.component.scss']
 })
 export class PlayerComponent implements OnInit {
 
