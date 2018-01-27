@@ -92,7 +92,7 @@ export class ArmpdComponent implements OnInit {
 		this.data = [];
 		this.platform = this.platforms[0];
 		this.isnext = true;
-		this.search = { field: 'name', term: '' };
+		this.search = { field: 'source', term: '' };
 		this.paging = { pg_page: 1, pg_size: 10, st_col: 'created_at', st_type: -1 };
 		this.header = [
 			{ id: 'date', name: 'Date', is_search: 1, st_col: 'data', st_type: 1 },
@@ -160,7 +160,7 @@ export class ArmpdComponent implements OnInit {
 			'startdate': this.dFrom.getTime(),
 			'enddate': this.dTo.getTime(),
 			'st_type': this.paging.st_type,
-			key: this.search.term
+			['search_' + this.search.field]: this.search.term
 		};
 		if (this.platform.id != '-1')
 			params.search_os = this.platform.name;

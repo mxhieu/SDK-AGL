@@ -13,10 +13,8 @@
                 <span class="hidden-md-down">{{fullname}}</span>
             </a>
             <div class="dropdown-menu dropdown-menu-right" dropdownMenu aria-labelledby="simple-dropdown">
-                <a class="dropdown-item" style="cursor: pointer;" 
-                (click)=(forgotPassword())><i class="icon-lock"></i> Change password</a>
-                <a class="dropdown-item" style="cursor: pointer;"
-                (click)="logout()"><i class="icon-logout"></i> Logout</a>
+                <a class="dropdown-item" style="cursor: pointer;" (click)=(forgotPassword())><i class="icon-lock"></i> Change password</a>
+                <a class="dropdown-item" style="cursor: pointer;" (click)="logout()"><i class="icon-logout"></i> Logout</a>
             </div>
         </li>
         <li class="nav-item hidden-md-down">
@@ -35,6 +33,12 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/armpd']">
+                        <i class="icon-event"></i> 
+                        ARM PD Report
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/roi']">
                         <i class="icon-event"></i> 
                         ROI Report
@@ -44,12 +48,6 @@
                     <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/roipd']">
                         <i class="icon-event"></i> 
                         ROI PD Report
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/armpd']">
-                        <i class="icon-event"></i> 
-                        ARM PD Report
                     </a>
                 </li>
                 <li class="divider"></li>

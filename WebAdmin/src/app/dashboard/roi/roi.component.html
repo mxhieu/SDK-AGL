@@ -1,9 +1,7 @@
 <div class="animated fadeIn rx-relative">
     <div class="card">
         <div class="card-header">
-            <h4
-            class="card-title">ROI Report from {{dFrom | date: 'dd-MM-yyyy' }} to {{dTo |  date:'dd-MM-yyyy'}}
-            </h4>
+            <h5 class="card-title">ROI Report from {{dFrom | date: 'dd-MM-yyyy' }} to {{dTo |  date:'dd-MM-yyyy'}}</h5>
         </div>
         <div class="card-block">
             <div class="row">
@@ -17,17 +15,13 @@
                 </div>
                 <div class="form-group col-lg-3 col-md-6 rx-form-group">
                     <label class="col-form-label">Source</label>
-                    <select class="form-control"
-                        [(ngModel)]="source" [ngModelOptions]="{standalone: true}"
-                        (ngModelChange)="doAnalysis()">
+                    <select class="form-control" [(ngModel)]="source" [ngModelOptions]="{standalone: true}" (ngModelChange)="doAnalysis()">
                         <option *ngFor="let s of sources" [ngValue]="s"> {{s.sourcename}} </option>
                     </select>
                 </div>
                 <div class="form-group col-lg-3 col-md-6 rx-form-group">
                     <label class="col-form-label">OS</label>
-                    <select class="form-control"
-                        [(ngModel)]="platform" [ngModelOptions]="{standalone: true}"
-                        (ngModelChange)="doAnalysis()">
+                    <select class="form-control" [(ngModel)]="platform" [ngModelOptions]="{standalone: true}" (ngModelChange)="doAnalysis()">
                         <option *ngFor="let p of platforms" [ngValue]="p"> {{p.name}} </option>
                     </select>
                 </div>
@@ -36,7 +30,7 @@
     </div>
     <div class="card">
         <div class="card-header">
-            <h4 class="card-title">Acquisition Retention </h4>
+            <h5 class="card-title">Acquisition Retention </h5>
         </div>
         <div class="card-body">
             <div class="card-body">
@@ -48,20 +42,16 @@
     </div>
     <div class="card">
         <div class="card-block">
-            <div class="row" style="margin-bottom: 4px;">
-                <div class="col-lg-6">
-                    <button type="button" class="btn btn-success">
-                    <i class="icon-cloud-download"></i>
-                    </button>
-                </div>
-                <div class="col-lg-6">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search for..." aria-label="Search for...">
-                        <span class="input-group-btn">
-                            <button type="button" class="btn btn-primary">Go!</button>
-                        </span>
-                    </div>
-                </div>
+            <div class="col-md-8 col-lg-8">
+                
+            </div>
+            <div class="col-md-4 col-lg-4 card-tools">
+                <select class="sel-search" [(ngModel)]="search.field">
+                    <option *ngFor="let perheader of header" [hidden]="!perheader.is_search" value="{{perheader.id}}">{{perheader.name}}</option>
+                </select><i class="icon-arrow-down sel-ico"></i>
+                <input type="text" class="rx-cur input-search" [(ngModel)]="search.term">
+                <button class="btn btn-sm btn-default btn-search" (click)="jumpPage(1)"><i class="icon-magnifier"></i></button>
+                <button class="btn btn-sm btn-success"> <i class="icon-cloud-download"></i></button>
             </div>
             <table class="table table-hover mb-0 table-striped fixed table-bordered">
                 <thead class="thead-default">
@@ -70,13 +60,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let d of data" style="cursor: pointer;">
+                    <tr *ngFor="let d of data">
                         <td>{{d.date | date:'dd-MM-yyyy'}} </td>
                         <td> {{d.source}} </td>
                         <td> {{d.os }} </td>
                         <td> {{d.install }} </td>
                         <td> {{d.nru }} </td>
-                        <td> {{d.rr3 }} </td>
+                        <td> {{d.rr3 }}%</td>
                         <td> {{d.pu1 }} </td>
                         <td> {{d.pu3 }} </td>
                         <td> {{d.pu7 }} </td>
@@ -89,15 +79,15 @@
                     <tr>
                         <td colspan="100%" class="rx-pagin">
                             <button class="rx-back" [disabled]="paging.pg_page <= 1" (click)="jumpPage(paging.pg_page - 1)">
-                            <</button>
-                            <input type="number" class="rx-cur" [(ngModel)]="paging.pg_page">
-                            <button class="rx-next" [disabled]="!isnext" (click)="jumpPage(paging.pg_page + 1)">></button>
-                            <span class="rx-jump" (click)="jumpPage(paging.pg_page)"><i class="icon-rocket"></i></span>
-                            <select type="number" class="rx-pg-size" (ngModelChange)="resizePage($event)" [(ngModel)]="paging.pg_size">
-                                <option value="10" selected>10</option>
-                                <option value="50" selected>50</option>
-                                <option value="100" selected>100</option>
-                            </select> / page
+                                <</button>
+                                    <input type="number" class="rx-cur" [(ngModel)]="paging.pg_page">
+                                    <button class="rx-next" [disabled]="!isnext" (click)="jumpPage(paging.pg_page + 1)">></button>
+                                    <span class="rx-jump" (click)="jumpPage(paging.pg_page)"><i class="icon-rocket"></i></span>
+                                    <select type="number" class="rx-pg-size" (ngModelChange)="resizePage($event)" [(ngModel)]="paging.pg_size">
+                                        <option value="10" selected>10</option>
+                                        <option value="50" selected>50</option>
+                                        <option value="100" selected>100</option>
+                                    </select> / page
                         </td>
                     </tr>
                 </tbody>

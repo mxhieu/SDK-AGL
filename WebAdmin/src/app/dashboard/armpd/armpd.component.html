@@ -43,20 +43,16 @@
     </div>
     <div class="card">
         <div class="card-block">
-            <div class="row" style="margin-bottom: 4px;">
-                <div class="col-lg-6">
-                    <button type="button" class="btn btn-success">
-                        <i class="icon-cloud-download"></i>
-                    </button>
-                </div>
-                <div class="col-lg-6">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search for..." aria-label="Search for...">
-                        <span class="input-group-btn">
-                            <button type="button" class="btn btn-primary">Go!</button>
-                        </span>
-                    </div>
-                </div>
+            <div class="col-md-8 col-lg-8">
+                
+            </div>
+            <div class="col-md-4 col-lg-4 card-tools">
+                <select class="sel-search" [(ngModel)]="search.field">
+                    <option *ngFor="let perheader of header" [hidden]="!perheader.is_search" value="{{perheader.id}}">{{perheader.name}}</option>
+                </select><i class="icon-arrow-down sel-ico"></i>
+                <input type="text" class="rx-cur input-search" [(ngModel)]="search.term">
+                <button class="btn btn-sm btn-default btn-search" (click)="jumpPage(1)"><i class="icon-magnifier"></i></button>
+                <button class="btn btn-sm btn-success"> <i class="icon-cloud-download"></i></button>
             </div>
             <table class="table table-hover mb-0 table-striped fixed table-bordered">
                 <thead class="thead-default">
@@ -70,7 +66,7 @@
                         </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let d of data" style="cursor: pointer;">
+                    <tr *ngFor="let d of data">
                         <td>{{d.date | date:'dd-MM-yyyy'}} </td>
                         <td> {{d.source}} </td>
                         <td> {{d.os }} </td>
@@ -80,13 +76,13 @@
                         <td> {{d.nru0_install }}% </td>
                         <td> {{d.cost }} </td>
                         <td> {{d.cpi }} </td>
-                        <td> {{d.rr1 }} </td>
-                        <td> {{d.rr7 }} </td>
-                        <td> {{d.rr30 }} </td>
+                        <td> {{d.rr1 }}% </td>
+                        <td> {{d.rr7 }}% </td>
+                        <td> {{d.rr30 }}% </td>
                         <td> {{d.uv30 }} </td>
-                        <td> {{d.cr7 }} </td>
+                        <td> {{d.cr7 }}% </td>
                         <td> {{d.cr30 }} </td>
-                        <td> {{d.rev7 }} </td>
+                        <td> {{d.rev7 }}% </td>
                         <td> {{d.rev30 }} </td>
                     </tr>
                     <!-- Pagination -->

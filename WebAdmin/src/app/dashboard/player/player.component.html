@@ -1,39 +1,4 @@
 <div class="animated fadeIn rx-relative">
-    <!-- Form -->
-    <div class="rx-floathide-form" [hidden]="!(onerow.created_at || 0)">
-        <div class="card rx-card-form">
-            <div class="card-header">
-                <h5 class="card-title">{{(onerow._id)? 'Edit': 'New user'}}</h5>
-            </div>
-            <div class="card-block card-block-form">
-                <form action="" class="form-horizontal col-md-10 col-sx-12 row" method="post">
-                    <div class="form-group col-md-6 rx-form-group">
-                        <label class="form-control-label">User Name</label>
-                        <input class="form-control" name="name" placeholder="Username ..." type="text" [(ngModel)]="onerow.username">
-                    </div>
-                    <div class="form-group col-md-6 rx-form-group">
-                        <label class="form-control-label">Password</label>
-                        <input class="form-control" name="password" placeholder="Password ..." type="text" [(ngModel)]="onerow.password">
-                    </div>
-                    <div class="form-group col-md-6 rx-form-group">
-                        <label class="form-control-label">Status</label>
-                        <select class="form-control" name="status" [(ngModel)]="onerow.is_active">
-                            <option value="1">Active</option>
-                            <option value="0">Inactive</option>
-                        </select>
-                    </div>
-                </form>
-            </div>
-            <div class="card-footer">
-                <button class="btn btn-sm btn-primary" type="submit" (click)="addSubmit()">
-                    <i class="fa fa-dot-circle-o"></i> {{onerow._id? 'Clone': 'Create'}}</button>
-                <button class="btn btn-sm btn-primary" type="submit" (click)="editSubmit()" [hidden]="!onerow._id">
-                    <i class="fa fa-dot-circle-o"></i> Update</button>
-                <button class="btn btn-sm btn-danger" type="reset" (click)="helpReset()"><i class="fa fa-ban"></i> Cancel</button>
-            </div>
-        </div>
-    </div>
-    <!-- End form -->
     <div class="card">
         <div class="card-block">
             <div class="row">
@@ -47,12 +12,9 @@
                         </select><i class="icon-arrow-down sel-ico"></i>
                         <input type="text" class="rx-cur input-search" [(ngModel)]="search.term">
                         <button class="btn btn-sm btn-default btn-search" (click)="jumpPage(1)"><i class="icon-magnifier"></i></button>
-                        <button class="btn btn-sm btn-primary" (click)="add()"><i class="icon-plus"></i> Create</button>
                     </div>
                 </div>
             </div>
-            <!-- End title bar -->
-            <!-- Table -->
             <table class="table table-hover table-outline mb-0 hidden-sm-down table-striped fixed">
                 <thead class="thead-default">
                     <tr>
@@ -69,20 +31,10 @@
                             <strong>{{perdata._id}}</strong>
                             <div class="small text-muted"><a href="{{perdata.storeurl}}" target="_blank">{{perdata.storeurl}}</a></div>
                         </td>
-                        <td>
-                            <strong>{{perdata.username}}</strong>
-                        </td>
-                        <td>
-                            {{perdata.email}}
-                        </td>
-                        <td>
-                            {{perdata.phone_number}}
-                        </td>
-                        <td>
-                            <div class="small">{{perdata.created_at * 1000 | date:'dd/MM/yyyy HH:mm:ss'}}</div>
-                        </td>
+                        <td>{{perdata.username}}</td>
+                        <td>{{perdata.email}}</td>
+                        <td>{{perdata.created_at * 1000 | date:'dd/MM/yyyy'}}</td>
                     </tr>
-                    <!-- Pagination -->
                     <tr>
                         <td colspan="100%" class="rx-pagin">
                             <button class="rx-back" [disabled]="paging.pg_page <= 1" (click)="jumpPage(paging.pg_page - 1)">
@@ -99,7 +51,6 @@
                     </tr>
                 </tbody>
             </table>
-            <!-- End table -->
         </div>
     </div>
 </div>

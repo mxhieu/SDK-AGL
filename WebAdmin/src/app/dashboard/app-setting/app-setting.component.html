@@ -12,8 +12,8 @@
                 <div class="col-lg-6 col-md-6">
                     <label class="col-form-label">Application Key</label>
                     <div class="row">
-                        <input class="form-control col-lg-8" type="text" name="key" disabled [(ngModel)]="appInfo.key" readonly="readonly">
-                        <div class="col-lg-4">
+                        <input class="form-control col-lg-8 col-md-8" type="text" name="key" disabled readonly="readonly" [(ngModel)]="appInfo.key">
+                        <div class="col-lg-4 col-md-4">
                             <button class="btn btn-danger" type="submit" (click)=(resetKey())>
                                 <i class="icon-refresh"></i> Reset
                             </button>
@@ -174,8 +174,6 @@
         </div>
     </div>
     <div class="card-footer">
-        <button class="btn btn-info" type="submit" (click)=(update()) style="float: right;">
-            <i class="icon-check"></i> Save
-        </button>
+        <button class="btn btn-sm btn-primary tright" (click)="update()"><i class="icon-check"></i> Save</button>
     </div>
 </div>

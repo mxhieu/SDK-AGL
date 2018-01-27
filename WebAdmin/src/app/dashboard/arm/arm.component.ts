@@ -33,36 +33,36 @@ export class ArmComponent implements OnInit, OnDestroy {
 	chartData = [];
 
 
- generateChartData() {
+	generateChartData() {
 
-    var firstDate = new Date();
-    firstDate.setTime(firstDate.getTime() - 10 * 24 * 60 * 60 * 1000);
+		var firstDate = new Date();
+		firstDate.setTime(firstDate.getTime() - 10 * 24 * 60 * 60 * 1000);
 
-    for (var i = firstDate.getTime(); i < (firstDate.getTime() + 10 * 24 * 60 * 60 * 1000); i += 60 * 60 * 1000) {
-        var newDate = new Date(i);
+		for (var i = firstDate.getTime(); i < (firstDate.getTime() + 10 * 24 * 60 * 60 * 1000); i += 60 * 60 * 1000) {
+			var newDate = new Date(i);
 
-        if (i == firstDate.getTime()) {
-            var value1 = Math.round(Math.random() * 10) + 1;
-        } else {
-            var value1 = Math.round(this.chartData[this.chartData.length - 1].value1 / 100 * (90 + Math.round(Math.random() * 20)) * 100) / 100;
-        }
+			if (i == firstDate.getTime()) {
+				var value1 = Math.round(Math.random() * 10) + 1;
+			} else {
+				var value1 = Math.round(this.chartData[this.chartData.length - 1].value1 / 100 * (90 + Math.round(Math.random() * 20)) * 100) / 100;
+			}
 
-        if (newDate.getHours() == 12) {
-            // we set daily data on 12th hour only
-            var value2 = Math.round(Math.random() * 12) + 1;
-            this.chartData.push({
-                date: newDate,
-                value1: value1,
-                value2: value2
-            });
-        } else {
-            this.chartData.push({
-                date: newDate,
-                value1: value1
-            });
-        }
-    }
-}
+			if (newDate.getHours() == 12) {
+				// we set daily data on 12th hour only
+				var value2 = Math.round(Math.random() * 12) + 1;
+				this.chartData.push({
+					date: newDate,
+					value1: value1,
+					value2: value2
+				});
+			} else {
+				this.chartData.push({
+					date: newDate,
+					value1: value1
+				});
+			}
+		}
+	}
 
 	// Make armchart options
 	makeOptions(dataProvider) {
@@ -129,7 +129,7 @@ export class ArmComponent implements OnInit, OnDestroy {
 	data: any; paging: any; isnext: any; header: any; search: any;
 	sources = [];
 	source = { 'sourcename': "all", 'sourceid': '-1' };
-	platforms = [{ 'id': '-1', 'name': 'all' }, { 'id': 'android', 'name': 'android'},{'id': 'ios','name': 'ios'}];
+	platforms = [{ 'id': '-1', 'name': 'all' }, { 'id': 'android', 'name': 'android' }, { 'id': 'ios', 'name': 'ios' }];
 	platform = { 'id': '-1', 'name': 'all' };
 
 	constructor(private conf: ConfigService, private service: Service, private AmCharts: AmChartsService) {
@@ -141,7 +141,7 @@ export class ArmComponent implements OnInit, OnDestroy {
 		this.platform = this.platforms[0];
 
 		this.isnext = true;
-		this.search = { field: 'name', term: '' };
+		this.search = { field: 'source', term: '' };
 		this.paging = { pg_page: 1, pg_size: 10, st_col: 'date', st_type: -1 };
 		this.header = [
 			{ id: 'date', name: 'Date', is_search: 1, st_col: 'date', st_type: 1 },
@@ -171,7 +171,7 @@ export class ArmComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnDestroy() {
-		if (this.chart) 
+		if (this.chart)
 			this.AmCharts.destroyChart(this.chart);
 	}
 
@@ -191,9 +191,9 @@ export class ArmComponent implements OnInit, OnDestroy {
 		var idAttr = target.attributes.rxdata;
 		if (typeof (idAttr) != 'undefined') {
 			var tempcol = idAttr.nodeValue;
-			if (this.paging.st_col == tempcol) 
+			if (this.paging.st_col == tempcol)
 				this.paging.st_type *= -1;
-			 else {
+			else {
 				this.paging.st_col = tempcol;
 				this.paging.st_type = -1;
 			}
@@ -212,7 +212,7 @@ export class ArmComponent implements OnInit, OnDestroy {
 			'startdate': Math.round(this.dFrom.getTime() / 1000),
 			'enddate': Math.round(this.dTo.getTime() / 1000),
 			'st_type': this.paging.st_type,
-			key: this.search.term
+			['search_' + this.search.field]: this.search.term
 		};
 		if (this.platform.id != '-1')
 			params.search_os = this.platform.name;

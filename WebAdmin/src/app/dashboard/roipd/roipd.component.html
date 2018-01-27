@@ -1,9 +1,7 @@
 <div class="animated fadeIn rx-relative">
     <div class="card">
         <div class="card-header">
-            <h4
-            class="card-title">ROI PD Report from {{dFrom | date: 'dd-MM-yyyy' }} to {{dTo |  date:'dd-MM-yyyy'}}
-            </h4>
+            <h5 class="card-title">ROI PD Report from {{dFrom | date: 'dd-MM-yyyy' }} to {{dTo |  date:'dd-MM-yyyy'}}</h5>
         </div>
         <div class="card-block">
             <div class="row">
@@ -36,7 +34,7 @@
     </div>
     <div class="card">
         <div class="card-header">
-            <h4 class="card-title">Acquisition Retention </h4>
+            <h5 class="card-title">Acquisition Retention </h5>
         </div>
         <div class="card-body">
             <div class="card-body">
@@ -48,20 +46,16 @@
     </div>
     <div class="card">
         <div class="card-block">
-            <div class="row" style="margin-bottom: 4px;">
-                <div class="col-lg-6">
-                    <button type="button" class="btn btn-success">
-                    <i class="icon-cloud-download"></i>
-                    </button>
-                </div>
-                <div class="col-lg-6">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search for..." aria-label="Search for...">
-                        <span class="input-group-btn">
-                            <button type="button" class="btn btn-primary">Go!</button>
-                        </span>
-                    </div>
-                </div>
+            <div class="col-md-8 col-lg-8">
+                
+            </div>
+            <div class="col-md-4 col-lg-4 card-tools">
+                <select class="sel-search" [(ngModel)]="search.field">
+                    <option *ngFor="let perheader of header" [hidden]="!perheader.is_search" value="{{perheader.id}}">{{perheader.name}}</option>
+                </select><i class="icon-arrow-down sel-ico"></i>
+                <input type="text" class="rx-cur input-search" [(ngModel)]="search.term">
+                <button class="btn btn-sm btn-default btn-search" (click)="jumpPage(1)"><i class="icon-magnifier"></i></button>
+                <button class="btn btn-sm btn-success"> <i class="icon-cloud-download"></i></button>
             </div>
             <table class="table table-hover mb-0 table-striped fixed table-bordered">
                 <thead class="thead-default">
@@ -70,13 +64,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let d of data" style="cursor: pointer;">
+                    <tr *ngFor="let d of data">
                         <td>{{d.date | date:'dd-MM-yyyy'}} </td>
                         <td> {{d.appName}} </td>
                         <td> {{d.source}} </td>
                         <td> {{d.os }} </td>
                         <td> {{d.install }} </td>
-                        <td> {{d.rr3 }} </td>
+                        <td> {{d.rr3 }}%</td>
                         <td> {{d.pd1 }} </td>
                         <td> {{d.pd3 }} </td>
                         <td> {{d.pd7 }} </td>
