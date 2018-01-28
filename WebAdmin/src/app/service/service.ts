@@ -12,11 +12,7 @@ export class Service {
 	private USER_TOKEN = 'ftoken';
 	private KEY_APP_ID = 'fAppId';
 
-	constructor(
-		private http: Http,
-		private router: RoutingService,
-		private config: ConfigService,
-		private flash: FlashMessagesService) { }
+	constructor(private http: Http, private router: RoutingService, private config: ConfigService, private flash: FlashMessagesService) { }
 
 	private makeHeaders(): Headers {
 		let headers = new Headers({

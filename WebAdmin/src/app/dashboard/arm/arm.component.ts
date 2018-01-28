@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Service } from '../../service/service';
 import { ConfigService } from '../../service/service.config';
 import { AmChartsService, AmChart } from "@amcharts/amcharts3-angular";
+import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 
 @Component({
 	selector: 'app-arm',
@@ -124,8 +125,10 @@ export class ArmComponent implements OnInit, OnDestroy {
 			}
 		};
 	}
+ 
+	dFrom: Date = new Date(); dTo: Date = new Date(); dMin: Date = new Date(); dMax: Date = new Date();
+  	bsConfig: Partial<BsDatepickerConfig>;
 
-	dFrom: Date; dTo: Date;
 	data: any; paging: any; isnext: any; header: any; search: any;
 	sources = [];
 	source = { 'sourcename': "all", 'sourceid': '-1' };
@@ -134,8 +137,12 @@ export class ArmComponent implements OnInit, OnDestroy {
 
 	constructor(private conf: ConfigService, private service: Service, private AmCharts: AmChartsService) {
 
+		// Date picker
 		this.dTo = new Date();
 		this.dFrom = new Date(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate() - 1000);
+		this.dMin = this.dFrom;
+		this.dMax = this.dTo;
+	    this.bsConfig = Object.assign({}, { containerClass: 'theme-dark-blue' });
 
 		this.data = [];
 		this.platform = this.platforms[0];

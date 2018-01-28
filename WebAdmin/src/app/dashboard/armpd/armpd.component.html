@@ -1,18 +1,19 @@
 <div class="animated fadeIn rx-relative">
     <div class="card">
         <div class="card-header">
-            <h4 class="card-title">ARM PD Report from {{dFrom | date: 'dd-MM-yyyy' }} to {{dTo |  date:'dd-MM-yyyy'}}
-            </h4>
+            <h5 class="card-title">ARM PD Report from {{dFrom | date: 'dd-MM-yyyy' }} to {{dTo |  date:'dd-MM-yyyy'}} </h5>
         </div>
         <div class="card-block">
             <div class="row">
-                <div class="form-group col-lg-3 col-md-6 rx-form-group">
+                <div class="form-group col-lg-3">
                     <label class="col-form-label">From</label>
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" [minDate]="dMin" [maxDate]="dMax" #dp="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue' }"
+                    [(ngModel)]="dFrom" (ngModelChange)="doAnalysis()">
                 </div>
-                <div class="form-group col-lg-3 col-md-6 rx-form-group">
+                <div class="form-group col-lg-3">
                     <label class="col-form-label">To</label>
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" [minDate]="dMin" [maxDate]="dMax" #dp="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue' }"
+                    [(ngModel)]="dTo" (ngModelChange)="doAnalysis()">
                 </div>
                 <div class="form-group col-lg-3">
                     <label class="col-form-label">Source</label>
@@ -35,16 +36,12 @@
         </div>
         <div class="card-body">
             <div class="card-body">
-                <div class="chart-wrapper" style="margin: 4%">
-                    <canvas baseChart class="chart" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColours" [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
-                </div>
             </div>
         </div>
     </div>
     <div class="card">
         <div class="card-block">
             <div class="col-md-8 col-lg-8">
-                
             </div>
             <div class="col-md-4 col-lg-4 card-tools">
                 <select class="sel-search" [(ngModel)]="search.field">

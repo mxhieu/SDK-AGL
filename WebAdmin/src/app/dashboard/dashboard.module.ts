@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ChartsModule } from 'ng2-charts/ng2-charts';
-import { DropdownModule } from 'ng2-bootstrap/dropdown';
+
 import { FormsModule } from '@angular/forms';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { PlayerComponent } from './player/player.component';
@@ -14,6 +13,10 @@ import { ArmComponent } from './arm/arm.component';
 import { RoiComponent } from './roi/roi.component';
 import { RoipdComponent } from './roipd/roipd.component';
 
+// Module
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+
 // 3rd party
 import { AmChartsModule } from "@amcharts/amcharts3-angular";
 
@@ -21,8 +24,8 @@ import { AmChartsModule } from "@amcharts/amcharts3-angular";
   imports: [
     CommonModule,
     DashboardRoutingModule,
-    ChartsModule,
-    DropdownModule,
+    BsDropdownModule.forRoot(),
+    BsDatepickerModule.forRoot(),
     FormsModule,
     AmChartsModule
   ],

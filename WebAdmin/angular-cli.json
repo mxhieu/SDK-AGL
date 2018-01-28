@@ -1,7 +1,7 @@
 {
   "project": {
-    "version": "1.0.0-alpha.3",
-    "name": "core-ui"
+    "version": "1.0.0",
+    "name": "game-sdk"
   },
   "apps": [
     {
@@ -16,11 +16,12 @@
       "prefix": "app",
       "mobile": false,
       "styles": [
+        "../node_modules/bootstrap/dist/css/bootstrap.min.css",
+        "../node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
         "scss/style.scss"
       ],
       "scripts": [
-        "../node_modules/chart.js/dist/Chart.bundle.min.js",
-        "../node_modules/chart.js/dist/Chart.min.js"
+        "../node_modules/jquery/dist/jquery.min.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {
@@ -34,6 +35,7 @@
       "config": "./protractor.conf.js"
     }
   },
+
   "lint": [
     {
       "files": "src/**/*.ts",
@@ -44,11 +46,6 @@
       "project": "e2e/tsconfig.json"
     }
   ],
-  "test": {
-    "karma": {
-      "config": "./karma.conf.js"
-    }
-  },
   "defaults": {
     "styleExt": "scss",
     "prefixInterfaces": false
