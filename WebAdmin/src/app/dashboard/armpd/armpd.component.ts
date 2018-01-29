@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AmChartsService, AmChart } from "@amcharts/amcharts3-angular";
 import { Service } from '../../service/service';
 import { ConfigService } from '../../service/service.config';
@@ -8,7 +8,9 @@ import { ConfigService } from '../../service/service.config';
 	styleUrls: ['./armpd.component.scss'],
 	templateUrl: './armpd.component.html'
 })
-export class ArmpdComponent implements OnInit {
+export class ArmpdComponent implements OnInit, OnDestroy {
+
+	chart: AmChart;
 
 	dFrom: Date;
 	dTo: Date;
@@ -86,169 +88,35 @@ export class ArmpdComponent implements OnInit {
 				"valueAlign": "left",
 				"valueWidth": 120
 			},
-			"dataProvider": [{
-				"date": "2018-01-14",
-				"install": 16000,
-				"nru": 10000,
-				"rr1": 40.71,
-				"townName": "New York",
-				"townName2": "New York",
-				"townSize": 25,
-				"duration": 408
-			}, {
-				"date": "2018-01-15",
-				"install": 22000,
-				"nru": 18000,
-				"rr1": 38.89,
-				"townName": "Washington",
-				"townSize": 14,
-				"duration": 482
-			}, {
-				"date": "2018-01-16",
-				"install": 16100,
-				"nru": 9000,
-				"rr1": 34.22,
-				"townName": "Wilmington",
-				"townSize": 6,
-				"duration": 562
-			}, {
-				"date": "2018-01-17",
-				"install": 15800,
-				"nru": 8000,
-				"rr1": 30.35,
-				"townName": "Jacksonville",
-				"townSize": 7,
-				"duration": 379
-			}, {
-				"date": "2018-01-18",
-				"install": 15500,
-				"nru": 5000,
-				"rr1": 25.83,
-				"townName": "Miami",
-				"townName2": "Miami",
-				"townSize": 10,
-				"duration": 501
-			}, {
-				"date": "2018-01-19",
-				"install": 14000,
-				"nru": 10000,
-				"rr1": 30.46,
-				"townName": "Tallahassee",
-				"townSize": 7,
-				"duration": 443
-			}, {
-				"date": "2018-01-20",
-				"install": 13800,
-				"nru": 7500,
-				"rr1": 29.94,
-				"townName": "New Orleans",
-				"townSize": 10,
-				"duration": 405
-			}, {
-				"date": "2018-01-21",
-				"install": 800,
-				"nru": 100,
-				"rr1": 29.76,
-				"townName": "Houston",
-				"townName2": "Houston",
-				"townSize": 16,
-				"duration": 309
-			}, {
-				"date": "2018-01-22",
-				"install": 700,
-				"nru": 800,
-				"rr1": 32.8,
-				"townName": "Dalas",
-				"townSize": 17,
-				"duration": 287
-			}, {
-				"date": "2018-01-23",
-				"install": 349,
-				"nru": 768,
-				"rr1": 35.49,
-				"townName": "Oklahoma City",
-				"townSize": 11,
-				"duration": 485
-			}, {
-				"date": "2018-01-24",
-				"install": 603,
-				"nru": 123,
-				"rr1": 39.1,
-				"townName": "Kansas City",
-				"townSize": 10,
-				"duration": 890
-			}, {
-				"date": "2018-01-25",
-				"install": 534,
-				"nru": 1820,
-				"rr1": 39.74,
-				"townName": "Denver",
-				"townName2": "Denver",
-				"townSize": 18,
-				"duration": 810
-			}, {
-				"date": "2018-01-26",
-				"install": 425,
-				"nru": 768,
-				"rr1": 40.75,
-				"townName": "Salt Lake City",
-				"townSize": 12,
-				"duration": 670,
-				"dashLength": 8,
-				"alpha": 0.4
-			}, {
-				"date": "2018-01-27",
-				"install": 0,
-				"nru": 0,
-				"rr1": 36.1,
-				"duration": 470,
-				"townName": "Las Vegas",
-				"townName2": "Las Vegas"
-			}, {
-				"date": "2018-01-28",
-				"install": 0,
-				"nru": 0,
-				"rr1": 0
-			}, {
-				"date": "2018-01-29",
-				"install": 0,
-				"nru": 0,
-				"rr1": 0
-			}],
+			"dataProvider": this.getChartData(),
 			"valueAxes": [{
 				"id": "installAxis",
 				"axisAlpha": 0,
 				"gridAlpha": 0,
 				"position": "left",
 				"title": ""
-			},{
+			}, {
 				"id": "nruAxis",
 				"axisAlpha": 0,
 				"gridAlpha": 0,
 				"position": "left",
 				"title": ""
-			},{
+			}, {
 				"id": "rr1Axis",
 				"axisAlpha": 0,
 				"gridAlpha": 0,
 				"labelsEnabled": false,
 				"position": "right"
 			}, {
-				"id": "durationAxis",
-				"duration": "mm",
-				"durationUnits": {
-					"hh": "h ",
-					"mm": "min"
-				},
+				"id": "rr7Axis",
 				"axisAlpha": 0,
 				"gridAlpha": 0,
-				"inside": true,
-				"position": "right",
-				"title": ""
+				"labelsEnabled": false,
+				"position": "right"
 			}],
 			"graphs": [{
 				"alphaField": "alpha",
-				"balloonText": "[[value]]",
+				"balloonText": "INSTALL:[[value]]",
 				"dashLengthField": "dashLength",
 				"fillAlphas": 0.7,
 				"legendPeriodValueText": "total: [[value.sum]]",
@@ -257,9 +125,9 @@ export class ArmpdComponent implements OnInit {
 				"type": "column",
 				"valueField": "install",
 				"valueAxis": "installAxis"
-			},{
+			}, {
 				"alphaField": "alpha",
-				"balloonText": "nru:[[value]]",
+				"balloonText": "NRU:[[value]]",
 				"dashLengthField": "dashLength",
 				"fillAlphas": 0.7,
 				"legendPeriodValueText": "total: [[value.sum]]",
@@ -268,8 +136,8 @@ export class ArmpdComponent implements OnInit {
 				"type": "column",
 				"valueField": "nru",
 				"valueAxis": "nruAxis"
-			},{
-				"balloonText": "rr1:[[value]]",
+			}, {
+				"balloonText": "RR1:[[value]]",
 				"bullet": "round",
 				"bulletBorderAlpha": 1,
 				"useLineColorForBulletBorder": true,
@@ -279,21 +147,27 @@ export class ArmpdComponent implements OnInit {
 				"descriptionField": "",
 				"labelPosition": "right",
 				"labelText": "[[]]",
-				"legendValueText": "[[value]]/[[description]]",
+				"legendValueText": "[[value]]",
 				"title": "RR1",
 				"fillAlphas": 0,
 				"valueField": "rr1",
 				"valueAxis": "rr1Axis"
 			}, {
-				"bullet": "square",
+				"balloonText": "RR7:[[value]]",
+				"bullet": "round",
 				"bulletBorderAlpha": 1,
-				"bulletBorderThickness": 1,
+				"useLineColorForBulletBorder": true,
+				"bulletColor": "#FFFFFF",
+				"bulletSizeField": "townSize",
 				"dashLengthField": "dashLength",
+				"descriptionField": "",
+				"labelPosition": "right",
+				"labelText": "[[]]",
 				"legendValueText": "[[value]]",
-				"title": "duration",
+				"title": "RR7",
 				"fillAlphas": 0,
-				"valueField": "duration",
-				"valueAxis": "durationAxis"
+				"valueField": "rr7",
+				"valueAxis": "rr7Axis"
 			}],
 			"chartCursor": {
 				"categoryBalloonDateFormat": "DD",
@@ -333,6 +207,101 @@ export class ArmpdComponent implements OnInit {
 
 	}
 
+	ngOnDestroy() {
+		if (this.chart)
+			this.AmCharts.destroyChart(this.chart);
+	}
+	getChartData(): any[] {
+		return [{
+			"date": "2018-01-14",
+			"install": 16000,
+			"nru": 10000,
+			"rr1": 40.71,
+			"rr7": 10.0
+		}, {
+			"date": "2018-01-15",
+			"install": 22000,
+			"nru": 18000,
+			"rr1": 38.89,
+			"rr7": 12.0
+		},{
+			"date": "2018-01-16",
+			"install": 16100,
+			"nru": 9000,
+			"rr1": 34.22,
+			"rr7": 25.1,
+			"duration": 562
+		},{
+			"date": "2018-01-17",
+			"install": 15800,
+			"nru": 8000,
+			"rr1": 30.35,
+			"rr7": 5.0
+		},{
+			"date": "2018-01-18",
+			"install": 15500,
+			"nru": 5000,
+			"rr1": 25.83,
+			"rr7": 14.5
+		},{
+			"date": "2018-01-19",
+			"install": 14000,
+			"nru": 10000,
+			"rr1": 30.46
+		},{
+			"date": "2018-01-20",
+			"install": 13800,
+			"nru": 7500,
+			"rr1": 29.94,
+			"rr7": 19.0
+		},{
+			"date": "2018-01-21",
+			"install": 800,
+			"nru": 100,
+			"rr1": 29.76,
+			"rr7": 24.2
+		},{
+			"date": "2018-01-22",
+			"install": 700,
+			"nru": 800,
+			"rr1": 32.8,
+			"rr7": 56.1
+		},{
+			"date": "2018-01-23",
+			"install": 349,
+			"nru": 768,
+			"rr1": 35.49,
+			"rr7": 17.5
+		},{
+			"date": "2018-01-24",
+			"install": 603,
+			"nru": 123,
+			"rr1": 39.1,
+			"rr7": 18.0
+		},{
+			"date": "2018-01-25",
+			"install": 534,
+			"nru": 1820,
+			"rr1": 39.74,
+			"rr7": 48.0,
+			"duration": 810
+		},{
+			"date": "2018-01-26",
+			"install": 425,
+			"nru": 768,
+			"rr1": 40.75,
+			"rr7": 12.0
+		},{
+			"date": "2018-01-27",
+			"install": 0,
+			"nru": 0,
+			"rr1": 36.1
+		}, {
+			"date": "2018-01-28",
+		}, {
+			"date": "2018-01-29",
+		}];
+	}
 
 	jumpPage(_page) {
 		_page = (_page <= 0) ? 1 : _page;

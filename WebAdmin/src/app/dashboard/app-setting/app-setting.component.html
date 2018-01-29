@@ -7,14 +7,16 @@
             <div class="form-group row">
                 <div class="col-lg-6 col-md-6">
                     <label class="col-form-label">Application Id</label>
-                    <input class="form-control" type="text" name="id" disabled value="{{appInfo._id}}" readonly="readonly">
+                    <input class="form-control" type="text" disabled value="{{appInfo._id}}" readonly="readonly">
                 </div>
                 <div class="col-lg-6 col-md-6">
                     <label class="col-form-label">Application Key</label>
                     <div class="row">
-                        <input class="form-control col-lg-8 col-md-8" type="text" name="key" disabled readonly="readonly" [(ngModel)]="appInfo.key">
+                        <div class="col-lg-8 col-md-8">
+                            <input class="form-control" type="text" disabled value="{{appInfo.key}}" readonly="readonly">
+                        </div>
                         <div class="col-lg-4 col-md-4">
-                            <button class="btn btn-danger" type="submit" (click)=(resetKey())>
+                            <button class="btn btn-danger" type="submit">
                                 <i class="icon-refresh"></i> Reset
                             </button>
                         </div>

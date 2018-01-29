@@ -1,19 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , OnDestroy} from '@angular/core';
 import { Service } from '../../service/service';
 import { ConfigService } from '../../service/service.config';
+import { AmChartsService, AmChart } from "@amcharts/amcharts3-angular";
 
 @Component({
   selector: 'app-roipd',
   templateUrl: './roipd.component.html',
   styleUrls: ['./roipd.component.scss']
 })
-export class RoipdComponent implements OnInit {
+export class RoipdComponent implements OnInit, OnDestroy {
 
 	dFrom: Date;
 	dTo: Date;
 	dOrganic: any;
 
 	data: any;
+	chart: AmChart;
 
 	paging: any;
 	isnext: any;
@@ -42,7 +44,7 @@ export class RoipdComponent implements OnInit {
 	];
 	platform = { 'id': '-1', 'name': 'all' };
 
-	constructor(private conf: ConfigService, private service: Service) {
+	constructor(private conf: ConfigService, private service: Service, private AmCharts: AmChartsService) {
 
 		// Timing
 		this.dTo = new Date();
@@ -72,9 +74,115 @@ export class RoipdComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
+this.chart = this.AmCharts.makeChart("chartdiv", {
+			"type": "serial",
+			"theme": "light",
+			"marginRight": 80,
+			"dataProvider": [{
+				"lineColor": "#b7e021",
+				"date": "2012-01-01",
+				"duration": 408
+			}, {
+				"date": "2012-01-02",
+				"duration": 482
+			}, {
+				"date": "2012-01-03",
+				"duration": 562
+			}, {
+				"date": "2012-01-04",
+				"duration": 379
+			}, {
+				"lineColor": "#fbd51a",
+				"date": "2012-01-05",
+				"duration": 501
+			}, {
+				"date": "2012-01-06",
+				"duration": 443
+			}, {
+				"date": "2012-01-07",
+				"duration": 405
+			}, {
+				"date": "2012-01-08",
+				"duration": 309,
+				"lineColor": "#2498d2"
+			}, {
+				"date": "2012-01-09",
+				"duration": 287
+			}, {
+				"date": "2012-01-10",
+				"duration": 485
+			}, {
+				"date": "2012-01-11",
+				"duration": 890
+			}, {
+				"date": "2012-01-12",
+				"duration": 810
+			}],
+			"balloon": {
+				"cornerRadius": 6,
+				"horizontalPadding": 15,
+				"verticalPadding": 10
+			},
+			"valueAxes": [{
+				"duration": "mm",
+				"durationUnits": {
+					"hh": "h ",
+					"mm": "min"
+				},
+				"axisAlpha": 0
+			}],
+			"graphs": [{
+				"bullet": "square",
+				"bulletBorderAlpha": 1,
+				"bulletBorderThickness": 1,
+				"fillAlphas": 0.3,
+				"fillColorsField": "lineColor",
+				"legendValueText": "[[value]]",
+				"lineColorField": "lineColor",
+				"title": "duration",
+				"valueField": "duration"
+			}],
+			"chartScrollbar": {
 
+			},
+			"chartCursor": {
+				"categoryBalloonDateFormat": "YYYY MMM DD",
+				"cursorAlpha": 0,
+				"fullWidth": true
+			},
+			"dataDateFormat": "YYYY-MM-DD",
+			"categoryField": "date",
+			"categoryAxis": {
+				"dateFormats": [{
+					"period": "DD",
+					"format": "DD"
+				}, {
+					"period": "WW",
+					"format": "MMM DD"
+				}, {
+					"period": "MM",
+					"format": "MMM"
+				}, {
+					"period": "YYYY",
+					"format": "YYYY"
+				}],
+				"parseDates": true,
+				"autoGridCount": false,
+				"axisColor": "#555555",
+				"gridAlpha": 0,
+				"gridCount": 50
+			},
+			"export": {
+				"enabled": true
+			}
+		});
 	}
 
+
+	ngOnDestroy() {
+		if (this.chart)
+			this.AmCharts.destroyChart(this.chart);
+	}
 
 	jumpPage(_page) {
 		_page = (_page <= 0) ? 1 : _page;

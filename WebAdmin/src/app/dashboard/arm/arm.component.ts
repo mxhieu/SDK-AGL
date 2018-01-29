@@ -11,123 +11,42 @@ import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 })
 export class ArmComponent implements OnInit, OnDestroy {
 
-	// Chart
-	chart: AmChart;
 	options: any;
+	chart: AmChart;
 
-	// Make armchart random data
-	makeRandomDataProvider() {
+	generateChartData(): any[] {
+		var chartData = [];
+		var firstDate = new Date();
+		firstDate.setDate(firstDate.getDate() - 100);
 
-		const dataProvider = [];
+		var visits = 1600;
+		var hits = 2900;
+		var views = 8700;
 
-		// Generate random data
-		for (let year = 1950; year <= 2005; ++year) {
-			dataProvider.push({
-				year: '' + year,
-				value: Math.floor(Math.random() * 100) - 50
+
+		for (var i = 0; i < 100; i++) {
+			// we create date objects here. In your data, you can have date strings
+			// and then set format of your dates using chart.dataDateFormat property,
+			// however when possible, use date objects, as this will speed up chart rendering.
+			var newDate = new Date(firstDate);
+			newDate.setDate(newDate.getDate() + i);
+
+			visits += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 10);
+			hits += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 10);
+			views += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 10);
+
+			chartData.push({
+				date: newDate,
+				visits: visits,
+				hits: hits,
+				views: views
 			});
 		}
-
-		return dataProvider;
+		return chartData;
 	}
 
-	chartData = [];
-
-
-	generateChartData() {
-
-		var firstDate = new Date();
-		firstDate.setTime(firstDate.getTime() - 10 * 24 * 60 * 60 * 1000);
-
-		for (var i = firstDate.getTime(); i < (firstDate.getTime() + 10 * 24 * 60 * 60 * 1000); i += 60 * 60 * 1000) {
-			var newDate = new Date(i);
-
-			if (i == firstDate.getTime()) {
-				var value1 = Math.round(Math.random() * 10) + 1;
-			} else {
-				var value1 = Math.round(this.chartData[this.chartData.length - 1].value1 / 100 * (90 + Math.round(Math.random() * 20)) * 100) / 100;
-			}
-
-			if (newDate.getHours() == 12) {
-				// we set daily data on 12th hour only
-				var value2 = Math.round(Math.random() * 12) + 1;
-				this.chartData.push({
-					date: newDate,
-					value1: value1,
-					value2: value2
-				});
-			} else {
-				this.chartData.push({
-					date: newDate,
-					value1: value1
-				});
-			}
-		}
-	}
-
-	// Make armchart options
-	makeOptions(dataProvider) {
-		return {
-			'type': 'serial',
-			'theme': 'light',
-			'marginTop': 0,
-			'marginRight': 80,
-			'dataProvider': dataProvider,
-			'valueAxes': [{
-				'axisAlpha': 0,
-				'position': 'left'
-			}],
-			'graphs': [{
-				'id': 'g1',
-				'balloonText': '[[category]]<br><b><span style=\'font-size:14px;\'>[[value]]</span></b>',
-				'bullet': 'round',
-				'bulletSize': 8,
-				'lineColor': '#d1655d',
-				'lineThickness': 2,
-				'negativeLineColor': '#637bb6',
-				'type': 'smoothedLine',
-				'valueField': 'value'
-			}],
-			'chartScrollbar': {
-				'graph': 'g1',
-				'gridAlpha': 0,
-				'color': '#888888',
-				'scrollbarHeight': 55,
-				'backgroundAlpha': 0,
-				'selectedBackgroundAlpha': 0.1,
-				'selectedBackgroundColor': '#888888',
-				'graphFillAlpha': 0,
-				'autoGridCount': true,
-				'selectedGraphFillAlpha': 0,
-				'graphLineAlpha': 0.2,
-				'graphLineColor': '#c2c2c2',
-				'selectedGraphLineColor': '#888888',
-				'selectedGraphLineAlpha': 1
-			},
-			'chartCursor': {
-				'categoryBalloonDateFormat': 'YYYY',
-				'cursorAlpha': 0,
-				'valueLineEnabled': true,
-				'valueLineBalloonEnabled': true,
-				'valueLineAlpha': 0.5,
-				'fullWidth': true
-			},
-			'dataDateFormat': 'YYYY',
-			'categoryField': 'year',
-			'categoryAxis': {
-				'minPeriod': 'YYYY',
-				'parseDates': true,
-				'minorGridAlpha': 0.1,
-				'minorGridEnabled': true
-			},
-			'export': {
-				'enabled': true
-			}
-		};
-	}
- 
 	dFrom: Date = new Date(); dTo: Date = new Date(); dMin: Date = new Date(); dMax: Date = new Date();
-  	bsConfig: Partial<BsDatepickerConfig>;
+	bsConfig: Partial<BsDatepickerConfig>;
 
 	data: any; paging: any; isnext: any; header: any; search: any;
 	sources = [];
@@ -142,7 +61,7 @@ export class ArmComponent implements OnInit, OnDestroy {
 		this.dFrom = new Date(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate() - 1000);
 		this.dMin = this.dFrom;
 		this.dMax = this.dTo;
-	    this.bsConfig = Object.assign({}, { containerClass: 'theme-dark-blue' });
+		this.bsConfig = Object.assign({}, { containerClass: 'theme-dark-blue' });
 
 		this.data = [];
 		this.platform = this.platforms[0];
@@ -174,7 +93,78 @@ export class ArmComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnInit(): void {
-		this.chart = this.AmCharts.makeChart('chartdiv', this.makeOptions(this.makeRandomDataProvider()));
+		this.chart = this.AmCharts.makeChart("chartdiv", {
+			"type": "serial",
+			"theme": "light",
+			"legend": {
+				"useGraphSettings": true
+			},
+			"dataProvider": this.generateChartData(),
+			"synchronizeGrid": true,
+			"valueAxes": [{
+				"id": "v1",
+				"axisColor": "#FF6600",
+				"axisThickness": 2,
+				"axisAlpha": 1,
+				"position": "left"
+			}, {
+				"id": "v2",
+				"axisColor": "#FCD202",
+				"axisThickness": 2,
+				"axisAlpha": 1,
+				"position": "right"
+			}, {
+				"id": "v3",
+				"axisColor": "#B0DE09",
+				"axisThickness": 2,
+				"gridAlpha": 0,
+				"offset": 50,
+				"axisAlpha": 1,
+				"position": "left"
+			}],
+			"graphs": [{
+				"valueAxis": "v1",
+				"lineColor": "#FF6600",
+				"bullet": "round",
+				"bulletBorderThickness": 1,
+				"hideBulletsCount": 30,
+				"title": "red line",
+				"valueField": "visits",
+				"fillAlphas": 0
+			}, {
+				"valueAxis": "v2",
+				"lineColor": "#FCD202",
+				"bullet": "square",
+				"bulletBorderThickness": 1,
+				"hideBulletsCount": 30,
+				"title": "yellow line",
+				"valueField": "hits",
+				"fillAlphas": 0
+			}, {
+				"valueAxis": "v3",
+				"lineColor": "#B0DE09",
+				"bullet": "triangleUp",
+				"bulletBorderThickness": 1,
+				"hideBulletsCount": 30,
+				"title": "green line",
+				"valueField": "views",
+				"fillAlphas": 0
+			}],
+			"chartScrollbar": {},
+			"chartCursor": {
+				"cursorPosition": "mouse"
+			},
+			"categoryField": "date",
+			"categoryAxis": {
+				"parseDates": true,
+				"axisColor": "#DADADA",
+				"minorGridEnabled": true
+			},
+			"export": {
+				"enabled": true,
+				"position": "bottom-right"
+			}
+		});
 	}
 
 	ngOnDestroy() {
