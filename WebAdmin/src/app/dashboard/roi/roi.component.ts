@@ -1,55 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Service } from '../../service/service';
 import { ConfigService } from '../../service/service.config';
+import { AmChartsService, AmChart } from "@amcharts/amcharts3-angular";
 
 @Component({
-  selector: 'app-roi',
-  templateUrl: './roi.component.html',
-  styleUrls: ['./roi.component.scss']
+	selector: 'app-roi',
+	templateUrl: './roi.component.html',
+	styleUrls: ['./roi.component.scss']
 })
-export class RoiComponent implements OnInit {
-
-  public lineChartData: Array<any> = [
-		{ data: [65, 59, 80, 81, 56, 55, 40], label: 'Install' },
-		{ data: [28, 48, 40, 19, 86, 27, 90], label: 'NRU' },
-		{ data: [18, 48, 77, 9, 100, 27, 40], label: 'RR1' },
-		{ data: [18, 48, 77, 9, 0, 27, 40], label: 'RR7' },
-		{ data: [18, 48, 77, 9, 0, 27, 40], label: 'RR30' }
-	];
-	public lineChartLabels: Array<any> = ['14 Jul', '15 Jul', '16 Jul', '17 Jul', '18 Jul', '19 Jul', '20 Jul'];
-	public lineChartOptions: any = {
-		animation: false,
-		responsive: true
-	};
-	public lineChartColours: Array<any> = [
-		{ // grey
-			backgroundColor: 'rgba(148,159,177,0.2)',
-			borderColor: 'rgba(148,159,177,1)',
-			pointBackgroundColor: 'rgba(148,159,177,1)',
-			pointBorderColor: '#fff',
-			pointHoverBackgroundColor: '#fff',
-			pointHoverBorderColor: 'rgba(148,159,177,0.8)'
-		},
-		{ // dark grey
-			backgroundColor: 'rgba(77,83,96,0.2)',
-			borderColor: 'rgba(77,83,96,1)',
-			pointBackgroundColor: 'rgba(77,83,96,1)',
-			pointBorderColor: '#fff',
-			pointHoverBackgroundColor: '#fff',
-			pointHoverBorderColor: 'rgba(77,83,96,1)'
-		},
-		{ // grey
-			backgroundColor: 'rgba(148,159,177,0.2)',
-			borderColor: 'rgba(148,159,177,1)',
-			pointBackgroundColor: 'rgba(148,159,177,1)',
-			pointBorderColor: '#fff',
-			pointHoverBackgroundColor: '#fff',
-			pointHoverBorderColor: 'rgba(148,159,177,0.8)'
-		}
-	];
-	
-	public lineChartLegend: boolean = true;
-	public lineChartType: string = 'line';
+export class RoiComponent implements OnInit , OnDestroy{
 
 	dFrom: Date;
 	dTo: Date;
@@ -62,6 +21,8 @@ export class RoiComponent implements OnInit {
 	header: any;
 
 	search: any;
+
+	chart: AmChart;
 
 	// Source list
 	sources = [];
@@ -84,7 +45,7 @@ export class RoiComponent implements OnInit {
 	];
 	platform = { 'id': '-1', 'name': 'all' };
 
-	constructor(private conf: ConfigService, private service: Service) {
+	constructor(private conf: ConfigService, private service: Service, private AmCharts: AmChartsService) {
 
 		// Timing
 		this.dTo = new Date();
@@ -92,7 +53,7 @@ export class RoiComponent implements OnInit {
 		this.data = [];
 		this.platform = this.platforms[0];
 		this.isnext = true;
-		this.search = { field: 'name', term: '' };
+		this.search = { field: 'source', term: '' };
 		this.paging = { pg_page: 1, pg_size: 10, st_col: 'date', st_type: -1 };
 		this.header = [
 			{ id: 'date', name: 'Date', is_search: 1, st_col: 'data', st_type: 1 },
@@ -114,9 +75,114 @@ export class RoiComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
+		this.chart = this.AmCharts.makeChart("chartdiv", {
+			"type": "serial",
+			"theme": "light",
+			"marginRight": 80,
+			"dataProvider": [{
+				"lineColor": "#b7e021",
+				"date": "2012-01-01",
+				"duration": 408
+			}, {
+				"date": "2012-01-02",
+				"duration": 482
+			}, {
+				"date": "2012-01-03",
+				"duration": 562
+			}, {
+				"date": "2012-01-04",
+				"duration": 379
+			}, {
+				"lineColor": "#fbd51a",
+				"date": "2012-01-05",
+				"duration": 501
+			}, {
+				"date": "2012-01-06",
+				"duration": 443
+			}, {
+				"date": "2012-01-07",
+				"duration": 405
+			}, {
+				"date": "2012-01-08",
+				"duration": 309,
+				"lineColor": "#2498d2"
+			}, {
+				"date": "2012-01-09",
+				"duration": 287
+			}, {
+				"date": "2012-01-10",
+				"duration": 485
+			}, {
+				"date": "2012-01-11",
+				"duration": 890
+			}, {
+				"date": "2012-01-12",
+				"duration": 810
+			}],
+			"balloon": {
+				"cornerRadius": 6,
+				"horizontalPadding": 15,
+				"verticalPadding": 10
+			},
+			"valueAxes": [{
+				"duration": "mm",
+				"durationUnits": {
+					"hh": "h ",
+					"mm": "min"
+				},
+				"axisAlpha": 0
+			}],
+			"graphs": [{
+				"bullet": "square",
+				"bulletBorderAlpha": 1,
+				"bulletBorderThickness": 1,
+				"fillAlphas": 0.3,
+				"fillColorsField": "lineColor",
+				"legendValueText": "[[value]]",
+				"lineColorField": "lineColor",
+				"title": "duration",
+				"valueField": "duration"
+			}],
+			"chartScrollbar": {
 
+			},
+			"chartCursor": {
+				"categoryBalloonDateFormat": "YYYY MMM DD",
+				"cursorAlpha": 0,
+				"fullWidth": true
+			},
+			"dataDateFormat": "YYYY-MM-DD",
+			"categoryField": "date",
+			"categoryAxis": {
+				"dateFormats": [{
+					"period": "DD",
+					"format": "DD"
+				}, {
+					"period": "WW",
+					"format": "MMM DD"
+				}, {
+					"period": "MM",
+					"format": "MMM"
+				}, {
+					"period": "YYYY",
+					"format": "YYYY"
+				}],
+				"parseDates": true,
+				"autoGridCount": false,
+				"axisColor": "#555555",
+				"gridAlpha": 0,
+				"gridCount": 50
+			},
+			"export": {
+				"enabled": true
+			}
+		});
 	}
 
+	ngOnDestroy() {
+		if (this.chart)
+			this.AmCharts.destroyChart(this.chart);
+	}
 
 	jumpPage(_page) {
 		_page = (_page <= 0) ? 1 : _page;
@@ -155,7 +221,7 @@ export class RoiComponent implements OnInit {
 			'startdate': this.dFrom.getTime(),
 			'enddate': this.dTo.getTime(),
 			'st_type': this.paging.st_type,
-			key: this.search.term
+			['search_' + this.search.field]: this.search.term
 		};
 		if (this.platform.id != '-1')
 			params.search_os = this.platform.name;

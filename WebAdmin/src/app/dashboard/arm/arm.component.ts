@@ -1,98 +1,73 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Service } from '../../service/service';
 import { ConfigService } from '../../service/service.config';
-import 'rxjs/Rx';
+import { AmChartsService, AmChart } from "@amcharts/amcharts3-angular";
+import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 
 @Component({
 	selector: 'app-arm',
 	templateUrl: './arm.component.html',
 	styleUrls: ['./arm.component.scss']
 })
-export class ArmComponent implements OnInit {
+export class ArmComponent implements OnInit, OnDestroy {
 
-	public lineChartData: Array<any> = [
-		{ data: [65, 59, 80, 81, 56, 55, 40], label: 'Install' },
-		{ data: [28, 48, 40, 19, 86, 27, 90], label: 'NRU' },
-		{ data: [18, 48, 77, 9, 100, 27, 40], label: 'RR1' },
-		{ data: [18, 48, 77, 9, 0, 27, 40], label: 'RR7' },
-		{ data: [18, 48, 77, 9, 0, 27, 40], label: 'RR30' }
-	];
-	public lineChartLabels: Array<any> = ['14 Jul', '15 Jul', '16 Jul', '17 Jul', '18 Jul', '19 Jul', '20 Jul'];
-	public lineChartOptions: any = {
-		animation: false,
-		responsive: true
-	};
-	public lineChartColours: Array<any> = [
-		{ // grey
-			backgroundColor: 'rgba(148,159,177,0.2)',
-			borderColor: 'rgba(148,159,177,1)',
-			pointBackgroundColor: 'rgba(148,159,177,1)',
-			pointBorderColor: '#fff',
-			pointHoverBackgroundColor: '#fff',
-			pointHoverBorderColor: 'rgba(148,159,177,0.8)'
-		},
-		{ // dark grey
-			backgroundColor: 'rgba(77,83,96,0.2)',
-			borderColor: 'rgba(77,83,96,1)',
-			pointBackgroundColor: 'rgba(77,83,96,1)',
-			pointBorderColor: '#fff',
-			pointHoverBackgroundColor: '#fff',
-			pointHoverBorderColor: 'rgba(77,83,96,1)'
-		},
-		{ // grey
-			backgroundColor: 'rgba(148,159,177,0.2)',
-			borderColor: 'rgba(148,159,177,1)',
-			pointBackgroundColor: 'rgba(148,159,177,1)',
-			pointBorderColor: '#fff',
-			pointHoverBackgroundColor: '#fff',
-			pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+	options: any;
+	chart: AmChart;
+
+	generateChartData(): any[] {
+		var chartData = [];
+		var firstDate = new Date();
+		firstDate.setDate(firstDate.getDate() - 100);
+
+		var visits = 1600;
+		var hits = 2900;
+		var views = 8700;
+
+
+		for (var i = 0; i < 100; i++) {
+			// we create date objects here. In your data, you can have date strings
+			// and then set format of your dates using chart.dataDateFormat property,
+			// however when possible, use date objects, as this will speed up chart rendering.
+			var newDate = new Date(firstDate);
+			newDate.setDate(newDate.getDate() + i);
+
+			visits += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 10);
+			hits += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 10);
+			views += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 10);
+
+			chartData.push({
+				date: newDate,
+				visits: visits,
+				hits: hits,
+				views: views
+			});
 		}
-	];
-	public lineChartLegend: boolean = true;
-	public lineChartType: string = 'line';
+		return chartData;
+	}
 
-	dFrom: Date;
-	dTo: Date;
-	dOrganic: any;
+	dFrom: Date = new Date(); dTo: Date = new Date(); dMin: Date = new Date(); dMax: Date = new Date();
+	bsConfig: Partial<BsDatepickerConfig>;
 
-	data: any;
-
-	paging: any;
-	isnext: any;
-	header: any;
-
-	search: any;
-
-	// Source list
+	data: any; paging: any; isnext: any; header: any; search: any;
 	sources = [];
 	source = { 'sourcename': "all", 'sourceid': '-1' };
-
-	// Platform
-	platforms = [
-		{
-			'id': '-1',
-			'name': 'all'
-		},
-		{
-			'id': 'android',
-			'name': 'android'
-		},
-		{
-			'id': 'ios',
-			'name': 'ios'
-		}
-	];
+	platforms = [{ 'id': '-1', 'name': 'all' }, { 'id': 'android', 'name': 'android' }, { 'id': 'ios', 'name': 'ios' }];
 	platform = { 'id': '-1', 'name': 'all' };
 
-	constructor(private conf: ConfigService, private service: Service) {
+	constructor(private conf: ConfigService, private service: Service, private AmCharts: AmChartsService) {
 
-		// Timing
+		// Date picker
 		this.dTo = new Date();
 		this.dFrom = new Date(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate() - 1000);
+		this.dMin = this.dFrom;
+		this.dMax = this.dTo;
+		this.bsConfig = Object.assign({}, { containerClass: 'theme-dark-blue' });
+
 		this.data = [];
 		this.platform = this.platforms[0];
+
 		this.isnext = true;
-		this.search = { field: 'name', term: '' };
+		this.search = { field: 'source', term: '' };
 		this.paging = { pg_page: 1, pg_size: 10, st_col: 'date', st_type: -1 };
 		this.header = [
 			{ id: 'date', name: 'Date', is_search: 1, st_col: 'date', st_type: 1 },
@@ -113,15 +88,89 @@ export class ArmComponent implements OnInit {
 			{ id: 'cr30', name: 'CR30', is_search: 1, st_col: 'cr30', st_type: 1 },
 			{ id: 'rev30', name: 'REV30', is_search: 1, st_col: 'rev30', st_type: 1 }
 		];
-
 		this.doAnalysis();
 		this.getSources();
 	}
 
 	ngOnInit(): void {
-
+		this.chart = this.AmCharts.makeChart("chartdiv", {
+			"type": "serial",
+			"theme": "light",
+			"legend": {
+				"useGraphSettings": true
+			},
+			"dataProvider": this.generateChartData(),
+			"synchronizeGrid": true,
+			"valueAxes": [{
+				"id": "v1",
+				"axisColor": "#FF6600",
+				"axisThickness": 2,
+				"axisAlpha": 1,
+				"position": "left"
+			}, {
+				"id": "v2",
+				"axisColor": "#FCD202",
+				"axisThickness": 2,
+				"axisAlpha": 1,
+				"position": "right"
+			}, {
+				"id": "v3",
+				"axisColor": "#B0DE09",
+				"axisThickness": 2,
+				"gridAlpha": 0,
+				"offset": 50,
+				"axisAlpha": 1,
+				"position": "left"
+			}],
+			"graphs": [{
+				"valueAxis": "v1",
+				"lineColor": "#FF6600",
+				"bullet": "round",
+				"bulletBorderThickness": 1,
+				"hideBulletsCount": 30,
+				"title": "red line",
+				"valueField": "visits",
+				"fillAlphas": 0
+			}, {
+				"valueAxis": "v2",
+				"lineColor": "#FCD202",
+				"bullet": "square",
+				"bulletBorderThickness": 1,
+				"hideBulletsCount": 30,
+				"title": "yellow line",
+				"valueField": "hits",
+				"fillAlphas": 0
+			}, {
+				"valueAxis": "v3",
+				"lineColor": "#B0DE09",
+				"bullet": "triangleUp",
+				"bulletBorderThickness": 1,
+				"hideBulletsCount": 30,
+				"title": "green line",
+				"valueField": "views",
+				"fillAlphas": 0
+			}],
+			"chartScrollbar": {},
+			"chartCursor": {
+				"cursorPosition": "mouse"
+			},
+			"categoryField": "date",
+			"categoryAxis": {
+				"parseDates": true,
+				"axisColor": "#DADADA",
+				"minorGridEnabled": true
+			},
+			"export": {
+				"enabled": true,
+				"position": "bottom-right"
+			}
+		});
 	}
 
+	ngOnDestroy() {
+		if (this.chart)
+			this.AmCharts.destroyChart(this.chart);
+	}
 
 	jumpPage(_page) {
 		_page = (_page <= 0) ? 1 : _page;
@@ -139,9 +188,9 @@ export class ArmComponent implements OnInit {
 		var idAttr = target.attributes.rxdata;
 		if (typeof (idAttr) != 'undefined') {
 			var tempcol = idAttr.nodeValue;
-			if (this.paging.st_col == tempcol) {
+			if (this.paging.st_col == tempcol)
 				this.paging.st_type *= -1;
-			} else {
+			else {
 				this.paging.st_col = tempcol;
 				this.paging.st_type = -1;
 			}
@@ -160,7 +209,7 @@ export class ArmComponent implements OnInit {
 			'startdate': Math.round(this.dFrom.getTime() / 1000),
 			'enddate': Math.round(this.dTo.getTime() / 1000),
 			'st_type': this.paging.st_type,
-			key: this.search.term
+			['search_' + this.search.field]: this.search.term
 		};
 		if (this.platform.id != '-1')
 			params.search_os = this.platform.name;

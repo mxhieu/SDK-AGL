@@ -13,7 +13,7 @@ export class FullLayoutComponent implements OnInit {
   fullname: string = '';
 
   constructor(private service: Service) {
-
+    
   }
 
   ngOnInit(): void {

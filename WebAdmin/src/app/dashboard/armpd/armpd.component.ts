@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import 'rxjs/Rx';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { AmChartsService, AmChart } from "@amcharts/amcharts3-angular";
 import { Service } from '../../service/service';
 import { ConfigService } from '../../service/service.config';
 
@@ -8,52 +8,12 @@ import { ConfigService } from '../../service/service.config';
 	styleUrls: ['./armpd.component.scss'],
 	templateUrl: './armpd.component.html'
 })
-export class ArmpdComponent implements OnInit {
+export class ArmpdComponent implements OnInit, OnDestroy {
 
-	public lineChartData: Array<any> = [
-		{ data: [65, 59, 80, 81, 56, 55, 40], label: 'Install' },
-		{ data: [28, 48, 40, 19, 86, 27, 90], label: 'NRU' },
-		{ data: [18, 48, 77, 9, 100, 27, 40], label: 'RR1' },
-		{ data: [18, 48, 77, 9, 0, 27, 40], label: 'RR7' },
-		{ data: [18, 48, 77, 9, 0, 27, 40], label: 'RR30' }
-	];
-	public lineChartLabels: Array<any> = ['14 Jul', '15 Jul', '16 Jul', '17 Jul', '18 Jul', '19 Jul', '20 Jul'];
-	public lineChartOptions: any = {
-		animation: false,
-		responsive: true
-	};
-	public lineChartColours: Array<any> = [
-		{ // grey
-			backgroundColor: 'rgba(148,159,177,0.2)',
-			borderColor: 'rgba(148,159,177,1)',
-			pointBackgroundColor: 'rgba(148,159,177,1)',
-			pointBorderColor: '#fff',
-			pointHoverBackgroundColor: '#fff',
-			pointHoverBorderColor: 'rgba(148,159,177,0.8)'
-		},
-		{ // dark grey
-			backgroundColor: 'rgba(77,83,96,0.2)',
-			borderColor: 'rgba(77,83,96,1)',
-			pointBackgroundColor: 'rgba(77,83,96,1)',
-			pointBorderColor: '#fff',
-			pointHoverBackgroundColor: '#fff',
-			pointHoverBorderColor: 'rgba(77,83,96,1)'
-		},
-		{ // grey
-			backgroundColor: 'rgba(148,159,177,0.2)',
-			borderColor: 'rgba(148,159,177,1)',
-			pointBackgroundColor: 'rgba(148,159,177,1)',
-			pointBorderColor: '#fff',
-			pointHoverBackgroundColor: '#fff',
-			pointHoverBorderColor: 'rgba(148,159,177,0.8)'
-		}
-	];
-	public lineChartLegend: boolean = true;
-	public lineChartType: string = 'line';
+	chart: AmChart;
 
 	dFrom: Date;
 	dTo: Date;
-	dOrganic: any;
 
 	data: any;
 
@@ -84,7 +44,7 @@ export class ArmpdComponent implements OnInit {
 	];
 	platform = { 'id': '-1', 'name': 'all' };
 
-	constructor(private conf: ConfigService, private service: Service) {
+	constructor(private conf: ConfigService, private service: Service, private AmCharts: AmChartsService) {
 
 		// Timing
 		this.dTo = new Date();
@@ -92,7 +52,7 @@ export class ArmpdComponent implements OnInit {
 		this.data = [];
 		this.platform = this.platforms[0];
 		this.isnext = true;
-		this.search = { field: 'name', term: '' };
+		this.search = { field: 'source', term: '' };
 		this.paging = { pg_page: 1, pg_size: 10, st_col: 'created_at', st_type: -1 };
 		this.header = [
 			{ id: 'date', name: 'Date', is_search: 1, st_col: 'data', st_type: 1 },
@@ -119,9 +79,229 @@ export class ArmpdComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
+		this.AmCharts.makeChart("chartdiv", {
+			"type": "serial",
+			"theme": "light",
+			"legend": {
+				"equalWidths": false,
+				"useGraphSettings": true,
+				"valueAlign": "left",
+				"valueWidth": 120
+			},
+			"dataProvider": this.getChartData(),
+			"valueAxes": [{
+				"id": "installAxis",
+				"axisAlpha": 0,
+				"gridAlpha": 0,
+				"position": "left",
+				"title": ""
+			}, {
+				"id": "nruAxis",
+				"axisAlpha": 0,
+				"gridAlpha": 0,
+				"position": "left",
+				"title": ""
+			}, {
+				"id": "rr1Axis",
+				"axisAlpha": 0,
+				"gridAlpha": 0,
+				"labelsEnabled": false,
+				"position": "right"
+			}, {
+				"id": "rr7Axis",
+				"axisAlpha": 0,
+				"gridAlpha": 0,
+				"labelsEnabled": false,
+				"position": "right"
+			}],
+			"graphs": [{
+				"alphaField": "alpha",
+				"balloonText": "INSTALL:[[value]]",
+				"dashLengthField": "dashLength",
+				"fillAlphas": 0.7,
+				"legendPeriodValueText": "total: [[value.sum]]",
+				"legendValueText": "[[value]]",
+				"title": "INSTALL",
+				"type": "column",
+				"valueField": "install",
+				"valueAxis": "installAxis"
+			}, {
+				"alphaField": "alpha",
+				"balloonText": "NRU:[[value]]",
+				"dashLengthField": "dashLength",
+				"fillAlphas": 0.7,
+				"legendPeriodValueText": "total: [[value.sum]]",
+				"legendValueText": "[[value]]",
+				"title": "NRU",
+				"type": "column",
+				"valueField": "nru",
+				"valueAxis": "nruAxis"
+			}, {
+				"balloonText": "RR1:[[value]]",
+				"bullet": "round",
+				"bulletBorderAlpha": 1,
+				"useLineColorForBulletBorder": true,
+				"bulletColor": "#FFFFFF",
+				"bulletSizeField": "townSize",
+				"dashLengthField": "dashLength",
+				"descriptionField": "",
+				"labelPosition": "right",
+				"labelText": "[[]]",
+				"legendValueText": "[[value]]",
+				"title": "RR1",
+				"fillAlphas": 0,
+				"valueField": "rr1",
+				"valueAxis": "rr1Axis"
+			}, {
+				"balloonText": "RR7:[[value]]",
+				"bullet": "round",
+				"bulletBorderAlpha": 1,
+				"useLineColorForBulletBorder": true,
+				"bulletColor": "#FFFFFF",
+				"bulletSizeField": "townSize",
+				"dashLengthField": "dashLength",
+				"descriptionField": "",
+				"labelPosition": "right",
+				"labelText": "[[]]",
+				"legendValueText": "[[value]]",
+				"title": "RR7",
+				"fillAlphas": 0,
+				"valueField": "rr7",
+				"valueAxis": "rr7Axis"
+			}],
+			"chartCursor": {
+				"categoryBalloonDateFormat": "DD",
+				"cursorAlpha": 0.1,
+				"cursorColor": "#000000",
+				"fullWidth": true,
+				"valueBalloonsEnabled": false,
+				"zoomable": false
+			},
+			"dataDateFormat": "YYYY-MM-DD",
+			"categoryField": "date",
+			"categoryAxis": {
+				"dateFormats": [{
+					"period": "DD",
+					"format": "DD"
+				}, {
+					"period": "WW",
+					"format": "MMM DD"
+				}, {
+					"period": "MM",
+					"format": "MMM"
+				}, {
+					"period": "YYYY",
+					"format": "YYYY"
+				}],
+				"parseDates": true,
+				"autoGridCount": false,
+				"axisColor": "#555555",
+				"gridAlpha": 0.1,
+				"gridColor": "#FFFFFF",
+				"gridCount": 50
+			},
+			"export": {
+				"enabled": true
+			}
+		});
 
 	}
 
+	ngOnDestroy() {
+		if (this.chart)
+			this.AmCharts.destroyChart(this.chart);
+	}
+	getChartData(): any[] {
+		return [{
+			"date": "2018-01-14",
+			"install": 16000,
+			"nru": 10000,
+			"rr1": 40.71,
+			"rr7": 10.0
+		}, {
+			"date": "2018-01-15",
+			"install": 22000,
+			"nru": 18000,
+			"rr1": 38.89,
+			"rr7": 12.0
+		},{
+			"date": "2018-01-16",
+			"install": 16100,
+			"nru": 9000,
+			"rr1": 34.22,
+			"rr7": 25.1,
+			"duration": 562
+		},{
+			"date": "2018-01-17",
+			"install": 15800,
+			"nru": 8000,
+			"rr1": 30.35,
+			"rr7": 5.0
+		},{
+			"date": "2018-01-18",
+			"install": 15500,
+			"nru": 5000,
+			"rr1": 25.83,
+			"rr7": 14.5
+		},{
+			"date": "2018-01-19",
+			"install": 14000,
+			"nru": 10000,
+			"rr1": 30.46
+		},{
+			"date": "2018-01-20",
+			"install": 13800,
+			"nru": 7500,
+			"rr1": 29.94,
+			"rr7": 19.0
+		},{
+			"date": "2018-01-21",
+			"install": 800,
+			"nru": 100,
+			"rr1": 29.76,
+			"rr7": 24.2
+		},{
+			"date": "2018-01-22",
+			"install": 700,
+			"nru": 800,
+			"rr1": 32.8,
+			"rr7": 56.1
+		},{
+			"date": "2018-01-23",
+			"install": 349,
+			"nru": 768,
+			"rr1": 35.49,
+			"rr7": 17.5
+		},{
+			"date": "2018-01-24",
+			"install": 603,
+			"nru": 123,
+			"rr1": 39.1,
+			"rr7": 18.0
+		},{
+			"date": "2018-01-25",
+			"install": 534,
+			"nru": 1820,
+			"rr1": 39.74,
+			"rr7": 48.0,
+			"duration": 810
+		},{
+			"date": "2018-01-26",
+			"install": 425,
+			"nru": 768,
+			"rr1": 40.75,
+			"rr7": 12.0
+		},{
+			"date": "2018-01-27",
+			"install": 0,
+			"nru": 0,
+			"rr1": 36.1
+		}, {
+			"date": "2018-01-28",
+		}, {
+			"date": "2018-01-29",
+		}];
+	}
 
 	jumpPage(_page) {
 		_page = (_page <= 0) ? 1 : _page;
@@ -160,7 +340,7 @@ export class ArmpdComponent implements OnInit {
 			'startdate': this.dFrom.getTime(),
 			'enddate': this.dTo.getTime(),
 			'st_type': this.paging.st_type,
-			key: this.search.term
+			['search_' + this.search.field]: this.search.term
 		};
 		if (this.platform.id != '-1')
 			params.search_os = this.platform.name;

@@ -5,16 +5,18 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
-import { DropdownModule } from 'ng2-bootstrap/dropdown';
-import { TabsModule } from 'ng2-bootstrap/tabs';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 import { NAV_DROPDOWN_DIRECTIVES } from './shared/nav-dropdown.directive';
 
-import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { FlashMessagesModule } from 'angular2-flash-messages';
+
+// Module
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+
 
 import { SIDEBAR_TOGGLE_DIRECTIVES } from './shared/sidebar.directive';
 import { AsideToggleDirective } from './shared/aside.directive';
-import { BreadcrumbsComponent } from './shared/breadcrumb.component';
 
 // Routing Module
 import { AppRoutingModule } from './app.routing';
@@ -32,7 +34,6 @@ import { p500Component } from './shared/500.component';
 import { RegisterComponent } from './user/register.component';
 import { AppsComponent } from './apps/apps.component';
 import { HeaderComponent } from './shared/header.component';
-import { WidgetsComponent } from './widgets/widgets.component';
 import { ContactComponent } from './contact/contact.component';
 import { BlogsComponent } from './blogs/blogs.component';
 import { DocumentsComponent } from './document/documents.component';
@@ -46,17 +47,16 @@ import { ForgotPasswordComponent } from './forgotpassword/forgotpassword.compone
         BrowserModule,
         FormsModule,
         AppRoutingModule,
-        DropdownModule.forRoot(),
-        TabsModule.forRoot(),
-        ChartsModule,
         HttpModule,
-        FlashMessagesModule
+        FlashMessagesModule,
+        BsDropdownModule.forRoot(),
+        BsDatepickerModule.forRoot(),
+        TabsModule.forRoot()
     ],
     declarations: [
         AppComponent,
         FullLayoutComponent,
         NAV_DROPDOWN_DIRECTIVES,
-        BreadcrumbsComponent,
         SIDEBAR_TOGGLE_DIRECTIVES,
         AsideToggleDirective,
         LoginComponent,
@@ -66,7 +66,6 @@ import { ForgotPasswordComponent } from './forgotpassword/forgotpassword.compone
         RegisterComponent,
         AppsComponent,
         HeaderComponent,
-        WidgetsComponent,
         ContactComponent,
         BlogsComponent,
         DocumentsComponent,

@@ -6,7 +6,6 @@ import { RegisterComponent } from './user/register.component';
 import { p404Component } from './shared/404.component';
 import { p500Component } from './shared/500.component';
 import { AppsComponent } from './apps/apps.component';
-import { WidgetsComponent } from './widgets/widgets.component';
 import { ContactComponent } from './contact/contact.component';
 import { BlogsComponent } from './blogs/blogs.component';
 import { DocumentsComponent } from './document/documents.component';
@@ -29,28 +28,12 @@ export const routes: Routes = [
     component: AppsComponent
   },
   {
-    path: 'widgets',
-    component: WidgetsComponent
-  },
-  {
     path: 'apps',
     component: FullLayoutComponent,
     children: [
       {
         path: 'admin',
         loadChildren: './dashboard/dashboard.module#DashboardModule'
-      },
-      {
-        path: 'components',
-        loadChildren: './components/components.module#ComponentsModule'
-      },
-      {
-        path: 'widgets',
-        loadChildren: './widgets/widgets.module#WidgetsModule'
-      },
-      {
-        path: 'charts',
-        loadChildren: './chartjs/chartjs.module#ChartJSModule'
       }
     ]
   },

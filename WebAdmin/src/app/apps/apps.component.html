@@ -92,10 +92,7 @@
             <tr *ngFor="let app of apps" style="cursor: pointer;" (click)=(onItemClick(app))>
                 <td class="text-center">
                     <div class="avatar">
-                        <img [src]="getUrl(app.icon)" 
-                            class="img-avatar"
-                            onError="this.src='./assets/img/ico_app_default.png'" 
-                            style="width: 64px; height: 64px;" />
+                        <img [src]="getUrl(app.icon)" class="img-avatar" onError="this.src='./assets/img/ico_app_default.png'" style="width: 64px; height: 64px;" />
                     </div>
                 </td>
                 <td align="center">
