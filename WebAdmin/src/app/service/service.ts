@@ -171,7 +171,7 @@ export class Service {
 	getApps(params, callback) {
 		this.get(this.config.API_APP_GET, params,
 			data => {
-				callback(data);
+				callback(Array.isArray(data) ? data : []);
 			});
 	}
 

@@ -4,10 +4,9 @@
             <div class="col-md-6">
                 <div class="card mx-2">
                     <div class="card-block p-2">
-                        <img src="../assets/img/favicon.png" alt="../assets/img/favicon.png"
-                        style="height: 72px; margin-left: auto; margin-right: auto; display: block;">
+                        <img src="../assets/img/favicon.png" alt="../assets/img/favicon.png" style="height: 72px; margin-left: auto; margin-right: auto; display: block;">
                         <h2 align="center">CoreSDK</h2>
-                        <p class="text-muted" align="center">Create your account. It's free and always will be. 
+                        <p class="text-muted" align="center">Create your account. It's free and always will be.
                             <a href="">Learn more</a>
                         </p>
                         <div class="input-group mb-1">
@@ -29,9 +28,11 @@
                             </span>
                             <input type="password" class="form-control" placeholder="Confirm password" [(ngModel)]="model.repassword">
                         </div>
-                        <button type="button" class="btn btn-block btn-success" (click)=register() >Create an account</button>
-                        <p class="text-muted" align="center">Already have account. 
-                            <a routerLinkActive="active" [routerLink]="['/login']">Login?</a>
+                        <button type="button" class="btn btn-block btn-success" (click)="register()">Create an account</button>
+                        <p align="center">
+                            <a href="#/login">
+                                    Back to Login
+                                </a>
                         </p>
                     </div>
                 </div>
