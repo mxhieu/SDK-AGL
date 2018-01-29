@@ -16,117 +16,118 @@
                             <input class="form-control" type="text" disabled value="{{appInfo.key}}" readonly="readonly">
                         </div>
                         <div class="col-lg-4 col-md-4">
-                            <button class="btn btn-danger" type="submit">
+                            <button class="btn btn-danger tright" type="submit">
                                 <i class="icon-refresh"></i> Reset
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="form-group row">
-                <div class="col-lg-6 col-md-6 row">
-                    <div class="col-lg-6 col-md-6">
-                        <label class="col-form-label-none">Enable app</label>
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6">
+                            <label class="col-form-label-none">Enable app</label>
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                            <label class="switch switch-text switch-pill switch-info tright">
+                                <input type="checkbox" class="switch-input" [checked]="appInfo.is_active" (change)=(onStatusChange())>
+                                <span class="switch-label" data-on="On" data-off="Off"></span>
+                                <span class="switch-handle"></span>
+                            </label>
+                        </div>
                     </div>
-                    <div class="col-lg-6 col-md-6">
-                        <label class="switch switch-text switch-pill switch-info tright">
-                            <input type="checkbox" class="switch-input" [checked]="appInfo.is_active" (change)=(onStatusChange())>
-                            <span class="switch-label" data-on="On" data-off="Off"></span>
-                            <span class="switch-handle"></span>
-                        </label>
+                    <hr>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6">
+                            <label class="col-form-label-none">Basic authorization</label>
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                            <label class="switch switch-text switch-pill switch-info tright">
+                                <input type="checkbox" class="switch-input" [(ngModel)]="appInfo.settings.is_formal_auth_enable" (change)=(update())>
+                                <span class="switch-label" data-on="On" data-off="Off"></span>
+                                <span class="switch-handle"></span>
+                            </label>
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-6 col-md-6 row">
-                    <div class="col-lg-6 col-md-6">
-                        <label class="col-form-label-none">Force update</label>
+                    <hr>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6">
+                            <label class="col-form-label-none">Quick play</label>
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                            <label class="switch switch-text switch-pill switch-info tright">
+                                <input type="checkbox" class="switch-input" [(ngModel)]="appInfo.settings.is_quickplay_enable" (change)=(update())>
+                                <span class="switch-label" data-on="On" data-off="Off"></span>
+                                <span class="switch-handle"></span>
+                            </label>
+                        </div>
                     </div>
-                    <div class="col-lg-6 col-md-6">
-                        <label class="switch switch-text switch-pill switch-info tright">
-                            <input type="checkbox" class="switch-input" [checked]="appInfo.settings.is_force_update" (change)=(update())>
-                            <span class="switch-label" data-on="On" data-off="Off"></span>
-                            <span class="switch-handle"></span>
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <hr>
-            <div class="form-group row">
-                <div class="col-lg-6 col-md-6 row">
-                    <div class="col-lg-6 col-md-6">
-                        <label class="col-form-label-none">Basic authorization</label>
-                    </div>
-                    <div class="col-lg-6 col-md-6">
-                        <label class="switch switch-text switch-pill switch-info tright">
-                            <input type="checkbox" class="switch-input" [(ngModel)]="appInfo.settings.is_formal_auth_enable" (change)=(update())>
-                            <span class="switch-label" data-on="On" data-off="Off"></span>
-                            <span class="switch-handle"></span>
-                        </label>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-6 row">
-                    <div class="col-lg-6 col-md-6">
-                        <label class="col-form-label-none">Facebook authorization</label>
-                    </div>
-                    <div class="col-lg-6 col-md-6">
-                        <label class="switch switch-text switch-pill switch-info tright">
-                            <input type="checkbox" class="switch-input" [(ngModel)]="appInfo.settings.is_facebook_auth_enable" (change)=(update())>
-                            <span class="switch-label" data-on="On" data-off="Off"></span>
-                            <span class="switch-handle"></span>
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <hr>
-            <div class="form-group row">
-                <div class="col-lg-6 col-md-6 row">
-                    <div class="col-lg-6 col-md-6">
-                        <label class="col-form-label-none">Quick play</label>
-                    </div>
-                    <div class="col-lg-6 col-md-6">
-                        <label class="switch switch-text switch-pill switch-info tright">
-                            <input type="checkbox" class="switch-input" [(ngModel)]="appInfo.settings.is_quickplay_enable" (change)=(update())>
-                            <span class="switch-label" data-on="On" data-off="Off"></span>
-                            <span class="switch-handle"></span>
-                        </label>
+                    <hr>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6">
+                            <label class="col-form-label-none">In-app purchase</label>
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                            <label class="switch switch-text switch-pill switch-info tright">
+                                <input type="checkbox" class="switch-input" [(ngModel)]="appInfo.settings.is_inapp_purchase_enable" (change)=(update())>
+                                <span class="switch-label" data-on="On" data-off="Off"></span>
+                                <span class="switch-handle"></span>
+                            </label>
+                        </div>
                     </div>
                 </div>
-                <div class="col-lg-6 col-md-6 row">
-                    <div class="col-lg-6 col-md-6">
-                        <label class="col-form-label-none">Google authorization</label>
+                <div class="col-lg-6 col-md-6">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6">
+                            <label class="col-form-label-none">Force update</label>
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                            <label class="switch switch-text switch-pill switch-info tright">
+                                <input type="checkbox" class="switch-input" [checked]="appInfo.settings.is_force_update" (change)=(update())>
+                                <span class="switch-label" data-on="On" data-off="Off"></span>
+                                <span class="switch-handle"></span>
+                            </label>
+                        </div>
                     </div>
-                    <div class="col-lg-6 col-md-6">
-                        <label class="switch switch-text switch-pill switch-info tright">
-                            <input type="checkbox" class="switch-input" [(ngModel)]="appInfo.settings.is_google_auth_enable" (change)=(update())>
-                            <span class="switch-label" data-on="On" data-off="Off"></span>
-                            <span class="switch-handle"></span>
-                        </label>
+                    <hr>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6">
+                            <label class="col-form-label-none">Facebook authorization</label>
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                            <label class="switch switch-text switch-pill switch-info tright">
+                                <input type="checkbox" class="switch-input" [(ngModel)]="appInfo.settings.is_facebook_auth_enable" (change)=(update())>
+                                <span class="switch-label" data-on="On" data-off="Off"></span>
+                                <span class="switch-handle"></span>
+                            </label>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <hr>
-            <div class="form-group row">
-                <div class="col-lg-6 col-md-6 row">
-                    <div class="col-lg-6 col-md-6">
-                        <label class="col-form-label-none">In-app purchase</label>
+                    <hr>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6">
+                            <label class="col-form-label-none">Google authorization</label>
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                            <label class="switch switch-text switch-pill switch-info tright">
+                                <input type="checkbox" class="switch-input" [(ngModel)]="appInfo.settings.is_google_auth_enable" (change)=(update())>
+                                <span class="switch-label" data-on="On" data-off="Off"></span>
+                                <span class="switch-handle"></span>
+                            </label>
+                        </div>
                     </div>
-                    <div class="col-lg-6 col-md-6">
-                        <label class="switch switch-text switch-pill switch-info tright">
-                            <input type="checkbox" class="switch-input" [(ngModel)]="appInfo.settings.is_inapp_purchase_enable" (change)=(update())>
-                            <span class="switch-label" data-on="On" data-off="Off"></span>
-                            <span class="switch-handle"></span>
-                        </label>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-6 row">
-                    <div class="col-lg-6 col-md-6">
-                        <label class="col-form-label-none">Card purchase</label>
-                    </div>
-                    <div class="col-lg-6 col-md-6">
-                        <label class="switch switch-text switch-pill switch-info tright">
-                            <input type="checkbox" class="switch-input" [(ngModel)]="appInfo.settings.is_card_purchase_enable" (change)=(update())>
-                            <span class="switch-label" data-on="On" data-off="Off"></span>
-                            <span class="switch-handle"></span>
-                        </label>
+                    <hr>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6">
+                            <label class="col-form-label-none">Card purchase</label>
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                            <label class="switch switch-text switch-pill switch-info tright">
+                                <input type="checkbox" class="switch-input" [(ngModel)]="appInfo.settings.is_card_purchase_enable" (change)=(update())>
+                                <span class="switch-label" data-on="On" data-off="Off"></span>
+                                <span class="switch-handle"></span>
+                            </label>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -176,6 +177,6 @@
         </div>
     </div>
     <div class="card-footer">
-        <button class="btn btn-sm btn-primary tright" (click)="update()"><i class="icon-check"></i> Save</button>
+        <button class="btn btn-primary tright" (click)="update()"><i class="icon-check"></i> Save</button>
     </div>
 </div>
