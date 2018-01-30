@@ -19,6 +19,7 @@ import { MetricComponent } from './metric/metric.component';
 // Module
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { GamereportComponent } from './gamereport/gamereport.component';
 
 @NgModule({
   imports: [
@@ -32,6 +33,6 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
   declarations: [
     PlayerComponent, AppSettingComponent, PaymentComponent,
     NotificationComponent, TelcoComponent, ArmpdComponent, ArmComponent,
-    RoiComponent, RoipdComponent, SourceslistComponent, MetricComponent]
+    RoiComponent, RoipdComponent, SourceslistComponent, MetricComponent, GamereportComponent]
 })
 export class DashboardModule { }

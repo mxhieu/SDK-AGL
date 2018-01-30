@@ -45,7 +45,6 @@ export class ArmComponent implements OnInit, OnDestroy {
 	}
 
 	dFrom: Date = new Date(); dTo: Date = new Date(); dMin: Date = new Date(); dMax: Date = new Date();
-	bsConfig: Partial<BsDatepickerConfig>;
 
 	data: any; paging: any; isnext: any; header: any; search: any;
 	sources = [];
@@ -60,7 +59,6 @@ export class ArmComponent implements OnInit, OnDestroy {
 		this.dFrom = new Date(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate() - 1000);
 		this.dMin = this.dFrom;
 		this.dMax = this.dTo;
-		this.bsConfig = Object.assign({}, { containerClass: 'theme-dark-blue' });
 
 		this.data = [];
 		this.platform = this.platforms[0];

@@ -11,45 +11,49 @@ import { RoiComponent } from './roi/roi.component';
 import { RoipdComponent } from './roipd/roipd.component';
 import { SourceslistComponent } from './sourceslist/sourceslist.component';
 import { MetricComponent } from './metric/metric.component';
+import { GamereportComponent } from './gamereport/gamereport.component';
 
 const routes: Routes = [
   {
     path: '',
     redirectTo: 'arm',
     pathMatch: 'full'
-  },{
+  }, {
     path: 'armpd',
     component: ArmpdComponent
-  },{
+  }, {
     path: 'arm',
     component: ArmComponent
-  },{
+  }, {
     path: 'roi',
     component: RoiComponent
-  },{
+  }, {
     path: 'roipd',
     component: RoipdComponent
-  },{
+  }, {
     path: 'player',
     component: PlayerComponent
-  },{
+  }, {
     path: 'setting',
     component: AppSettingComponent
-  },{
+  }, {
     path: 'payment',
     component: PaymentComponent
-  },{
+  }, {
     path: 'telco',
     component: TelcoComponent
-  },{
+  }, {
     path: 'notification',
     component: NotificationComponent
-  },{
+  }, {
     path: 'sourceslist',
     component: SourceslistComponent
   },{
     path: 'metric',
     component: MetricComponent
+  },{
+    path: 'gamereport',
+    component: GamereportComponent
   }
 ];
 

@@ -1,0 +1,34 @@
+<div class="animated fadeIn rx-relative">
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title"></h5>
+        </div>
+        <div class="card-block">
+            <div class="row">
+                <div class="form-group col-lg-6 col-md-6">
+                    <label class="col-form-label">From</label>
+                    <input type="text" class="form-control" [minDate]="dMin" [maxDate]="dMax" #dp="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue' }" [(ngModel)]="dFrom">
+                </div>
+                <div class="form-group col-lg-6 col-md-6">
+                    <label class="col-form-label">To</label>
+                    <input type="text" class="form-control" [minDate]="dMin" [maxDate]="dMax" #dp="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue' }" [(ngModel)]="dTo">
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-6 col-md-6">
+                    <label class="col-form-label">Source</label>
+                    <select class="form-control" [(ngModel)]="source">
+                        <option *ngFor="let s of sources" [ngValue]="s"> {{s.sourceid}} - {{s.sourcename}} </option>
+                    </select>
+                </div>
+                <div class="form-group col-lg-6 col-md-6">
+                    <label class="col-form-label">OS</label>
+                    <select class="form-control" [(ngModel)]="platform">
+                        <option *ngFor="let p of platforms" [ngValue]="p"> {{p.name}} </option>
+                    </select>
+                </div>
+            </div>
+            <button class="btn btn-success" (click)="doAnalysis()">Analytic</button>
+        </div>
+    </div>
+</div>
