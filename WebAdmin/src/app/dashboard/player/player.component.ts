@@ -8,17 +8,10 @@ import { ConfigService } from '../../service/service.config';
 })
 export class PlayerComponent implements OnInit {
 
-  data: any;
-
-  onerow: any;
-  paging: any;
-  isnext: any;
-  header: any;
-  search: any;
+  data: any; paging: any; isnext: any; header: any; search: any;
 
   constructor(private conf: ConfigService, private service: Service) {
 
-    this.onerow = {};
     this.data = [];
     this.isnext = true;
     this.search = { field: 'username', term: '' };

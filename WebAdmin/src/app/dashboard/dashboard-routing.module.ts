@@ -9,6 +9,8 @@ import { ArmpdComponent } from './armpd/armpd.component';
 import { ArmComponent } from './arm/arm.component';
 import { RoiComponent } from './roi/roi.component';
 import { RoipdComponent } from './roipd/roipd.component';
+import { SourceslistComponent } from './sourceslist/sourceslist.component';
+import { MetricComponent } from './metric/metric.component';
 
 const routes: Routes = [
   {
@@ -42,6 +44,12 @@ const routes: Routes = [
   },{
     path: 'notification',
     component: NotificationComponent
+  },{
+    path: 'sourceslist',
+    component: SourceslistComponent
+  },{
+    path: 'metric',
+    component: MetricComponent
   }
 ];
 

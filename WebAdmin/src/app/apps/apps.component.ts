@@ -23,7 +23,7 @@ export class AppsComponent implements OnInit {
 			{ id: 'name', name: 'Name', is_search: 1, st_col: 'name', st_type: 1 },
 			{ id: 'bundle_id', name: 'BundleId', is_search: 1, st_col: 'bundle_id', st_type: 1 },
 			{ id: 'version', name: 'Version', is_search: 1, st_col: 'version', st_type: 1 },
-			/*{ id: 'platform', name: 'Platform', is_search: 1, st_col: 'platform', st_type: 1 },*/
+			{ id: 'platform', name: 'Platform', is_search: 1, st_col: 'platform', st_type: 1 },
 			{ id: 'created_at', name: 'Created', is_search: 1, st_col: 'created_at', st_type: 1 },
 			{ id: 'is_active', name: 'Status', is_search: 1, st_col: 'is_active', st_type: 1 }
 		];

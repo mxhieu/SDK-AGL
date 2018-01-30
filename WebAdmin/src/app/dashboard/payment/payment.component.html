@@ -82,26 +82,26 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let item of items" style="cursor: pointer;" (click)=(onRowClick(item))>
-                        <td align="center">
+                        <td align="center" style="vertical-align: middle;">
                             {{item.id}}
                         </td>
-                        <td align="center">
+                        <td align="center" style="vertical-align: middle;">
                             {{item.name}}
                         </td>
-                        <td align="center">
+                        <td align="center" style="vertical-align: middle;">
                             {{item.desc}}
                         </td>
-                        <td align="center">
+                        <td align="center" style="vertical-align: middle;">
                             {{item.price}}
                         </td>
                         <td align="center">
                             <img [src]="getUrl(item.icon)" onError="this.src='./assets/img/ico_app_default.png'" style="width: 96px;" />
                         </td>
-                        <td align="center">
+                        <td align="center" style="vertical-align: middle;">
                             <span class="tag tag-success" *ngIf="item.is_active">Active</span>
                             <span class="tag tag-danger" *ngIf="!item.is_active">Inactive</span>
                         </td>
-                        <td align="center">
+                        <td align="center" style="vertical-align: middle;">
                             {{item.created_at * 1000 | date:'dd/MM/yyyy'}}
                         </td>
                     </tr>

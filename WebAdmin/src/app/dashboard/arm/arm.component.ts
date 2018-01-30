@@ -203,11 +203,11 @@ export class ArmComponent implements OnInit, OnDestroy {
 			'pg_page': this.paging.pg_page,
 			'pg_size': this.paging.pg_size,
 			'st_col': this.paging.st_col,
+			'st_type': this.paging.st_type,
 			'search_os': null,
 			'search_sourceid': null,
 			'startdate': Math.round(this.dFrom.getTime() / 1000),
 			'enddate': Math.round(this.dTo.getTime() / 1000),
-			'st_type': this.paging.st_type,
 			['search_' + this.search.field]: this.search.term
 		};
 		if (this.platform.id != '-1')
@@ -225,7 +225,7 @@ export class ArmComponent implements OnInit, OnDestroy {
 	getSources() {
 		this.service.getSources(data => {
 			this.sources.push({ 'sourcename': "Please choose OS", 'sourceid': '-1' });
-			this.sources = this.sources.concat(data);
+			this.sources = this.sources.concat(data.source);
 			this.source = this.sources[0];
 		});
 	}

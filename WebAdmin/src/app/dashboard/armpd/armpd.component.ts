@@ -357,7 +357,7 @@ export class ArmpdComponent implements OnInit, OnDestroy {
 	getSources() {
 		this.service.getSources(data => {
 			this.sources.push({ 'sourcename': "Please choose source", 'sourceid': '-1' });
-			this.sources = this.sources.concat(data);
+			this.sources = this.sources.concat(data.source);
 			this.source = this.sources[0];
 		});
 	}

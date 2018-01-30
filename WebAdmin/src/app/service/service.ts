@@ -196,7 +196,14 @@ export class Service {
 	}
 
 	getSources(callback) {
-		this.get(this.config.API_SOURCE_LIST, null,
+		this.get(this.config.API_SOURCE_LIST, 
+			{
+				'app_id': this.getAppId(),
+				'pg_page': 1,
+				'pg_size': 100,
+				'st_col': 'sourcename',
+				'st_type': 1,
+			},
 			data => {
 				callback(data);
 			});
