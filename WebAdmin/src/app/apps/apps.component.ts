@@ -16,14 +16,14 @@ export class AppsComponent implements OnInit {
 	data: any; paging: any; isnext: any; header: any; search: any;
 	constructor(private service: Service) {
 		this.isnext = true;
-		this.search = { field: 'created_at', term: '' };
-		this.paging = { pg_page: 1, pg_size: 10, st_col: 'created_at', st_type: -1 };
+		this.search = { field: 'name', term: '' };
+		this.paging = { pg_page: 1, pg_size: 10, st_col: 'name', st_type: -1 };
 		this.header = [
 			{ id: '_id', name: 'ID', is_search: 1, st_col: '_id', st_type: 1 },
 			{ id: 'name', name: 'Name', is_search: 1, st_col: 'name', st_type: 1 },
 			{ id: 'bundle_id', name: 'BundleId', is_search: 1, st_col: 'bundle_id', st_type: 1 },
 			{ id: 'version', name: 'Version', is_search: 1, st_col: 'version', st_type: 1 },
-			{ id: 'platform', name: 'Platform', is_search: 1, st_col: 'platform', st_type: 1 },
+			/*{ id: 'platform', name: 'Platform', is_search: 1, st_col: 'platform', st_type: 1 },*/
 			{ id: 'created_at', name: 'Created', is_search: 1, st_col: 'created_at', st_type: 1 },
 			{ id: 'is_active', name: 'Status', is_search: 1, st_col: 'is_active', st_type: 1 }
 		];
@@ -90,11 +90,11 @@ export class AppsComponent implements OnInit {
 	}
 	getApps() {
 		this.service.getApps({
-			/*'pg_page': this.paging.pg_page,
-			'pg_size': this.paging.pg_size,
 			'st_col': this.paging.st_col,
 			'st_type': this.paging.st_type,
-			['search_' + this.search.field]: this.search.term*/
+			'pg_page': this.paging.pg_page,
+			'pg_size': this.paging.pg_size,
+			['search_' + this.search.field]: this.search.term
 		}, data => {
 			this.apps = data;
 		});

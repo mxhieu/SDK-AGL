@@ -6,7 +6,7 @@
   "apps": [
     {
       "root": "src",
-      "outDir": "product",
+      "outDir": "sdk-admin",
       "assets": ["assets"],
       "index": "index.html",
       "main": "main.ts",
