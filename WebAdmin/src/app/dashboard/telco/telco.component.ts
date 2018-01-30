@@ -18,8 +18,7 @@ export class TelcoComponent implements OnInit {
 	isEdit: boolean;
 
 	constructor(
-		private config: ConfigService,
-		private service: Service) {
+		private config: ConfigService, private service: Service) {
 	}
 
 	ngOnInit() {

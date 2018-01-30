@@ -4,8 +4,7 @@ import { ConfigService } from '../../service/service.config';
 
 @Component({
   selector: 'app-player',
-  templateUrl: 'player.component.html',
-  styleUrls: ['./player.component.scss']
+  templateUrl: 'player.component.html'
 })
 export class PlayerComponent implements OnInit {
 

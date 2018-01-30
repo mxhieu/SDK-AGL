@@ -11,7 +11,6 @@ import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 })
 export class ArmComponent implements OnInit, OnDestroy {
 
-	options: any;
 	chart: AmChart;
 
 	generateChartData(): any[] {
@@ -50,9 +49,9 @@ export class ArmComponent implements OnInit, OnDestroy {
 
 	data: any; paging: any; isnext: any; header: any; search: any;
 	sources = [];
-	source = { 'sourcename': "all", 'sourceid': '-1' };
-	platforms = [{ 'id': '-1', 'name': 'all' }, { 'id': 'android', 'name': 'android' }, { 'id': 'ios', 'name': 'ios' }];
-	platform = { 'id': '-1', 'name': 'all' };
+	source = { 'sourcename': "Please choose source", 'sourceid': '-1' };
+	platforms = [{ 'id': '-1', 'name': 'Please choose OS' }, { 'id': 'android', 'name': 'android' }, { 'id': 'ios', 'name': 'ios' }];
+	platform = { 'id': '-1', 'name': 'Please choose OS' };
 
 	constructor(private conf: ConfigService, private service: Service, private AmCharts: AmChartsService) {
 
@@ -225,7 +224,7 @@ export class ArmComponent implements OnInit, OnDestroy {
 	}
 	getSources() {
 		this.service.getSources(data => {
-			this.sources.push({ 'sourcename': "all", 'sourceid': '-1' });
+			this.sources.push({ 'sourcename': "Please choose OS", 'sourceid': '-1' });
 			this.sources = this.sources.concat(data);
 			this.source = this.sources[0];
 		});

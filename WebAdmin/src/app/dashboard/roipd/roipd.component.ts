@@ -25,13 +25,13 @@ export class RoipdComponent implements OnInit, OnDestroy {
 
 	// Source list
 	sources = [];
-	source = { 'sourcename': "all", 'sourceid': '-1' };
+	source = { 'sourcename': "Please choose source", 'sourceid': '-1' };
 
 	// Platform
 	platforms = [
 		{
 			'id': '-1',
-			'name': 'all'
+			'name': 'Please choose OS'
 		},
 		{
 			'id': 'android',
@@ -42,7 +42,7 @@ export class RoipdComponent implements OnInit, OnDestroy {
 			'name': 'ios'
 		}
 	];
-	platform = { 'id': '-1', 'name': 'all' };
+	platform = { 'id': '-1', 'name': 'Please choose OS' };
 
 	constructor(private conf: ConfigService, private service: Service, private AmCharts: AmChartsService) {
 
@@ -237,7 +237,7 @@ this.chart = this.AmCharts.makeChart("chartdiv", {
 	}
 	getSources() {
 		this.service.getSources(data => {
-			this.sources.push({ 'sourcename': "all", 'sourceid': '-1' });
+			this.sources.push({ 'sourcename': "Please choose source", 'sourceid': '-1' });
 			this.sources = this.sources.concat(data);
 			this.source = this.sources[0];
 		});

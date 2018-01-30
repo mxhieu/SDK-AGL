@@ -3,7 +3,7 @@
         <div class="card">
             <!-- Form -->
             <div class="rx-floathide-form rx-isview" [hidden]="isHidden">
-                <div class="card rx-card-form">
+                <div class="card">
                     <div class="card-header">
                         <h5 class="card-title">Telco Item</h5>
                     </div>
@@ -61,13 +61,14 @@
         </div>
     </div>
     <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">Telco items</h5>
+        </div>
         <div class="card-block">
-            <h5 class="card-title">Telco items
-                <button class="btn btn-primary tright" (click)=(toggle())>
+            <button class="btn btn-primary tright" (click)=(toggle())>
                 <i class="icon-plus"></i> Create
-                </button>
-            </h5>
-            <table class="table table-hover table-outline mb-0 hidden-sm-down table-striped">
+            </button>
+            <table class="table table-hover mb-0 table-striped fixed table-bordered">
                 <thead class="thead-default">
                     <tr>
                         <th class="text-center rx-table-ico-head">Id</th>
@@ -75,8 +76,8 @@
                         <th class="text-center rx-table-ico-head">Description</th>
                         <th class="text-center rx-table-ico-head">Price (USD)</th>
                         <th class="text-center rx-table-ico-head">Image</th>
-                        <th class="text-center rx-table-ico-head">Created</th>
                         <th class="text-center rx-table-ico-head">Status</th>
+                        <th class="text-center rx-table-ico-head">Created</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -97,11 +98,11 @@
                             <img [src]="getUrl(item.icon)" onError="this.src='./assets/img/ico_app_default.png'" style="width: 96px;" />
                         </td>
                         <td align="center">
-                            <div class="small">{{item.created_at * 1000 | date:'dd/MM/yyyy HH:mm:ss'}}</div>
-                        </td>
-                        <td align="center">
                             <span class="tag tag-success" *ngIf="item.is_active">Active</span>
                             <span class="tag tag-danger" *ngIf="!item.is_active">Inactive</span>
+                        </td>
+                        <td align="center">
+                            {{item.created_at * 1000 | date:'dd/MM/yyyy'}}
                         </td>
                     </tr>
                 </tbody>
