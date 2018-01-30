@@ -90,29 +90,17 @@ export class ArmpdComponent implements OnInit, OnDestroy {
 			},
 			"dataProvider": this.getChartData(),
 			"valueAxes": [{
-				"id": "installAxis",
+				"id": "leftAxis",
 				"axisAlpha": 0,
 				"gridAlpha": 0,
 				"position": "left",
 				"title": ""
 			}, {
-				"id": "nruAxis",
+				"id": "rightAxis",
 				"axisAlpha": 0,
 				"gridAlpha": 0,
-				"position": "left",
+				"position": "right",
 				"title": ""
-			}, {
-				"id": "rr1Axis",
-				"axisAlpha": 0,
-				"gridAlpha": 0,
-				"labelsEnabled": false,
-				"position": "right"
-			}, {
-				"id": "rr7Axis",
-				"axisAlpha": 0,
-				"gridAlpha": 0,
-				"labelsEnabled": false,
-				"position": "right"
 			}],
 			"graphs": [{
 				"alphaField": "alpha",
@@ -124,7 +112,7 @@ export class ArmpdComponent implements OnInit, OnDestroy {
 				"title": "INSTALL",
 				"type": "column",
 				"valueField": "install",
-				"valueAxis": "installAxis"
+				"valueAxis": "leftAxis"
 			}, {
 				"alphaField": "alpha",
 				"balloonText": "NRU:[[value]]",
@@ -135,7 +123,7 @@ export class ArmpdComponent implements OnInit, OnDestroy {
 				"title": "NRU",
 				"type": "column",
 				"valueField": "nru",
-				"valueAxis": "nruAxis"
+				"valueAxis": "leftAxis"
 			}, {
 				"balloonText": "RR1:[[value]]",
 				"bullet": "round",
@@ -151,7 +139,7 @@ export class ArmpdComponent implements OnInit, OnDestroy {
 				"title": "RR1",
 				"fillAlphas": 0,
 				"valueField": "rr1",
-				"valueAxis": "rr1Axis"
+				"valueAxis": "rightAxis"
 			}, {
 				"balloonText": "RR7:[[value]]",
 				"bullet": "round",
@@ -167,7 +155,23 @@ export class ArmpdComponent implements OnInit, OnDestroy {
 				"title": "RR7",
 				"fillAlphas": 0,
 				"valueField": "rr7",
-				"valueAxis": "rr7Axis"
+				"valueAxis": "rightAxis"
+			}, {
+				"balloonText": "RR30:[[value]]",
+				"bullet": "round",
+				"bulletBorderAlpha": 1,
+				"useLineColorForBulletBorder": true,
+				"bulletColor": "#FFFFFF",
+				"bulletSizeField": "townSize",
+				"dashLengthField": "dashLength",
+				"descriptionField": "",
+				"labelPosition": "right",
+				"labelText": "[[]]",
+				"legendValueText": "[[value]]",
+				"title": "RR30",
+				"fillAlphas": 0,
+				"valueField": "rr30",
+				"valueAxis": "rightAxis"
 			}],
 			"chartCursor": {
 				"categoryBalloonDateFormat": "DD",
@@ -217,81 +221,84 @@ export class ArmpdComponent implements OnInit, OnDestroy {
 			"install": 16000,
 			"nru": 10000,
 			"rr1": 40.71,
-			"rr7": 10.0
+			"rr7": 10.0,
+			"rr30": 26.0
 		}, {
 			"date": "2018-01-15",
 			"install": 22000,
 			"nru": 18000,
 			"rr1": 38.89,
-			"rr7": 12.0
-		},{
+			"rr7": 12.0,
+			"rr30": 19.0
+		}, {
 			"date": "2018-01-16",
 			"install": 16100,
 			"nru": 9000,
 			"rr1": 34.22,
 			"rr7": 25.1,
-			"duration": 562
-		},{
+			"rr30": 19.0
+		}, {
 			"date": "2018-01-17",
 			"install": 15800,
 			"nru": 8000,
 			"rr1": 30.35,
 			"rr7": 5.0
-		},{
+		}, {
 			"date": "2018-01-18",
 			"install": 15500,
 			"nru": 5000,
 			"rr1": 25.83,
 			"rr7": 14.5
-		},{
+		}, {
 			"date": "2018-01-19",
 			"install": 14000,
 			"nru": 10000,
 			"rr1": 30.46
-		},{
+		}, {
 			"date": "2018-01-20",
 			"install": 13800,
 			"nru": 7500,
 			"rr1": 29.94,
 			"rr7": 19.0
-		},{
+		}, {
 			"date": "2018-01-21",
 			"install": 800,
 			"nru": 100,
 			"rr1": 29.76,
 			"rr7": 24.2
-		},{
+		}, {
 			"date": "2018-01-22",
 			"install": 700,
 			"nru": 800,
 			"rr1": 32.8,
 			"rr7": 56.1
-		},{
+		}, {
 			"date": "2018-01-23",
 			"install": 349,
 			"nru": 768,
 			"rr1": 35.49,
 			"rr7": 17.5
-		},{
+		}, {
 			"date": "2018-01-24",
 			"install": 603,
 			"nru": 123,
 			"rr1": 39.1,
 			"rr7": 18.0
-		},{
+		}, {
 			"date": "2018-01-25",
 			"install": 534,
 			"nru": 1820,
 			"rr1": 39.74,
 			"rr7": 48.0,
 			"duration": 810
-		},{
+		}, {
 			"date": "2018-01-26",
 			"install": 425,
 			"nru": 768,
 			"rr1": 40.75,
-			"rr7": 12.0
-		},{
+			"rr7": 12.0,
+			"rr30": 100
+		}, {
 			"date": "2018-01-27",
 			"install": 0,
 			"nru": 0,
@@ -300,6 +307,7 @@ export class ArmpdComponent implements OnInit, OnDestroy {
 			"date": "2018-01-28",
 		}, {
 			"date": "2018-01-29",
+			"rr30": 0
 		}];
 	}
 
