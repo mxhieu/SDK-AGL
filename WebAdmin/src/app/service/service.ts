@@ -53,9 +53,8 @@ export class Service {
 		params.append('authorization', this.getToken());
 
 		if (dParams) {
-			for (var key in dParams) {
+			for (var key in dParams) 
 				params.append(key, dParams[key]);
-			}
 		}
 		var options: RequestOptionsArgs = {
 			search: params,

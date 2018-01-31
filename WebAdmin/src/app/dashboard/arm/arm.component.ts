@@ -13,37 +13,6 @@ export class ArmComponent implements OnInit, OnDestroy {
 
 	chart: AmChart;
 
-	generateChartData(): any[] {
-		var chartData = [];
-		var firstDate = new Date();
-		firstDate.setDate(firstDate.getDate() - 100);
-
-		var visits = 1600;
-		var hits = 2900;
-		var views = 8700;
-
-
-		for (var i = 0; i < 100; i++) {
-			// we create date objects here. In your data, you can have date strings
-			// and then set format of your dates using chart.dataDateFormat property,
-			// however when possible, use date objects, as this will speed up chart rendering.
-			var newDate = new Date(firstDate);
-			newDate.setDate(newDate.getDate() + i);
-
-			visits += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 10);
-			hits += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 10);
-			views += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 10);
-
-			chartData.push({
-				date: newDate,
-				visits: visits,
-				hits: hits,
-				views: views
-			});
-		}
-		return chartData;
-	}
-
 	dFrom: Date = new Date(); dTo: Date = new Date(); dMin: Date = new Date(); dMax: Date = new Date();
 
 	data: any; paging: any; isnext: any; header: any; search: any;
@@ -87,83 +56,145 @@ export class ArmComponent implements OnInit, OnDestroy {
 		];
 		this.doAnalysis();
 		this.getSources();
+		this.getChart();
 	}
 
 	ngOnInit(): void {
+
+	}
+
+	makeChart(chartData: any[]){
+
 		this.chart = this.AmCharts.makeChart("chartdiv", {
 			"type": "serial",
 			"theme": "light",
 			"legend": {
-				"useGraphSettings": true
+				"equalWidths": false,
+				"useGraphSettings": true,
+				"valueAlign": "left",
+				"valueWidth": 120
 			},
-			"dataProvider": this.generateChartData(),
-			"synchronizeGrid": true,
+			"dataProvider": chartData,
 			"valueAxes": [{
-				"id": "v1",
-				"axisColor": "#FF6600",
-				"axisThickness": 2,
-				"axisAlpha": 1,
-				"position": "left"
-			}, {
-				"id": "v2",
-				"axisColor": "#FCD202",
-				"axisThickness": 2,
-				"axisAlpha": 1,
-				"position": "right"
-			}, {
-				"id": "v3",
-				"axisColor": "#B0DE09",
-				"axisThickness": 2,
+				"id": "leftAxis",
+				"axisAlpha": 0,
 				"gridAlpha": 0,
-				"offset": 50,
-				"axisAlpha": 1,
-				"position": "left"
+				"position": "left",
+				"title": ""
+			}, {
+				"id": "rightAxis",
+				"axisAlpha": 0,
+				"gridAlpha": 0,
+				"position": "right",
+				"title": ""
 			}],
 			"graphs": [{
-				"valueAxis": "v1",
-				"lineColor": "#FF6600",
+				"alphaField": "alpha",
+				"balloonText": "INSTALL:[[value]]",
+				"dashLengthField": "dashLength",
+				"fillAlphas": 0.7,
+				"legendPeriodValueText": "total: [[value.sum]]",
+				"legendValueText": "[[value]]",
+				"title": "INSTALL",
+				"type": "column",
+				"valueField": "install",
+				"valueAxis": "leftAxis"
+			}, {
+				"alphaField": "alpha",
+				"balloonText": "NRU:[[value]]",
+				"dashLengthField": "dashLength",
+				"fillAlphas": 0.7,
+				"legendPeriodValueText": "total: [[value.sum]]",
+				"legendValueText": "[[value]]",
+				"title": "NRU",
+				"type": "column",
+				"valueField": "nru",
+				"valueAxis": "leftAxis"
+			}, {
+				"balloonText": "RR1:[[value]]",
 				"bullet": "round",
-				"bulletBorderThickness": 1,
-				"hideBulletsCount": 30,
-				"title": "red line",
-				"valueField": "visits",
-				"fillAlphas": 0
+				"bulletBorderAlpha": 1,
+				"useLineColorForBulletBorder": true,
+				"bulletColor": "#FFFFFF",
+				"bulletSizeField": "townSize",
+				"dashLengthField": "dashLength",
+				"descriptionField": "",
+				"labelPosition": "right",
+				"labelText": "[[]]",
+				"legendValueText": "[[value]]",
+				"title": "RR1",
+				"fillAlphas": 0,
+				"valueField": "rr1",
+				"valueAxis": "rightAxis"
 			}, {
-				"valueAxis": "v2",
-				"lineColor": "#FCD202",
-				"bullet": "square",
-				"bulletBorderThickness": 1,
-				"hideBulletsCount": 30,
-				"title": "yellow line",
-				"valueField": "hits",
-				"fillAlphas": 0
+				"balloonText": "RR7:[[value]]",
+				"bullet": "round",
+				"bulletBorderAlpha": 1,
+				"useLineColorForBulletBorder": true,
+				"bulletColor": "#FFFFFF",
+				"bulletSizeField": "townSize",
+				"dashLengthField": "dashLength",
+				"descriptionField": "",
+				"labelPosition": "right",
+				"labelText": "[[]]",
+				"legendValueText": "[[value]]%",
+				"title": "RR7",
+				"fillAlphas": 0,
+				"valueField": "rr7",
+				"valueAxis": "rightAxis"
 			}, {
-				"valueAxis": "v3",
-				"lineColor": "#B0DE09",
-				"bullet": "triangleUp",
-				"bulletBorderThickness": 1,
-				"hideBulletsCount": 30,
-				"title": "green line",
-				"valueField": "views",
-				"fillAlphas": 0
+				"balloonText": "RR30:[[value]]",
+				"bullet": "round",
+				"bulletBorderAlpha": 1,
+				"useLineColorForBulletBorder": true,
+				"bulletColor": "#FFFFFF",
+				"bulletSizeField": "townSize",
+				"dashLengthField": "dashLength",
+				"descriptionField": "",
+				"labelPosition": "right",
+				"labelText": "[[]]",
+				"legendValueText": "[[value]]%",
+				"title": "RR30",
+				"fillAlphas": 0,
+				"valueField": "rr30",
+				"valueAxis": "rightAxis"
 			}],
-			"chartScrollbar": {},
 			"chartCursor": {
-				"cursorPosition": "mouse"
+				"categoryBalloonDateFormat": "DD",
+				"cursorAlpha": 0.1,
+				"cursorColor": "#000000",
+				"fullWidth": true,
+				"valueBalloonsEnabled": false,
+				"zoomable": false
 			},
+			"dataDateFormat": "YYYY-MM-DD",
 			"categoryField": "date",
 			"categoryAxis": {
+				"dateFormats": [{
+					"period": "DD",
+					"format": "DD"
+				}, {
+					"period": "WW",
+					"format": "MMM DD"
+				}, {
+					"period": "MM",
+					"format": "MMM"
+				}, {
+					"period": "YYYY",
+					"format": "YYYY"
+				}],
 				"parseDates": true,
-				"axisColor": "#DADADA",
-				"minorGridEnabled": true
+				"autoGridCount": false,
+				"axisColor": "#555555",
+				"gridAlpha": 0.1,
+				"gridColor": "#FFFFFF",
+				"gridCount": 50
 			},
 			"export": {
-				"enabled": true,
-				"position": "bottom-right"
+				"enabled": true
 			}
 		});
 	}
-
 	ngOnDestroy() {
 		if (this.chart)
 			this.AmCharts.destroyChart(this.chart);
@@ -228,4 +259,15 @@ export class ArmComponent implements OnInit, OnDestroy {
 		});
 	}
 
+	getChart() {
+		this.service.get(this.conf.API_REPORT_ARM_CHART,
+			{
+				'app_id': this.service.getAppId(),
+				'startdate': Math.round(this.dFrom.getTime() / 1000),
+				'enddate': Math.round(this.dTo.getTime() / 1000),
+			},
+			data => {
+				this.makeChart(data);
+			});
+	}
 }
