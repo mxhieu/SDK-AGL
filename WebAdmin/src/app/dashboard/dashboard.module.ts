@@ -4,6 +4,10 @@ import { FormsModule } from '@angular/forms';
 import { AmChartsModule } from "@amcharts/amcharts3-angular";
 import { DashboardRoutingModule } from './dashboard-routing.module';
 
+// Module
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+
 import { PlayerComponent } from './player/player.component';
 import { AppSettingComponent } from './app-setting/app-setting.component';
 import { PaymentComponent } from './payment/payment.component';
@@ -15,11 +19,10 @@ import { RoiComponent } from './roi/roi.component';
 import { RoipdComponent } from './roipd/roipd.component';
 import { SourceslistComponent } from './sourceslist/sourceslist.component';
 import { MetricComponent } from './metric/metric.component';
-
-// Module
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { GamereportComponent } from './gamereport/gamereport.component';
+import { FilterComponent } from './filter/filter.component';
+import { ProductreportComponent } from './productreport/productreport.component';
+
 
 @NgModule({
   imports: [
@@ -33,6 +36,6 @@ import { GamereportComponent } from './gamereport/gamereport.component';
   declarations: [
     PlayerComponent, AppSettingComponent, PaymentComponent,
     NotificationComponent, TelcoComponent, ArmpdComponent, ArmComponent,
-    RoiComponent, RoipdComponent, SourceslistComponent, MetricComponent, GamereportComponent]
+    RoiComponent, RoipdComponent, SourceslistComponent, MetricComponent, GamereportComponent, FilterComponent, ProductreportComponent]
 })
 export class DashboardModule { }

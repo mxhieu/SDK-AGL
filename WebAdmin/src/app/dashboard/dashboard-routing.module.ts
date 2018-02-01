@@ -12,6 +12,7 @@ import { RoipdComponent } from './roipd/roipd.component';
 import { SourceslistComponent } from './sourceslist/sourceslist.component';
 import { MetricComponent } from './metric/metric.component';
 import { GamereportComponent } from './gamereport/gamereport.component';
+import { ProductreportComponent } from './productreport/productreport.component';
 
 const routes: Routes = [
   {
@@ -48,12 +49,15 @@ const routes: Routes = [
   }, {
     path: 'sourceslist',
     component: SourceslistComponent
-  },{
+  }, {
     path: 'metric',
     component: MetricComponent
-  },{
+  }, {
     path: 'gamereport',
     component: GamereportComponent
+  }, {
+    path: 'productreport',
+    component: ProductreportComponent
   }
 ];
 
