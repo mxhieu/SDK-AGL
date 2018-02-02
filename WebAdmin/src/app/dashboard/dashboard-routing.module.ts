@@ -13,6 +13,7 @@ import { SourceslistComponent } from './sourceslist/sourceslist.component';
 import { MetricComponent } from './metric/metric.component';
 import { GamereportComponent } from './gamereport/gamereport.component';
 import { ProductreportComponent } from './productreport/productreport.component';
+import { PureportComponent } from './pureport/pureport.component';
 
 const routes: Routes = [
   {
@@ -55,9 +56,12 @@ const routes: Routes = [
   }, {
     path: 'gamereport',
     component: GamereportComponent
-  }, {
+  },{
     path: 'productreport',
     component: ProductreportComponent
+  },{
+    path: 'pureport',
+    component: PureportComponent
   }
 ];
 

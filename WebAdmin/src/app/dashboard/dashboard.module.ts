@@ -22,6 +22,7 @@ import { MetricComponent } from './metric/metric.component';
 import { GamereportComponent } from './gamereport/gamereport.component';
 import { FilterComponent } from './filter/filter.component';
 import { ProductreportComponent } from './productreport/productreport.component';
+import { PureportComponent } from './pureport/pureport.component';
 
 
 @NgModule({
@@ -36,6 +37,6 @@ import { ProductreportComponent } from './productreport/productreport.component'
   declarations: [
     PlayerComponent, AppSettingComponent, PaymentComponent,
     NotificationComponent, TelcoComponent, ArmpdComponent, ArmComponent,
-    RoiComponent, RoipdComponent, SourceslistComponent, MetricComponent, GamereportComponent, FilterComponent, ProductreportComponent]
+    RoiComponent, RoipdComponent, SourceslistComponent, MetricComponent, GamereportComponent, FilterComponent, ProductreportComponent, PureportComponent]
 })
 export class DashboardModule { }

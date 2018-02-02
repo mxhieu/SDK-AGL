@@ -54,16 +54,15 @@ export class ArmComponent implements OnInit, OnDestroy {
 			{ id: 'cr30', name: 'CR30', is_search: 1, st_col: 'cr30', st_type: 1 },
 			{ id: 'rev30', name: 'REV30', is_search: 1, st_col: 'rev30', st_type: 1 }
 		];
-		this.doAnalysis();
 		this.getSources();
-		this.getChart();
+		this.doAnalysis();
 	}
 
 	ngOnInit(): void {
 
 	}
 
-	makeChart(chartData: any[]){
+	makeChart(chartData: any[]) {
 
 		this.chart = this.AmCharts.makeChart("chartdiv", {
 			"type": "serial",
@@ -234,7 +233,7 @@ export class ArmComponent implements OnInit, OnDestroy {
 			'st_col': this.paging.st_col,
 			'st_type': this.paging.st_type,
 			'search_os': null,
-			'search_sourceid': null,
+			'search_source': null,
 			'startdate': Math.round(this.dFrom.getTime() / 1000),
 			'enddate': Math.round(this.dTo.getTime() / 1000),
 			['search_' + this.search.field]: this.search.term
@@ -250,6 +249,7 @@ export class ArmComponent implements OnInit, OnDestroy {
 				this.data = Array.isArray(data) ? data : [];
 				this.isnext = (this.data.length >= this.paging.pg_size) ? true : false;
 			});
+		this.getChart();
 	}
 	getSources() {
 		this.service.getSources(data => {
@@ -260,14 +260,21 @@ export class ArmComponent implements OnInit, OnDestroy {
 	}
 
 	getChart() {
-		this.service.get(this.conf.API_REPORT_ARM_CHART,
-			{
-				'app_id': this.service.getAppId(),
-				'startdate': Math.round(this.dFrom.getTime() / 1000),
-				'enddate': Math.round(this.dTo.getTime() / 1000),
-			},
-			data => {
-				this.makeChart(data);
-			});
+		var params = {
+			'app_id': this.service.getAppId(),
+			'search_os': null,
+			'search_source': null,
+			'startdate': Math.round(this.dFrom.getTime() / 1000),
+			'enddate': Math.round(this.dTo.getTime() / 1000)
+		};
+		if (this.platform.id != '-1')
+			params.search_os = this.platform.name;
+
+		if (this.source.sourceid != '-1')
+			params.search_source = this.source.sourceid;
+
+		this.service.get(this.conf.API_REPORT_ARM_CHART, params, data => {
+			this.makeChart(data);
+		});
 	}
 }
