@@ -14,6 +14,7 @@ import { MetricComponent } from './metric/metric.component';
 import { GamereportComponent } from './gamereport/gamereport.component';
 import { ProductreportComponent } from './productreport/productreport.component';
 import { PureportComponent } from './pureport/pureport.component';
+import { CohortComponent } from './cohort/cohort.component';
 
 const routes: Routes = [
   {
@@ -62,6 +63,10 @@ const routes: Routes = [
   },{
     path: 'pureport',
     component: PureportComponent
+  },
+  {
+    path: 'cohort',
+    component: CohortComponent
   }
 ];
 

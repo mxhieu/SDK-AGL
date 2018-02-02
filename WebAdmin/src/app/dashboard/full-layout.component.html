@@ -5,10 +5,21 @@
             <ul class="nav">
                 <li class="nav-title"> Reports </li>
                 <li class="nav-item">
+                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/arm']">
+                        <i class="icon-pie-chart"></i> 
+                        ARM Report
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/armpd']">
+                        <i class="icon-chart"></i> 
+                        ARM PD Report
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/gamereport']">
                         <i class="icon-pie-chart"></i> 
-                        Game Report
-                        <span class="badge badge-primary">NEW</span>
+                        Game Report                        
                     </a>
                 </li>
                 <li class="nav-item">
@@ -36,16 +47,10 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/arm']">
+                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/cohort']">
                         <i class="icon-pie-chart"></i> 
-                        ARM Report
+                        Cohort
                         <span class="badge badge-primary">NEW</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/armpd']">
-                        <i class="icon-chart"></i> 
-                        ARM PD Report
                     </a>
                 </li>
                 <li class="divider"></li>
