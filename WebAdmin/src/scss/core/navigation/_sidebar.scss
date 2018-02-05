@@ -62,7 +62,7 @@
   }
 
   ul.nav {
-    @include sidebar-width($sidebar-borders, $sidebar-width);
+    // @include sidebar-width($sidebar-borders, $sidebar-width);
     flex-direction: column !important;
 
     li.nav-title {

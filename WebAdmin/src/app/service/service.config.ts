@@ -72,11 +72,13 @@ export class ConfigService {
   API_REPORT_ARM = PrivateService.BASE_URL  + 'report-arm';
   API_REPORT_ARM_CHART = PrivateService.BASE_URL  + 'report-arm/chart';
   API_REPORT_ARM_PD = PrivateService.BASE_URL  + 'report-armPd';
+  API_REPORT_ARM_PD_CHART = PrivateService.BASE_URL  + 'report-armPd/chart';
   API_SOURCE_LIST = PrivateService.BASE_URL + 'listsource';
   API_REPORT_ROI = PrivateService.BASE_URL + 'report-roi';
   API_REPORT_ROI_PD = PrivateService.BASE_URL + 'report-roiPd';
   API_REPORT_GAME = PrivateService.BASE_URL + 'report-roiPd';
   API_REPORT_PRODUCT = PrivateService.BASE_URL + 'report-roiPd';
+  API_REPORT_COHORT = PrivateService.BASE_URL + 'report-cohort';
 
   public setFullname(fullname: string) {
     Cookie.set(this.USER_FULLNAME, fullname);

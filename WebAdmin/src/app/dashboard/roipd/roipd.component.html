@@ -31,7 +31,7 @@
             <button class="btn btn-success" (click)="doAnalysis()">Analytic</button>
         </div>
     </div>
-    <div class="card">
+<!--     <div class="card">
         <div class="card-header">
             <h5 class="card-title">Acquisition Retention </h5>
         </div>
@@ -40,7 +40,7 @@
                 <div id="chartdiv" [style.width.%]="100" [style.height.px]="500"></div>
             </div>
         </div>
-    </div>
+    </div> -->
     <div class="card">
         <div class="card-block">
             <div class="card-tools">
@@ -59,8 +59,7 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let d of data">
-                        <td>{{d.date | date:'dd-MM-yyyy'}} </td>
-                        <td> {{d.appName}} </td>
+                        <td>{{d.date * 1000| date:'dd-MM-yyyy'}} </td>
                         <td> {{d.source}} </td>
                         <td> {{d.os }} </td>
                         <td> {{d.install }} </td>

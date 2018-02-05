@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AmChartsService, AmChart } from "@amcharts/amcharts3-angular";
 import { Service } from '../../service/service';
 import { ConfigService } from '../../service/service.config';
+import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 
 @Component({
 	selector: 'app-armpd',
@@ -11,16 +12,14 @@ import { ConfigService } from '../../service/service.config';
 export class ArmpdComponent implements OnInit, OnDestroy {
 
 	chart: AmChart;
-
-	dFrom: Date;
-	dTo: Date;
-
+	dFrom: Date = new Date(); 
+	dTo: Date = new Date(); 
+	dMin: Date = new Date(); 
+	dMax: Date = new Date();
 	data: any;
-
 	paging: any;
 	isnext: any;
 	header: any;
-
 	search: any;
 
 	// Source list
@@ -53,7 +52,7 @@ export class ArmpdComponent implements OnInit, OnDestroy {
 		this.platform = this.platforms[0];
 		this.isnext = true;
 		this.search = { field: 'source', term: '' };
-		this.paging = { pg_page: 1, pg_size: 10, st_col: 'created_at', st_type: -1 };
+		this.paging = { pg_page: 1, pg_size: 10, st_col: 'date', st_type: -1 };
 		this.header = [
 			{ id: 'date', name: 'Date', is_search: 1, st_col: 'data', st_type: 1 },
 			{ id: 'source', name: 'Source', is_search: 1, st_col: 'source', st_type: 1 },
@@ -79,7 +78,11 @@ export class ArmpdComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnInit(): void {
-		this.AmCharts.makeChart("chartdiv", {
+	}
+
+	makeChart(chartData: any[]) {
+
+		this.chart = this.AmCharts.makeChart("chartdiv", {
 			"type": "serial",
 			"theme": "light",
 			"legend": {
@@ -88,7 +91,7 @@ export class ArmpdComponent implements OnInit, OnDestroy {
 				"valueAlign": "left",
 				"valueWidth": 120
 			},
-			"dataProvider": this.getChartData(),
+			"dataProvider": chartData,
 			"valueAxes": [{
 				"id": "leftAxis",
 				"axisAlpha": 0,
@@ -151,7 +154,7 @@ export class ArmpdComponent implements OnInit, OnDestroy {
 				"descriptionField": "",
 				"labelPosition": "right",
 				"labelText": "[[]]",
-				"legendValueText": "[[value]]",
+				"legendValueText": "[[value]]%",
 				"title": "RR7",
 				"fillAlphas": 0,
 				"valueField": "rr7",
@@ -167,7 +170,7 @@ export class ArmpdComponent implements OnInit, OnDestroy {
 				"descriptionField": "",
 				"labelPosition": "right",
 				"labelText": "[[]]",
-				"legendValueText": "[[value]]",
+				"legendValueText": "[[value]]%",
 				"title": "RR30",
 				"fillAlphas": 0,
 				"valueField": "rr30",
@@ -208,107 +211,11 @@ export class ArmpdComponent implements OnInit, OnDestroy {
 				"enabled": true
 			}
 		});
-
 	}
 
 	ngOnDestroy() {
 		if (this.chart)
 			this.AmCharts.destroyChart(this.chart);
-	}
-	getChartData(): any[] {
-		return [{
-			"date": "2018-01-14",
-			"install": 16000,
-			"nru": 10000,
-			"rr1": 40.71,
-			"rr7": 10.0,
-			"rr30": 26.0
-		}, {
-			"date": "2018-01-15",
-			"install": 22000,
-			"nru": 18000,
-			"rr1": 38.89,
-			"rr7": 12.0,
-			"rr30": 19.0
-		}, {
-			"date": "2018-01-16",
-			"install": 16100,
-			"nru": 9000,
-			"rr1": 34.22,
-			"rr7": 25.1,
-			"rr30": 19.0
-		}, {
-			"date": "2018-01-17",
-			"install": 15800,
-			"nru": 8000,
-			"rr1": 30.35,
-			"rr7": 5.0
-		}, {
-			"date": "2018-01-18",
-			"install": 15500,
-			"nru": 5000,
-			"rr1": 25.83,
-			"rr7": 14.5
-		}, {
-			"date": "2018-01-19",
-			"install": 14000,
-			"nru": 10000,
-			"rr1": 30.46
-		}, {
-			"date": "2018-01-20",
-			"install": 13800,
-			"nru": 7500,
-			"rr1": 29.94,
-			"rr7": 19.0
-		}, {
-			"date": "2018-01-21",
-			"install": 800,
-			"nru": 100,
-			"rr1": 29.76,
-			"rr7": 24.2
-		}, {
-			"date": "2018-01-22",
-			"install": 700,
-			"nru": 800,
-			"rr1": 32.8,
-			"rr7": 56.1
-		}, {
-			"date": "2018-01-23",
-			"install": 349,
-			"nru": 768,
-			"rr1": 35.49,
-			"rr7": 17.5
-		}, {
-			"date": "2018-01-24",
-			"install": 603,
-			"nru": 123,
-			"rr1": 39.1,
-			"rr7": 18.0
-		}, {
-			"date": "2018-01-25",
-			"install": 534,
-			"nru": 1820,
-			"rr1": 39.74,
-			"rr7": 48.0,
-			"duration": 810
-		}, {
-			"date": "2018-01-26",
-			"install": 425,
-			"nru": 768,
-			"rr1": 40.75,
-			"rr7": 12.0,
-			"rr30": 100
-		}, {
-			"date": "2018-01-27",
-			"install": 0,
-			"nru": 0,
-			"rr1": 36.1
-		}, {
-			"date": "2018-01-28",
-		}, {
-			"date": "2018-01-29",
-			"rr30": 0
-		}];
 	}
 
 	jumpPage(_page) {
@@ -343,11 +250,11 @@ export class ArmpdComponent implements OnInit, OnDestroy {
 			'pg_page': this.paging.pg_page,
 			'pg_size': this.paging.pg_size,
 			'st_col': this.paging.st_col,
-			'search_os': null,
-			'search_sourceid': null,
-			'startdate': this.dFrom.getTime(),
-			'enddate': this.dTo.getTime(),
 			'st_type': this.paging.st_type,
+			'search_os': null,
+			'search_source': null,
+			'startdate': Math.round(this.dFrom.getTime() / 1000),
+			'enddate': Math.round(this.dTo.getTime() / 1000),
 			['search_' + this.search.field]: this.search.term
 		};
 		if (this.platform.id != '-1')
@@ -361,12 +268,33 @@ export class ArmpdComponent implements OnInit, OnDestroy {
 				this.data = Array.isArray(data) ? data : [];
 				this.isnext = (this.data.length >= this.paging.pg_size) ? true : false;
 			});
+		this.getChart();
 	}
+
 	getSources() {
 		this.service.getSources(data => {
 			this.sources.push({ 'sourcename': "Please choose source", 'sourceid': '-1' });
 			this.sources = this.sources.concat(data.source);
 			this.source = this.sources[0];
+		});
+	}
+
+	getChart() {
+		var params = {
+			'app_id': this.service.getAppId(),
+			'search_os': null,
+			'search_source': null,
+			'startdate': Math.round(this.dFrom.getTime() / 1000),
+			'enddate': Math.round(this.dTo.getTime() / 1000)
+		};
+		if (this.platform.id != '-1')
+			params.search_os = this.platform.name;
+
+		if (this.source.sourceid != '-1')
+			params.search_source = this.source.sourceid;
+
+		this.service.get(this.conf.API_REPORT_ARM_PD_CHART, params, data => {
+			this.makeChart(data);
 		});
 	}
 
