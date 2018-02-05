@@ -9,6 +9,7 @@ import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 	templateUrl: './arm.component.html',
 	styleUrls: ['./arm.component.scss']
 })
+
 export class ArmComponent implements OnInit, OnDestroy {
 
 	chart: AmChart;
@@ -63,7 +64,20 @@ export class ArmComponent implements OnInit, OnDestroy {
 	}
 
 	makeChart(chartData: any[]) {
-
+		
+		console.log("[1]");
+		console.log(chartData);
+		chartData.sort((l,r) : number => {
+			var date1  = Date.parse(l.date);
+			var date2  = Date.parse(r.date);
+			if (date1 > date2) 
+				return 1;
+  			if (date1 < date2) 
+  				return -1;
+  			return 0;
+		});
+		console.log("[2]");
+		console.log(chartData);
 		this.chart = this.AmCharts.makeChart("chartdiv", {
 			"type": "serial",
 			"theme": "light",
@@ -78,14 +92,12 @@ export class ArmComponent implements OnInit, OnDestroy {
 				"id": "leftAxis",
 				"axisAlpha": 0,
 				"gridAlpha": 0,
-				"position": "left",
-				"title": ""
+				"position": "left"
 			}, {
 				"id": "rightAxis",
 				"axisAlpha": 0,
 				"gridAlpha": 0,
-				"position": "right",
-				"title": ""
+				"position": "right"
 			}],
 			"graphs": [{
 				"alphaField": "alpha",
