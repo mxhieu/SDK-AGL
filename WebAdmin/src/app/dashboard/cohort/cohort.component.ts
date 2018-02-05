@@ -18,8 +18,8 @@ export class CohortComponent implements OnInit {
 	platforms = [{ 'id': '-1', 'name': 'Please choose OS' }, { 'id': 'android', 'name': 'android' }, { 'id': 'ios', 'name': 'ios' }];
 	platform = { 'id': '-1', 'name': 'Please choose OS' };
 
-	constructor(private conf: ConfigService, private service: Service,) {
-		
+	constructor(private conf: ConfigService, private service: Service, ) {
+
 		this.dTo = new Date();
 		this.dFrom = new Date(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate() - 1000);
 
@@ -30,15 +30,15 @@ export class CohortComponent implements OnInit {
 		this.paging = { pg_page: 1, pg_size: 30, st_col: 'date', st_type: -1 };
 
 		for (var i = 0; i < 11; i++) {
-			if(i == 0) {
-				this.header.push({ id: 'rr0', name: '', index: i});
+			if (i == 0) {
+				this.header.push({ id: 'rr0', name: '', index: i });
 			} else {
-				this.header.push({ id: 'rr' + i, name: 'Day ' + i, index: i});
+				this.header.push({ id: 'rr' + i, name: 'Day ' + i, index: i });
 			}
 		}
-		this.header.push({ id: 'rr14', name: 'Day 14', index: 14});
-		this.header.push({ id: 'rr21', name: 'Day 21', index: 21});
-		this.header.push({ id: 'rr28', name: 'Day 28', index: 28});
+		this.header.push({ id: 'rr14', name: 'Day 14', index: 14 });
+		this.header.push({ id: 'rr21', name: 'Day 21', index: 21 });
+		this.header.push({ id: 'rr28', name: 'Day 28', index: 28 });
 		this.getSources();
 		this.doAnalysis();
 	}
@@ -71,17 +71,17 @@ export class CohortComponent implements OnInit {
 
 				var arrdata = Array.isArray(data) ? data : [];
 
-				for (let objdata of arrdata){
+				for (let objdata of arrdata) {
 					var arrReturnRate = [];
-					var indexrrs=0;
+					var indexrrs = 0;
 
-					for (let valuereturn of objdata.rrs){
-						for (let valueheader of this.header){
-							if (valueheader.index == indexrrs+1) {
-								var namerr = 'rr'+ (indexrrs+1);
-							  arrReturnRate.push({key:namerr,value:valuereturn,index:indexrrs+1});
+					for (let valuereturn of objdata.rrs) {
+						for (let valueheader of this.header) {
+							if (valueheader.index == indexrrs + 1) {
+								var namerr = 'rr' + (indexrrs + 1);
+								arrReturnRate.push({ key: namerr, value: valuereturn, index: indexrrs + 1 });
 							}
-						}					
+						}
 						indexrrs++;
 					}
 

@@ -36,14 +36,11 @@
             <h5 class="card-title">Acquisition Retention </h5>
         </div>
         <div class="card-body">
-            <div class="card-body">
-                <div id="chartdiv" [style.width.%]="100" [style.height.px]="500"></div>
-            </div>
+            <div id="chartdiv" [style.width.%]="100" [style.height.px]="500"></div>
         </div>
     </div>
     <div class="card">
         <div class="card-block">
-           
             <div class="card-tools">
                 <select class="sel-search" [(ngModel)]="search.field">
                     <option *ngFor="let perheader of header" [hidden]="!perheader.is_search" value="{{perheader.id}}">{{perheader.name}}</option>
