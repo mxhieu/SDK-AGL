@@ -56,7 +56,6 @@ export class RoipdComponent implements OnInit, OnDestroy {
 		this.paging = { pg_page: 1, pg_size: 10, st_col: 'created_at', st_type: -1 };
 		this.header = [
 			{ id: 'date', name: 'Date', is_search: 1, st_col: 'date', st_type: 1 },
-			{ id: 'appName', name: 'AppName', is_search: 1, st_col: 'appName', st_type: 1 },
 			{ id: 'source', name: 'Media Source', is_search: 1, st_col: 'source', st_type: 1 },
 			{ id: 'os', name: 'Device Os', is_search: 1, st_col: 'os', st_type: 1 },
 			{ id: 'install', name: 'Install', is_search: 1, st_col: 'install', st_type: 1 },
@@ -74,7 +73,7 @@ export class RoipdComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnInit(): void {
-this.chart = this.AmCharts.makeChart("chartdiv", {
+		this.chart = this.AmCharts.makeChart("chartdiv", {
 			"type": "serial",
 			"theme": "light",
 			"marginRight": 80,
@@ -218,8 +217,8 @@ this.chart = this.AmCharts.makeChart("chartdiv", {
 			'st_col': this.paging.st_col,
 			'search_os': null,
 			'search_sourceid': null,
-			'startdate': this.dFrom.getTime(),
-			'enddate': this.dTo.getTime(),
+			'startdate': Math.round(this.dFrom.getTime() / 1000),
+			'enddate': Math.round(this.dTo.getTime() / 1000),
 			'st_type': this.paging.st_type,
 			['search_' + this.search.field]: this.search.term
 		};
