@@ -15,10 +15,9 @@ export class ArmComponent implements OnInit, OnDestroy {
 
 	chart: AmChart;
 
-	dFrom: Date ; dMin: Date; dTo: Date = new Date(); dMax: Date = new Date();
-
+	dFrom: Date ; dMin: Date; 
+	dTo: Date = new Date(); dMax: Date = new Date();
 	data = []; paging: any; isnext = true; header: any; 
-
 	search = { field: 'source', term: '' };
 	source: any; sources = [{ 'source_group': "All", 'source': '-1' }];
 	platform : any; platforms = [
@@ -31,8 +30,6 @@ export class ArmComponent implements OnInit, OnDestroy {
 
 		this.source = this.sources[0];
 		this.platform = this.platforms[0];
-
-		// Date picker
 		this.dFrom = new Date(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate() - 30);
 		this.dMin = new Date(this.dMax.getFullYear(), this.dMax.getMonth(), this.dMax.getDate() - 1000);
 
@@ -279,6 +276,8 @@ export class ArmComponent implements OnInit, OnDestroy {
 			'pg_size': 100,
 			'st_col': 'date',
 			'st_type': 1,
+			'search_os': null,
+			'search_source': null,
 			'startdate': Math.round(this.dFrom.getTime() / 1000),
 			'enddate': Math.round(this.dTo.getTime() / 1000)
 		};

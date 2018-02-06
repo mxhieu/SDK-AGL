@@ -9,29 +9,24 @@ import { ConfigService } from '../../service/service.config';
 })
 export class CohortComponent implements OnInit {
 
-	data = []; isnext: any; header = []; search: any; paging: any;
-
-	dFrom: Date = new Date(); dTo: Date = new Date(); dMin: Date = new Date(); dMax: Date = new Date();
-
-	sources = [];
-	source = { 'sourcename': "Please choose source", 'sourceid': '-1' };
-	platforms = [
-		{ 'id': '-1', 'name': 'Please choose OS' },
+	dFrom: Date ; dMin: Date; 
+	dTo: Date = new Date(); dMax: Date = new Date();
+	data = [];  header = []; paging: any; isnext = true;
+	search = { field: 'source', term: '' };
+	source: any; sources = [{ 'source_group': "All", 'source': '-1' }];
+	platform : any; platforms = [
+		{ 'id': '-1', 'name': 'All' },
 		{ 'id': 'android', 'name': 'Android' },
 		{ 'id': 'ios', 'name': 'iOS' },
 		{ 'id': 'web', 'name': 'Web' }];
-	platform = { 'id': '-1', 'name': 'Please choose OS' };
 
 	constructor(private conf: ConfigService, private service: Service, ) {
 
-		this.dTo = new Date();
-		this.dFrom = new Date(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate() - 30);
-		this.dMax = this.dTo;
-		this.dMin = new Date(this.dMax.getFullYear(), this.dMax.getMonth(), this.dMax.getDate() - 1000);
-		
+		this.source = this.sources[0];
 		this.platform = this.platforms[0];
-		this.isnext = true;
-		this.search = { field: 'source', term: '' };
+		this.dFrom = new Date(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate() - 30);
+		this.dMin = new Date(this.dMax.getFullYear(), this.dMax.getMonth(), this.dMax.getDate() - 1000);
+
 		this.paging = { pg_page: 1, pg_size: 30, st_col: 'date', st_type: -1 };
 
 		for (var i = 0; i < 11; i++) {
@@ -55,21 +50,21 @@ export class CohortComponent implements OnInit {
 		this.data = [];
 		var params = {
 			'app_id': this.service.getAppId(),
-			'pg_page': this.paging.pg_page,
-			'pg_size': this.paging.pg_size,
-			'st_col': this.paging.st_col,
+			'pg_page': 1,
+			'pg_size': 100,
+			'st_col': 'date_install',
 			'search_os': null,
-			'search_sourceid': null,
+			'search_source': null,
 			'startdate': Math.round(this.dFrom.getTime() / 1000),
 			'enddate': Math.round(this.dTo.getTime() / 1000),
-			'st_type': this.paging.st_type,
+			'st_type': 1,
 			['search_' + this.search.field]: this.search.term
 		};
 		if (this.platform.id != '-1')
-			params.search_os = this.platform.name;
+			params.search_os = this.platform.id;
 
-		if (this.source.sourceid != '-1')
-			params.search_sourceid = this.source.sourceid;
+		if (this.source.source != '-1')
+			params.search_source = this.source.source;
 
 		this.service.get(this.conf.API_REPORT_COHORT, params,
 			data => {
@@ -102,7 +97,6 @@ export class CohortComponent implements OnInit {
 
 	getSources() {
 		this.service.getSources(data => {
-			this.sources.push({ 'sourcename': "Please choose source", 'sourceid': '-1' });
 			this.sources = this.sources.concat(data.source);
 			this.source = this.sources[0];
 		});

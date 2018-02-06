@@ -41,7 +41,6 @@ import { PrivacyComponent } from './privacy/privacy.component';
 import { HelpComponent } from './help/help.component';
 import { ResourceComponent } from './resource/resource.component';
 import { ForgotPasswordComponent } from './forgotpassword/forgotpassword.component';
-import { RxDateFormatPipe } from './pipe/rx-date-format.pipe';
 
 @NgModule({
     imports: [
@@ -73,8 +72,7 @@ import { RxDateFormatPipe } from './pipe/rx-date-format.pipe';
         PrivacyComponent,
         HelpComponent,
         ResourceComponent,
-        ForgotPasswordComponent,
-        RxDateFormatPipe
+        ForgotPasswordComponent
     ],
     providers: [
         ConfigService,
