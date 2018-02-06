@@ -14,7 +14,7 @@ export class ArmComponent implements OnInit, OnDestroy {
 
 	chart: AmChart;
 
-	dFrom: Date ; dMin: Date; 
+	dFrom: Date ; dMin: Date;
 	dTo: Date = new Date(); dMax: Date = new Date();
 	data = []; paging: any; isnext = true; header: any; 
 	search = { field: 'source', term: '' };

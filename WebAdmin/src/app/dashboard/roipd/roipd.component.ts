@@ -1,4 +1,4 @@
-import { Component, OnInit , OnDestroy} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { Service } from '../../service/service';
 import { ConfigService } from '../../service/service.config';
 import { AmChartsService, AmChart } from "@amcharts/amcharts3-angular";
@@ -8,49 +8,30 @@ import { AmChartsService, AmChart } from "@amcharts/amcharts3-angular";
   templateUrl: './roipd.component.html',
   styleUrls: ['./roipd.component.scss']
 })
-export class RoipdComponent implements OnInit, OnDestroy {
+export class RoipdComponent implements OnInit {
 
-	dFrom: Date = new Date(); dTo: Date = new Date(); dMin: Date = new Date(); dMax: Date = new Date();
-	
-	dOrganic: any;
-
-	data: any;
-	chart: AmChart;
-
-	paging: any;
-	isnext: any;
-	header: any;
-
-	search: any;
-
-	// Source list
-	sources = [];
-	source = { 'sourcename': "Please choose source", 'sourceid': '-1' };
-
-	// Platform
-	platforms = [
-		{ 'id': '-1', 'name': 'Please choose OS' },
+	dFrom: Date ; dMin: Date;
+	dTo: Date = new Date(); dMax: Date = new Date();
+	data = []; paging: any; isnext = true; header: any; 
+	search = { field: 'source', term: '' };
+	source: any; sources = [{ 'source_group': "All", 'source': '-1' }];
+	platform : any; platforms = [
+		{ 'id': '-1', 'name': 'All' },
 		{ 'id': 'android', 'name': 'Android' },
 		{ 'id': 'ios', 'name': 'iOS' },
 		{ 'id': 'web', 'name': 'Web' }];
-	platform = { 'id': '-1', 'name': 'Please choose OS' };
 
 	constructor(private conf: ConfigService, private service: Service, private AmCharts: AmChartsService) {
 
-		// Timing
-		this.dTo = new Date();
+		this.source = this.sources[0];
+		this.platform = this.platforms[0];
 		this.dFrom = new Date(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate() - 30);
-		this.dMax = this.dTo;
 		this.dMin = new Date(this.dMax.getFullYear(), this.dMax.getMonth(), this.dMax.getDate() - 1000);
 
-		this.data = [];
-		this.platform = this.platforms[0];
-		this.isnext = true;
-		this.search = { field: 'source', term: '' };
 		this.paging = { pg_page: 1, pg_size: 10, st_col: 'created_at', st_type: -1 };
 		this.header = [
 			{ id: 'date', name: 'Date', is_search: 1, st_col: 'date', st_type: 1 },
-			{ id: 'source', name: 'Media Source', is_search: 1, st_col: 'source', st_type: 1 },
+			{ id: 'source', name: 'Source', is_search: 1, st_col: 'source', st_type: 1 },
 			{ id: 'os', name: 'Device Os', is_search: 1, st_col: 'os', st_type: 1 },
 			{ id: 'install', name: 'Install', is_search: 1, st_col: 'install', st_type: 1 },
 			{ id: 'rr3', name: 'RR3', is_search: 1, st_col: 'rr3', st_type: 1 },
@@ -67,114 +48,7 @@ export class RoipdComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnInit(): void {
-		this.chart = this.AmCharts.makeChart("chartdiv", {
-			"type": "serial",
-			"theme": "light",
-			"marginRight": 80,
-			"dataProvider": [{
-				"lineColor": "#b7e021",
-				"date": "2012-01-01",
-				"duration": 408
-			}, {
-				"date": "2012-01-02",
-				"duration": 482
-			}, {
-				"date": "2012-01-03",
-				"duration": 562
-			}, {
-				"date": "2012-01-04",
-				"duration": 379
-			}, {
-				"lineColor": "#fbd51a",
-				"date": "2012-01-05",
-				"duration": 501
-			}, {
-				"date": "2012-01-06",
-				"duration": 443
-			}, {
-				"date": "2012-01-07",
-				"duration": 405
-			}, {
-				"date": "2012-01-08",
-				"duration": 309,
-				"lineColor": "#2498d2"
-			}, {
-				"date": "2012-01-09",
-				"duration": 287
-			}, {
-				"date": "2012-01-10",
-				"duration": 485
-			}, {
-				"date": "2012-01-11",
-				"duration": 890
-			}, {
-				"date": "2012-01-12",
-				"duration": 810
-			}],
-			"balloon": {
-				"cornerRadius": 6,
-				"horizontalPadding": 15,
-				"verticalPadding": 10
-			},
-			"valueAxes": [{
-				"duration": "mm",
-				"durationUnits": {
-					"hh": "h ",
-					"mm": "min"
-				},
-				"axisAlpha": 0
-			}],
-			"graphs": [{
-				"bullet": "square",
-				"bulletBorderAlpha": 1,
-				"bulletBorderThickness": 1,
-				"fillAlphas": 0.3,
-				"fillColorsField": "lineColor",
-				"legendValueText": "[[value]]",
-				"lineColorField": "lineColor",
-				"title": "duration",
-				"valueField": "duration"
-			}],
-			"chartScrollbar": {
 
-			},
-			"chartCursor": {
-				"categoryBalloonDateFormat": "YYYY MMM DD",
-				"cursorAlpha": 0,
-				"fullWidth": true
-			},
-			"dataDateFormat": "YYYY-MM-DD",
-			"categoryField": "date",
-			"categoryAxis": {
-				"dateFormats": [{
-					"period": "DD",
-					"format": "DD"
-				}, {
-					"period": "WW",
-					"format": "MMM DD"
-				}, {
-					"period": "MM",
-					"format": "MMM"
-				}, {
-					"period": "YYYY",
-					"format": "YYYY"
-				}],
-				"parseDates": true,
-				"autoGridCount": false,
-				"axisColor": "#555555",
-				"gridAlpha": 0,
-				"gridCount": 50
-			},
-			"export": {
-				"enabled": true
-			}
-		});
-	}
-
-
-	ngOnDestroy() {
-		if (this.chart)
-			this.AmCharts.destroyChart(this.chart);
 	}
 
 	jumpPage(_page) {
@@ -209,18 +83,16 @@ export class RoipdComponent implements OnInit, OnDestroy {
 			'pg_page': this.paging.pg_page,
 			'pg_size': this.paging.pg_size,
 			'st_col': this.paging.st_col,
-			'search_os': null,
-			'search_sourceid': null,
 			'startdate': Math.round(this.dFrom.getTime() / 1000),
 			'enddate': Math.round(this.dTo.getTime() / 1000),
 			'st_type': this.paging.st_type,
 			['search_' + this.search.field]: this.search.term
 		};
 		if (this.platform.id != '-1')
-			params.search_os = this.platform.name;
+			params.search_os = this.platform.id;
 
-		if (this.source.sourceid != '-1')
-			params.search_sourceid = this.source.sourceid;
+		if (this.source.source != '-1')
+			params.search_source = this.source.source;
 
 		this.service.get(this.conf.API_REPORT_ROI_PD, params,
 			data => {
@@ -230,7 +102,6 @@ export class RoipdComponent implements OnInit, OnDestroy {
 	}
 	getSources() {
 		this.service.getSources(data => {
-			this.sources.push({ 'sourcename': "Please choose source", 'sourceid': '-1' });
 			this.sources = this.sources.concat(data.source);
 			this.source = this.sources[0];
 		});

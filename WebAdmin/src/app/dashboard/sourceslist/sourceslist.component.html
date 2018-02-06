@@ -12,8 +12,8 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let d of data">
-                        <td align="center" style="vertical-align: middle;">{{d.sourcename}}</td>
-                        <td align="center" style="vertical-align: middle;">{{d.sourceid}}</td>
+                        <td align="center" style="vertical-align: middle;">{{d.source_group}}</td>
+                        <td align="center" style="vertical-align: middle;">{{d.source}}</td>
                         <td align="center" style="vertical-align: middle;">{{d.action}}</td>
                         <td align="center" style="vertical-align: middle;">
                             <span class="tag tag-success" *ngIf="!d.is_delete">Active</span>

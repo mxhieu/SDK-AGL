@@ -10,46 +10,28 @@ import { AmChartsService, AmChart } from "@amcharts/amcharts3-angular";
 })
 export class RoiComponent implements OnInit {
 
-	dFrom: Date = new Date(); dTo: Date = new Date(); dMin: Date = new Date(); dMax: Date = new Date();
-	
-	dOrganic: any;
-
-	data: any;
-
-	paging: any;
-	isnext: any;
-	header: any;
-
-	search: any;
-
-	// Source list
-	sources = [];
-	source = { 'sourcename': "Please choose source", 'sourceid': '-1' };
-
-	// Platform
-	platforms = [
-		{ 'id': '-1', 'name': 'Please choose OS' },
+	dFrom: Date ; dMin: Date; 
+	dTo: Date = new Date(); dMax: Date = new Date();
+	data = []; paging: any; isnext = true; header: any; 
+	search = { field: 'source', term: '' };
+	source: any; sources = [{ 'source_group': "All", 'source': '-1' }];
+	platform : any; platforms = [
+		{ 'id': '-1', 'name': 'All' },
 		{ 'id': 'android', 'name': 'Android' },
 		{ 'id': 'ios', 'name': 'iOS' },
 		{ 'id': 'web', 'name': 'Web' }];
-	platform = { 'id': '-1', 'name': 'Please choose OS' };
 
 	constructor(private conf: ConfigService, private service: Service, private AmCharts: AmChartsService) {
 
-		// Timing
-		this.dTo = new Date();
+		this.source = this.sources[0];
+		this.platform = this.platforms[0];
 		this.dFrom = new Date(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate() - 30);
-		this.dMax = this.dTo;
 		this.dMin = new Date(this.dMax.getFullYear(), this.dMax.getMonth(), this.dMax.getDate() - 1000);
 
-		this.data = [];
-		this.platform = this.platforms[0];
-		this.isnext = true;
-		this.search = { field: 'source', term: '' };
 		this.paging = { pg_page: 1, pg_size: 10, st_col: 'date', st_type: -1 };
 		this.header = [
 			{ id: 'date', name: 'Date', is_search: 1, st_col: 'data', st_type: 1 },
-			{ id: 'source', name: 'Media Source', is_search: 1, st_col: 'source', st_type: 1 },
+			{ id: 'source', name: 'Source', is_search: 1, st_col: 'source', st_type: 1 },
 			{ id: 'os', name: 'Device Os', is_search: 1, st_col: 'os', st_type: 1 },
 			{ id: 'install', name: 'Install', is_search: 1, st_col: 'install', st_type: 1 },
 			{ id: 'nru', name: 'NRU', is_search: 1, st_col: 'nru', st_type: 1 },
@@ -102,18 +84,16 @@ export class RoiComponent implements OnInit {
 			'pg_page': this.paging.pg_page,
 			'pg_size': this.paging.pg_size,
 			'st_col': this.paging.st_col,
-			'search_os': null,
-			'search_sourceid': null,
 			'startdate': Math.round(this.dFrom.getTime() / 1000),
 			'enddate': Math.round(this.dTo.getTime() / 1000),
 			'st_type': this.paging.st_type,
 			['search_' + this.search.field]: this.search.term
 		};
 		if (this.platform.id != '-1')
-			params.search_os = this.platform.name;
+			params.search_os = this.platform.id;
 
-		if (this.source.sourceid != '-1')
-			params.search_sourceid = this.source.sourceid;
+		if (this.source.source != '-1')
+			params.search_source = this.source.source;
 
 		this.service.get(this.conf.API_REPORT_ROI, params,
 			data => {
@@ -123,7 +103,6 @@ export class RoiComponent implements OnInit {
 	}
 	getSources() {
 		this.service.getSources(data => {
-			this.sources.push({ 'sourcename': "Please choose source", 'sourceid': '-1' });
 			this.sources = this.sources.concat(data.source);
 			this.source = this.sources[0];
 		});
