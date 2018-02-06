@@ -3,7 +3,6 @@ import { Service } from '../../service/service';
 import { ConfigService } from '../../service/service.config';
 import { AmChartsService, AmChart } from "@amcharts/amcharts3-angular";
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
-import { RxDateFormatPipe } from '../../pipe/rx-date-format.pipe';
 
 @Component({
 	selector: 'app-arm',
@@ -169,7 +168,7 @@ export class ArmComponent implements OnInit, OnDestroy {
 				"fillAlphas": 0,
 				"valueField": "rr30",
 				"valueAxis": "rightAxis",
-				'lineColor':'#ef6c00',
+				'lineColor':'#ef6c00'
 			}],
 			"chartCursor": {
 				"categoryBalloonDateFormat": "DD",
