@@ -14,12 +14,13 @@ export class ArmComponent implements OnInit, OnDestroy {
 
 	chart: AmChart;
 
-	dFrom: Date ; dMin: Date;
+	dFrom: Date; dMin: Date;
 	dTo: Date = new Date(); dMax: Date = new Date();
-	data = []; paging: any; isnext = true; header: any; 
+	data = []; paging: any; isnext = true; header: any;
 	search = { field: 'source', term: '' };
+	version: any; versions = [{ 'version': '', 'os': '' }]; versionDisplay = [{ 'version': '', 'os': '' }];
 	source: any; sources = [{ 'source_group': "All", 'source': '-1' }];
-	platform : any; platforms = [
+	platform: any; platforms = [
 		{ 'id': '-1', 'name': 'All' },
 		{ 'id': 'android', 'name': 'Android' },
 		{ 'id': 'ios', 'name': 'iOS' },
@@ -61,17 +62,17 @@ export class ArmComponent implements OnInit, OnDestroy {
 	}
 
 	makeChart(chartData: any[]) {
-		
-		chartData.sort((l,r) : number => {
-			var date1  = Date.parse(l.date);
-			var date2  = Date.parse(r.date);
-			if (date1 > date2) 
+
+		chartData.sort((l, r): number => {
+			var date1 = Date.parse(l.date);
+			var date2 = Date.parse(r.date);
+			if (date1 > date2)
 				return 1;
-  			if (date1 < date2) 
-  				return -1;
-  			return 0;
+			if (date1 < date2)
+				return -1;
+			return 0;
 		});
-		
+
 		this.chart = this.AmCharts.makeChart("chartdiv", {
 			"type": "serial",
 			"theme": "light",
@@ -105,7 +106,7 @@ export class ArmComponent implements OnInit, OnDestroy {
 				"valueField": "install",
 				"valueAxis": "leftAxis",
 				'fillColors': "#7bc0f7",
-				'lineColor':'#64b5f6'
+				'lineColor': '#64b5f6'
 			}, {
 				"alphaField": "alpha",
 				"balloonText": "NRU:[[value]]",
@@ -118,7 +119,7 @@ export class ArmComponent implements OnInit, OnDestroy {
 				"valueField": "nru",
 				"valueAxis": "leftAxis",
 				'fillColors': "#3b8ad9",
-				'lineColor':'#1976d2'
+				'lineColor': '#1976d2'
 			}, {
 				"balloonText": "RR1:[[value]]",
 				"bullet": "round",
@@ -134,7 +135,7 @@ export class ArmComponent implements OnInit, OnDestroy {
 				"title": "RR1",
 				"fillAlphas": 0,
 				"valueField": "rr1",
-				'lineColor':'#ffdb69',
+				'lineColor': '#ffdb69',
 				"valueAxis": "rightAxis"
 			}, {
 				"balloonText": "RR7:[[value]]",
@@ -168,7 +169,7 @@ export class ArmComponent implements OnInit, OnDestroy {
 				"fillAlphas": 0,
 				"valueField": "rr30",
 				"valueAxis": "rightAxis",
-				'lineColor':'#ef6c00'
+				'lineColor': '#ef6c00'
 			}],
 			"chartCursor": {
 				"categoryBalloonDateFormat": "DD",
@@ -263,8 +264,15 @@ export class ArmComponent implements OnInit, OnDestroy {
 	}
 	getSources() {
 		this.service.getSources(data => {
+
+			// Sources
 			this.sources = this.sources.concat(data.source);
 			this.source = this.sources[0];
+
+			// Os
+			this.versions = data.os.settings;
+			this.versionDisplay = this.versions;
+			this.version = this.versionDisplay[0];
 		});
 	}
 
@@ -289,5 +297,19 @@ export class ArmComponent implements OnInit, OnDestroy {
 		this.service.get(this.conf.API_REPORT_ARM_CHART, params, data => {
 			this.makeChart(data);
 		});
+	}
+	osPickerChanged(event) {
+
+		this.versionDisplay = [];
+
+		if (event.id == '-1')
+			for (var v of this.versions)
+				this.versionDisplay.push(v);
+		else
+			for (var v of this.versions)
+				if (v.os == event.id)
+					this.versionDisplay.push(v);
+
+		this.version = this.versionDisplay[0];
 	}
 }
