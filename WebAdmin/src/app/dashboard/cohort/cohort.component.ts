@@ -11,7 +11,7 @@ export class CohortComponent implements OnInit {
 
 	data = []; isnext: any; header = []; search: any; paging: any;
 
-	dFrom: Date = new Date(); dTo: Date = new Date();
+	dFrom: Date = new Date(); dTo: Date = new Date(); dMin: Date = new Date(); dMax: Date = new Date();
 
 	sources = [];
 	source = { 'sourcename': "Please choose source", 'sourceid': '-1' };
@@ -26,6 +26,9 @@ export class CohortComponent implements OnInit {
 
 		this.dTo = new Date();
 		this.dFrom = new Date(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate() - 30);
+		this.dMax = this.dTo;
+		this.dMin = new Date(this.dMax.getFullYear(), this.dMax.getMonth(), this.dMax.getDate() - 1000);
+		
 		this.platform = this.platforms[0];
 		this.isnext = true;
 		this.search = { field: 'source', term: '' };

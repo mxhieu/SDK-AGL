@@ -55,7 +55,7 @@
                             </td>
                             <td *ngFor="let itemreturn of d.arrreturn" style="text-align: center;vertical-align: middle;" 
                             [style.background-color]="'rgba(13, 71, 161, '+itemreturn.value +')'" 
-                            [style.color]="itemreturn.value < 50 ? 'white': 'black'">
+                            [style.color]="itemreturn.value < 50 ? 'black': 'white'">
                                 <div class="block-content" *ngIf="itemreturn.value != null">
                                     <strong>{{itemreturn.value * 100 | number : '1.2-2'}}%</strong>
                                 </div>

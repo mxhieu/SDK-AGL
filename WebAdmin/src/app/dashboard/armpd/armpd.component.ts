@@ -12,10 +12,9 @@ import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 export class ArmpdComponent implements OnInit, OnDestroy {
 
 	chart: AmChart;
-	dFrom: Date = new Date(); 
-	dTo: Date = new Date(); 
-	dMin: Date = new Date(); 
-	dMax: Date = new Date();
+	
+	dFrom: Date = new Date(); dTo: Date = new Date(); dMin: Date = new Date(); dMax: Date = new Date();
+	
 	data: any;
 	paging: any;
 	isnext: any;
@@ -39,6 +38,9 @@ export class ArmpdComponent implements OnInit, OnDestroy {
 		// Timing
 		this.dTo = new Date();
 		this.dFrom = new Date(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate() - 30);
+		this.dMax = this.dTo;
+		this.dMin = new Date(this.dMax.getFullYear(), this.dMax.getMonth(), this.dMax.getDate() - 1000);
+
 		this.data = [];
 		this.platform = this.platforms[0];
 		this.isnext = true;
@@ -285,6 +287,10 @@ export class ArmpdComponent implements OnInit, OnDestroy {
 			'app_id': this.service.getAppId(),
 			'search_os': null,
 			'search_source': null,
+			'pg_page': 1,
+			'pg_size': 100,
+			'st_col': 'date',
+			'st_type': 1,
 			'startdate': Math.round(this.dFrom.getTime() / 1000),
 			'enddate': Math.round(this.dTo.getTime() / 1000)
 		};

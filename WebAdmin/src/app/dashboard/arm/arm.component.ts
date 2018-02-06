@@ -13,7 +13,6 @@ import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 export class ArmComponent implements OnInit, OnDestroy {
 
 	chart: AmChart;
-
 	dFrom: Date = new Date(); dTo: Date = new Date(); dMin: Date = new Date(); dMax: Date = new Date();
 
 	data: any; paging: any; isnext: any; header: any; search: any;
@@ -31,8 +30,8 @@ export class ArmComponent implements OnInit, OnDestroy {
 		// Date picker
 		this.dTo = new Date();
 		this.dFrom = new Date(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate() - 30);
-		this.dMin = this.dFrom;
-		this.dMax = this.dTo;
+		this.dMax = new Date();
+		this.dMin = new Date(this.dMax.getFullYear(), this.dMax.getMonth(), this.dMax.getDate() - 1000);
 
 		this.data = [];
 		this.platform = this.platforms[0];
@@ -110,7 +109,11 @@ export class ArmComponent implements OnInit, OnDestroy {
 				"title": "INSTALL",
 				"type": "column",
 				"valueField": "install",
-				"valueAxis": "leftAxis"
+				"valueAxis": "leftAxis",
+				/*'fillColors': "#f18226",
+				'lineColor':'#ef6c00'*/
+				'fillColors': "#7bc0f7",
+				'lineColor':'#64b5f6'
 			}, {
 				"alphaField": "alpha",
 				"balloonText": "NRU:[[value]]",
@@ -121,7 +124,9 @@ export class ArmComponent implements OnInit, OnDestroy {
 				"title": "NRU",
 				"type": "column",
 				"valueField": "nru",
-				"valueAxis": "leftAxis"
+				"valueAxis": "leftAxis",
+				'fillColors': "#3b8ad9",
+				'lineColor':'#1976d2'
 			}, {
 				"balloonText": "RR1:[[value]]",
 				"bullet": "round",
@@ -137,6 +142,7 @@ export class ArmComponent implements OnInit, OnDestroy {
 				"title": "RR1",
 				"fillAlphas": 0,
 				"valueField": "rr1",
+				'lineColor':'#ffdb69',
 				"valueAxis": "rightAxis"
 			}, {
 				"balloonText": "RR7:[[value]]",
@@ -169,7 +175,8 @@ export class ArmComponent implements OnInit, OnDestroy {
 				"title": "RR30",
 				"fillAlphas": 0,
 				"valueField": "rr30",
-				"valueAxis": "rightAxis"
+				"valueAxis": "rightAxis",
+				'lineColor':'#ef6c00',
 			}],
 			"chartCursor": {
 				"categoryBalloonDateFormat": "DD",
@@ -277,6 +284,10 @@ export class ArmComponent implements OnInit, OnDestroy {
 			'app_id': this.service.getAppId(),
 			'search_os': null,
 			'search_source': null,
+			'pg_page': 1,
+			'pg_size': 100,
+			'st_col': 'date',
+			'st_type': 1,
 			'startdate': Math.round(this.dFrom.getTime() / 1000),
 			'enddate': Math.round(this.dTo.getTime() / 1000)
 		};

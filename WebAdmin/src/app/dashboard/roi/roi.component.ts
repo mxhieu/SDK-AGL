@@ -10,8 +10,8 @@ import { AmChartsService, AmChart } from "@amcharts/amcharts3-angular";
 })
 export class RoiComponent implements OnInit {
 
-	dFrom: Date;
-	dTo: Date;
+	dFrom: Date = new Date(); dTo: Date = new Date(); dMin: Date = new Date(); dMax: Date = new Date();
+	
 	dOrganic: any;
 
 	data: any;
@@ -27,7 +27,7 @@ export class RoiComponent implements OnInit {
 	source = { 'sourcename': "Please choose source", 'sourceid': '-1' };
 
 	// Platform
-	plplatforms = [
+	platforms = [
 		{ 'id': '-1', 'name': 'Please choose OS' },
 		{ 'id': 'android', 'name': 'Android' },
 		{ 'id': 'ios', 'name': 'iOS' },
@@ -39,6 +39,9 @@ export class RoiComponent implements OnInit {
 		// Timing
 		this.dTo = new Date();
 		this.dFrom = new Date(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate() - 30);
+		this.dMax = this.dTo;
+		this.dMin = new Date(this.dMax.getFullYear(), this.dMax.getMonth(), this.dMax.getDate() - 1000);
+
 		this.data = [];
 		this.platform = this.platforms[0];
 		this.isnext = true;
