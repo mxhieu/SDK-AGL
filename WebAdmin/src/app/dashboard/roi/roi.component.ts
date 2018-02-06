@@ -47,7 +47,7 @@ export class RoiComponent implements OnInit {
 
 		// Timing
 		this.dTo = new Date();
-		this.dFrom = new Date(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate() - 1000);
+		this.dFrom = new Date(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate() - 30);
 		this.data = [];
 		this.platform = this.platforms[0];
 		this.isnext = true;

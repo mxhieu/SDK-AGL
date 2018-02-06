@@ -19,7 +19,7 @@
                 <div class="form-group col-lg-6 col-md-6">
                     <label class="col-form-label">Source</label>
                     <select class="form-control" [(ngModel)]="source">
-                        <option *ngFor="let s of sources" [ngValue]="s"> {{s.sourceid}} - {{s.sourcename}} </option>
+                        <option *ngFor="let s of sources" [ngValue]="s"> {{s.sourceid}} - [{{s.sourcename}}] </option>
                     </select>
                 </div>
                 <div class="form-group col-lg-6 col-md-6">

@@ -26,7 +26,7 @@ export class ArmComponent implements OnInit, OnDestroy {
 
 		// Date picker
 		this.dTo = new Date();
-		this.dFrom = new Date(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate() - 1000);
+		this.dFrom = new Date(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate() - 30);
 		this.dMin = this.dFrom;
 		this.dMax = this.dTo;
 
@@ -65,8 +65,6 @@ export class ArmComponent implements OnInit, OnDestroy {
 
 	makeChart(chartData: any[]) {
 		
-		console.log("[1]");
-		console.log(chartData);
 		chartData.sort((l,r) : number => {
 			var date1  = Date.parse(l.date);
 			var date2  = Date.parse(r.date);
@@ -76,8 +74,7 @@ export class ArmComponent implements OnInit, OnDestroy {
   				return -1;
   			return 0;
 		});
-		console.log("[2]");
-		console.log(chartData);
+		
 		this.chart = this.AmCharts.makeChart("chartdiv", {
 			"type": "serial",
 			"theme": "light",
@@ -265,7 +262,7 @@ export class ArmComponent implements OnInit, OnDestroy {
 	}
 	getSources() {
 		this.service.getSources(data => {
-			this.sources.push({ 'sourcename': "Please choose OS", 'sourceid': '-1' });
+			this.sources.push({ 'sourcename': "Please choose source", 'sourceid': '-1' });
 			this.sources = this.sources.concat(data.source);
 			this.source = this.sources[0];
 		});

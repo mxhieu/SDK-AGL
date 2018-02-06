@@ -21,10 +21,8 @@ export class CohortComponent implements OnInit {
 	constructor(private conf: ConfigService, private service: Service, ) {
 
 		this.dTo = new Date();
-		this.dFrom = new Date(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate() - 1000);
-
+		this.dFrom = new Date(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate() - 30);
 		this.platform = this.platforms[0];
-
 		this.isnext = true;
 		this.search = { field: 'source', term: '' };
 		this.paging = { pg_page: 1, pg_size: 30, st_col: 'date', st_type: -1 };
@@ -97,7 +95,7 @@ export class CohortComponent implements OnInit {
 
 	getSources() {
 		this.service.getSources(data => {
-			this.sources.push({ 'sourcename': "Please choose OS", 'sourceid': '-1' });
+			this.sources.push({ 'sourcename': "Please choose source", 'sourceid': '-1' });
 			this.sources = this.sources.concat(data.source);
 			this.source = this.sources[0];
 		});

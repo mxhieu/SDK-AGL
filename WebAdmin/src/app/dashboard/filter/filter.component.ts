@@ -21,7 +21,7 @@ export class FilterComponent {
 
 	constructor(private api: Service) {
 		this.dTo = new Date();
-		this.dFrom = new Date(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate() - 1000);
+		this.dFrom = new Date(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate() - 30);
 		this.dMin = this.dFrom;
 		this.dMax = this.dTo;
 		this.platform = this.platforms[0];

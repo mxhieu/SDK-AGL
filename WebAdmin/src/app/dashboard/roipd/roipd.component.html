@@ -18,7 +18,7 @@
                 <div class="form-group col-lg-6 col-md-6">
                     <label class="col-form-label">Source</label>
                     <select class="form-control" [(ngModel)]="source">
-                        <option *ngFor="let s of sources" [ngValue]="s"> {{s.sourceid}} - {{s.sourcename}} </option>
+                        <option *ngFor="let s of sources" [ngValue]="s"> {{s.sourceid}} - [{{s.sourcename}}] </option>
                     </select>
                 </div>
                 <div class="form-group col-lg-6 col-md-6">
@@ -31,16 +31,6 @@
             <button class="btn btn-success" (click)="doAnalysis()">Analytic</button>
         </div>
     </div>
-<!--     <div class="card">
-        <div class="card-header">
-            <h5 class="card-title">Acquisition Retention </h5>
-        </div>
-        <div class="card-body">
-            <div class="card-body">
-                <div id="chartdiv" [style.width.%]="100" [style.height.px]="500"></div>
-            </div>
-        </div>
-    </div> -->
     <div class="card">
         <div class="card-block">
             <div class="card-tools">

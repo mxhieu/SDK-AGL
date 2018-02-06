@@ -47,7 +47,7 @@ export class ArmpdComponent implements OnInit, OnDestroy {
 
 		// Timing
 		this.dTo = new Date();
-		this.dFrom = new Date(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate() - 1000);
+		this.dFrom = new Date(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate() - 30);
 		this.data = [];
 		this.platform = this.platforms[0];
 		this.isnext = true;
@@ -81,6 +81,16 @@ export class ArmpdComponent implements OnInit, OnDestroy {
 	}
 
 	makeChart(chartData: any[]) {
+		
+		chartData.sort((l,r) : number => {
+			var date1  = Date.parse(l.date);
+			var date2  = Date.parse(r.date);
+			if (date1 > date2) 
+				return 1;
+  			if (date1 < date2) 
+  				return -1;
+  			return 0;
+		});
 
 		this.chart = this.AmCharts.makeChart("chartdiv", {
 			"type": "serial",
