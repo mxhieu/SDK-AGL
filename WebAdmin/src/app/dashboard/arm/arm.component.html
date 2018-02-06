@@ -1,24 +1,26 @@
 <div class="animated fadeIn rx-relative">
     <div class="card">
         <div class="card-header">
-            <h5 class="card-title">ARM Report from {{dFrom | date: 'dd-MM-yyyy' }} to {{dTo |  date:'dd-MM-yyyy'}} </h5>
+            <h5 class="card-title">ARM Report from {{dFrom | date: 'dd/MM/yyyy' }} to {{dTo |  date:'dd/MM/yyyy'}}</h5>
         </div>
         <div class="card-block">
             <div class="row">
                 <div class="form-group col-lg-6 col-md-6">
                     <label class="col-form-label">From</label>
-                    <input type="text" class="form-control" [minDate]="dMin" [maxDate]="dMax" #dp="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue' }" [(ngModel)]="dFrom">
+                    <input type="text" class="form-control" [minDate]="dMin" [maxDate]="dMax" #dp="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }" [(ngModel)]="dFrom">
                 </div>
                 <div class="form-group col-lg-6 col-md-6">
                     <label class="col-form-label">To</label>
-                    <input type="text" class="form-control" [minDate]="dMin" [maxDate]="dMax" #dp="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue' }" [(ngModel)]="dTo">
+                    <input type="text" class="form-control" [minDate]="dMin" [maxDate]="dMax" #dp="bsDatepicker" bsDatepicker 
+                    [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }" 
+                    [ngModel]="dTo">
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col-lg-6 col-md-6">
                     <label class="col-form-label">Source</label>
                     <select class="form-control" [(ngModel)]="source">
-                        <option *ngFor="let s of sources" [ngValue]="s"> {{s.sourceid}} - [{{s.sourcename}}] </option>
+                        <option *ngFor="let s of sources" [ngValue]="s"> {{s.source_group}} </option>
                     </select>
                 </div>
                 <div class="form-group col-lg-6 col-md-6">
@@ -62,7 +64,7 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let d of data">
-                        <td>{{d.date * 1000 | date:'dd-MM-yyyy'}} </td>
+                        <td>{{d.date * 1000 | date:'dd/MM/yyyy'}} </td>
                         <td> {{d.source}}</td>
                         <td> {{d.os}}</td>
                         <td> {{d.install}} </td>

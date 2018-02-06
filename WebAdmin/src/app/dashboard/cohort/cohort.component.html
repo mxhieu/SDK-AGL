@@ -2,17 +2,19 @@
     <!-- <app-filter (selectChanged)="apply($event)"></app-filter> -->
     <div class="card">
         <div class="card-header">
-            <h5 class="card-title">Cohort Report from {{dFrom | date: 'dd-MM-yyyy' }} to {{dTo |  date:'dd-MM-yyyy'}} </h5>
+            <h5 class="card-title">Cohort Report from {{dFrom | date: 'dd/MM/yyyy' }} to {{dTo |  date:'dd/MM/yyyy'}}</h5>
         </div>
         <div class="card-block">
             <div class="row">
                 <div class="form-group col-lg-6 col-md-6">
                     <label class="col-form-label">From</label>
-                    <input type="text" class="form-control" [minDate]="dMin" [maxDate]="dMax" #dp="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue' }" [(ngModel)]="dFrom">
+                    <input type="text" class="form-control" [minDate]="dMin" [maxDate]="dMax" #dp="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }" [(ngModel)]="dFrom">
                 </div>
                 <div class="form-group col-lg-6 col-md-6">
                     <label class="col-form-label">To</label>
-                    <input type="text" class="form-control" [minDate]="dMin" [maxDate]="dMax" #dp="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-dark-blue' }" [(ngModel)]="dTo">
+                    <input type="text" class="form-control" [minDate]="dMin" [maxDate]="dMax" #dp="bsDatepicker" bsDatepicker 
+                    [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }" 
+                    [ngModel]="dTo">
                 </div>
             </div>
             <div class="row">
@@ -55,7 +57,7 @@
                             </td>
                             <td *ngFor="let itemreturn of d.arrreturn" style="text-align: center;vertical-align: middle;" 
                             [style.background-color]="'rgba(13, 71, 161, '+itemreturn.value +')'" 
-                            [style.color]="itemreturn.value < 50 ? 'black': 'white'">
+                            [style.color]="itemreturn.value < 50 ? 'white': 'black'">
                                 <div class="block-content" *ngIf="itemreturn.value != null">
                                     <strong>{{itemreturn.value * 100 | number : '1.2-2'}}%</strong>
                                 </div>
