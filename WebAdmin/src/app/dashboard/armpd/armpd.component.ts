@@ -28,19 +28,10 @@ export class ArmpdComponent implements OnInit, OnDestroy {
 
 	// Platform
 	platforms = [
-		{
-			'id': '-1',
-			'name': 'Please choose OS'
-		},
-		{
-			'id': 'android',
-			'name': 'android'
-		},
-		{
-			'id': 'ios',
-			'name': 'ios'
-		}
-	];
+		{ 'id': '-1', 'name': 'Please choose OS' },
+		{ 'id': 'android', 'name': 'Android' },
+		{ 'id': 'ios', 'name': 'iOS' },
+		{ 'id': 'web', 'name': 'Web' }];
 	platform = { 'id': '-1', 'name': 'Please choose OS' };
 
 	constructor(private conf: ConfigService, private service: Service, private AmCharts: AmChartsService) {
