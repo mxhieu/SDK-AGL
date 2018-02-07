@@ -14,6 +14,7 @@ export class RoiComponent implements OnInit {
 	dTo: Date = new Date(); dMax: Date = new Date();
 	data = []; paging: any; isnext = true; header: any; 
 	search = { field: 'source', term: '' };
+	version: any; versions = [{ 'version': '', 'os': '' }]; versionDisplay = [{ 'version': '', 'os': '' }];
 	source: any; sources = [{ 'source_group': "All", 'source': '-1' }];
 	platform : any; platforms = [
 		{ 'id': '-1', 'name': 'All' },
@@ -103,9 +104,31 @@ export class RoiComponent implements OnInit {
 	}
 	getSources() {
 		this.service.getSources(data => {
+			// Sources
 			this.sources = this.sources.concat(data.source);
 			this.source = this.sources[0];
+
+			// Os
+			this.versions = data.os.settings;
+			this.versionDisplay = this.versions;
+			this.version = this.versionDisplay[0];
 		});
 	}
+onVersionChanged(event){
+		console.log(event.app_id);
+	}
+	osPickerChanged(event) {
 
+		this.versionDisplay = [];
+
+		if (event.id == '-1')
+			for (var v of this.versions)
+				this.versionDisplay.push(v);
+		else
+			for (var v of this.versions)
+				if (v.os == event.id)
+					this.versionDisplay.push(v);
+
+		this.version = this.versionDisplay[0];
+	}
 }

@@ -20,13 +20,19 @@
                 <div class="form-group col-lg-6 col-md-6">
                     <label class="col-form-label">Source</label>
                     <select class="form-control" [(ngModel)]="source">
-                        <option *ngFor="let s of sources" [ngValue]="s"> {{s.source_group}}</option>
+                        <option *ngFor="let s of sources" [ngValue]="s"> {{s.source_group}} </option>
                     </select>
                 </div>
-                <div class="form-group col-lg-6 col-md-6">
+                <div class="form-group col-lg-3 col-md-3">
                     <label class="col-form-label">OS</label>
-                    <select class="form-control" [(ngModel)]="platform">
+                    <select class="form-control" [(ngModel)]="platform" (ngModelChange)="osPickerChanged($event)" >
                         <option *ngFor="let p of platforms" [ngValue]="p"> {{p.name}} </option>
+                    </select>
+                </div>
+                <div class="form-group col-lg-3 col-md-3">
+                    <label class="col-form-label">Version</label>
+                    <select class="form-control" [(ngModel)]="version" (ngModelChange)="onVersionChanged($event)" >
+                        <option *ngFor="let v of versionDisplay" [ngValue]="v"> {{v.version}} </option>
                     </select>
                 </div>
             </div>
