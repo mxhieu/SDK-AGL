@@ -298,6 +298,9 @@ export class ArmComponent implements OnInit, OnDestroy {
 			this.makeChart(data);
 		});
 	}
+	onVersionChanged(event){
+		console.log(event.app_id);
+	}
 	osPickerChanged(event) {
 
 		this.versionDisplay = [];

@@ -20,10 +20,18 @@ export class CohortComponent implements OnInit {
 		{ 'id': 'ios', 'name': 'iOS' },
 		{ 'id': 'web', 'name': 'Web' }];
 
+	timeRange: any; tRvalues = []; timeRanges = [
+		{'id':7 , 'name': '7 ngày'},
+		{'id':14 , 'name': '14 ngày'},
+		{'id':21 , 'name': '21 ngày'},
+		{'id':30 , 'name': '30 ngày'}];
+
 	constructor(private conf: ConfigService, private service: Service, ) {
 
 		this.source = this.sources[0];
 		this.platform = this.platforms[0];
+		this.timeRange = this.timeRanges[0];
+		this.makeFilterDataArray(this.timeRange.id);
 		this.dFrom = new Date(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate() - 30);
 		this.dMin = new Date(this.dMax.getFullYear(), this.dMax.getMonth(), this.dMax.getDate() - 1000);
 
@@ -58,6 +66,7 @@ export class CohortComponent implements OnInit {
 			'startdate': Math.round(this.dFrom.getTime() / 1000),
 			'enddate': Math.round(this.dTo.getTime() / 1000),
 			'st_type': 1,
+			'filter_dates':this.tRvalues,
 			['search_' + this.search.field]: this.search.term
 		};
 		if (this.platform.id != '-1')
@@ -100,5 +109,15 @@ export class CohortComponent implements OnInit {
 			this.sources = this.sources.concat(data.source);
 			this.source = this.sources[0];
 		});
+	}
+
+	makeFilterDataArray(idx){
+		this.tRvalues = [];
+		for (var i = 1; i <= idx; i ++)
+			this.tRvalues.push(i);
+	}
+	dateRangeChanged(event){
+		this.makeFilterDataArray(event.id);
+		this.doAnalysis();
 	}
 }

@@ -12,9 +12,7 @@
                 </div>
                 <div class="form-group col-lg-6 col-md-6">
                     <label class="col-form-label">To</label>
-                    <input type="text" class="form-control" [minDate]="dMin" [maxDate]="dMax" #dp="bsDatepicker" bsDatepicker 
-                    [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }" 
-                    [ngModel]="dTo">
+                    <input type="text" class="form-control" [minDate]="dMin" [maxDate]="dMax" #dp="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }" [ngModel]="dTo">
                 </div>
             </div>
             <div class="row">
@@ -39,6 +37,15 @@
             <h5 class="card-title">Cohort</h5>
         </div>
         <div class="card-body">
+            <div class="row">
+                <div class="form-group col-lg-9 col-md-9">
+                </div>
+                <div class="form-group col-lg-3 col-md-3">
+                    <select class="form-control" [(ngModel)]="timeRange" (ngModelChange)="dateRangeChanged($event)">
+                        <option *ngFor="let t of timeRanges" [ngValue]="t"> {{t.name}} </option>
+                    </select>
+                </div>
+            </div>
             <div style="overflow-x: auto; width: 100%; box-sizing: border-box;">
                 <table class="table table-hover mb-0 table-striped fixed table-bordered">
                     <thead class="thead-default">
@@ -53,12 +60,12 @@
                                 <p style="text-align: center; vertical-align: middle;">
                                     <strong>{{d.date * 1000 | date:'dd/MM/yyyy'}}</strong>
                                 </p>
-                                <p class="small" style="text-align: center; vertical-align: middle;">{{d.install}} install / nru0 : {{d.user}}</p>
+                                <p style="text-align: center; vertical-align: middle;">{{d.install}} install(s) / nru0 : {{d.user}}</p>
                             </td>
                             <td *ngFor="let itemreturn of d.arrreturn" style="text-align: center;vertical-align: middle;" 
-                            [style.background-color]="'rgba(13, 71, 161, '+itemreturn.value +')'" 
-                            [style.color]="itemreturn.value < 50 ? 'white': 'black'">
-                                <div class="block-content" *ngIf="itemreturn.value != null">
+                            [style.background-color]="'rgba(13, 71, 161, ' + itemreturn.value + ')'" 
+                            [style.color]="itemreturn.value < 0.5 ? 'black' : 'white'">
+                                <div *ngIf="itemreturn.value != null">
                                     <strong>{{itemreturn.value * 100 | number : '1.2-2'}}%</strong>
                                 </div>
                             </td>
