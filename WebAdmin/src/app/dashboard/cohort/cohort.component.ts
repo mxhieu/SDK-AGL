@@ -36,17 +36,9 @@ export class CohortComponent implements OnInit {
 		this.dMin = new Date(this.dMax.getFullYear(), this.dMax.getMonth(), this.dMax.getDate() - 1000);
 
 		this.paging = { pg_page: 1, pg_size: 30, st_col: 'date', st_type: -1 };
-
-		for (var i = 0; i < 11; i++) {
-			if (i == 0) {
-				this.header.push({ id: 'rr0', name: '', index: i });
-			} else {
-				this.header.push({ id: 'rr' + i, name: 'Day ' + i, index: i });
-			}
-		}
-		this.header.push({ id: 'rr14', name: 'Day 14', index: 14 });
-		this.header.push({ id: 'rr21', name: 'Day 21', index: 21 });
-		this.header.push({ id: 'rr28', name: 'Day 28', index: 28 });
+		this.changeHeader(7);
+		
+		
 		this.getSources();
 		this.doAnalysis();
 	}
@@ -81,6 +73,7 @@ export class CohortComponent implements OnInit {
 				var arrdata = Array.isArray(data) ? data : [];
 
 				for (let objdata of arrdata) {
+
 					var arrReturnRate = [];
 					var indexrrs = 0;
 
@@ -111,12 +104,89 @@ export class CohortComponent implements OnInit {
 		});
 	}
 
+	changeHeader(index) {
+		this.header = [];
+		if (index == 7) {
+
+			for (var i = 0; i <= 7; i++) {
+				if (i == 0) {
+					this.header.push({ id: 'rr0', name: '', index: i });
+				} else {
+					this.header.push({ id: 'rr' + i, name: 'Day ' + i, index: i });
+				}
+			}
+
+		} else if (index == 14) {
+
+			for (var i = 0; i < 10; i++) {
+				if (i == 0) {
+					this.header.push({ id: 'rr0', name: '', index: i });
+				} else {
+					this.header.push({ id: 'rr' + i, name: 'Day ' + i, index: i });
+				}
+			}
+			for (var i = 10; i <= 14; i++) {
+				if (i % 2 == 0) {
+					this.header.push({ id: 'rr' + i, name: 'Day ' + i, index: i });
+				}
+			}
+
+			console.log(this.header);
+
+		} else if (index == 21) {
+
+			for (var i = 0; i < 10; i++) {
+				if (i == 0) {
+					this.header.push({ id: 'rr0', name: '', index: i });
+				} else {
+					this.header.push({ id: 'rr' + i, name: 'Day ' + i, index: i });
+				}
+			}
+
+			for (var i = 10; i <= 21; i++) {
+				if (i % 3 == 0) {
+					this.header.push({ id: 'rr' + i, name: 'Day ' + i, index: i });
+				}
+			}
+
+		} else if (index == 30) {
+
+			for (var i = 0; i < 10; i++) {
+				if (i == 0) {
+					this.header.push({ id: 'rr0', name: '', index: i });
+				} else {
+					this.header.push({ id: 'rr' + i, name: 'Day ' + i, index: i });
+				}
+			}
+
+			for (var i = 10; i <= 30; i++) {
+				if (i % 6 == 0) {
+					this.header.push({ id: 'rr' + i, name: 'Day ' + i, index: i });
+				}
+			}
+
+		}
+
+		// for (var i = 0; i < 11; i++) {
+		// 	if (i == 0) {
+		// 		this.header.push({ id: 'rr0', name: '', index: i });
+		// 	} else {
+		// 		this.header.push({ id: 'rr' + i, name: 'Day ' + i, index: i });
+		// 	}
+		// }
+		// this.header.push({ id: 'rr14', name: 'Day 14', index: 14 });
+		// this.header.push({ id: 'rr21', name: 'Day 21', index: 21 });
+		// this.header.push({ id: 'rr28', name: 'Day 28', index: 28 });
+
+	}
+
 	makeFilterDataArray(idx){
 		this.tRvalues = [];
 		for (var i = 1; i <= idx; i ++)
 			this.tRvalues.push(i);
 	}
 	dateRangeChanged(event){
+		this.changeHeader(event.id);
 		this.makeFilterDataArray(event.id);
 		this.doAnalysis();
 	}
