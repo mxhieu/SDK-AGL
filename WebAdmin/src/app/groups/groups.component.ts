@@ -13,6 +13,9 @@ export class GroupsComponent implements OnInit {
 
 	fullname: string = '';
 
+
+	isAppHidden: boolean;
+
 	constructor(private service: Service) {
 		this.isnext = true;
 		this.search = { field: 'name', term: '' };
