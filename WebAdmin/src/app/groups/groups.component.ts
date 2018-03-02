@@ -74,7 +74,8 @@ export class GroupsComponent implements OnInit {
 		};
 		this.groups = [];
 	}
-	delete(id: any){
+	delete(e: any, id: any){
+		e.stopPropagation();
 		this.service.deleteGroup({'id': id}, data => {this.refresh()});
 	}
 	jumpPage(_page) {
@@ -103,11 +104,13 @@ export class GroupsComponent implements OnInit {
 	getUrl(icon: string): string {
 		return this.service.getUrl(icon);
 	}
-	showApp(group: any){
+
+	onItemClick(group: any){
 		var st = group.settings; 
 		if(st){
 			var app = st[0];
 			if(app){
+				this.service.saveGroupSetting(st);
 				this.service.moveToAppDetail(app.app_id);
 			}
 		}

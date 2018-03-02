@@ -11,6 +11,7 @@ export class Service {
 	private KEY_AUTH = 'fAuth';
 	private USER_TOKEN = 'ftoken';
 	private KEY_APP_ID = 'fAppId';
+	private KEY_GROUP_SETTING = 'fGroupSetting'
 
 	constructor(private http: Http, private router: RoutingService, private config: ConfigService, private flash: FlashMessagesService) { }
 
@@ -211,6 +212,15 @@ export class Service {
 		return 'http://apitracking.bonanhem.com/upload/image/' + icon;
 	}
 
+	saveGroupSetting(settings: any){
+		Cookie.set(this.KEY_GROUP_SETTING, JSON.stringify(settings));
+	}
+	getGroupSetting(): any{
+		var data = Cookie.get(this.KEY_GROUP_SETTING);
+		if(data)
+			return JSON.parse(data);
+		return null;
+	}
 	getSources(callback) {
 		this.get(this.config.API_SOURCE_LIST,
 			{

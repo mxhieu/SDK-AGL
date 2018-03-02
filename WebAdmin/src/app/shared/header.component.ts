@@ -7,17 +7,33 @@ import { Service } from '../service/service';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private serice: Service) { }
+  constructor(private service: Service) { }
 
   fullname: string = '';
+  apps: any;
+  appId: any;
 
   ngOnInit() {
-    this.fullname = this.serice.getAuth().fullname;
+    this.fullname = this.service.getAuth().fullname;
+    this.getApps();
   }
   forgotPassword() {
-    this.serice.moveToForgotPassword();
+    this.service.moveToForgotPassword();
   }
   logout() {
-    this.serice.logout();
+    this.service.logout();
   }
+  getApps() {
+    this.appId = this.service.getAppId();
+    this.apps = this.service.getGroupSetting();
+  }
+
+  showAppName(os: string, version: string): string {
+    return os + " | " + version;
+  }
+  onItemClick(app: any) {
+    this.service.moveToAppDetail(app.app_id);
+    this.appId = app.app_id;
+  }
+
 }

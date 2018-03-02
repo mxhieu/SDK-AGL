@@ -19,7 +19,7 @@
         </div>
         <div class="card-footer">
             <button class="btn btn-primary" type="submit" (click)=(newGroup())>
-            <i class="fa fa-dot-circle-o"></i> Create </button>
+            <i class="fa fa-dot-circle-o"></i> Create group </button>
             <button class="btn btn-danger" type="reset" (click)=(cancel())><i class="fa fa-ban"></i> Cancel</button>
         </div>
     </div>
@@ -36,7 +36,7 @@
                 <input type="text" class="rx-cur input-search" [(ngModel)]="search.term">
                 <button class="btn btn-sm btn-default btn-search" (click)="jumpPage(1)"><i class="icon-magnifier"></i></button>
                 <button class="btn btn-sm btn-primary" (click)=(toggle())>
-                <i class="icon-plus"></i> Create
+                <i class="icon-plus"></i> Create group
                 </button>
             </div>
             <div style="overflow-x: auto; width: 100%; box-sizing: border-box;">
@@ -49,7 +49,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let g of groups">
+                        <tr *ngFor="let g of groups" (click)=(onItemClick(g)) class="tpointer">
                             <td class="text-center">
                                 <div class="avatar">
                                     <img [src]="getUrl(g.icon)" class="img-avatar" onError="this.src='./assets/img/ico_app_default.png'" style="width: 32px; height: 32px;" />
@@ -67,9 +67,8 @@
                                 <span class="tag tag-danger" [hidden]="!(g.is_deleted || 0)">Deleted</span>
                             </td>
                             <td align="center" class="text-center">
-                                <button type="button" class="btn btn-sm btn-success" (click)=(showApp(g))><i class="fa fa-eye"></i></button>
                                 <button type="button" class="btn btn-sm btn-primary"><i class="fa fa-pencil-square-o"></i></button>
-                                <button type="button" class="btn btn-sm btn-danger" (click)=(delete(g._id))><i class="fa fa-trash-o"></i></button>
+                                <button type="button" class="btn btn-sm btn-danger" (click)="delete($event, g._id)"><i class="fa fa-trash-o"></i></button>
                             </td>
                         </tr>
                         <tr>
