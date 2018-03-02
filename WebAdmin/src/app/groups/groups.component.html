@@ -6,8 +6,7 @@
                 <img src="assets/img/avatars/6.jpg" class="img-avatar">
                 <span class="hidden-md-down">{{fullname}}</span>
             </a>
-            <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown"
-                style="position: absolute;">
+            <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown" style="position: absolute;">
                 <div class="dropdown-header text-center">
                     <strong>Account</strong>
                 </div>
@@ -20,100 +19,101 @@
     </ul>
 </header>
 <div class="app-body">
-<div class="rx-floathide-form rx-isview" [hidden]="isHidden">
-    <div class="card">
-        <div class="card-header">
-            <h5 class="card-title">New group</h5>
-        </div>
-        <div class="card-block">
-            <div class="row">
-                <div class="col-md-6 col-lg-6 form-group rx-form-group">
-                    <label class="form-control-label">Name</label>
-                    <input class="form-control" name="name" placeholder="App Name ..." type="text" [(ngModel)]="onerow.name">
+    <div class="rx-floathide-form rx-isview" [hidden]="isHidden">
+        <div class="col-lg-12 col-md-12" style="margin-top: 1.25rem; width:100%;">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">New group</h5>
                 </div>
-                <div class="col-md-6 col-lg-6 form-group rx-form-group">
-                    <label class="form-control-label">Icon</label>
-                    <input class="form-control" name="icon" placeholder="Icon ..." type="text" [(ngModel)]="onerow.icon">
+                <div class="card-block">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-6 form-group rx-form-group">
+                            <label class="form-control-label">Name</label>
+                            <input class="form-control" name="name" placeholder="App Name ..." type="text" [(ngModel)]="onerow.name">
+                        </div>
+                        <div class="col-md-6 col-lg-6 form-group rx-form-group">
+                            <label class="form-control-label">Icon</label>
+                            <input class="form-control" name="icon" placeholder="Icon ..." type="text" [(ngModel)]="onerow.icon">
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="card-footer">
-            <button class="btn btn-primary" type="submit" (click)=(newGroup())>
-            <i class="fa fa-dot-circle-o"></i> Create group </button>
-            <button class="btn btn-danger" type="reset" (click)=(cancel())><i class="fa fa-ban"></i> Cancel</button>
-        </div>
-    </div>
-</div>
-<div class="col-lg-1 col-md-1">
-</div>
-<div class="col-lg-10 col-md-10" style="margin-top: 1.25rem; width:100%;">
-    <div class="card">
-        <div class="card-block">
-            <div class="card-tools">
-                <select class="sel-search" [(ngModel)]="search.field">
-                    <option *ngFor="let perheader of header" [hidden]="!perheader.is_search" value="{{perheader.id}}">{{perheader.name}}</option>
-                </select><i class="icon-arrow-down sel-ico"></i>
-                <input type="text" class="rx-cur input-search" [(ngModel)]="search.term">
-                <button class="btn btn-sm btn-default btn-search" (click)="jumpPage(1)"><i class="icon-magnifier"></i></button>
-                <button class="btn btn-sm btn-primary" (click)=(toggle())>
-                <i class="icon-plus"></i> Create group
-                </button>
-            </div>
-            <div style="overflow-x: auto; width: 100%; box-sizing: border-box;">
-                <table class="table table-hover table-outline mb-0 table-striped" style="max-height: 1280px;">
-                    <thead class="thead-default">
-                        <tr>
-                            <th *ngFor="let perheader of header" (click)="sort($event)" [attr.rxdata]="perheader.id" class="{{(perheader.id ==  paging.st_col)? 'rxsorting' : ''}} {{(paging.st_type == 1)? 'rxup' : 'rxdown'}} text-center" style="vertical-align:middle;">
-                                {{perheader.name}}
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let g of groups" (click)=(onItemClick(g)) class="tpointer">
-                            <td class="text-center">
-                                <div class="avatar">
-                                    <img [src]="getUrl(g.icon)" class="img-avatar" onError="this.src='./assets/img/ico_app_default.png'" style="width: 32px; height: 32px;" />
-                                </div>
-                            </td>
-                            <td align="center" class="text-center">
-                                <strong>{{g.name}}</strong>
-                            </td>
-                            <td align="center" class="text-center">
-                                <div>{{g.created_at * 1000 | date:'dd/MM/yyyy'}}</div>
-                            </td>
-                            <td align="center" class="text-center">
-                                <span class="tag tag-success" [hidden]="!(g.is_active || 0)">Active</span>
-                                <span class="tag tag-default" [hidden]="(g.is_active || 0)">Inactive</span>
-                                <span class="tag tag-danger" [hidden]="!(g.is_deleted || 0)">Deleted</span>
-                            </td>
-                            <td align="center" class="text-center">
-                                <button type="button" class="btn btn-sm btn-primary"><i class="fa fa-pencil-square-o"></i></button>
-                                <button type="button" class="btn btn-sm btn-danger" (click)="delete($event, g._id)"><i class="fa fa-trash-o"></i></button>
-                                <button type="button" class="btn btn-sm btn-success"> New app </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="100%" class="rx-pagin">
-                                <button class="rx-back" [disabled]="paging.pg_page <= 1" (click)="jumpPage(paging.pg_page - 1)">
-                                <</button>
-                                <input type="number" class="rx-cur" [(ngModel)]="paging.pg_page">
-                                <button class="rx-next" [disabled]="!isnext" (click)="jumpPage(paging.pg_page + 1)">></button>
-                                <span class="rx-jump" (click)="jumpPage(paging.pg_page)"><i class="icon-rocket"></i></span>
-                                <select type="number" class="rx-pg-size" (ngModelChange)="resizePage($event)" [(ngModel)]="paging.pg_size">
-                                    <option value="10" selected>10</option>
-                                    <option value="50" selected>50</option>
-                                    <option value="100" selected>100</option>
-                                </select> / page
-                            </td>
-                        </tr>
-                    </tbody>
-                    
-                </table>
+                <div class="card-footer">
+                    <button class="btn btn-primary" type="submit" (click)=(newGroup())>
+                        <i class="fa fa-dot-circle-o"></i> Create group </button>
+                    <button class="btn btn-danger" type="reset" (click)=(cancel())><i class="fa fa-ban"></i> Cancel</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class="col-lg-1 col-md-1">
-</div>
+    <div class="col-lg-1 col-md-1">
+    </div>
+    <div class="col-lg-10 col-md-10" style="margin-top: 1.25rem; width:100%;">
+        <div class="card">
+            <div class="card-block">
+                <div class="card-tools">
+                    <select class="sel-search" [(ngModel)]="search.field">
+                        <option *ngFor="let perheader of header" [hidden]="!perheader.is_search" value="{{perheader.id}}">{{perheader.name}}</option>
+                    </select><i class="icon-arrow-down sel-ico"></i>
+                    <input type="text" class="rx-cur input-search" [(ngModel)]="search.term">
+                    <button class="btn btn-sm btn-default btn-search" (click)="jumpPage(1)"><i class="icon-magnifier"></i></button>
+                    <button class="btn btn-sm btn-primary" (click)=(toggle())>
+                        <i class="icon-plus"></i> Create group
+                    </button>
+                </div>
+                <div style="overflow-x: auto; width: 100%; box-sizing: border-box;">
+                    <table class="table table-hover table-outline mb-0 table-striped" style="max-height: 1280px;">
+                        <thead class="thead-default">
+                            <tr>
+                                <th *ngFor="let perheader of header" (click)="sort($event)" [attr.rxdata]="perheader.id" class="{{(perheader.id ==  paging.st_col)? 'rxsorting' : ''}} {{(paging.st_type == 1)? 'rxup' : 'rxdown'}} text-center" style="vertical-align:middle;">
+                                    {{perheader.name}}
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let g of groups" (click)=(onItemClick(g)) class="tpointer">
+                                <td class="text-center">
+                                    <div class="avatar">
+                                        <img [src]="getUrl(g.icon)" class="img-avatar" onError="this.src='./assets/img/ico_app_default.png'" style="width: 32px; height: 32px;" />
+                                    </div>
+                                </td>
+                                <td align="center" class="text-center">
+                                    <strong>{{g.name}}</strong>
+                                </td>
+                                <td align="center" class="text-center">
+                                    <div>{{g.created_at * 1000 | date:'dd/MM/yyyy'}}</div>
+                                </td>
+                                <td align="center" class="text-center">
+                                    <span class="tag tag-success" [hidden]="!(g.is_active || 0)">Active</span>
+                                    <span class="tag tag-default" [hidden]="(g.is_active || 0)">Inactive</span>
+                                    <span class="tag tag-danger" [hidden]="!(g.is_deleted || 0)">Deleted</span>
+                                </td>
+                                <td align="center" class="text-center">
+                                    <button type="button" class="btn btn-sm btn-primary"><i class="fa fa-pencil-square-o"></i></button>
+                                    <button type="button" class="btn btn-sm btn-danger" (click)="delete($event, g._id)"><i class="fa fa-trash-o"></i></button>
+                                    <button type="button" class="btn btn-sm btn-success"> New app </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="100%" class="rx-pagin">
+                                    <button class="rx-back" [disabled]="paging.pg_page <= 1" (click)="jumpPage(paging.pg_page - 1)">
+                                        <</button>
+                                            <input type="number" class="rx-cur" [(ngModel)]="paging.pg_page">
+                                            <button class="rx-next" [disabled]="!isnext" (click)="jumpPage(paging.pg_page + 1)">></button>
+                                            <span class="rx-jump" (click)="jumpPage(paging.pg_page)"><i class="icon-rocket"></i></span>
+                                            <select type="number" class="rx-pg-size" (ngModelChange)="resizePage($event)" [(ngModel)]="paging.pg_size">
+                                                <option value="10" selected>10</option>
+                                                <option value="50" selected>50</option>
+                                                <option value="100" selected>100</option>
+                                            </select> / page
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-1 col-md-1">
+    </div>
 </div>
 <app-footer></app-footer>

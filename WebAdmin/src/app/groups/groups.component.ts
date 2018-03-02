@@ -72,8 +72,8 @@ export class GroupsComponent implements OnInit {
 		this.onerow = {
 			'_id': '',
 			'name': 'group' + new Date().getMilliseconds(),
-			'is_active': '',
-			'icon': ''
+			'is_active': 1,
+			'icon': 'icon' + new Date().getMilliseconds(),
 		};
 		this.groups = [];
 	}
