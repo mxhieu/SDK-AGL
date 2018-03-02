@@ -2,31 +2,25 @@ import { Component, OnInit } from '@angular/core';
 import { Service } from '../service/service';
 
 @Component({
-	selector: 'app-apps',
-	templateUrl: './apps.component.html',
-	styleUrls: ['./apps.component.scss']
+  selector: 'app-groups',
+  templateUrl: './groups.component.html',
+  styleUrls: ['./groups.component.scss']
 })
-export class AppsComponent implements OnInit {
-
-	isHidden: boolean;
-
-	apps: any[];
-	onerow: any;
-
-	data: any; paging: any; isnext: any; header: any; search: any;
+export class GroupsComponent implements OnInit {
 	
+	isHidden: boolean; groups: any[];onerow: any; data: any; 
+	paging: any; isnext: any; header: any; search: any;
+
 	constructor(private service: Service) {
 		this.isnext = true;
 		this.search = { field: 'name', term: '' };
 		this.paging = { pg_page: 1, pg_size: 10, st_col: 'name', st_type: -1 };
 		this.header = [
-			/*{ id: '_id', name: 'ID', is_search: 1, st_col: '_id', st_type: 1 },*/
+			{ id: 'icon', name: 'Icon', is_search: 0, st_col: 'icon', st_type: 0 },
 			{ id: 'name', name: 'Name', is_search: 1, st_col: 'name', st_type: 1 },
-			{ id: 'bundle_id', name: 'BundleId', is_search: 1, st_col: 'bundle_id', st_type: 1 },
-			{ id: 'version', name: 'Version', is_search: 1, st_col: 'version', st_type: 1 },
-			{ id: 'platform', name: 'Platform', is_search: 1, st_col: 'platform', st_type: 1 },
 			{ id: 'created_at', name: 'Created', is_search: 1, st_col: 'created_at', st_type: 1 },
-			{ id: 'is_active', name: 'Status', is_search: 1, st_col: 'is_active', st_type: 1 }
+			{ id: 'is_active', name: 'Status', is_search: 1, st_col: 'is_active', st_type: 1 },
+			{ id: 'action', name: 'Action', is_search: 0, st_col: 'action', st_type: 0 },
 		];
 	}
 
@@ -43,7 +37,7 @@ export class AppsComponent implements OnInit {
 			this.service.moveToLogin();
 		} else {
 			this.reset();
-			this.getApps();
+			this.getGroups();
 		}
 	}
 
@@ -58,7 +52,7 @@ export class AppsComponent implements OnInit {
 				this.paging.st_col = tempcol;
 				this.paging.st_type = -1;
 			}
-			this.getApps();
+			this.getGroups();
 		}
 	}
 	cancel() {
@@ -73,37 +67,50 @@ export class AppsComponent implements OnInit {
 	reset() {
 		this.isHidden = true;
 		this.onerow = {
-			'platform': 'android',
-			'name': 'app' + new Date().getMilliseconds(),
-			'bundle_id': 'com.coresdk.sampleapp',
+			'_id':'',
+			'name': 'group' + new Date().getMilliseconds(),
+			'is_active':'',
 			'icon': ''
 		};
-		this.apps = [];
+		this.groups = [];
 	}
-
+	delete(id: any){
+		this.service.deleteGroup({'id': id}, data => {this.refresh()});
+	}
 	jumpPage(_page) {
 		_page = (_page <= 0) ? 1 : _page;
 		this.paging.pg_page = _page
-		this.getApps();
+		this.getGroups();
 	}
-	newApp() {
-		this.service.newApp(this.onerow, data => { this.refresh(); });
+	newGroup() {
+		this.service.newGroup(this.onerow, data => { this.refresh(); });
 	}
-	getApps() {
-		this.service.getApps({
+	getGroups() {
+		this.service.getGroups({
 			'st_col': this.paging.st_col,
 			'st_type': this.paging.st_type,
 			'pg_page': this.paging.pg_page,
 			'pg_size': this.paging.pg_size,
 			['search_' + this.search.field]: this.search.term
 		}, data => {
-			this.apps = data;
+			this.groups = data;
 		});
 	}
+	newApp() {
+		this.service.newApp(this.onerow, data => { this.refresh(); });
+	}
+
 	getUrl(icon: string): string {
 		return this.service.getUrl(icon);
 	}
-	onItemClick(app: any) {
-		this.service.moveToAppDetail(app._id);
+	showApp(group: any){
+		var st = group.settings; 
+		if(st){
+			var app = st[0];
+			if(app){
+				this.service.moveToAppDetail(app.app_id);
+			}
+		}
 	}
+	
 }

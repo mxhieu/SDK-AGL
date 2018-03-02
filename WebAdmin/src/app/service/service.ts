@@ -31,21 +31,21 @@ export class Service {
 		let options = new RequestOptions({ headers: headers });
 		this.http.post('http://apitracking.bonanhem.com/v1/upload', formData)
 			.subscribe(
-			(data) => {
-				try {
-					let json = JSON.parse(data.text());
-					if (json['success'] && json['success'] == 1)
-						callback(json['data']);
-					else
-						this.failure(json['msg']);
-				} catch (err) {
+				(data) => {
+					try {
+						let json = JSON.parse(data.text());
+						if (json['success'] && json['success'] == 1)
+							callback(json['data']);
+						else
+							this.failure(json['msg']);
+					} catch (err) {
+						this.failure(err);
+					}
+					console.log(data);
+				},
+				(err) => {
 					this.failure(err);
-				}
-				console.log(data);
-			},
-			(err) => {
-				this.failure(err);
-			});
+				});
 	}
 	get(url: string, dParams, callback) {
 
@@ -53,7 +53,7 @@ export class Service {
 		params.append('authorization', this.getToken());
 
 		if (dParams) {
-			for (var key in dParams) 
+			for (var key in dParams)
 				params.append(key, dParams[key]);
 		}
 		var options: RequestOptionsArgs = {
@@ -62,22 +62,22 @@ export class Service {
 		};
 		this.http.get(url, options)
 			.subscribe(
-			(data) => {
-				try {
-					let json = JSON.parse(data.text());
-					if (json['success'] && (json['success'] == 1 || json['success'] == 100)) {
-						callback(json['data']);
-						this.successful(json['msg'], json['success']);
+				(data) => {
+					try {
+						let json = JSON.parse(data.text());
+						if (json['success'] && (json['success'] == 1 || json['success'] == 100)) {
+							callback(json['data']);
+							this.successful(json['msg'], json['success']);
+						}
+						else
+							this.failure(json['msg']);
+					} catch (err) {
+						this.failure(err);
 					}
-					else
-						this.failure(json['msg']);
-				} catch (err) {
+				},
+				(err) => {
 					this.failure(err);
-				}
-			},
-			(err) => {
-				this.failure(err);
-			});
+				});
 	}
 
 	post(url: string, body: any, dParams, callback) {
@@ -97,22 +97,22 @@ export class Service {
 
 		this.http.post(url, body, options)
 			.subscribe(
-			(data) => {
-				try {
-					let json = JSON.parse(data.text());
-					if (json['success'] && (json['success'] == 1 || json['success'] == 100)) {
-						callback(json['data']);
-						this.successful(json['msg'], json['success']);
+				(data) => {
+					try {
+						let json = JSON.parse(data.text());
+						if (json['success'] && (json['success'] == 1 || json['success'] == 100)) {
+							callback(json['data']);
+							this.successful(json['msg'], json['success']);
+						}
+						else
+							this.failure(json['msg']);
+					} catch (err) {
+						this.failure(err);
 					}
-					else
-						this.failure(json['msg']);
-				} catch (err) {
+				},
+				(err) => {
 					this.failure(err);
-				}
-			},
-			(err) => {
-				this.failure(err);
-			});
+				});
 	}
 
 	private failure(error: any) {
@@ -167,13 +167,30 @@ export class Service {
 				callback(data);
 			});
 	}
+	newGroup(body: any, callback) {
+		this.post(this.config.API_GROUP_NEW, JSON.stringify(body), null,
+			data => {
+				callback(data);
+			});
+	}
 	getApps(params, callback) {
 		this.get(this.config.API_APP_GET, params,
 			data => {
 				callback(Array.isArray(data) ? data : []);
 			});
 	}
-
+	getGroups(params, callback) {
+		this.get(this.config.API_GROUP_GET, params,
+			data => {
+				callback(Array.isArray(data) ? data : []);
+			});
+	}
+	deleteGroup(params, callback) {
+		this.get(this.config.API_GROUP_DELETE, params,
+			data => {
+				callback(Array.isArray(data) ? data : []);
+			});
+	}
 	/* Router */
 	moveToLogin() {
 		this.router.moveToLogin();
@@ -195,7 +212,7 @@ export class Service {
 	}
 
 	getSources(callback) {
-		this.get(this.config.API_SOURCE_LIST, 
+		this.get(this.config.API_SOURCE_LIST,
 			{
 				'app_id': this.getAppId(),
 				'pg_page': 1,

@@ -3,49 +3,30 @@
 <div class="rx-floathide-form rx-isview" [hidden]="isHidden">
     <div class="card">
         <div class="card-header">
-            <h5 class="card-title">New app</h5>
+            <h5 class="card-title">New group</h5>
         </div>
         <div class="card-block">
             <div class="row">
                 <div class="col-md-6 col-lg-6 form-group rx-form-group">
-                    <label class="form-control-label">App Name</label>
+                    <label class="form-control-label">Name</label>
                     <input class="form-control" name="name" placeholder="App Name ..." type="text" [(ngModel)]="onerow.name">
                 </div>
                 <div class="col-md-6 col-lg-6 form-group rx-form-group">
-                    <label class="form-control-label">Description</label>
-                    <input class="form-control" name="desc" placeholder="Description ..." type="text" [(ngModel)]="onerow.desc">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6 col-lg-6 form-group rx-form-group">
-                    <label class="form-control-label">
-                    Package name/ Bundle Id</label>
-                    <br/>
-                    <input class="form-control" name="bundle_id" placeholder="Bundle Id ..." type="text" [(ngModel)]="onerow.bundle_id">
-                </div>
-                <div class="col-md-6 col-lg-6 form-group rx-form-group">
-                    <label class="form-control-label">Store Url</label>
-                    <input class="form-control" name="storeUrl" placeholder="Store Url ..." type="text" [(ngModel)]="onerow.storeUrl">
-                </div>
-            </div>
-            <div class="row">
-                <div class="form-group col-md-6 col-lg-6 rx-form-group">
-                    <label class="form-control-label">
-                    Platform</label>
-                    <br/>
-                    <input class="tpointer" type="radio" name="platform" value="ios" [(ngModel)]="onerow.platform"> <i class="fa fa-apple fa-lg m-t-2 rx-apple"></i> iOS
-                    <input class="tpointer" type="radio" name="platform" value="android" [(ngModel)]="onerow.platform"> <i class="fa fa-android fa-lg m-t-2 rx-android"></i> Android
+                    <label class="form-control-label">Icon</label>
+                    <input class="form-control" name="icon" placeholder="Icon ..." type="text" [(ngModel)]="onerow.icon">
                 </div>
             </div>
         </div>
         <div class="card-footer">
-            <button class="btn btn-primary" type="submit" (click)=(newApp())>
-            <i class="fa fa-dot-circle-o"></i> Save </button>
+            <button class="btn btn-primary" type="submit" (click)=(newGroup())>
+            <i class="fa fa-dot-circle-o"></i> Create </button>
             <button class="btn btn-danger" type="reset" (click)=(cancel())><i class="fa fa-ban"></i> Cancel</button>
         </div>
     </div>
 </div>
-<div class="col-lg-12 col-md-12" style="margin-top: 1.25rem; width:100%;">
+<div class="col-lg-1 col-md-1">
+</div>
+<div class="col-lg-10 col-md-10" style="margin-top: 1.25rem; width:100%;">
     <div class="card">
         <div class="card-block">
             <div class="card-tools">
@@ -62,38 +43,33 @@
                 <table class="table table-hover table-outline mb-0 table-striped" style="max-height: 1280px;">
                     <thead class="thead-default">
                         <tr>
-                            <th></th>
                             <th *ngFor="let perheader of header" (click)="sort($event)" [attr.rxdata]="perheader.id" class="{{(perheader.id ==  paging.st_col)? 'rxsorting' : ''}} {{(paging.st_type == 1)? 'rxup' : 'rxdown'}} text-center" style="vertical-align:middle;">
                                 {{perheader.name}}
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let app of apps" class="tpointer" (click)=(onItemClick(app))>
+                        <tr *ngFor="let g of groups">
                             <td class="text-center">
                                 <div class="avatar">
-                                    <img [src]="getUrl(app.icon)" class="img-avatar" onError="this.src='./assets/img/ico_app_default.png'" style="width: 64px; height: 64px;" />
+                                    <img [src]="getUrl(g.icon)" class="img-avatar" onError="this.src='./assets/img/ico_app_default.png'" style="width: 32px; height: 32px;" />
                                 </div>
                             </td>
                             <td align="center" class="text-center">
-                                <strong>{{app.name}}</strong>
+                                <strong>{{g.name}}</strong>
                             </td>
                             <td align="center" class="text-center">
-                                {{app.bundle_id}}
+                                <div>{{g.created_at * 1000 | date:'dd/MM/yyyy'}}</div>
                             </td>
                             <td align="center" class="text-center">
-                                {{app.version}}
-                            </td>
-                            <td align="center" class="text-center"><i [hidden]="app.platform != 'android'" class="fa fa-android fa-lg m-t-2 rx-android"></i>
-                                <i [hidden]="app.platform == 'android'" class="fa fa-apple fa-lg m-t-2 rx-apple"></i> {{app.platform}}
-                            </td>
-                            <td align="center" class="text-center">
-                                <span class="tag tag-success" [hidden]="!(app.is_active || 0)">Active</span>
-                                <span class="tag tag-default" [hidden]="(app.is_active || 0)">Inactive</span>
-                                <span class="tag tag-danger" [hidden]="!(app.is_deleted || 0)">Deleted</span>
+                                <span class="tag tag-success" [hidden]="!(g.is_active || 0)">Active</span>
+                                <span class="tag tag-default" [hidden]="(g.is_active || 0)">Inactive</span>
+                                <span class="tag tag-danger" [hidden]="!(g.is_deleted || 0)">Deleted</span>
                             </td>
                             <td align="center" class="text-center">
-                                <div>{{app.created_at * 1000 | date:'dd/MM/yyyy'}}</div>
+                                <button type="button" class="btn btn-sm btn-success" (click)=(showApp(g))><i class="fa fa-eye"></i></button>
+                                <button type="button" class="btn btn-sm btn-primary"><i class="fa fa-pencil-square-o"></i></button>
+                                <button type="button" class="btn btn-sm btn-danger" (click)=(delete(g._id))><i class="fa fa-trash-o"></i></button>
                             </td>
                         </tr>
                         <tr>
@@ -116,6 +92,8 @@
             </div>
         </div>
     </div>
+</div>
+<div class="col-lg-1 col-md-1">
 </div>
 </div>
 <app-footer></app-footer>

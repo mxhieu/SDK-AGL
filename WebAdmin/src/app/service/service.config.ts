@@ -8,6 +8,7 @@ export class ConfigService {
 
   API_LOGIN = PrivateService.BASE_URL + 'authorize';
   
+  // Apps
   API_APP_GET = PrivateService.BASE_URL + 'app';
   API_APP_NEW = PrivateService.BASE_URL + 'app/index';
   API_APP_EDIT = PrivateService.BASE_URL + 'app/edit';
@@ -15,6 +16,10 @@ export class ConfigService {
   API_APP_KEY_RESET = PrivateService.BASE_URL + 'app/resetkey';
   API_APP_DELETE = PrivateService.BASE_URL + 'app/delete';
 
+  // Group
+  API_GROUP_GET = PrivateService.BASE_URL + 'groupApp';
+  API_GROUP_NEW = PrivateService.BASE_URL + 'groupApp';
+  API_GROUP_DELETE = PrivateService.BASE_URL + 'groupApp/delete';
 
   api_suggestion_get = PrivateService.BASE_URL + 'suggestion';
   api_suggestion_search = PrivateService.BASE_URL + 'suggestion/search/';
