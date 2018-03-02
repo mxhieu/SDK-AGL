@@ -16,7 +16,7 @@ export class RoutingService {
 	}
 
 	moveToApps() {
-		this.router.navigate(['/apps']);
+		this.router.navigate(['/groups']);
 	}
 	moveToForgotPassword() {
 		this.router.navigate(['/forgot-password']);

@@ -2,14 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { Service } from '../service/service';
 
 @Component({
-  selector: 'app-groups',
-  templateUrl: './groups.component.html',
-  styleUrls: ['./groups.component.scss']
+	selector: 'app-groups',
+	templateUrl: './groups.component.html',
+	styleUrls: ['./groups.component.scss']
 })
 export class GroupsComponent implements OnInit {
-	
-	isHidden: boolean; groups: any[];onerow: any; data: any; 
+
+	isHidden: boolean; groups: any[]; onerow: any; data: any;
 	paging: any; isnext: any; header: any; search: any;
+
+	fullname: string = '';
 
 	constructor(private service: Service) {
 		this.isnext = true;
@@ -38,6 +40,7 @@ export class GroupsComponent implements OnInit {
 		} else {
 			this.reset();
 			this.getGroups();
+			this.fullname = this.service.getAuth().fullname;
 		}
 	}
 
@@ -58,7 +61,7 @@ export class GroupsComponent implements OnInit {
 	cancel() {
 		this.refresh();
 	}
-	
+
 	resizePage($event) {
 		this.paging.pg_size = $event;
 		this.jumpPage(1);
@@ -67,16 +70,16 @@ export class GroupsComponent implements OnInit {
 	reset() {
 		this.isHidden = true;
 		this.onerow = {
-			'_id':'',
+			'_id': '',
 			'name': 'group' + new Date().getMilliseconds(),
-			'is_active':'',
+			'is_active': '',
 			'icon': ''
 		};
 		this.groups = [];
 	}
-	delete(e: any, id: any){
+	delete(e: any, id: any) {
 		e.stopPropagation();
-		this.service.deleteGroup({'id': id}, data => {this.refresh()});
+		this.service.deleteGroup({ 'id': id }, data => { this.refresh() });
 	}
 	jumpPage(_page) {
 		_page = (_page <= 0) ? 1 : _page;
@@ -104,16 +107,21 @@ export class GroupsComponent implements OnInit {
 	getUrl(icon: string): string {
 		return this.service.getUrl(icon);
 	}
-
-	onItemClick(group: any){
-		var st = group.settings; 
-		if(st){
+	forgotPassword() {
+		this.service.moveToForgotPassword();
+	}
+	logout() {
+		this.service.logout();
+	}
+	onItemClick(group: any) {
+		var st = group.settings;
+		if (st) {
 			var app = st[0];
-			if(app){
+			if (app) {
 				this.service.saveGroupSetting(st);
 				this.service.moveToAppDetail(app.app_id);
 			}
 		}
 	}
-	
+
 }

@@ -28,9 +28,6 @@ export class HeaderComponent implements OnInit {
     this.apps = this.service.getGroupSetting();
   }
 
-  showAppName(os: string, version: string): string {
-    return os + " | " + version;
-  }
   onItemClick(app: any) {
     this.service.moveToAppDetail(app.app_id);
     this.appId = app.app_id;
