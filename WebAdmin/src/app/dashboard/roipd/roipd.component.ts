@@ -37,11 +37,17 @@ export class RoipdComponent implements OnInit {
 			{ id: 'install', name: 'Install', is_search: 1, st_col: 'install', st_type: 1 },
 			{ id: 'rr3', name: 'RR3', is_search: 1, st_col: 'rr3', st_type: 1 },
 			{ id: 'pd1', name: 'PD1', is_search: 1, st_col: 'pd1', st_type: 1 },
+			{ id: 'rev1', name: 'REV1', is_search: 1, st_col: 'rev1', st_type: 1 },
 			{ id: 'pd3', name: 'PD3', is_search: 1, st_col: 'pd3', st_type: 1 },
+			{ id: 'rev3', name: 'REV3', is_search: 1, st_col: 'rev3', st_type: 1 },
 			{ id: 'pd7', name: 'PD7', is_search: 1, st_col: 'pd7', st_type: 1 },
+			{ id: 'rev7', name: 'REV7', is_search: 1, st_col: 'rev7', st_type: 1 },
 			{ id: 'pd14', name: 'PD14', is_search: 1, st_col: 'pd14', st_type: 1 },
+			{ id: 'rev14', name: 'REV14', is_search: 1, st_col: 'rev14', st_type: 1 },
 			{ id: 'pd21', name: 'PD21', is_search: 1, st_col: 'pd21', st_type: 1 },
-			{ id: 'pd30', name: 'PD30', is_search: 1, st_col: 'pd30', st_type: 1 }
+			{ id: 'rev21', name: 'REV21', is_search: 1, st_col: 'rev21', st_type: 1 },
+			{ id: 'pd30', name: 'PD30', is_search: 1, st_col: 'pd30', st_type: 1 },
+			{ id: 'rev30', name: 'REV30', is_search: 1, st_col: 'rev30', st_type: 1 }
 		];
 
 		this.doAnalysis();

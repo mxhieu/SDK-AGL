@@ -140,8 +140,6 @@ export class CohortComponent implements OnInit {
 				}
 			}
 
-			console.log(this.header);
-
 		} else if (index == 21) {
 
 			for (var i = 0; i < 10; i++) {
@@ -175,18 +173,6 @@ export class CohortComponent implements OnInit {
 			}
 
 		}
-
-		// for (var i = 0; i < 11; i++) {
-		// 	if (i == 0) {
-		// 		this.header.push({ id: 'rr0', name: '', index: i });
-		// 	} else {
-		// 		this.header.push({ id: 'rr' + i, name: 'Day ' + i, index: i });
-		// 	}
-		// }
-		// this.header.push({ id: 'rr14', name: 'Day 14', index: 14 });
-		// this.header.push({ id: 'rr21', name: 'Day 21', index: 21 });
-		// this.header.push({ id: 'rr28', name: 'Day 28', index: 28 });
-
 	}
 
 	makeFilterDataArray(idx){
