@@ -27,9 +27,7 @@ export class AppSettingComponent implements OnInit {
 	}
 
 	refresh() {
-		if (this.api.isExpired())
-			this.api.moveToLogin();
-		else 
+		if (!this.api.isExpired())
 			this.api.get(this.config.API_APP_DETAIL, { 'id': this.config.getAppId() }, data => this.appInfo = data );
 	}
 	resetKey() {

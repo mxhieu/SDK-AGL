@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Service } from '../service/service';
+import { GroupService } from '../service/group.service';
 
 @Component({
   selector: 'app-header',
@@ -7,14 +8,14 @@ import { Service } from '../service/service';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private service: Service) { }
+  constructor(private service: GroupService) { }
 
   fullname: string = '';
   apps: any;
   appId: any;
 
   ngOnInit() {
-    this.fullname = this.service.getAuth().fullname;
+    this.fullname = this.service.getFullName();
     this.getApps();
   }
   forgotPassword() {

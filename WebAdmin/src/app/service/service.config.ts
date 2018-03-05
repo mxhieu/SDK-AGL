@@ -16,11 +16,6 @@ export class ConfigService {
   API_APP_KEY_RESET = PrivateService.BASE_URL + 'app/resetkey';
   API_APP_DELETE = PrivateService.BASE_URL + 'app/delete';
 
-  // Group
-  API_GROUP_GET = PrivateService.BASE_URL + 'groupApp';
-  API_GROUP_NEW = PrivateService.BASE_URL + 'groupApp';
-  API_GROUP_DELETE = PrivateService.BASE_URL + 'groupApp/delete';
-
   api_suggestion_get = PrivateService.BASE_URL + 'suggestion';
   api_suggestion_search = PrivateService.BASE_URL + 'suggestion/search/';
 
