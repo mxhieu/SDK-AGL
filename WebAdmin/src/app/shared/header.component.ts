@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Service } from '../service/service';
+import { GroupService } from '../service/group.service';
 
 @Component({
   selector: 'app-header',
@@ -7,17 +8,30 @@ import { Service } from '../service/service';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private serice: Service) { }
+  constructor(private service: GroupService) { }
 
   fullname: string = '';
+  apps: any;
+  appId: any;
 
   ngOnInit() {
-    this.fullname = this.serice.getAuth().fullname;
+    this.fullname = this.service.getFullName();
+    this.getApps();
   }
   forgotPassword() {
-    this.serice.moveToForgotPassword();
+    this.service.moveToForgotPassword();
   }
   logout() {
-    this.serice.logout();
+    this.service.logout();
   }
+  getApps() {
+    this.appId = this.service.getAppId();
+    this.apps = this.service.getGroupSetting();
+  }
+
+  onItemClick(app: any) {
+    this.service.moveToAppDetail(app.app_id);
+    this.appId = app.app_id;
+  }
+
 }

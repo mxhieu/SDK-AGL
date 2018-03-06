@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Service } from '../service/service';
+import { GroupService } from '../service/group.service';
+import { BaseComponent } from '../service/base.component';
 
 @Component({
 	selector: 'app-apps',
 	templateUrl: './apps.component.html',
 	styleUrls: ['./apps.component.scss']
 })
-export class AppsComponent implements OnInit {
+export class AppsComponent extends BaseComponent implements OnInit {
 
 	isHidden: boolean;
 
@@ -14,12 +15,14 @@ export class AppsComponent implements OnInit {
 	onerow: any;
 
 	data: any; paging: any; isnext: any; header: any; search: any;
-	constructor(private service: Service) {
+	
+	constructor(private service: GroupService) {
+		super();
 		this.isnext = true;
 		this.search = { field: 'name', term: '' };
 		this.paging = { pg_page: 1, pg_size: 10, st_col: 'name', st_type: -1 };
 		this.header = [
-			{ id: '_id', name: 'ID', is_search: 1, st_col: '_id', st_type: 1 },
+			/*{ id: '_id', name: 'ID', is_search: 1, st_col: '_id', st_type: 1 },*/
 			{ id: 'name', name: 'Name', is_search: 1, st_col: 'name', st_type: 1 },
 			{ id: 'bundle_id', name: 'BundleId', is_search: 1, st_col: 'bundle_id', st_type: 1 },
 			{ id: 'version', name: 'Version', is_search: 1, st_col: 'version', st_type: 1 },
@@ -38,9 +41,7 @@ export class AppsComponent implements OnInit {
 	}
 
 	refresh() {
-		if (this.service.isExpired()) {
-			this.service.moveToLogin();
-		} else {
+		if (!this.service.isExpired()) {
 			this.reset();
 			this.getApps();
 		}
@@ -98,9 +99,6 @@ export class AppsComponent implements OnInit {
 		}, data => {
 			this.apps = data;
 		});
-	}
-	getUrl(icon: string): string {
-		return this.service.getUrl(icon);
 	}
 	onItemClick(app: any) {
 		this.service.moveToAppDetail(app._id);

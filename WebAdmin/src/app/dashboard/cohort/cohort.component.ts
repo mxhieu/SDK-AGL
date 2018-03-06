@@ -33,7 +33,7 @@ export class CohortComponent implements OnInit {
 		this.platform = this.platforms[0];
 		this.timeRange = this.timeRanges[0];
 		this.makeFilterDataArray(this.timeRange.id);
-		this.dFrom = new Date(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate() - 30);
+		this.dFrom = new Date(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate() - 1000);
 		this.dMin = new Date(this.dMax.getFullYear(), this.dMax.getMonth(), this.dMax.getDate() - 1000);
 
 		this.paging = { pg_page: 1, pg_size: 30, st_col: 'date', st_type: -1 };
@@ -140,8 +140,6 @@ export class CohortComponent implements OnInit {
 				}
 			}
 
-			console.log(this.header);
-
 		} else if (index == 21) {
 
 			for (var i = 0; i < 10; i++) {
@@ -175,18 +173,6 @@ export class CohortComponent implements OnInit {
 			}
 
 		}
-
-		// for (var i = 0; i < 11; i++) {
-		// 	if (i == 0) {
-		// 		this.header.push({ id: 'rr0', name: '', index: i });
-		// 	} else {
-		// 		this.header.push({ id: 'rr' + i, name: 'Day ' + i, index: i });
-		// 	}
-		// }
-		// this.header.push({ id: 'rr14', name: 'Day 14', index: 14 });
-		// this.header.push({ id: 'rr21', name: 'Day 21', index: 21 });
-		// this.header.push({ id: 'rr28', name: 'Day 28', index: 28 });
-
 	}
 
 	makeFilterDataArray(idx){

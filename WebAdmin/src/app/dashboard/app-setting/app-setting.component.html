@@ -1,7 +1,7 @@
 <div class="animated fadeIn">
     <div class="card">
         <div class="card-header">
-            <h5 class="card-title">Settings</h5>
+            <h5 class="card-title">Setting</h5>
         </div>
         <div class="card-block">
             <div class="form-group row">
@@ -97,7 +97,8 @@
                         </div>
                         <div class="col-lg-6 col-md-6">
                             <label class="switch switch-text switch-pill switch-info tright">
-                                <input type="checkbox" class="switch-input" [(ngModel)]="appInfo.settings.is_google_auth_enable" (change)=(update())>
+                                <input type="checkbox" class="switch-input" [(ngModel)]="appInfo.settings.is_google_auth_enable" 
+                                (change)=(update())>
                                 <span class="switch-label" data-on="On" data-off="Off"></span>
                                 <span class="switch-handle"></span>
                             </label>
@@ -122,14 +123,12 @@
                             <label class="col-form-label-none" style="vertical-align: middle;">Force update</label>
                         </div>
                         <div class="col-lg-5 col-md-5">
-                            <input class="form-control" type="text" [hidden]="!appInfo.settings.is_force_update"
+                            <input class="form-control" type="text"
                             style="vertical-align: middle;"
                             [(ngModel)]="appInfo.force_update_url">
                         </div>
                         <div class="col-lg-2 col-md-2">
-                            <button class="btn btn-primary btn-sm" 
-                            (click)="update()"
-                            [hidden]="!appInfo.settings.is_force_update"><i class="icon-check"></i> Save</button>
+                            <button class="btn btn-primary btn-sm" (click)="update()"><i class="icon-check"></i> Save</button>
                         </div>
                         <div class="col-lg-2 col-md-2">
                             <label class="switch switch-text switch-pill switch-info tright" style="vertical-align: middle;">
@@ -146,7 +145,7 @@
 </div>
 <div class="card">
     <div class="card-header">
-        <h5 class="card-title">Infos</h5>
+        <h5 class="card-title">Information</h5>
     </div>
     <div class="card-block">
         <div class="row">

@@ -14,8 +14,7 @@ export class RegisterComponent {
 
   }
   ngOnInit(): void {
-    if (!this.service.isExpired())
-      this.service.moveToApps();
+    
   }
   register(event) {
     this.service.post(this.config.api_user_register,

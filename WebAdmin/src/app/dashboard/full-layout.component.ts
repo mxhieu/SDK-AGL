@@ -18,7 +18,7 @@ export class FullLayoutComponent implements OnInit {
 
   ngOnInit(): void {
     if (!this.service.isExpired()) {
-      this.fullname = this.service.getAuth().fullname;
+      this.fullname = this.service.getFullName();
     }
   }
 

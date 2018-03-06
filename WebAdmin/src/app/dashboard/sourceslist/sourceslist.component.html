@@ -1,26 +1,60 @@
 <div class="animated fadeIn rx-relative">
+    <div class="card-block rx-floathide-form" [hidden]="isHidden">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Create source</h5>
+            </div>
+            <div class="card-block">
+                <div class="row">
+                    <div class="form-group col-md-3 col-lg-3">
+                        <label class="col-form-label-none">Source Group</label>
+                        <input class="form-control" name="source_group" placeholder="Source Group ..." type="text" [disabled]="isEdit" 
+                        [(ngModel)]="onerow.source_group">
+                    </div>
+                    <div class="form-group col-md-3 col-lg-3">
+                        <label class="col-form-label-none">Source</label>
+                        <input class="form-control" name="source" placeholder="Source ..." type="text" 
+                        [(ngModel)]="onerow.source">
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-sm btn-primary" (click)=(save()) [hidden]="isEdit"><i class="icon-plus"></i> Create </button>
+                <button class="btn btn-sm btn-primary" (click)=(update()) [hidden]="!isEdit"><i class="icon-check"></i> Save</button>
+                <button class="btn btn-sm btn-danger tright" (click)=(delete()) [hidden]="!isEdit"><i class="icon-trash"></i> Delete</button>
+                <button class="btn btn-sm btn-secondary tright" (click)="toggle()"><i class="icon-close"></i> Cancel</button>
+            </div>
+        </div>
+    </div>
     <div class="card">
         <div class="card-header">
             <h5 class="card-title">Sources</h5>
         </div>
         <div class="card-block">
+            <div class="card-tools">
+                <select class="sel-search" [(ngModel)]="search.field">
+                    <option *ngFor="let perheader of headers" [hidden]="!perheader.is_search" value="{{perheader.id}}">{{perheader.name}}</option>
+                </select><i class="icon-arrow-down sel-ico"></i>
+                <input type="text" class="rx-cur input-search" [(ngModel)]="search.term">
+                <button class="btn btn-sm btn-default btn-search" (click)="jumpPage(1)"><i class="icon-magnifier"></i></button>
+                <button class="btn btn-sm btn-success" (click)="toggle()"> <i class="icon-plus"></i> Create </button>
+            </div>
             <table class="table table-hover mb-0 table-striped fixed table-bordered">
                 <thead class="thead-default">
                     <tr>
-                        <th *ngFor="let perheader of header" class="text-center rx-table-ico-head">{{perheader.name}}</th>
+                        <th *ngFor="let perheader of headers" class="text-center rx-table-ico-head">{{perheader.name}}</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let d of data">
+                    <tr *ngFor="let d of data" class="tpointer" (click)="onItemClick(d)">
                         <td align="center" style="vertical-align: middle;">{{d.source_group}}</td>
                         <td align="center" style="vertical-align: middle;">{{d.source}}</td>
-                        <td align="center" style="vertical-align: middle;">{{d.action}}</td>
+                        <td align="center" style="vertical-align: middle;">
+                            {{d.created_at * 1000 | date:'dd/MM/yyyy'}}
+                        </td>
                         <td align="center" style="vertical-align: middle;">
                             <span class="tag tag-success" *ngIf="!d.is_delete">Active</span>
                             <span class="tag tag-danger" *ngIf="d.is_delete">Inactive</span>
-                        </td>
-                        <td align="center" style="vertical-align: middle;">
-                            {{d.created_at * 1000 | date:'dd/MM/yyyy'}}
                         </td>
                     </tr>
                 </tbody>

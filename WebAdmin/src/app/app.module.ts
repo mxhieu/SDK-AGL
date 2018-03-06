@@ -41,6 +41,9 @@ import { PrivacyComponent } from './privacy/privacy.component';
 import { HelpComponent } from './help/help.component';
 import { ResourceComponent } from './resource/resource.component';
 import { ForgotPasswordComponent } from './forgotpassword/forgotpassword.component';
+import { GroupsComponent } from './groups/groups.component';
+import { BaseComponent } from './service/base.component';
+import { GroupService } from './service/group.service';
 
 @NgModule({
     imports: [
@@ -72,12 +75,14 @@ import { ForgotPasswordComponent } from './forgotpassword/forgotpassword.compone
         PrivacyComponent,
         HelpComponent,
         ResourceComponent,
-        ForgotPasswordComponent
+        ForgotPasswordComponent,
+        GroupsComponent
     ],
     providers: [
         ConfigService,
         Service,
         RoutingService,
+        GroupService,
         PrivateService,
         {
             provide: LocationStrategy,

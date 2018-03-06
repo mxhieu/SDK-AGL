@@ -18,9 +18,7 @@ export class NotificationComponent implements OnInit {
 		this.refresh();
 	}
 	refresh() {
-		if (this.service.isExpired()) {
-			this.service.moveToLogin();
-		} else {
+		if (!this.service.isExpired()) {
 			this.reset();
 			this.getData();
 		}

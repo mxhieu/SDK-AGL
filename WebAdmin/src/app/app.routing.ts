@@ -13,6 +13,7 @@ import { PrivacyComponent } from './privacy/privacy.component';
 import { HelpComponent } from './help/help.component';
 import { ResourceComponent } from './resource/resource.component';
 import { ForgotPasswordComponent } from './forgotpassword/forgotpassword.component';
+import { GroupsComponent } from './groups/groups.component';
 
 export const routes: Routes = [
   {
@@ -26,6 +27,10 @@ export const routes: Routes = [
   {
     path: 'apps',
     component: AppsComponent
+  },
+  {
+    path: 'groups',
+    component: GroupsComponent
   },
   {
     path: 'apps',

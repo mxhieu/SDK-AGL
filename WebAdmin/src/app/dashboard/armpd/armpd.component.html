@@ -36,7 +36,7 @@
                     </select>
                 </div>
             </div>
-            <button class="btn btn-success" (click)="doAnalysis()">Analytic</button>
+            <button class="btn btn-success" (click)="doAnalysis()"><i class="icon-magic-wand"></i> Analytic</button>
         </div>
     </div>
     <div class="card">
@@ -70,7 +70,7 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let d of data">
-                        <td>{{d.date * 1000 | date:'dd-MM-yyyy'}} </td>
+                        <td class="text-center">{{d.date * 1000 | date:'dd-MM-yyyy'}} </td>
                         <td> {{d.source}} </td>
                         <td> {{d.os }} </td>
                         <td> {{d.install }} </td>

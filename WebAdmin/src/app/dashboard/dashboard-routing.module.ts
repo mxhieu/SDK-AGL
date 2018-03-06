@@ -15,6 +15,7 @@ import { GamereportComponent } from './gamereport/gamereport.component';
 import { ProductreportComponent } from './productreport/productreport.component';
 import { PureportComponent } from './pureport/pureport.component';
 import { CohortComponent } from './cohort/cohort.component';
+import { CampaignComponent } from './campaign/campaign.component';
 
 const routes: Routes = [
   {
@@ -45,6 +46,10 @@ const routes: Routes = [
   }, {
     path: 'telco',
     component: TelcoComponent
+  },
+  {
+    path: 'campaign',
+    component: CampaignComponent
   }, {
     path: 'notification',
     component: NotificationComponent
@@ -57,10 +62,10 @@ const routes: Routes = [
   }, {
     path: 'gamereport',
     component: GamereportComponent
-  },{
+  }, {
     path: 'productreport',
     component: ProductreportComponent
-  },{
+  }, {
     path: 'pureport',
     component: PureportComponent
   },
