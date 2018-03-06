@@ -9,16 +9,10 @@ import { Service } from '../../service/service';
 })
 export class TelcoComponent implements OnInit {
 
-	items: any[];
-	cardItems: any[];
-	onerow: any;
+	items: any[]; cardItems: any[]; onerow: any;
+	isHidden: boolean; paging: any; isEdit: boolean;
 
-	isHidden: boolean;
-	paging: any;
-	isEdit: boolean;
-
-	constructor(
-		private config: ConfigService, private service: Service) {
+	constructor(private config: ConfigService, private service: Service) {
 	}
 
 	ngOnInit() {

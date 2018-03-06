@@ -24,6 +24,7 @@ import { FilterComponent } from './filter/filter.component';
 import { ProductreportComponent } from './productreport/productreport.component';
 import { PureportComponent } from './pureport/pureport.component';
 import { CohortComponent } from './cohort/cohort.component';
+import { CampaignComponent } from './campaign/campaign.component';
 
 @NgModule({
   imports: [
@@ -37,6 +38,6 @@ import { CohortComponent } from './cohort/cohort.component';
   declarations: [
     PlayerComponent, AppSettingComponent, PaymentComponent,
     NotificationComponent, TelcoComponent, ArmpdComponent, ArmComponent,
-    RoiComponent, RoipdComponent, SourceslistComponent, MetricComponent, GamereportComponent, FilterComponent, ProductreportComponent, PureportComponent, CohortComponent]
+    RoiComponent, RoipdComponent, SourceslistComponent, MetricComponent, GamereportComponent, FilterComponent, ProductreportComponent, PureportComponent, CohortComponent, CampaignComponent]
 })
 export class DashboardModule { }

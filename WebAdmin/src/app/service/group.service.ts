@@ -12,7 +12,7 @@ enum GroupApiUrls {
 @Injectable()
 export class GroupService extends BaseService {
 
-	private KEY_GROUP_SETTING: string = 'KEY_GROUP_SETTING';
+	KEY_GROUP_SETTING: string = 'KEY_GROUP_SETTING';
 
 	saveGroupSetting(settings: any) {
 		this.setCookie(this.KEY_GROUP_SETTING, JSON.stringify(settings));
