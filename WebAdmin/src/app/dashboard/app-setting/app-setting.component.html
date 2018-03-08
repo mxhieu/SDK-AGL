@@ -1,6 +1,50 @@
 <div class="animated fadeIn">
     <div class="card">
         <div class="card-header">
+            <h5 class="card-title">Information</h5>
+        </div>
+        <div class="card-block">
+            <div class="row">
+                <div class="col-md-6 col-lg-6">
+                    <label class="col-form-label">App icon</label>
+                    <input type="file" (change)="fileChanged($event, 0)" placeholder="Upload file" accept="*.*">
+                    <img [src]="getUrl(appInfo.icon)" onError="this.src='./assets/img/ico_app_default.png'" class="tIcon" />
+                </div>
+                <div class="col-md-6 col-lg-6">
+                    <label class="col-form-label">App logo</label>
+                    <input type="file" (change)="fileLogoChanged($event, 1)" placeholder="Upload file" accept="*.*">
+                    <img [src]="getUrl(appInfo.logo)" onError="this.src='./assets/img/ico_app_default.png'" class="tIcon" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 col-lg-3">
+                    <label class="col-form-label">BundleId/Package name</label>
+                    <input class="form-control" type="text" name="bundle_id" [(ngModel)]="appInfo.bundle_id">
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <label class="col-form-label">Name</label>
+                    <input class="form-control" type="text" name="name" [(ngModel)]="appInfo.name">
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <label class="col-form-label">Description</label>
+                    <input class="form-control" placeholder="Description" type="text" name="desc" [(ngModel)]="appInfo.desc">
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <label class="col-form-label">Store URL</label>
+                    <input class="form-control" type="text" name="storeurl" placeholder="Storeurl" [(ngModel)]="appInfo.storeurl">
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <label class="col-form-label">App version</label>
+                    <input class="form-control" type="text" name="version" [(ngModel)]="appInfo.version">
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <button class="btn btn-sm btn-primary tright" (click)="update()"><i class="icon-check"></i> Save</button>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">
             <h5 class="card-title">Setting</h5>
         </div>
         <div class="card-block">
@@ -16,7 +60,7 @@
                             <input class="form-control" type="text" disabled value="{{appInfo.key}}" readonly="readonly">
                         </div>
                         <div class="col-lg-4 col-md-4">
-                            <button class="btn btn-danger tright" type="submit">
+                            <button class="btn btn-sm btn-danger tright" type="submit">
                                 <i class="icon-refresh"></i> Reset
                             </button>
                         </div>
@@ -97,8 +141,7 @@
                         </div>
                         <div class="col-lg-6 col-md-6">
                             <label class="switch switch-text switch-pill switch-info tright">
-                                <input type="checkbox" class="switch-input" [(ngModel)]="appInfo.settings.is_google_auth_enable" 
-                                (change)=(update())>
+                                <input type="checkbox" class="switch-input" [(ngModel)]="appInfo.settings.is_google_auth_enable" (change)=(update())>
                                 <span class="switch-label" data-on="On" data-off="Off"></span>
                                 <span class="switch-handle"></span>
                             </label>
@@ -123,9 +166,7 @@
                             <label class="col-form-label-none" style="vertical-align: middle;">Force update</label>
                         </div>
                         <div class="col-lg-5 col-md-5">
-                            <input class="form-control" type="text"
-                            style="vertical-align: middle;"
-                            [(ngModel)]="appInfo.force_update_url">
+                            <input class="form-control" type="text" style="vertical-align: middle;" [(ngModel)]="appInfo.force_update_url">
                         </div>
                         <div class="col-lg-2 col-md-2">
                             <button class="btn btn-primary btn-sm" (click)="update()"><i class="icon-check"></i> Save</button>
@@ -141,51 +182,10 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
-<div class="card">
-    <div class="card-header">
-        <h5 class="card-title">Information</h5>
-    </div>
-    <div class="card-block">
-        <div class="row">
-            <div class="col-md-4 col-lg-4">
-                <label class="col-form-label">BundleId/Package name</label>
-                <input class="form-control" type="text" name="bundle_id" [(ngModel)]="appInfo.bundle_id">
-            </div>
-            <div class="col-md-4 col-lg-4">
-                <label class="col-form-label">Name</label>
-                <input class="form-control" type="text" name="name" [(ngModel)]="appInfo.name">
-            </div>
-            <div class="col-md-4 col-lg-4">
-                <label class="col-form-label">Description</label>
-                <input class="form-control" placeholder="Description" type="text" name="desc" [(ngModel)]="appInfo.desc">
-            </div>
+        <div class="card-footer">
+            <button class="btn btn-sm btn-danger" (click)="delete()">
+                <i class="fa fa-trash-o"></i> Delete app
+            </button>
         </div>
-        <div class="form-group row">
-            <div class="col-md-4 col-lg-4">
-                <label class="col-form-label">Store URL</label>
-                <input class="form-control" type="text" name="storeurl" placeholder="Storeurl" [(ngModel)]="appInfo.storeurl">
-            </div>
-            <div class="col-md-4 col-lg-4">
-                <label class="col-form-label">App version</label>
-                <input class="form-control" type="text" name="version" [(ngModel)]="appInfo.version">
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-6 col-lg-6">
-                <label class="col-form-label">App icon</label>
-                <input type="file" (change)="fileChanged($event, 0)" placeholder="Upload file" accept="*.*">
-                <img [src]="getUrl(appInfo.icon)" onError="this.src='./assets/img/ico_app_default.png'" class="tIcon" />
-            </div>
-            <div class="col-md-6 col-lg-6">
-                <label class="col-form-label">App logo</label>
-                <input type="file" (change)="fileLogoChanged($event, 1)" placeholder="Upload file" accept="*.*">
-                <img [src]="getUrl(appInfo.logo)" onError="this.src='./assets/img/ico_app_default.png'" class="tIcon" />
-            </div>
-        </div>
-    </div>
-    <div class="card-footer">
-        <button class="btn btn-primary tright" (click)="update()"><i class="icon-check"></i> Save</button>
     </div>
 </div>
