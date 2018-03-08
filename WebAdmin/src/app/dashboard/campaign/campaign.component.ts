@@ -1,26 +1,31 @@
 import { Component, OnInit } from '@angular/core';
+import { BaseComponent } from '../../service/base.component';
+import { CampaignService } from '../../service/campaign.service';
 
 @Component({
 	selector: 'app-campaign',
 	templateUrl: './campaign.component.html',
 	styleUrls: ['./campaign.component.scss']
 })
-export class CampaignComponent implements OnInit {
+export class CampaignComponent extends BaseComponent implements OnInit {
 
-	headers: any; paging: any; search = { field: 'source', term: '' };
-	isHidden: boolean; campaigns = []; onerow: any;
+	headers: any; paging: any; search = { field: 'name', term: '' };
 
-	constructor() {
 
-		this.isHidden = true;
-		this.paging = { pg_page: 1, pg_size: 10, st_col: 'created_at', st_type: -1 };
+	campaigns = []; onerow: any; isEdit: boolean; isHidden: boolean;
+	sources = [];
+
+	constructor(private service: CampaignService) {
+
+		super();
+
+		this.paging = this.service.defaultPaging();
+
 		this.headers = [
 			{ id: 'name', name: 'Name', is_search: 1, st_col: 'name', st_type: 1 },
 			{ id: 'desc', name: 'Description', is_search: 1, st_col: 'desc', st_type: 1 },
-			/*{ id: 'start_date', name: 'Start', is_search: 1, st_col: 'start_date', st_type: 1 },
-			{ id: 'end_date', name: 'End', is_search: 1, st_col: 'end_date', st_type: 1 },*/
-			{ id: 'source', name: 'Source', is_search: 1, st_col: 'source', st_type: 1 },
-			{ id: 'source_group', name: 'Medium', is_search: 1, st_col: 'source_group', st_type: 1 },
+			{ id: 'utm_source', name: 'Utm Source', is_search: 1, st_col: 'utm_source', st_type: 1 },
+			{ id: 'utm_medium', name: 'Utm Medium', is_search: 1, st_col: 'utm_medium', st_type: 1 },
 			{ id: 'created_at', name: 'Created', is_search: 1, st_col: 'created_at', st_type: 1 },
 			{ id: 'is_active', name: 'Status', is_search: 1, st_col: 'is_active', st_type: 1 }
 		];
@@ -28,6 +33,7 @@ export class CampaignComponent implements OnInit {
 
 	ngOnInit() {
 		this.refresh();
+		this.getSources();
 	}
 
 	jumpPage(_page) {
@@ -42,50 +48,49 @@ export class CampaignComponent implements OnInit {
 	}
 	refresh() {
 		this.reset();
+		this.getCampaigns();
 	}
 	reset() {
-
 		this.campaigns = [];
-		this.campaigns.push({
-			'name': 'Tặng 200 gold khi mua bất kì gói nào trong cửa hàng',
-			'desc': 'Áp dụng cho cả hình thức mua gold bằng SMS hoặc bằng G (thẻ cào)',
-			/*'start_date': 1520319659,
-			'end_date': 1520319700,*/
-			/*'cost': 1000000,*/
-			'source':'FBAds',
-			'source_group':'FBAds',
-			'is_active': 1,
-			'updated_at': 1520319659,
-			'created_at': 1520319659
-		});
-		this.campaigns.push({
-			'name': 'Nạp thẻ bất kì, X2 gold',
-			'desc': 'Vina, Mobi, Viettel',
-			/*'start_date': 1520319659,
-			'end_date': 1520319700,*/
-			/*'cost': 2000000,*/
-			'source':'Agency',
-			'source_group':'Agency',
-			'is_active': 0,
-			'updated_at': 1520319659,
-			'created_at': 1520319659
-		});
-
 		this.isHidden = true;
+		this.isEdit = false;
 		this.onerow = {
 			'name': 'Nạp thẻ bất kì, X2 gold',
 			'desc': 'Vina, Mobi, Viettel',
-			/*'start_date': 1520319659,
-			'end_date': 1520319700,*/
-			/*'cost': 2000000,*/
-			'source':'Agency',
-			'source_group':'Agency',
+			'source': 'Agency',
+			'source_group': 'Agency',
 			'is_active': 0,
+			'utm_medium': '',
+			'utm_source': '',
+			'source_id': '',
+			'app_id': this.service.getAppId(),
+			'agency_id': '5aa0ee42b887cb6691ed5b43',
 			'updated_at': 1520319659,
 			'created_at': 1520319659
 		};
-		this.paging = { pg_page: 1, pg_size: 100 };
+		this.paging = this.service.defaultPaging();
 
+	}
+
+	getSources() {
+		this.service.getSources(data => {
+			this.sources = data.source;
+			if (this.sources.length > 0)
+				this.onerow.source_id = this.sources[0]._id;
+		});
+	}
+
+	getCampaigns() {
+		this.service.getCampaigns({
+			'st_col': this.paging.st_col,
+			'st_type': this.paging.st_type,
+			'pg_page': this.paging.pg_page,
+			'pg_size': this.paging.pg_size,
+			'search_agency_id': '5aa0ee42b887cb6691ed5b43',
+			['search_' + this.search.field]: this.search.term
+		}, data => {
+			this.campaigns = data
+		});
 	}
 	sort($event) {
 		var target = $event.target || $event.srcElement || $event.currentTarget;
@@ -101,8 +106,29 @@ export class CampaignComponent implements OnInit {
 			this.refresh();
 		}
 	}
-	toggle(){
+
+	toggle() {
 		this.isHidden = !this.isHidden;
 	}
-	
+	save() {
+		for (var sc of this.sources) {
+			if (this.onerow.source_id == sc._id) {
+				this.onerow.utm_medium = sc.source;
+				this.onerow.utm_source = sc.source_group;
+			}
+		}
+		this.service.insert(this.onerow, data => { this.refresh(); });
+	}
+
+	onItemClick(cp: any) {
+		this.onerow = cp;
+		this.isEdit = true;
+		this.isHidden = false;
+	}
+	update() {
+		this.service.update(this.onerow, data => { this.refresh(); });
+	}
+	delete() {
+		this.service.delete({ 'id': this.onerow._id }, data => { this.refresh(); });
+	}
 }
