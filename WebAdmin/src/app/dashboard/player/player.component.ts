@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Service } from '../../service/service';
+import { PlayerService } from '../../service/player.service';
 import { ConfigService } from '../../service/service.config';
 
 @Component({
@@ -10,12 +10,14 @@ export class PlayerComponent implements OnInit {
 
   data: any; paging: any; isnext: any; header: any; search: any;
 
-  constructor(private conf: ConfigService, private service: Service) {
+  constructor(private service: PlayerService) {
 
     this.data = [];
     this.isnext = true;
     this.search = { field: 'username', term: '' };
-    this.paging = { pg_page: 1, pg_size: 10, st_col: 'created_at', st_type: -1 };
+
+    this.paging = this.service.defaultPaging();
+
     this.header = [
       { id: '_id', name: 'User Id', is_search: 1, st_col: '_id', st_type: 1 },
       { id: 'username', name: 'User Name', is_search: 1, st_col: 'username', st_type: 1 },
@@ -54,7 +56,7 @@ export class PlayerComponent implements OnInit {
   }
 
   helpFetchData() {
-    this.service.get(this.conf.api_player_get,
+    this.service.getPlayers(
       {
         'search_app_id': this.service.getAppId(),
         'pg_page': this.paging.pg_page,
@@ -63,7 +65,7 @@ export class PlayerComponent implements OnInit {
         'st_type': this.paging.st_type,
         ['search_' + this.search.field]: this.search.term
       }, data => {
-        this.data = Array.isArray(data) ? data : [];
+        this.data = data;
         this.isnext = (this.data.length >= this.paging.pg_size) ? true : false;
       });
   }

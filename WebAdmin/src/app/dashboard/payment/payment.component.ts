@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ConfigService } from '../../service/service.config';
-import { Service } from '../../service/service';
+import { PaymentService } from '../../service/payment.service';
+import { BaseComponent } from '../../service/base.component';
 
 @Component({
 	selector: 'app-payment',
@@ -8,7 +8,7 @@ import { Service } from '../../service/service';
 	styleUrls: ['./payment.component.scss']
 })
 
-export class PaymentComponent implements OnInit {
+export class PaymentComponent extends BaseComponent implements OnInit {
 
 	items: any[];
 	cardItems: any[];
@@ -18,23 +18,20 @@ export class PaymentComponent implements OnInit {
 	paging: any;
 	isEdit: boolean;
 
-	constructor( private config: ConfigService, private service: Service) {}
-
-	ngOnInit() { this.refresh();}
-
-	getData() {
-		this.service.get(this.config.API_PAYMENT_GET_ITEMS, {
-			'search_app_id': this.service.getAppId(),
-			'st_col': this.paging.st_col,
-      		'st_type': this.paging.st_type
-		}, data => {
-			this.items = Array.isArray(data) ? data : [];
-		});
+	constructor(private service: PaymentService) {
+		super();
 	}
+
+	ngOnInit() { this.refresh(); }
+
 	refresh() {
 		if (!this.service.isExpired()) {
 			this.reset();
-			this.getData();
+			this.service.getPayments({
+				'search_app_id': this.service.getAppId(),
+				'st_col': this.paging.st_col,
+				'st_type': this.paging.st_type
+			}, data => { this.items = data; });
 		}
 	}
 	fileChange(event) {
@@ -55,26 +52,15 @@ export class PaymentComponent implements OnInit {
 		this.isEdit = true;
 	}
 	update() {
-		this.service.post(this.config.API_PAYMENT_EDIT, this.onerow, null,
-			data => {
-				this.refresh();
-			});
+		this.service.update( this.onerow, data => { this.refresh(); });
 	}
 	save() {
-		this.service.post(this.config.API_PAYMENT_ADD_IN_APPS, this.onerow, null,
-			data => {
-				this.refresh();
-			});
+		this.service.insert( this.onerow, data => { this.refresh(); });
 	}
 	delete() {
-		this.service.get(this.config.API_PAYMENT_DELETE, this.onerow,
-			data => {
-				this.refresh();
-			});
+		this.service.delete( this.onerow, data => { this.refresh(); });
 	}
-	getUrl(icon: string): string {
-		return this.service.getUrl(icon);
-	}
+	
 	reset() {
 		this.isEdit = false;
 		this.isHidden = true;
@@ -87,7 +73,7 @@ export class PaymentComponent implements OnInit {
 			'is_active': 1
 		};
 		this.items = [];
-		this.paging = { pg_page: 1, pg_size: 100 };
+		this.paging = this.service.defaultPaging();
 	}
 	toggle() {
 		this.isHidden = !this.isHidden;

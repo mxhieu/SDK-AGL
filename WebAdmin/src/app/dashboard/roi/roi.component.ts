@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Service } from '../../service/service';
-import { ConfigService } from '../../service/service.config';
+import { ReportService } from '../../service/report.service';
 import { AmChartsService, AmChart } from "@amcharts/amcharts3-angular";
 
 @Component({
@@ -10,26 +9,26 @@ import { AmChartsService, AmChart } from "@amcharts/amcharts3-angular";
 })
 export class RoiComponent implements OnInit {
 
-	dFrom: Date ; dMin: Date; 
-	dTo: Date = new Date(); dMax: Date = new Date();
-	data = []; paging: any; isnext = true; header: any; 
+	dFrom: Date; dMin: Date; dTo: Date = new Date(); dMax: Date = new Date();
+
+	data = []; paging: any; isnext = true; header: any;
 	search = { field: 'source', term: '' };
 	version: any; versions = [{ 'version': '', 'os': '' }]; versionDisplay = [{ 'version': '', 'os': '' }];
 	source: any; sources = [{ 'source_group': "All", 'source': '-1' }];
-	platform : any; platforms = [
-		{ 'id': '-1', 'name': 'All' },
-		{ 'id': 'android', 'name': 'Android' },
-		{ 'id': 'ios', 'name': 'iOS' },
-		{ 'id': 'web', 'name': 'Web' }];
+	platform: any; platforms = [];
 
-	constructor(private conf: ConfigService, private service: Service, private AmCharts: AmChartsService) {
+	constructor(private service: ReportService, private AmCharts: AmChartsService) {
 
 		this.source = this.sources[0];
-		this.platform = this.platforms[0];
-		this.dFrom = new Date(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate() - 1000);
-		this.dMin = new Date(this.dMax.getFullYear(), this.dMax.getMonth(), this.dMax.getDate() - 1000);
 
-		this.paging = { pg_page: 1, pg_size: 10, st_col: 'date', st_type: -1 };
+		this.platforms = this.service.defaultPlatforms();
+		this.platform = this.platforms[0];
+		
+		this.dFrom = this.service.fromDate(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate());
+		this.dMin = this.service.fromDate(this.dMax.getFullYear(), this.dMax.getMonth(), this.dMax.getDate());
+
+		this.paging = this.service.defaultPaging();
+		
 		this.header = [
 			{ id: 'date', name: 'Date', is_search: 1, st_col: 'data', st_type: 1 },
 			{ id: 'source', name: 'Source', is_search: 1, st_col: 'source', st_type: 1 },
@@ -56,7 +55,7 @@ export class RoiComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		
+
 	}
 
 	jumpPage(_page) {
@@ -102,11 +101,10 @@ export class RoiComponent implements OnInit {
 		if (this.source.source != '-1')
 			params.search_source = this.source.source;
 
-		this.service.get(this.conf.API_REPORT_ROI, params,
-			data => {
-				this.data = Array.isArray(data) ? data : [];
-				this.isnext = (this.data.length >= this.paging.pg_size) ? true : false;
-			});
+		this.service.roiAnalysis(params, data => {
+			this.data = data;
+			this.isnext = (this.data.length >= this.paging.pg_size) ? true : false;
+		});
 	}
 	getSources() {
 		this.service.getSources(data => {
@@ -120,7 +118,7 @@ export class RoiComponent implements OnInit {
 			this.version = this.versionDisplay[0];
 		});
 	}
-onVersionChanged(event){
+	onVersionChanged(event) {
 		console.log(event.app_id);
 	}
 	osPickerChanged(event) {

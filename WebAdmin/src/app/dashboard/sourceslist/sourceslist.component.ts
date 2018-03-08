@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Service } from '../../service/service';
-import { ConfigService } from '../../service/service.config';
+import { BaseService } from '../../service/base.service';
 
 @Component({
 	selector: 'app-sourceslist',
@@ -11,7 +10,7 @@ export class SourceslistComponent implements OnInit {
 	data: any; headers: any; search = { field: 'source', term: '' };
 	onerow: any; paging: any; isHidden: boolean; isEdit: boolean;
 
-	constructor(private config: ConfigService, private api: Service) {
+	constructor(private service: BaseService) {
 		this.isHidden = true; this.isEdit = false;
 		this.data = [];
 		this.paging = { pg_page: 1, pg_size: 10, st_col: 'created_at', st_type: -1 };
@@ -30,7 +29,7 @@ export class SourceslistComponent implements OnInit {
 
 	refresh() {
 		this.reset();
-		this.api.getSources(data => {
+		this.service.getSources(data => {
 			this.data = data.source;
 		});
 	}
@@ -45,5 +44,16 @@ export class SourceslistComponent implements OnInit {
 		this.onerow = item;
 		this.isEdit = true;
 		this.isHidden = false;
+	}
+	delete() {
+		this.service.deleteSource({ 'id': this.onerow._id }, data => {
+			this.refresh();
+		});
+	}
+	create(){
+		this.service.insertSource(this.onerow, data => { this.refresh(); });
+	}
+	update(){
+
 	}
 }

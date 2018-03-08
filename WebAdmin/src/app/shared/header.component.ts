@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Service } from '../service/service';
-import { GroupService } from '../service/group.service';
+import { BaseService } from '../service/base.service';
 
 @Component({
   selector: 'app-header',
@@ -8,10 +7,10 @@ import { GroupService } from '../service/group.service';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private service: GroupService) { }
+  constructor(private service: BaseService) { }
 
   fullname: string = '';
-  apps: any;
+  
   appId: any;
 
   ngOnInit() {
@@ -26,7 +25,6 @@ export class HeaderComponent implements OnInit {
   }
   getApps() {
     this.appId = this.service.getAppId();
-    this.apps = this.service.getGroupSetting();
   }
 
   onItemClick(app: any) {

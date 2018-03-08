@@ -1,19 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { ConfigService } from '../../service/service.config';
-import { Service } from '../../service/service';
+import { AppService } from '../../service/app.service';
+import { BaseComponent } from '../../service/base.component';
 
 @Component({
 	selector: 'app-app-setting',
 	templateUrl: './app-setting.component.html',
-	providers: [Service],
 	styleUrls: ['./app-setting.component.scss']
 })
-export class AppSettingComponent implements OnInit {
+export class AppSettingComponent extends BaseComponent implements OnInit {
 
 	appInfo: any;
 
-	constructor(private api: Service, private config: ConfigService) {
+	constructor(private service: AppService) {
 
+		super();
+		
 		this.appInfo = {
 			'settings': {},
 			'version': 1.0,
@@ -27,30 +28,28 @@ export class AppSettingComponent implements OnInit {
 	}
 
 	refresh() {
-		if (!this.api.isExpired())
-			this.api.get(this.config.API_APP_DETAIL, { 'id': this.config.getAppId() }, data => this.appInfo = data );
+		if (!this.service.isExpired())
+			this.service.detail({ 'id': this.service.getAppId() }, data => this.appInfo = data );
 	}
 	resetKey() {
-		this.api.get(this.config.API_APP_KEY_RESET, { 'id': this.config.getAppId() }, data => this.appInfo.key = data );
+		this.service.resetKey({ 'id': this.service.getAppId() }, data => this.appInfo.key = data );
 	}
 	update() {
-		this.api.post(this.config.API_APP_EDIT, JSON.stringify(this.appInfo), { 'id': this.config.getAppId() }, data => this.refresh());
+		this.service.update(JSON.stringify(this.appInfo), { 'id': this.service.getAppId() }, data => this.refresh());
 	}
 	delete() {
-		this.api.get(this.config.API_APP_DELETE, {'id': this.config.getAppId() }, data => this.api.moveToApps());
+		this.service.delete({'id': this.service.getAppId() }, data => this.service.moveToApps());
 	}
 	onStatusChange() {
 		this.appInfo.is_active = (this.appInfo.is_active == 1 ? 0 : 1);
 		this.update();
 	}
-	getUrl(icon: string) : string{
-		return this.api.getUrl(icon);
-	}
+	
 	fileChanged(event, type: number) {
 		let fileList: FileList = event.target.files;
 		if(fileList.length > 0) {
         	let file: File = fileList[0];
-			this.api.upload(file, data => {
+			this.service.upload(file, data => {
 				if(type == 0)
 					this.appInfo.icon = data;
 				else

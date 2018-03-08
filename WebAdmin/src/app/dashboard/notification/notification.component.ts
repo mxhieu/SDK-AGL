@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Service } from '../../service/service';
+import { BaseService } from '../../service/base.service';
 
 @Component({
 	selector: 'app-notification',
@@ -13,7 +13,7 @@ export class NotificationComponent implements OnInit {
 	paging: any;
 
 	constructor(
-		private service: Service) { }
+		private service: BaseService) { }
 	ngOnInit() {
 		this.refresh();
 	}

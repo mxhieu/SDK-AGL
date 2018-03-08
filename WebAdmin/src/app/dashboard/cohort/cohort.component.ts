@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Service } from '../../service/service';
-import { ConfigService } from '../../service/service.config';
+import { ReportService } from '../../service/report.service';
 
 @Component({
 	selector: 'app-cohort',
@@ -9,37 +8,37 @@ import { ConfigService } from '../../service/service.config';
 })
 export class CohortComponent implements OnInit {
 
-	dFrom: Date ; dMin: Date; 
+	dFrom: Date; dMin: Date;
 	dTo: Date = new Date(); dMax: Date = new Date();
-	data = [];  header = []; paging: any; isnext = true;
+	data = []; header = []; paging: any; isnext = true;
 	search = { field: 'source', term: '' };
 	version: any; versions = [{ 'version': '', 'os': '' }]; versionDisplay = [{ 'version': '', 'os': '' }];
 	source: any; sources = [{ 'source_group': "All", 'source': '-1' }];
-	platform : any; platforms = [
-		{ 'id': '-1', 'name': 'All' },
-		{ 'id': 'android', 'name': 'Android' },
-		{ 'id': 'ios', 'name': 'iOS' },
-		{ 'id': 'web', 'name': 'Web' }];
+	platform: any; platforms = [];
 
 	timeRange: any; tRvalues = []; timeRanges = [
-		{'id':7 , 'name': '7 ngày'},
-		{'id':14 , 'name': '14 ngày'},
-		{'id':21 , 'name': '21 ngày'},
-		{'id':30 , 'name': '30 ngày'}];
+		{ 'id': 7, 'name': '7 ngày' },
+		{ 'id': 14, 'name': '14 ngày' },
+		{ 'id': 21, 'name': '21 ngày' },
+		{ 'id': 30, 'name': '30 ngày' }];
 
-	constructor(private conf: ConfigService, private service: Service, ) {
+	constructor(private service: ReportService) {
 
 		this.source = this.sources[0];
+
+		this.platforms = this.service.defaultPlatforms();
 		this.platform = this.platforms[0];
+
 		this.timeRange = this.timeRanges[0];
 		this.makeFilterDataArray(this.timeRange.id);
-		this.dFrom = new Date(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate() - 1000);
-		this.dMin = new Date(this.dMax.getFullYear(), this.dMax.getMonth(), this.dMax.getDate() - 1000);
+
+		this.dFrom = this.service.fromDate(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate());
+		this.dMin = this.service.fromDate(this.dMax.getFullYear(), this.dMax.getMonth(), this.dMax.getDate());
 
 		this.paging = { pg_page: 1, pg_size: 30, st_col: 'date', st_type: -1 };
 		this.changeHeader(7);
-		
-		
+
+
 		this.getSources();
 		this.doAnalysis();
 	}
@@ -59,7 +58,7 @@ export class CohortComponent implements OnInit {
 			'startdate': Math.round(this.dFrom.getTime() / 1000),
 			'enddate': Math.round(this.dTo.getTime() / 1000),
 			'st_type': 1,
-			'filter_dates':this.tRvalues,
+			'filter_dates': this.tRvalues,
 			['search_' + this.search.field]: this.search.term
 		};
 		if (this.platform.id != '-1')
@@ -68,39 +67,36 @@ export class CohortComponent implements OnInit {
 		if (this.source.source != '-1')
 			params.search_source = this.source.source;
 
-		this.service.get(this.conf.API_REPORT_COHORT, params,
-			data => {
+		this.service.cohortAnalysis(params, data => {
 
-				var arrdata = Array.isArray(data) ? data : [];
+			for (let objdata of data) {
 
-				for (let objdata of arrdata) {
+				var arrReturnRate = [];
+				var indexrrs = 0;
 
-					var arrReturnRate = [];
-					var indexrrs = 0;
-
-					for (let valuereturn of objdata.rrs) {
-						for (let valueheader of this.header) {
-							if (valueheader.index == indexrrs + 1) {
-								var namerr = 'rr' + (indexrrs + 1);
-								arrReturnRate.push({ key: namerr, value: valuereturn, index: indexrrs + 1 });
-							}
+				for (let valuereturn of objdata.rrs) {
+					for (let valueheader of this.header) {
+						if (valueheader.index == indexrrs + 1) {
+							var namerr = 'rr' + (indexrrs + 1);
+							arrReturnRate.push({ key: namerr, value: valuereturn, index: indexrrs + 1 });
 						}
-						indexrrs++;
 					}
-
-					this.data.push({
-						'date': objdata.date_install,
-						'install': objdata.installs,
-						'user': objdata.new_users,
-						'arrreturn': arrReturnRate
-					});
+					indexrrs++;
 				}
-			});
+
+				this.data.push({
+					'date': objdata.date_install,
+					'install': objdata.installs,
+					'user': objdata.new_users,
+					'arrreturn': arrReturnRate
+				});
+			}
+		});
 	}
 
 	getSources() {
 		this.service.getSources(data => {
-			
+
 			// Sources
 			this.sources = this.sources.concat(data.source);
 			this.source = this.sources[0];
@@ -109,7 +105,7 @@ export class CohortComponent implements OnInit {
 			this.versions = data.os.settings;
 			this.versionDisplay = this.versions;
 			this.version = this.versionDisplay[0];
-			
+
 		});
 	}
 
@@ -175,17 +171,17 @@ export class CohortComponent implements OnInit {
 		}
 	}
 
-	makeFilterDataArray(idx){
+	makeFilterDataArray(idx) {
 		this.tRvalues = [];
-		for (var i = 1; i <= idx; i ++)
+		for (var i = 1; i <= idx; i++)
 			this.tRvalues.push(i);
 	}
-	dateRangeChanged(event){
+	dateRangeChanged(event) {
 		this.changeHeader(event.id);
 		this.makeFilterDataArray(event.id);
 		this.doAnalysis();
 	}
-	onVersionChanged(event){
+	onVersionChanged(event) {
 		console.log(event.app_id);
 	}
 	osPickerChanged(event) {

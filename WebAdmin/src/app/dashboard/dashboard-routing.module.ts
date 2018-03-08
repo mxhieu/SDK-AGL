@@ -11,9 +11,6 @@ import { RoiComponent } from './roi/roi.component';
 import { RoipdComponent } from './roipd/roipd.component';
 import { SourceslistComponent } from './sourceslist/sourceslist.component';
 import { MetricComponent } from './metric/metric.component';
-import { GamereportComponent } from './gamereport/gamereport.component';
-import { ProductreportComponent } from './productreport/productreport.component';
-import { PureportComponent } from './pureport/pureport.component';
 import { CohortComponent } from './cohort/cohort.component';
 import { CampaignComponent } from './campaign/campaign.component';
 
@@ -59,15 +56,6 @@ const routes: Routes = [
   }, {
     path: 'metric',
     component: MetricComponent
-  }, {
-    path: 'gamereport',
-    component: GamereportComponent
-  }, {
-    path: 'productreport',
-    component: ProductreportComponent
-  }, {
-    path: 'pureport',
-    component: PureportComponent
   },
   {
     path: 'cohort',

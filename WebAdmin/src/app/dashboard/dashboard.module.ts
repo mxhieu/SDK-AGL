@@ -19,10 +19,6 @@ import { RoiComponent } from './roi/roi.component';
 import { RoipdComponent } from './roipd/roipd.component';
 import { SourceslistComponent } from './sourceslist/sourceslist.component';
 import { MetricComponent } from './metric/metric.component';
-import { GamereportComponent } from './gamereport/gamereport.component';
-import { FilterComponent } from './filter/filter.component';
-import { ProductreportComponent } from './productreport/productreport.component';
-import { PureportComponent } from './pureport/pureport.component';
 import { CohortComponent } from './cohort/cohort.component';
 import { CampaignComponent } from './campaign/campaign.component';
 
@@ -38,6 +34,6 @@ import { CampaignComponent } from './campaign/campaign.component';
   declarations: [
     PlayerComponent, AppSettingComponent, PaymentComponent,
     NotificationComponent, TelcoComponent, ArmpdComponent, ArmComponent,
-    RoiComponent, RoipdComponent, SourceslistComponent, MetricComponent, GamereportComponent, FilterComponent, ProductreportComponent, PureportComponent, CohortComponent, CampaignComponent]
+    RoiComponent, RoipdComponent, SourceslistComponent, MetricComponent, CohortComponent, CampaignComponent]
 })
 export class DashboardModule { }

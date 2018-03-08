@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AmChartsService, AmChart } from "@amcharts/amcharts3-angular";
-import { Service } from '../../service/service';
-import { ConfigService } from '../../service/service.config';
+import { ReportService } from '../../service/report.service';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 
 @Component({
@@ -12,27 +11,25 @@ import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 export class ArmpdComponent implements OnInit, OnDestroy {
 
 	chart: AmChart;
-	
-	
-	dFrom: Date ; dMin: Date; 
-	dTo: Date = new Date(); dMax: Date = new Date();
-	data = []; paging: any; isnext = true; header: any; 
+
+	dFrom: Date; dMin: Date; dTo: Date = new Date(); dMax: Date = new Date();
+	data = []; paging: any; isnext = true; header: any;
 	search = { field: 'source', term: '' };
 	version: any; versions = [{ 'version': '', 'os': '' }]; versionDisplay = [{ 'version': '', 'os': '' }];
 	source: any; sources = [{ 'source_group': "All", 'source': '-1' }];
-	platform : any; platforms = [
-		{ 'id': '-1', 'name': 'All' },
-		{ 'id': 'android', 'name': 'Android' },
-		{ 'id': 'ios', 'name': 'iOS' },
-		{ 'id': 'web', 'name': 'Web' }];
+	platform: any; platforms = [];
 
-	constructor(private conf: ConfigService, private service: Service, private AmCharts: AmChartsService) {
+	constructor(private service: ReportService, private AmCharts: AmChartsService) {
 
 		this.source = this.sources[0];
+		this.platforms = this.service.defaultPlatforms();
 		this.platform = this.platforms[0];
-		this.dFrom = new Date(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate() - 1000);
-		this.dMin = new Date(this.dMax.getFullYear(), this.dMax.getMonth(), this.dMax.getDate() - 1000);
-		this.paging = { pg_page: 1, pg_size: 10, st_col: 'date', st_type: -1 };
+
+		this.dFrom = this.service.fromDate(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate());
+		this.dMin = this.service.fromDate(this.dMax.getFullYear(), this.dMax.getMonth(), this.dMax.getDate());
+
+		this.paging = this.service.defaultPaging();
+
 		this.header = [
 			{ id: 'date', name: 'Date', is_search: 1, st_col: 'data', st_type: 1 },
 			{ id: 'source', name: 'Source', is_search: 1, st_col: 'source', st_type: 1 },
@@ -62,15 +59,15 @@ export class ArmpdComponent implements OnInit, OnDestroy {
 	}
 
 	makeChart(chartData: any[]) {
-		
-		chartData.sort((l,r) : number => {
-			var date1  = Date.parse(l.date);
-			var date2  = Date.parse(r.date);
-			if (date1 > date2) 
+
+		chartData.sort((l, r): number => {
+			var date1 = Date.parse(l.date);
+			var date2 = Date.parse(r.date);
+			if (date1 > date2)
 				return 1;
-  			if (date1 < date2) 
-  				return -1;
-  			return 0;
+			if (date1 < date2)
+				return -1;
+			return 0;
 		});
 
 		this.chart = this.AmCharts.makeChart("chartdiv", {
@@ -108,7 +105,7 @@ export class ArmpdComponent implements OnInit, OnDestroy {
 				"valueField": "install",
 				"valueAxis": "leftAxis",
 				'fillColors': "#7bc0f7",
-				'lineColor':'#64b5f6'
+				'lineColor': '#64b5f6'
 			}, {
 				"alphaField": "alpha",
 				"balloonText": "NRU:[[value]]",
@@ -121,7 +118,7 @@ export class ArmpdComponent implements OnInit, OnDestroy {
 				"valueField": "nru",
 				"valueAxis": "leftAxis",
 				'fillColors': "#3b8ad9",
-				'lineColor':'#1976d2'
+				'lineColor': '#1976d2'
 			}, {
 				"balloonText": "RR1:[[value]]",
 				"bullet": "round",
@@ -137,7 +134,7 @@ export class ArmpdComponent implements OnInit, OnDestroy {
 				"title": "RR1",
 				"fillAlphas": 0,
 				"valueField": "rr1",
-				'lineColor':'#ffdb69',
+				'lineColor': '#ffdb69',
 				"valueAxis": "rightAxis"
 			}, {
 				"balloonText": "RR7:[[value]]",
@@ -171,7 +168,7 @@ export class ArmpdComponent implements OnInit, OnDestroy {
 				"fillAlphas": 0,
 				"valueField": "rr30",
 				"valueAxis": "rightAxis",
-				'lineColor':'#ef6c00'
+				'lineColor': '#ef6c00'
 			}],
 			"chartCursor": {
 				"categoryBalloonDateFormat": "DD",
@@ -260,11 +257,10 @@ export class ArmpdComponent implements OnInit, OnDestroy {
 		if (this.source.source != '-1')
 			params.search_source = this.source.source;
 
-		this.service.get(this.conf.API_REPORT_ARM_PD, params,
-			data => {
-				this.data = Array.isArray(data) ? data : [];
-				this.isnext = (this.data.length >= this.paging.pg_size) ? true : false;
-			});
+		this.service.armPdAnalysis(params, data => {
+			this.data = data;
+			this.isnext = (this.data.length >= this.paging.pg_size) ? true : false;
+		});
 		this.getChart();
 	}
 
@@ -299,11 +295,9 @@ export class ArmpdComponent implements OnInit, OnDestroy {
 		if (this.source.source != '-1')
 			params.search_source = this.source.source;
 
-		this.service.get(this.conf.API_REPORT_ARM_PD_CHART, params, data => {
-			this.makeChart(data);
-		});
+		this.service.armPdChartAnalysis(params, data => { this.makeChart(data); });
 	}
-	onVersionChanged(event){
+	onVersionChanged(event) {
 		console.log(event.app_id);
 	}
 	osPickerChanged(event) {

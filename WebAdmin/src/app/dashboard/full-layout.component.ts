@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Service } from '../service/service';
+import { BaseService } from '../service/base.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,7 +12,7 @@ export class FullLayoutComponent implements OnInit {
 
   fullname: string = '';
 
-  constructor(private service: Service) {
+  constructor(private service: BaseService) {
     
   }
 

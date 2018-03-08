@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { BaseService } from './base.service';
 
-
 enum GroupApiUrls {
 	get = 'groupApp',
 	new = 'groupApp',
 	delete = 'groupApp/delete',
-	update = 'groupApp/edit'
+	update = 'groupApp/edit',
+	app_get = 'app',
+	app_new = 'app/index'
 }
 
 @Injectable()
@@ -48,18 +49,19 @@ export class GroupService extends BaseService {
 	}
 
 	newApp(params: any, callback) {
-		this.post(this.config.API_APP_NEW, JSON.stringify(params), null,
+		this.post(this.baseUrl() + GroupApiUrls.app_new, JSON.stringify(params), null,
 			data => {
 				callback(data);
 			});
 	}
 
 	getApps(params, callback) {
-		this.get(this.config.API_APP_GET, params,
+		this.get(this.baseUrl() + GroupApiUrls.app_get, params,
 			data => {
 				callback(Array.isArray(data) ? data : []);
 			});
 	}
+	
 	updateGroup(params, callback) {
 		if(params.is_active)
 			params.is_active = 1;

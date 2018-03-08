@@ -22,7 +22,6 @@ import { AsideToggleDirective } from './shared/aside.directive';
 import { AppRoutingModule } from './app.routing';
 import { PrivateService } from './service/service.private';
 import { ConfigService } from './service/service.config';
-import { Service } from './service/service';
 import { RoutingService } from './service/routing.service';
 
 // Layouts
@@ -43,7 +42,13 @@ import { ResourceComponent } from './resource/resource.component';
 import { ForgotPasswordComponent } from './forgotpassword/forgotpassword.component';
 import { GroupsComponent } from './groups/groups.component';
 import { BaseComponent } from './service/base.component';
+import { BaseService } from './service/base.service';
 import { GroupService } from './service/group.service';
+import { TelcoService } from './service/telco.service';
+import { ReportService } from './service/report.service';
+import { PlayerService } from './service/player.service';
+import { PaymentService } from './service/payment.service';
+import { AppService } from './service/app.service';
 
 @NgModule({
     imports: [
@@ -80,9 +85,14 @@ import { GroupService } from './service/group.service';
     ],
     providers: [
         ConfigService,
-        Service,
         RoutingService,
+        BaseService,
         GroupService,
+        TelcoService,
+        ReportService,
+        PlayerService,
+        PaymentService,
+        AppService,
         PrivateService,
         {
             provide: LocationStrategy,
