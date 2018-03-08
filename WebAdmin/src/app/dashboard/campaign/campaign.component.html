@@ -36,7 +36,7 @@
                 <button class="btn btn-sm btn-primary" (click)=(save()) [hidden]="isEdit"><i class="icon-plus"></i> Create </button>
                 <button class="btn btn-sm btn-primary" (click)=(update()) [hidden]="!isEdit"><i class="icon-check"></i> Save</button>
                 <button class="btn btn-sm btn-danger tright" (click)=(delete()) [hidden]="!isEdit"><i class="icon-trash"></i> Delete</button>
-                <button class="btn btn-sm btn-secondary tright" (click)="toggle()"><i class="icon-close"></i> Cancel</button>
+                <button class="btn btn-sm btn-secondary tright" (click)="refresh()"><i class="icon-close"></i> Cancel</button>
             </div>
         </div>
     </div>
@@ -51,7 +51,7 @@
                 </select><i class="icon-arrow-down sel-ico"></i>
                 <input type="text" class="rx-cur input-search" [(ngModel)]="search.term">
                 <button class="btn btn-sm btn-default btn-search" (click)="jumpPage(1)"><i class="icon-magnifier"></i></button>
-                <button class="btn btn-sm btn-success" (click)="toggle()"> <i class="icon-plus"></i> Create </button>
+                <button class="btn btn-sm btn-success" (click)="show()"> <i class="icon-plus"></i> Create </button>
             </div>
             <table class="table table-hover mb-0 table-striped fixed table-bordered">
                 <thead class="thead-default">

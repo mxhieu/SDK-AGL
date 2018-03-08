@@ -29,11 +29,12 @@ export class CampaignComponent extends BaseComponent implements OnInit {
 			{ id: 'created_at', name: 'Created', is_search: 1, st_col: 'created_at', st_type: 1 },
 			{ id: 'is_active', name: 'Status', is_search: 1, st_col: 'is_active', st_type: 1 }
 		];
+		this.refresh();
+		this.getSources();
 	}
 
 	ngOnInit() {
-		this.refresh();
-		this.getSources();
+		
 	}
 
 	jumpPage(_page) {
@@ -57,19 +58,13 @@ export class CampaignComponent extends BaseComponent implements OnInit {
 		this.onerow = {
 			'name': 'Nạp thẻ bất kì, X2 gold',
 			'desc': 'Vina, Mobi, Viettel',
-			'source': 'Agency',
-			'source_group': 'Agency',
 			'is_active': 0,
 			'utm_medium': '',
 			'utm_source': '',
 			'source_id': '',
 			'app_id': this.service.getAppId(),
 			'agency_id': '5aa0ee42b887cb6691ed5b43',
-			'updated_at': 1520319659,
-			'created_at': 1520319659
 		};
-		this.paging = this.service.defaultPaging();
-
 	}
 
 	getSources() {
@@ -107,8 +102,9 @@ export class CampaignComponent extends BaseComponent implements OnInit {
 		}
 	}
 
-	toggle() {
-		this.isHidden = !this.isHidden;
+	show() {
+		this.isHidden = false;
+		this.isEdit = false;
 	}
 	save() {
 		for (var sc of this.sources) {
@@ -126,6 +122,12 @@ export class CampaignComponent extends BaseComponent implements OnInit {
 		this.isHidden = false;
 	}
 	update() {
+		for (var sc of this.sources) {
+			if (this.onerow.source_id == sc._id) {
+				this.onerow.utm_medium = sc.source;
+				this.onerow.utm_source = sc.source_group;
+			}
+		}
 		this.service.update(this.onerow, data => { this.refresh(); });
 	}
 	delete() {
