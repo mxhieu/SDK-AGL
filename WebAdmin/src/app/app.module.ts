@@ -14,7 +14,6 @@ import { FlashMessagesModule } from 'angular2-flash-messages';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
-
 import { SIDEBAR_TOGGLE_DIRECTIVES } from './shared/sidebar.directive';
 import { AsideToggleDirective } from './shared/aside.directive';
 
@@ -34,21 +33,15 @@ import { RegisterComponent } from './user/register.component';
 import { AppsComponent } from './apps/apps.component';
 import { HeaderComponent } from './shared/header.component';
 import { ContactComponent } from './contact/contact.component';
-import { BlogsComponent } from './blogs/blogs.component';
+import { BlogComponent } from './blog/blog.component';
 import { DocumentsComponent } from './document/documents.component';
 import { PrivacyComponent } from './privacy/privacy.component';
 import { HelpComponent } from './help/help.component';
 import { ResourceComponent } from './resource/resource.component';
 import { ForgotPasswordComponent } from './forgotpassword/forgotpassword.component';
-import { GroupsComponent } from './groups/groups.component';
+import { GroupComponent } from './group/group.component';
 import { BaseComponent } from './service/base.component';
-import { BaseService } from './service/base.service';
-import { GroupService } from './service/group.service';
-import { TelcoService } from './service/telco.service';
-import { ReportService } from './service/report.service';
-import { PlayerService } from './service/player.service';
-import { PaymentService } from './service/payment.service';
-import { AppService } from './service/app.service';
+import { SharedModule } from './service/shared.module';
 
 @NgModule({
     imports: [
@@ -59,7 +52,8 @@ import { AppService } from './service/app.service';
         FlashMessagesModule,
         BsDropdownModule.forRoot(),
         BsDatepickerModule.forRoot(),
-        TabsModule.forRoot()
+        TabsModule.forRoot(),
+        SharedModule
     ],
     declarations: [
         AppComponent,
@@ -75,24 +69,17 @@ import { AppService } from './service/app.service';
         AppsComponent,
         HeaderComponent,
         ContactComponent,
-        BlogsComponent,
+        BlogComponent,
         DocumentsComponent,
         PrivacyComponent,
         HelpComponent,
         ResourceComponent,
         ForgotPasswordComponent,
-        GroupsComponent
+        GroupComponent
     ],
     providers: [
         ConfigService,
         RoutingService,
-        BaseService,
-        GroupService,
-        TelcoService,
-        ReportService,
-        PlayerService,
-        PaymentService,
-        AppService,
         PrivateService,
         {
             provide: LocationStrategy,

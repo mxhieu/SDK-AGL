@@ -7,13 +7,13 @@ import { p404Component } from './shared/404.component';
 import { p500Component } from './shared/500.component';
 import { AppsComponent } from './apps/apps.component';
 import { ContactComponent } from './contact/contact.component';
-import { BlogsComponent } from './blogs/blogs.component';
+import { BlogComponent } from './blog/blog.component';
 import { DocumentsComponent } from './document/documents.component';
 import { PrivacyComponent } from './privacy/privacy.component';
 import { HelpComponent } from './help/help.component';
 import { ResourceComponent } from './resource/resource.component';
 import { ForgotPasswordComponent } from './forgotpassword/forgotpassword.component';
-import { GroupsComponent } from './groups/groups.component';
+import { GroupComponent } from './group/group.component';
 
 export const routes: Routes = [
   {
@@ -30,7 +30,7 @@ export const routes: Routes = [
   },
   {
     path: 'groups',
-    component: GroupsComponent
+    component: GroupComponent
   },
   {
     path: 'apps',
@@ -48,7 +48,7 @@ export const routes: Routes = [
   },
   {
     path: 'blogs',
-    component: BlogsComponent
+    component: BlogComponent
   },
   {
     path: 'document',

@@ -4,11 +4,11 @@ import { BaseComponent } from '../service/base.component';
 
 @Component({
 	selector: 'app-groups',
-	templateUrl: './groups.component.html',
-	styleUrls: ['./groups.component.scss']
+	templateUrl: './group.component.html',
+	styleUrls: ['./group.component.scss']
 })
 
-export class GroupsComponent extends BaseComponent implements OnInit {
+export class GroupComponent extends BaseComponent implements OnInit {
 
 	groups: any[]; onerow: any; data: any;
 	paging: any; isnext: any; header: any; search: any;

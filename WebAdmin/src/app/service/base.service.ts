@@ -245,6 +245,12 @@ export class BaseService {
 		});
 	}
 
+	public updateSource(params, callback){
+		this.post(this.getRestUrl(SourceApiUrls.update), params, null, data => {
+			callback(Array.isArray(data) ? data : []);
+		});
+	}
+
 	// DEFAULT
 	defaultPaging() {
 		return { pg_page: 1, pg_size: 10, st_col: 'created_at', st_type: -1 };

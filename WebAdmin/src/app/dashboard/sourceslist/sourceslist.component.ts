@@ -37,9 +37,12 @@ export class SourceslistComponent implements OnInit {
 		this.isEdit = false;
 		this.isHidden = true;
 	}
-	toggle() {
-		this.isHidden = !this.isHidden;
+	
+	show(){
+		this.isHidden = false;
+		this.isEdit = false;
 	}
+	
 	onItemClick(item: any) {
 		this.onerow = item;
 		this.isEdit = true;
@@ -54,6 +57,6 @@ export class SourceslistComponent implements OnInit {
 		this.service.insertSource(this.onerow, data => { this.refresh(); });
 	}
 	update(){
-
+		this.service.updateSource(this.onerow, data => { this.refresh(); });
 	}
 }
