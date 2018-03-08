@@ -8,13 +8,11 @@
                 <div class="row">
                     <div class="form-group col-md-3 col-lg-3">
                         <label class="col-form-label-none">Source Group</label>
-                        <input class="form-control" name="source_group" placeholder="Source Group ..." type="text" [disabled]="isEdit" 
-                        [(ngModel)]="onerow.source_group">
+                        <input class="form-control" name="source_group" placeholder="Source Group ..." type="text" [disabled]="isEdit" [(ngModel)]="onerow.source_group">
                     </div>
                     <div class="form-group col-md-3 col-lg-3">
                         <label class="col-form-label-none">Source</label>
-                        <input class="form-control" name="source" placeholder="Source ..." type="text" 
-                        [(ngModel)]="onerow.source">
+                        <input class="form-control" name="source" placeholder="Source ..." type="text" [(ngModel)]="onerow.source">
                     </div>
                 </div>
             </div>
@@ -55,6 +53,20 @@
                         <td align="center" style="vertical-align: middle;">
                             <span class="tag tag-success" *ngIf="!d.is_delete">Active</span>
                             <span class="tag tag-danger" *ngIf="d.is_delete">Inactive</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="100%" class="rx-pagin">
+                            <button class="rx-back" [disabled]="paging.pg_page <= 1" (click)="jumpPage(paging.pg_page - 1)">
+                                <</button>
+                                    <input type="number" class="rx-cur" [(ngModel)]="paging.pg_page">
+                                    <button class="rx-next" [disabled]="!isnext" (click)="jumpPage(paging.pg_page + 1)">></button>
+                                    <span class="rx-jump" (click)="jumpPage(paging.pg_page)"><i class="icon-rocket"></i></span>
+                                    <select type="number" class="rx-pg-size" (ngModelChange)="resizePage($event)" [(ngModel)]="paging.pg_size">
+                                        <option value="10" selected>10</option>
+                                        <option value="50" selected>50</option>
+                                        <option value="100" selected>100</option>
+                                    </select> / page
                         </td>
                     </tr>
                 </tbody>

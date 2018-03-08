@@ -34,7 +34,7 @@ export class CampaignComponent extends BaseComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		
+
 	}
 
 	jumpPage(_page) {
@@ -117,6 +117,10 @@ export class CampaignComponent extends BaseComponent implements OnInit {
 	}
 
 	onItemClick(cp: any) {
+
+	}
+	onEdit(e: any, cp: any) {
+		e.stopPropagation();
 		this.onerow = cp;
 		this.isEdit = true;
 		this.isHidden = false;
@@ -130,7 +134,8 @@ export class CampaignComponent extends BaseComponent implements OnInit {
 		}
 		this.service.update(this.onerow, data => { this.refresh(); });
 	}
-	delete() {
-		this.service.delete({ 'id': this.onerow._id }, data => { this.refresh(); });
+	delete(e: any, cp: any) {
+		e.stopPropagation();
+		this.service.delete({ 'id': cp._id }, data => { this.refresh(); });
 	}
 }

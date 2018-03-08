@@ -16,8 +16,8 @@ export class SourceslistComponent implements OnInit {
 		this.paging = { pg_page: 1, pg_size: 10, st_col: 'created_at', st_type: -1 };
 		this.onerow = { 'source_group': '', 'source': '', 'is_delete': 0, 'created_at': '' };
 		this.headers = [
-			{ id: 'source_group', name: 'Source Group', is_search: 1, st_col: 'sourcename', st_type: 1 },
-			{ id: 'source', name: 'Source', is_search: 1, st_col: 'sourceid', st_type: 1 },
+			{ id: 'source_group', name: 'Utm Source', is_search: 1, st_col: 'sourcename', st_type: 1 },
+			{ id: 'source', name: 'Utm Medium', is_search: 1, st_col: 'sourceid', st_type: 1 },
 			{ id: 'created_at', name: 'Created', is_search: 1, st_col: 'created_at', st_type: 1 },
 			{ id: 'is_delete', name: 'Status', is_search: 1, st_col: 'is_delete', st_type: 1 }
 		]
