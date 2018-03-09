@@ -28,31 +28,25 @@
                 <div class="row">
                     <div class="col-md-3 col-lg-3">
                         <label class="col-form-label-none">Campaign Id</label>
-                        <input class="form-control" name="campaign_id" disabled
-                        placeholder="Campaign id ..." type="text" [(ngModel)]="onerow.campaign_id">
+                        <input class="form-control" name="campaign_id" disabled placeholder="Campaign id ..." type="text" [(ngModel)]="onerow.campaign_id">
                     </div>
                     <div class="col-md-3 col-lg-3">
                         <label class="col-form-label-none">Campaign Name</label>
-                        <input class="form-control" name="campaign_id" disabled
-                        placeholder="Campaign id ..." type="text" [(ngModel)]="campaign.name">
+                        <input class="form-control" name="campaign_id" disabled placeholder="Campaign id ..." type="text" [(ngModel)]="campaign.name">
                     </div>
                     <div class="col-md-3 col-lg-3">
                         <label class="col-form-label-none">Cost</label>
-                        <input class="form-control" name="cost"
-                        placeholder="Cost ..." type="text" [(ngModel)]="onerow.cost">
+                        <input class="form-control" name="cost" placeholder="Cost ..." type="text" [(ngModel)]="onerow.cost">
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-lg-6 col-md-6">
                         <label class="col-form-label">Start date</label>
-                        <input type="text" class="form-control" [minDate]="dMin" [maxDate]="dMax" #dp="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }"
-                        [(ngModel)]="dFrom">
+                        <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }" [(ngModel)]="startDate">
                     </div>
                     <div class="form-group col-lg-6 col-md-6">
                         <label class="col-form-label">End date</label>
-                        <input type="text" class="form-control" [minDate]="dMin" [maxDate]="dMax" #dp="bsDatepicker" bsDatepicker
-                        [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }"
-                        [ngModel]="dTo">
+                        <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }" [(ngModel)]="endDate">
                     </div>
                 </div>
             </div>
@@ -120,22 +114,22 @@
                         </td>
                         <td class="text-center">
                             <button class="btn btn-sm btn-danger" type="button" (click)="delete($event, ad)">
-                            <i class="icon-trash "></i>
+                                <i class="icon-trash "></i>
                             </button>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="100% " class="rx-pagin">
                             <button class="rx-back" [disabled]="paging.pg_page <=1 " (click)="jumpPage(paging.pg_page - 1) ">
-                            <</button>
-                            <input type="number " class="rx-cur " [(ngModel)]="paging.pg_page ">
-                            <button class="rx-next " [disabled]="!isnext " (click)="jumpPage(paging.pg_page + 1) ">></button>
-                            <span class="rx-jump " (click)="jumpPage(paging.pg_page) "><i class="icon-rocket "></i></span>
-                            <select type="number " class="rx-pg-size " (ngModelChange)="resizePage($event) " [(ngModel)]="paging.pg_size ">
-                                <option value="10 " selected>10</option>
-                                <option value="50 " selected>50</option>
-                                <option value="100 " selected>100</option>
-                            </select> / page
+                                <</button>
+                                    <input type="number " class="rx-cur " [(ngModel)]="paging.pg_page ">
+                                    <button class="rx-next " [disabled]="!isnext " (click)="jumpPage(paging.pg_page + 1) ">></button>
+                                    <span class="rx-jump " (click)="jumpPage(paging.pg_page) "><i class="icon-rocket "></i></span>
+                                    <select type="number " class="rx-pg-size " (ngModelChange)="resizePage($event) " [(ngModel)]="paging.pg_size ">
+                                        <option value="10 " selected>10</option>
+                                        <option value="50 " selected>50</option>
+                                        <option value="100 " selected>100</option>
+                                    </select> / page
                         </td>
                     </tr>
                 </tbody>

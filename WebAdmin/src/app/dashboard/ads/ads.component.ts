@@ -12,20 +12,19 @@ import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 export class AdsComponent extends BaseComponent implements OnInit, OnDestroy {
 
 	headers: any; paging: any; search = { field: 'name', term: '' };
-	ads = []; onerow: any; isEdit: boolean; isHidden: boolean; 
+	ads = []; onerow: any; isEdit: boolean; isHidden: boolean;
 	adType = [];
 
-	dFrom: Date; dMin: Date; dTo: Date = new Date(); dMax: Date = new Date();
-	campaign : any;
+	startDate: Date; endDate: Date = new Date();
+
+	campaign: any;
 
 	constructor(private service: CampaignService) {
 
 		super();
 
 		this.paging = this.service.defaultPaging();
-		this.dFrom = this.service.fromDate(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate());
-		this.dMin = this.service.fromDate(this.dMax.getFullYear(), this.dMax.getMonth(), this.dMax.getDate());
-
+		this.startDate = this.service.fromDate(this.endDate.getFullYear(), this.endDate.getMonth(), this.endDate.getDate());
 		this.headers = [
 			{ id: 'id', name: 'Ad Id', is_search: 1, st_col: 'id', st_type: 1 },
 			{ id: 'name', name: 'Name', is_search: 1, st_col: 'name', st_type: 1 },
@@ -93,7 +92,10 @@ export class AdsComponent extends BaseComponent implements OnInit, OnDestroy {
 			'search_campaign_id': this.campaign._id,
 			['search_' + this.search.field]: this.search.term
 		}, data => {
-			this.ads = data
+			this.ads = data;
+			for (var ad of this.ads) {
+				console.log(ad);
+			}
 		});
 	}
 	sort($event) {
@@ -118,20 +120,22 @@ export class AdsComponent extends BaseComponent implements OnInit, OnDestroy {
 	}
 
 	createAd() {
-		this.onerow.start_date = Math.round(this.dFrom.getTime() / 1000);
-		this.onerow.end_date = Math.round(this.dTo.getTime() / 1000);
+		this.onerow.start_date = Math.round(this.startDate.getTime() / 1000);
+		this.onerow.end_date = Math.round(this.endDate.getTime() / 1000);
 		this.onerow.campaign_id = this.campaign._id;
 		this.service.createAd(this.onerow, data => { this.service.moveToAds(this.onerow); });
 	}
 
 	onItemClick(cp: any) {
 		this.onerow = cp;
+		this.startDate = new Date(this.onerow.start_date * 1000);
+		this.endDate = new Date(this.onerow.end_date * 1000);
 		this.isEdit = true;
 		this.isHidden = false;
 	}
 	update() {
-		this.onerow.start_date = Math.round(this.dFrom.getTime() / 1000);
-		this.onerow.end_date = Math.round(this.dTo.getTime() / 1000);
+		this.onerow.start_date = Math.round(this.startDate.getTime() / 1000);
+		this.onerow.end_date = Math.round(this.endDate.getTime() / 1000);
 		this.onerow.campaign_id = this.campaign._id;
 		this.service.updateAd(this.onerow, data => { this.refresh(); });
 	}
