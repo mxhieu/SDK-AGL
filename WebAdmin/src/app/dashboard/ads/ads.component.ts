@@ -39,8 +39,7 @@ export class AdsComponent extends BaseComponent implements OnInit, OnDestroy {
 			{ id: 'cost', name: 'Cost', is_search: 1, st_col: 'cost', st_type: 1 },
 			{ id: 'start_date', name: 'Start date', is_search: 1, st_col: 'start_date', st_type: 1 },
 			{ id: 'end_date', name: 'End date', is_search: 1, st_col: 'end_date', st_type: 1 },
-			{ id: 'created_at', name: 'Created', is_search: 1, st_col: 'created_at', st_type: 1 },
-			{ id: 'is_active', name: 'Status', is_search: 1, st_col: 'is_active', st_type: 1 }
+			{ id: 'created_at', name: 'Created', is_search: 1, st_col: 'created_at', st_type: 1 }
 		];
 	}
 
@@ -84,7 +83,7 @@ export class AdsComponent extends BaseComponent implements OnInit, OnDestroy {
 			'link': 'link' + new Date().getMilliseconds(),
 			'cost': new Date().getMilliseconds(),
 			'type': 1, // 1: banner, 2: facebook, 3: google
-			'campaign_id': '',
+			'campaign_id': this.campaign._id
 		};
 	}
 
@@ -98,9 +97,6 @@ export class AdsComponent extends BaseComponent implements OnInit, OnDestroy {
 			['search_' + this.search.field]: this.search.term
 		}, data => {
 			this.ads = data;
-			for (var ad of this.ads) {
-				console.log(ad);
-			}
 		});
 	}
 	sort($event) {
@@ -121,14 +117,12 @@ export class AdsComponent extends BaseComponent implements OnInit, OnDestroy {
 	show() {
 		this.isHidden = false;
 		this.isEdit = false;
-		this.onerow.campaign_id = this.campaign._id;
 	}
 
 	createAd() {
 		this.onerow.start_date = Math.round(this.startDate.getTime() / 1000);
 		this.onerow.end_date = Math.round(this.endDate.getTime() / 1000);
-		this.onerow.campaign_id = this.campaign._id;
-		this.service.createAd(this.onerow, data => { this.service.moveToAds(this.onerow); });
+		this.service.createAd(this.onerow, data => { this.refresh();});
 	}
 
 	onItemClick(cp: any) {
@@ -141,7 +135,6 @@ export class AdsComponent extends BaseComponent implements OnInit, OnDestroy {
 	update() {
 		this.onerow.start_date = Math.round(this.startDate.getTime() / 1000);
 		this.onerow.end_date = Math.round(this.endDate.getTime() / 1000);
-		this.onerow.campaign_id = this.campaign._id;
 		this.service.updateAd(this.onerow, data => { this.refresh(); });
 	}
 	delete(e: any, cp: any) {

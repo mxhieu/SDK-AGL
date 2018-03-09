@@ -1,4 +1,4 @@
-<div class="animated fadeIn">
+<div class="col-lg-12 col-md-12 animated fadeIn">
     <div class="card-block rx-floathide-form" [hidden]="isHidden">
         <div class="card">
             <div class="card-header">
@@ -18,10 +18,6 @@
                 </div>
                 <div class="row">
                     <div class="form-group col-md-3 col-lg-3">
-                        <label class="col-form-label-none">Ad Id</label>
-                        <input class="form-control" name="name" placeholder="App Id" type="text" [(ngModel)]="onerow.id">
-                    </div>
-                    <div class="form-group col-md-3 col-lg-3">
                         <label class="col-form-label-none">Name</label>
                         <input class="form-control" name="name" placeholder="Agency Id" type="text" [(ngModel)]="onerow.name">
                     </div>
@@ -35,12 +31,12 @@
                         <label class="col-form-label-none">Description</label>
                         <input class="form-control" name="description" placeholder="Description ..." type="text" [(ngModel)]="onerow.desc">
                     </div>
-                </div>
-                <div class="row">
                     <div class="form-group col-md-3 col-lg-3">
                         <label class="col-form-label-none">Campaign Id</label>
                         <input class="form-control" name="campaign_id" disabled placeholder="Campaign id ..." type="text" [(ngModel)]="onerow.campaign_id">
                     </div>
+                </div>
+                <div class="row">
                     <div class="form-group col-md-3 col-lg-3">
                         <label class="col-form-label-none">Campaign Name</label>
                         <input class="form-control" name="campaign_id" disabled placeholder="Campaign id ..." type="text" [(ngModel)]="campaign.name">
@@ -53,12 +49,12 @@
                         <label class="col-form-label-none">Utm campaign</label>
                         <input class="form-control" type="text" [(ngModel)]="onerow.utm_campaign">
                     </div>
-                </div>
-                <div class="row">
                     <div class="form-group col-md-3 col-lg-3">
                         <label class="col-form-label-none">Utm Source</label>
                         <input class="form-control" name="name" type="text" [(ngModel)]="onerow.utm_source">
                     </div>
+                </div>
+                <div class="row">
                     <div class="form-group col-md-3 col-lg-3">
                         <label class="col-form-label-none">Utm Medium</label>
                         <input class="form-control" name="name" type="text" [(ngModel)]="onerow.utm_medium">
@@ -74,7 +70,7 @@
                 </div>
             </div>
             <div class="card-footer">
-                <button class="btn btn-sm btn-primary" (click)=(save()) [hidden]="isEdit"><i class="icon-plus"></i> Create </button>
+                <button class="btn btn-sm btn-primary" (click)=(createAd()) [hidden]="isEdit"><i class="icon-plus"></i> Create </button>
                 <button class="btn btn-sm btn-primary" (click)=(update()) [hidden]="!isEdit"><i class="icon-check"></i> Save</button>
                 <button class="btn btn-sm btn-secondary tright" (click)="refresh()"><i class="icon-close"></i> Cancel</button>
             </div>
@@ -134,10 +130,6 @@
                         </td>
                         <td align="center" class="text-center tMiddle">
                             <div>{{ad.created_at * 1000 | date:'dd/MM/yyyy'}}</div>
-                        </td>
-                        <td align="center" class="text-center tMiddle">
-                            <span class="tag tag-success" [hidden]="!(ad.is_active || 0)">Active</span>
-                            <span class="tag tag-default" [hidden]="(ad.is_active || 0)">Inactive</span>
                         </td>
                         <td class="text-center tMiddle">
                             <button class="btn btn-sm btn-danger" type="button" (click)="delete($event, ad)">
