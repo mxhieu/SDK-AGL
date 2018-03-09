@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { AppService } from '../service/app.service';
 import { BaseService } from '../service/base.service';
 import { GroupService } from '../service/group.service';
 import { TelcoService } from '../service/telco.service';
@@ -11,6 +10,6 @@ import { CampaignService } from '../service/campaign.service';
 @NgModule({
 	providers: [
 		BaseService, GroupService, TelcoService, ReportService,
-		PlayerService, PaymentService, AppService, CampaignService]
+		PlayerService, PaymentService, CampaignService]
 })
 export class SharedModule { }

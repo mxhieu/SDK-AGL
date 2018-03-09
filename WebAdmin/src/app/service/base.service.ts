@@ -136,6 +136,12 @@ export class BaseService {
 			callback(data);
 		});
 	}
+	protected baseUrl(): string {
+		return PrivateService.BASE_URL;
+	}
+	protected getRestUrl(postfix: string): string {
+		return this.baseUrl() + postfix;
+	}
 
 	protected getToken(): string {
 		return Cookie.get(this.USER_TOKEN);
@@ -152,6 +158,11 @@ export class BaseService {
 	protected setCookie(key: any, value: any) {
 		Cookie.set(key, value);
 	}
+	
+	protected removeCookie(key: any){
+		Cookie.delete(key);
+	}
+
 	protected getCookie(key: any) {
 		var data = Cookie.get(key);
 		if (data)
@@ -195,12 +206,6 @@ export class BaseService {
 		return this.getAuth().fullname;
 	}
 
-	protected baseUrl(): string {
-		return PrivateService.BASE_URL;
-	}
-	protected getRestUrl(postfix: string): string {
-		return this.baseUrl() + postfix;
-	}
 	public login(params) {
 		this.post(this.config.API_LOGIN, null, params, data => {
 			this.setToken(data.authorization);
@@ -249,6 +254,10 @@ export class BaseService {
 		this.post(this.getRestUrl(SourceApiUrls.update), params, null, data => {
 			callback(Array.isArray(data) ? data : []);
 		});
+	}
+
+	fromDate(year, month, date) {
+		return new Date(year, month, date - 1000);
 	}
 
 	// DEFAULT

@@ -10,6 +10,13 @@ enum GroupApiUrls {
 	app_new = 'app/index'
 }
 
+enum AppApiUrls {
+	detail = 'app/details',
+	reset_key = 'app/resetkey',
+	delete = 'app/delete',
+	update = 'app/edit'
+}
+
 @Injectable()
 export class GroupService extends BaseService {
 
@@ -71,6 +78,21 @@ export class GroupService extends BaseService {
 			data => {
 				callback(Array.isArray(data) ? data : []);
 			});
+	}
+
+	detailApp(params, callback) {
+		this.request(AppApiUrls.detail, params, callback);
+	}
+	resetKey(params, callback) {
+		this.request(AppApiUrls.reset_key, params, callback);
+	}
+	updateApp(body, params, callback) {
+		this.post(this.baseUrl() + AppApiUrls.update, body, params, data => {
+			callback(data);
+		});
+	}
+	deleteApp(params, callback) {
+		this.request(AppApiUrls.delete, params, callback);
 	}
 
 }

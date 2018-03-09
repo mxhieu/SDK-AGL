@@ -1,121 +1,126 @@
 <app-header></app-header>
 <div class="app-body">
-<div class="rx-floathide-form rx-isview" [hidden]="isHidden">
-    <div class="card">
-        <div class="card-header">
-            <h5 class="card-title">New app</h5>
-        </div>
-        <div class="card-block">
-            <div class="row">
-                <div class="col-md-6 col-lg-6 form-group rx-form-group">
-                    <label class="form-control-label">App Name</label>
-                    <input class="form-control" name="name" placeholder="App Name ..." type="text" [(ngModel)]="onerow.name">
+    <div class="rx-floathide-form rx-isview" [hidden]="isHidden">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">New app</h5>
+            </div>
+            <div class="card-block">
+                <div class="row">
+                    <div class="col-md-6 col-lg-6 form-group rx-form-group">
+                        <label class="form-control-label">App Name</label>
+                        <input class="form-control" name="name" placeholder="App Name ..." type="text" [(ngModel)]="onerow.name">
+                    </div>
+                    <div class="col-md-6 col-lg-6 form-group rx-form-group">
+                        <label class="form-control-label">Description</label>
+                        <input class="form-control" name="desc" placeholder="Description ..." type="text" [(ngModel)]="onerow.desc">
+                    </div>
                 </div>
-                <div class="col-md-6 col-lg-6 form-group rx-form-group">
-                    <label class="form-control-label">Description</label>
-                    <input class="form-control" name="desc" placeholder="Description ..." type="text" [(ngModel)]="onerow.desc">
+                <div class="row">
+                    <div class="col-md-6 col-lg-6 form-group rx-form-group">
+                        <label class="form-control-label">
+                            Package name/ Bundle Id</label>
+                        <br/>
+                        <input class="form-control" name="bundle_id" placeholder="Bundle Id ..." type="text" [(ngModel)]="onerow.bundle_id">
+                    </div>
+                    <div class="col-md-6 col-lg-6 form-group rx-form-group">
+                        <label class="form-control-label">Store Url</label>
+                        <input class="form-control" name="storeUrl" placeholder="Store Url ..." type="text" [(ngModel)]="onerow.storeUrl">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6 col-lg-6 rx-form-group">
+                        <label class="form-control-label">
+                            Platform</label>
+                        <br/>
+                        <input class="tpointer" type="radio" name="platform" value="ios" [(ngModel)]="onerow.platform"> <i class="fa fa-apple fa-lg m-t-2 rx-apple"></i> iOS
+                        <input class="tpointer" type="radio" name="platform" value="android" [(ngModel)]="onerow.platform"> <i class="fa fa-android fa-lg m-t-2 rx-android"></i> Android
+                    </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-6 col-lg-6 form-group rx-form-group">
-                    <label class="form-control-label">
-                    Package name/ Bundle Id</label>
-                    <br/>
-                    <input class="form-control" name="bundle_id" placeholder="Bundle Id ..." type="text" [(ngModel)]="onerow.bundle_id">
-                </div>
-                <div class="col-md-6 col-lg-6 form-group rx-form-group">
-                    <label class="form-control-label">Store Url</label>
-                    <input class="form-control" name="storeUrl" placeholder="Store Url ..." type="text" [(ngModel)]="onerow.storeUrl">
-                </div>
-            </div>
-            <div class="row">
-                <div class="form-group col-md-6 col-lg-6 rx-form-group">
-                    <label class="form-control-label">
-                    Platform</label>
-                    <br/>
-                    <input class="tpointer" type="radio" name="platform" value="ios" [(ngModel)]="onerow.platform"> <i class="fa fa-apple fa-lg m-t-2 rx-apple"></i> iOS
-                    <input class="tpointer" type="radio" name="platform" value="android" [(ngModel)]="onerow.platform"> <i class="fa fa-android fa-lg m-t-2 rx-android"></i> Android
-                </div>
-            </div>
-        </div>
-        <div class="card-footer">
-            <button class="btn btn-primary" type="submit" (click)=(newApp())>
-            <i class="fa fa-dot-circle-o"></i> Save </button>
-            <button class="btn btn-danger" type="reset" (click)=(cancel())><i class="fa fa-ban"></i> Cancel</button>
-        </div>
-    </div>
-</div>
-<div class="col-lg-12 col-md-12" style="margin-top: 1.25rem; width:100%;">
-    <div class="card">
-        <div class="card-block">
-            <div class="card-tools">
-                <select class="sel-search" [(ngModel)]="search.field">
-                    <option *ngFor="let perheader of header" [hidden]="!perheader.is_search" value="{{perheader.id}}">{{perheader.name}}</option>
-                </select><i class="icon-arrow-down sel-ico"></i>
-                <input type="text" class="rx-cur input-search" [(ngModel)]="search.term">
-                <button class="btn btn-sm btn-default btn-search" (click)="jumpPage(1)"><i class="icon-magnifier"></i></button>
-                <button class="btn btn-sm btn-primary" (click)=(toggle())>
-                <i class="icon-plus"></i> Create
-                </button>
-            </div>
-            <div style="overflow-x: auto; width: 100%; box-sizing: border-box;">
-                <table class="table table-hover table-outline mb-0 table-striped" style="max-height: 1280px;">
-                    <thead class="thead-default">
-                        <tr>
-                            <th></th>
-                            <th *ngFor="let perheader of header" (click)="sort($event)" [attr.rxdata]="perheader.id" class="{{(perheader.id ==  paging.st_col)? 'rxsorting' : ''}} {{(paging.st_type == 1)? 'rxup' : 'rxdown'}} text-center" style="vertical-align:middle;">
-                                {{perheader.name}}
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let app of apps" class="tpointer" (click)=(onItemClick(app))>
-                            <td class="text-center">
-                                <div class="avatar">
-                                    <img [src]="getUrl(app.icon)" class="img-avatar" onError="this.src='./assets/img/ico_app_default.png'" style="width: 64px; height: 64px;" />
-                                </div>
-                            </td>
-                            <td align="center" class="text-center">
-                                <strong>{{app.name}}</strong>
-                            </td>
-                            <td align="center" class="text-center">
-                                {{app.bundle_id}}
-                            </td>
-                            <td align="center" class="text-center">
-                                {{app.version}}
-                            </td>
-                            <td align="center" class="text-center"><i [hidden]="app.platform != 'android'" class="fa fa-android fa-lg m-t-2 rx-android"></i>
-                                <i [hidden]="app.platform == 'android'" class="fa fa-apple fa-lg m-t-2 rx-apple"></i> {{app.platform}}
-                            </td>
-                            <td align="center" class="text-center">
-                                <span class="tag tag-success" [hidden]="!(app.is_active || 0)">Active</span>
-                                <span class="tag tag-default" [hidden]="(app.is_active || 0)">Inactive</span>
-                                <span class="tag tag-danger" [hidden]="!(app.is_deleted || 0)">Deleted</span>
-                            </td>
-                            <td align="center" class="text-center">
-                                <div>{{app.created_at * 1000 | date:'dd/MM/yyyy'}}</div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="100%" class="rx-pagin">
-                                <button class="rx-back" [disabled]="paging.pg_page <= 1" (click)="jumpPage(paging.pg_page - 1)">
-                                <</button>
-                                <input type="number" class="rx-cur" [(ngModel)]="paging.pg_page">
-                                <button class="rx-next" [disabled]="!isnext" (click)="jumpPage(paging.pg_page + 1)">></button>
-                                <span class="rx-jump" (click)="jumpPage(paging.pg_page)"><i class="icon-rocket"></i></span>
-                                <select type="number" class="rx-pg-size" (ngModelChange)="resizePage($event)" [(ngModel)]="paging.pg_size">
-                                    <option value="10" selected>10</option>
-                                    <option value="50" selected>50</option>
-                                    <option value="100" selected>100</option>
-                                </select> / page
-                            </td>
-                        </tr>
-                    </tbody>
-                    
-                </table>
+            <div class="card-footer">
+                <button class="btn btn-primary" type="submit" (click)=(newApp())>
+                    <i class="fa fa-dot-circle-o"></i> Save </button>
+                <button class="btn btn-danger" type="reset" (click)=(cancel())><i class="fa fa-ban"></i> Cancel</button>
             </div>
         </div>
     </div>
-</div>
+    <div class="col-lg-12 col-md-12" style="margin-top: 1.25rem; width:100%;">
+        <div class="card">
+            <div class="card-block">
+                <div class="card-tools">
+                    <select class="sel-search" [(ngModel)]="search.field">
+                        <option *ngFor="let perheader of header" [hidden]="!perheader.is_search" value="{{perheader.id}}">{{perheader.name}}</option>
+                    </select><i class="icon-arrow-down sel-ico"></i>
+                    <input type="text" class="rx-cur input-search" [(ngModel)]="search.term">
+                    <button class="btn btn-sm btn-default btn-search" (click)="jumpPage(1)"><i class="icon-magnifier"></i></button>
+                    <button class="btn btn-sm btn-primary" (click)=(toggle())>
+                        <i class="icon-plus"></i> Create
+                    </button>
+                </div>
+                <div style="overflow-x: auto; width: 100%; box-sizing: border-box;">
+                    <table class="table table-hover table-outline mb-0 table-striped" style="max-height: 1280px;">
+                        <thead class="thead-default">
+                            <tr>
+                                <th></th>
+                                <th *ngFor="let perheader of header" (click)="sort($event)" [attr.rxdata]="perheader.id" class="{{(perheader.id ==  paging.st_col)? 'rxsorting' : ''}} {{(paging.st_type == 1)? 'rxup' : 'rxdown'}} text-center" style="vertical-align:middle;">
+                                    {{perheader.name}}
+                                </th>
+                                <th>#</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let app of apps" class="tpointer" (click)=(onItemClick(app))>
+                                <td class="text-center">
+                                    <div class="avatar">
+                                        <img [src]="getUrl(app.icon)" class="img-avatar" onError="this.src='./assets/img/ico_app_default.png'" style="width: 64px; height: 64px;" />
+                                    </div>
+                                </td>
+                                <td align="center" class="text-center">
+                                    <strong>{{app.name}}</strong>
+                                </td>
+                                <td align="center" class="text-center">
+                                    {{app.bundle_id}}
+                                </td>
+                                <td align="center" class="text-center">
+                                    {{app.version}}
+                                </td>
+                                <td align="center" class="text-center"><i [hidden]="app.platform != 'android'" class="fa fa-android fa-lg m-t-2 rx-android"></i>
+                                    <i [hidden]="app.platform == 'android'" class="fa fa-apple fa-lg m-t-2 rx-apple"></i> {{app.platform}}
+                                </td>
+                                <td align="center" class="text-center">
+                                    <span class="tag tag-success" [hidden]="!(app.is_active || 0)">Active</span>
+                                    <span class="tag tag-default" [hidden]="(app.is_active || 0)">Inactive</span>
+                                    <span class="tag tag-danger" [hidden]="!(app.is_deleted || 0)">Deleted</span>
+                                </td>
+                                <td align="center" class="text-center">
+                                    <div>{{app.created_at * 1000 | date:'dd/MM/yyyy'}}</div>
+                                </td>
+                                <td class="text-center">
+                                    <button type="button" class="btn btn-sm btn-danger" (click)="deleteApp($event, app._id)">
+                                        <i class="fa fa-trash-o"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="100%" class="rx-pagin">
+                                    <button class="rx-back" [disabled]="paging.pg_page <= 1" (click)="jumpPage(paging.pg_page - 1)">
+                                        <</button>
+                                            <input type="number" class="rx-cur" [(ngModel)]="paging.pg_page">
+                                            <button class="rx-next" [disabled]="!isnext" (click)="jumpPage(paging.pg_page + 1)">></button>
+                                            <span class="rx-jump" (click)="jumpPage(paging.pg_page)"><i class="icon-rocket"></i></span>
+                                            <select type="number" class="rx-pg-size" (ngModelChange)="resizePage($event)" [(ngModel)]="paging.pg_size">
+                                                <option value="10" selected>10</option>
+                                                <option value="50" selected>50</option>
+                                                <option value="100" selected>100</option>
+                                            </select> / page
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <app-footer></app-footer>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AppService } from '../../service/app.service';
+import { GroupService } from '../../service/group.service';
 import { BaseComponent } from '../../service/base.component';
 
 @Component({
@@ -11,7 +11,7 @@ export class AppSettingComponent extends BaseComponent implements OnInit {
 
 	appInfo: any;
 
-	constructor(private service: AppService) {
+	constructor(private service: GroupService) {
 
 		super();
 		
@@ -29,16 +29,16 @@ export class AppSettingComponent extends BaseComponent implements OnInit {
 
 	refresh() {
 		if (!this.service.isExpired())
-			this.service.detail({ 'id': this.service.getAppId() }, data => this.appInfo = data );
+			this.service.detailApp({ 'id': this.service.getAppId() }, data => this.appInfo = data );
 	}
 	resetKey() {
 		this.service.resetKey({ 'id': this.service.getAppId() }, data => this.appInfo.key = data );
 	}
 	update() {
-		this.service.update(JSON.stringify(this.appInfo), { 'id': this.service.getAppId() }, data => this.refresh());
+		this.service.updateApp(JSON.stringify(this.appInfo), { 'id': this.service.getAppId() }, data => this.refresh());
 	}
 	delete() {
-		this.service.delete({'id': this.service.getAppId() }, data => this.service.moveToApps());
+		this.service.deleteApp({'id': this.service.getAppId() }, data => this.service.moveToApps());
 	}
 	onStatusChange() {
 		this.appInfo.is_active = (this.appInfo.is_active == 1 ? 0 : 1);

@@ -21,6 +21,7 @@ import { SourceslistComponent } from './sourceslist/sourceslist.component';
 import { MetricComponent } from './metric/metric.component';
 import { CohortComponent } from './cohort/cohort.component';
 import { CampaignComponent } from './campaign/campaign.component';
+import { AdsComponent } from './ads/ads.component';
 
 @NgModule({
   imports: [
@@ -34,6 +35,6 @@ import { CampaignComponent } from './campaign/campaign.component';
   declarations: [
     PlayerComponent, AppSettingComponent, PaymentComponent,
     NotificationComponent, TelcoComponent, ArmpdComponent, ArmComponent,
-    RoiComponent, RoipdComponent, SourceslistComponent, MetricComponent, CohortComponent, CampaignComponent]
+    RoiComponent, RoipdComponent, SourceslistComponent, MetricComponent, CohortComponent, CampaignComponent, AdsComponent]
 })
 export class DashboardModule { }

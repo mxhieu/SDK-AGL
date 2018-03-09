@@ -23,10 +23,6 @@ export class ReportService extends BaseService {
 			{ 'id': 'web', 'name': 'Web' }];
 	}
 
-	fromDate(year, month, date) {
-		return new Date(year, month, date - 1000);
-	}
-
 	roiAnalysis(params, callback) {
 		this.get(this.getRestUrl(ChartApiUrls.analyze_roi), params, data => {
 			callback(Array.isArray(data) ? data : []);

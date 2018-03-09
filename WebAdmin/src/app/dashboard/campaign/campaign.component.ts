@@ -11,8 +11,8 @@ export class CampaignComponent extends BaseComponent implements OnInit {
 
 	headers: any; paging: any; search = { field: 'name', term: '' };
 
-
-	campaigns = []; onerow: any; isEdit: boolean; isHidden: boolean;
+	campaigns = []; onerow: any; isEdit: boolean;
+	isHidden: boolean;
 	sources = [];
 
 	constructor(private service: CampaignService) {
@@ -20,7 +20,7 @@ export class CampaignComponent extends BaseComponent implements OnInit {
 		super();
 
 		this.paging = this.service.defaultPaging();
-
+		
 		this.headers = [
 			{ id: 'name', name: 'Name', is_search: 1, st_col: 'name', st_type: 1 },
 			{ id: 'desc', name: 'Description', is_search: 1, st_col: 'desc', st_type: 1 },
@@ -58,7 +58,7 @@ export class CampaignComponent extends BaseComponent implements OnInit {
 		this.onerow = {
 			'name': 'Nạp thẻ bất kì, X2 gold',
 			'desc': 'Vina, Mobi, Viettel',
-			'is_active': 0,
+			'is_active': 1,
 			'utm_medium': '',
 			'utm_source': '',
 			'source_id': '',
@@ -81,6 +81,7 @@ export class CampaignComponent extends BaseComponent implements OnInit {
 			'st_type': this.paging.st_type,
 			'pg_page': this.paging.pg_page,
 			'pg_size': this.paging.pg_size,
+			'search_app_id': this.service.getAppId(),
 			'search_agency_id': '5aa0ee42b887cb6691ed5b43',
 			['search_' + this.search.field]: this.search.term
 		}, data => {
@@ -117,7 +118,8 @@ export class CampaignComponent extends BaseComponent implements OnInit {
 	}
 
 	onItemClick(cp: any) {
-
+		this.onerow = cp;
+		this.service.moveToAds(this.onerow);
 	}
 	onEdit(e: any, cp: any) {
 		e.stopPropagation();
@@ -125,6 +127,7 @@ export class CampaignComponent extends BaseComponent implements OnInit {
 		this.isEdit = true;
 		this.isHidden = false;
 	}
+	
 	update() {
 		for (var sc of this.sources) {
 			if (this.onerow.source_id == sc._id) {

@@ -27,7 +27,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="form-group col-md-12 col-lg-12">
+                    <div class="col-md-12 col-lg-12">
                         <label class="col-form-label-none">Description</label>
                         <input class="form-control" name="description" placeholder="Description ..." type="text" [(ngModel)]="onerow.desc">
                     </div>
@@ -51,7 +51,7 @@
                 </select><i class="icon-arrow-down sel-ico"></i>
                 <input type="text" class="rx-cur input-search" [(ngModel)]="search.term">
                 <button class="btn btn-sm btn-default btn-search" (click)="jumpPage(1)"><i class="icon-magnifier"></i></button>
-                <button class="btn btn-sm btn-success" (click)="show()"> <i class="icon-plus"></i> Create </button>
+                <button class="btn btn-sm btn-success" (click)="show()"> <i class="icon-plus"></i> Create campaign </button>
             </div>
             <table class="table mb-0 table-striped table-responsive-sm table-bordered">
                 <thead class="thead-inverse">
@@ -85,25 +85,25 @@
                         </td>
                         <td class="text-center">
                             <button class="btn btn-sm btn-primary" type="button" (click)="onEdit($event, cp)">
-                                <i class="fa fa-pencil-square-o"></i>
+                            <i class="fa fa-pencil-square-o"></i>
                             </button>
                             <button class="btn btn-sm btn-danger" type="button" (click)="delete($event, cp)">
-                                <i class="icon-trash "></i>
+                            <i class="icon-trash "></i>
                             </button>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="100% " class="rx-pagin">
                             <button class="rx-back " [disabled]="paging.pg_page <=1 " (click)="jumpPage(paging.pg_page - 1) ">
-                                <</button>
-                                    <input type="number " class="rx-cur " [(ngModel)]="paging.pg_page ">
-                                    <button class="rx-next " [disabled]="!isnext " (click)="jumpPage(paging.pg_page + 1) ">></button>
-                                    <span class="rx-jump " (click)="jumpPage(paging.pg_page) "><i class="icon-rocket "></i></span>
-                                    <select type="number " class="rx-pg-size " (ngModelChange)="resizePage($event) " [(ngModel)]="paging.pg_size ">
-                                        <option value="10 " selected>10</option>
-                                        <option value="50 " selected>50</option>
-                                        <option value="100 " selected>100</option>
-                                    </select> / page
+                            <</button>
+                            <input type="number " class="rx-cur " [(ngModel)]="paging.pg_page ">
+                            <button class="rx-next " [disabled]="!isnext " (click)="jumpPage(paging.pg_page + 1) ">></button>
+                            <span class="rx-jump " (click)="jumpPage(paging.pg_page) "><i class="icon-rocket "></i></span>
+                            <select type="number " class="rx-pg-size " (ngModelChange)="resizePage($event) " [(ngModel)]="paging.pg_size ">
+                                <option value="10 " selected>10</option>
+                                <option value="50 " selected>50</option>
+                                <option value="100 " selected>100</option>
+                            </select> / page
                         </td>
                     </tr>
                 </tbody>

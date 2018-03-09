@@ -89,6 +89,10 @@ export class AppsComponent extends BaseComponent implements OnInit {
 	newApp() {
 		this.service.newApp(this.onerow, data => { this.refresh(); });
 	}
+	deleteApp(e: any, id: any) {
+		e.stopPropagation();
+		this.service.deleteApp({ 'id': id }, data => { this.refresh() });
+	}
 	getApps() {
 		this.service.getApps({
 			'st_col': this.paging.st_col,

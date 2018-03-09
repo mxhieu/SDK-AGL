@@ -25,5 +25,10 @@ export class RoutingService {
 		this.router.navigate(['/apps/admin']);
 	}
 
-
+	moveToCampaigns(){
+		this.router.navigate(['/apps/admin/campaign']);
+	}
+	moveToAds(){
+		this.router.navigate(['/apps/admin/ads']);
+	}
 }

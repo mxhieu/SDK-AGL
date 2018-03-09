@@ -13,6 +13,7 @@ import { SourceslistComponent } from './sourceslist/sourceslist.component';
 import { MetricComponent } from './metric/metric.component';
 import { CohortComponent } from './cohort/cohort.component';
 import { CampaignComponent } from './campaign/campaign.component';
+import { AdsComponent } from './ads/ads.component';
 
 const routes: Routes = [
   {
@@ -37,6 +38,9 @@ const routes: Routes = [
   }, {
     path: 'setting',
     component: AppSettingComponent
+  }, {
+    path: 'ads',
+    component: AdsComponent
   }, {
     path: 'payment',
     component: PaymentComponent
