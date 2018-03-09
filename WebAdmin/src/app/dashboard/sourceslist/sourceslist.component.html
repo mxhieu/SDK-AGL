@@ -50,10 +50,6 @@
                         <td align="center" style="vertical-align: middle;">
                             {{d.created_at * 1000 | date:'dd/MM/yyyy'}}
                         </td>
-                        <td align="center" style="vertical-align: middle;">
-                            <span class="tag tag-success" *ngIf="!d.is_delete">Active</span>
-                            <span class="tag tag-danger" *ngIf="d.is_delete">Inactive</span>
-                        </td>
                     </tr>
                     <tr>
                         <td colspan="100%" class="rx-pagin">

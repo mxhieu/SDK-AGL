@@ -65,8 +65,8 @@ export class CampaignService extends BaseService {
 	getAdType(){
 		return [
 			{ 'id': 1, 'name':'Banner' },
-			{ 'id': 1, 'name':'Facebook' },
-			{ 'id': 1, 'name':'Banner' }
+			{ 'id': 2, 'name':'Facebook' },
+			{ 'id': 3, 'name':'Google' }
 		];
 	}
 }

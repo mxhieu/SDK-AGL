@@ -23,12 +23,17 @@ export class AdsComponent extends BaseComponent implements OnInit, OnDestroy {
 
 		super();
 
+		this.adType = this.service.getAdType();
 		this.paging = this.service.defaultPaging();
 		this.startDate = this.service.fromDate(this.endDate.getFullYear(), this.endDate.getMonth(), this.endDate.getDate());
 		this.headers = [
-			{ id: 'id', name: 'Ad Id', is_search: 1, st_col: 'id', st_type: 1 },
 			{ id: 'name', name: 'Name', is_search: 1, st_col: 'name', st_type: 1 },
 			{ id: 'desc', name: 'Description', is_search: 1, st_col: 'desc', st_type: 1 },
+			{ id: 'utm_source', name: 'Utm Source', is_search: 1, st_col: 'utm_source', st_type: 1 },
+			{ id: 'utm_medium', name: 'Utm Medium', is_search: 1, st_col: 'utm_medium', st_type: 1 },
+			{ id: 'utm_term', name: 'Utm Term', is_search: 1, st_col: 'utm_term', st_type: 1 },
+			{ id: 'utm_content', name: 'Utm Content', is_search: 1, st_col: 'utm_content', st_type: 1 },
+			{ id: 'utm_campaign', name: 'Utm Campaign', is_search: 1, st_col: 'utm_campaign', st_type: 1 },
 			{ id: 'link', name: 'Link', is_search: 1, st_col: 'link', st_type: 1 },
 			{ id: 'type', name: 'Type', is_search: 1, st_col: 'type', st_type: 1 },
 			{ id: 'cost', name: 'Cost', is_search: 1, st_col: 'cost', st_type: 1 },
