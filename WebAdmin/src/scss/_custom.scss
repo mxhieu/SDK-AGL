@@ -554,7 +554,7 @@ th.rxsorting {
     content: '';
     display: block;
     position: absolute;
-    right: 20px;
+    right: 5%;
     top: 10px;
     border-left: 4px solid transparent;
     border-right: 4px solid transparent;
@@ -565,20 +565,14 @@ th.rxsorting {
     content: '';
     display: block;
     position: absolute;
-    right: 20px;
+    right: 5%;
     top: 10px;
     border-left: 4px solid transparent;
     border-right: 4px solid transparent;
     border-bottom: 7px solid #fff;
 }
 
-
-
-
-
-
 /* Pagination */
-
 .rx-pg-size {
     width: 40px;
     border-radius: 2px;
@@ -815,7 +809,11 @@ th.rxsorting {
 .tright {
     float: right;
 }
-
+.tMiddle {
+    vertical-align: middle;
+    text-align: center;
+    align: center;
+}
 .app-header.navbar {
     border-bottom: 1px solid #a4b7c1;
 }
@@ -824,4 +822,3 @@ th.rxsorting {
     min-width: 50px;
     height: 100%;
 }
-

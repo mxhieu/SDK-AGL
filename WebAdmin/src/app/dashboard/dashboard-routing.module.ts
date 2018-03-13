@@ -20,44 +20,56 @@ const routes: Routes = [
     path: '',
     redirectTo: 'arm',
     pathMatch: 'full'
-  }, {
+  },
+  {
     path: 'armpd',
     component: ArmpdComponent
-  }, {
+  },
+  {
     path: 'arm',
     component: ArmComponent
-  }, {
+  },
+  {
     path: 'roi',
     component: RoiComponent
-  }, {
+  },
+  {
     path: 'roipd',
     component: RoipdComponent
-  }, {
+  },
+  {
     path: 'player',
     component: PlayerComponent
-  }, {
+  },
+  {
     path: 'setting',
     component: AppSettingComponent
-  }, {
+  },
+  {
     path: 'ads',
     component: AdsComponent
-  }, {
+  },
+  {
     path: 'payment',
     component: PaymentComponent
-  }, {
+  },
+  {
     path: 'telco',
     component: TelcoComponent
   },
   {
     path: 'campaign',
     component: CampaignComponent
-  }, {
+  },
+  {
     path: 'notification',
     component: NotificationComponent
-  }, {
+  },
+  {
     path: 'sourceslist',
     component: SourceslistComponent
-  }, {
+  },
+  {
     path: 'metric',
     component: MetricComponent
   },

@@ -4,9 +4,10 @@ import { FormsModule } from '@angular/forms';
 import { AmChartsModule } from "@amcharts/amcharts3-angular";
 import { DashboardRoutingModule } from './dashboard-routing.module';
 
-// Module
+// Ngx Module
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 
 import { PlayerComponent } from './player/player.component';
 import { AppSettingComponent } from './app-setting/app-setting.component';
@@ -29,6 +30,7 @@ import { AdsComponent } from './ads/ads.component';
     DashboardRoutingModule,
     BsDropdownModule.forRoot(),
     BsDatepickerModule.forRoot(),
+    TabsModule.forRoot(),
     FormsModule,
     AmChartsModule
   ],

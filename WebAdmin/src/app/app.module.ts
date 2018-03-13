@@ -10,7 +10,7 @@ import { NAV_DROPDOWN_DIRECTIVES } from './shared/nav-dropdown.directive';
 
 import { FlashMessagesModule } from 'angular2-flash-messages';
 
-// Module
+// Ngx Module
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 

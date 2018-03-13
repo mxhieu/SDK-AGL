@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { PlayerService } from '../../service/player.service';
-import { ConfigService } from '../../service/service.config';
 
 @Component({
   selector: 'app-player',
@@ -15,7 +14,6 @@ export class PlayerComponent implements OnInit {
     this.data = [];
     this.isnext = true;
     this.search = { field: 'username', term: '' };
-
     this.paging = this.service.defaultPaging();
 
     this.header = [

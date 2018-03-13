@@ -28,10 +28,10 @@
                         </form>
                     </div>
                     <div class="card-footer">
-                        <button class="btn btn-primary" type="submit" (click)=(send()) [hidden]="isEdit">
+                        <button class="btn btn-sm btn-primary" type="submit" (click)=(send()) [hidden]="isEdit">
                             <i class="icon-cursor"></i> Send
                         </button>
-                        <button class="btn btn-secondary" type="reset" (click)=(cancel())>
+                        <button class="btn btn-sm btn-secondary" type="reset" (click)=(cancel())>
                             <i class="icon-close"></i> Cancel
                         </button>
                     </div>
@@ -43,7 +43,7 @@
     <div class="card">
         <div class="card-block">
             <h4>Push notification
-			<button class="btn btn-primary tright" (click)=(toggle())>
+			<button class="btn btn-sm btn-primary tright" (click)=(toggle())>
 			<i class="icon-plus"></i> New message
 			</button>
 			</h4>
@@ -78,7 +78,7 @@
                             {{msg.open}}
                         </td>
                         <td align="center">
-                            <button class="btn btn-danger" type="submit" (click)=(delete())>
+                            <button class="btn btn-sm btn-danger" type="submit" (click)=(delete())>
                                 <i class="icon-trash"></i>
                             </button>
                         </td>

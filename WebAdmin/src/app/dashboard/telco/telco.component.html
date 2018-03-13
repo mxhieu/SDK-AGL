@@ -49,10 +49,10 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <button class="btn btn-primary" (click)=(save()) [hidden]="isEdit"> <i class="icon-plus"></i> OK </button>
-                        <button class="btn btn-primary" (click)=(update()) [hidden]="!isEdit"><i class="icon-check"></i> Save</button>
-                        <button class="btn btn-danger tright" (click)=(delete()) [hidden]="!isEdit"><i class="icon-trash"></i> Delete</button>
-                        <button class="btn btn-secondary tright" (click)=(cancel())><i class="icon-close"></i> Cancel</button>
+                        <button class="btn btn-sm btn-primary" (click)=(save()) [hidden]="isEdit"> <i class="icon-plus"></i> OK </button>
+                        <button class="btn btn-sm btn-primary" (click)=(update()) [hidden]="!isEdit"><i class="icon-check"></i> Save</button>
+                        <button class="btn btn-sm btn-danger tright" (click)=(delete()) [hidden]="!isEdit"><i class="icon-trash"></i> Delete</button>
+                        <button class="btn btn-sm btn-secondary tright" (click)=(cancel())><i class="icon-close"></i> Cancel</button>
                     </div>
                 </div>
             </div>
@@ -63,7 +63,7 @@
             <h5 class="card-title">Telco items</h5>
         </div>
         <div class="card-block">
-            <button class="btn btn-primary tright" (click)=(toggle())>
+            <button class="btn btn-sm btn-primary tright" (click)=(toggle())>
                 <i class="icon-plus"></i> Create
             </button>
             <table class="table table-hover mb-0 table-striped fixed table-bordered">
