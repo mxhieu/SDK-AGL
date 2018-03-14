@@ -38,6 +38,9 @@
         </div>
     </div>
     <div class="card">
+    	<div class="card-header">
+            <h5 class="card-title">Matrix</h5>
+        </div>
         <div class="card-block">
             <div class="card-tools">
                 <select class="sel-search" [(ngModel)]="search.field">
@@ -60,17 +63,17 @@
                     <tr *ngFor="let d of data">
                         <td class="tMiddle"> {{d.type}} </td>
                         <td class="tMiddle" 
-                        	[style.background-color]="d.today < 100 ? 'rgba(255,23,68, 80)': 'rgba(0,230,118, 80)'" 
+                        	[style.background-color]="d.today < 100 ? 'rgba(255,36,16, 100)': 'rgba(50,195,54, 100)'" 
                             [style.color]="'white'"> 
                             <strong>{{d.today}}%</strong>
                         </td>
                         <td class="tMiddle" 
-                        	[style.background-color]="d.yesterday < 100 ? 'rgba(255,23,68, 80)': 'rgba(0,230,118, 80)'" 
+                        	[style.background-color]="d.yesterday < 100 ? 'rgba(255,36,16, 100)': 'rgba(50,195,54, 100)'" 
                             [style.color]="'white'"> 
                             <strong>{{d.yesterday}}%</strong>
                         </td>
                         <td class="tMiddle" 
-                        	[style.background-color]="d.one_week_ago < 100 ? 'rgba(255,23,68, 80)': 'rgba(0,230,118, 80)'" 
+                        	[style.background-color]="d.one_week_ago < 100 ? 'rgba(255,36,16, 100)': 'rgba(50,195,54, 100)'" 
                             [style.color]="'white'"> 
                             <strong>{{d.one_week_ago}}%</strong>
                         </td>
