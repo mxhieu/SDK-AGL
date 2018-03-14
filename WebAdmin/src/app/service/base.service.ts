@@ -170,7 +170,7 @@ export class BaseService {
 		return null;
 	}
 
-	private setAppId(appId: string) {
+	public setAppId(appId: string) {
 		Cookie.set(this.KEY_APP_ID, appId);
 	}
 

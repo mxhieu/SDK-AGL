@@ -25,9 +25,8 @@ export class KpireportComponent implements OnInit {
 			{ id: 'a1', name: 'A1', is_search: 1, st_col: 'a1', st_type: -1 },
 			{ id: 'a7', name: 'A7', is_search: 1, st_col: 'a7', st_type: 1 },
 			{ id: 'a30', name: 'A30', is_search: 1, st_col: 'a30', st_type: 1 },
-			{ id: 'n1', name: 'N1', is_search: 1, st_col: 'n1', st_type: 1 },
-			{ id: 'nru', name: 'NRU', is_search: 1, st_col: 'nru', st_type: 1 },
-			{ id: 'gross', name: 'Gross', is_search: 1, st_col: 'gross', st_type: 1 },
+			{ id: 'nru0', name: 'NRU0', is_search: 1, st_col: 'nru', st_type: 1 },
+			{ id: 'gross', name: 'Gross Rev', is_search: 1, st_col: 'gross', st_type: 1 },
 			{ id: 'pu', name: 'PU', is_search: 1, st_col: 'pu', st_type: 1 },
 			{ id: 'pu1', name: 'PU1', is_search: 1, st_col: 'pu1', st_type: 1 },
 			{ id: 'arpu', name: 'ARPU', is_search: 1, st_col: 'arpu', st_type: 1 },
@@ -64,6 +63,7 @@ export class KpireportComponent implements OnInit {
 	}
 
 	onVersionChanged(event) {
+		this.service.setAppId(event.app_id);
 		this.doAnalysis();
 	}
 	osPickerChanged(event) {
