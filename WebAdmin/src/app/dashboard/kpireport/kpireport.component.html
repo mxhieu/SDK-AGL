@@ -1,33 +1,14 @@
 <div class="animated fadeIn rx-relative">
     <div class="card">
-        <div class="card-header">
-            <h5 class="card-title">ARM Report from {{dFrom | date: 'dd/MM/yyyy' }} to {{dTo |  date:'dd/MM/yyyy'}}</h5>
-        </div>
         <div class="card-block">
             <div class="row">
                 <div class="form-group col-lg-6 col-md-6">
-                    <label class="col-form-label">From</label>
-                    <input type="text" class="form-control" [minDate]="dMin" [maxDate]="dMax" #dp="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }" [(ngModel)]="dFrom">
-                </div>
-                <div class="form-group col-lg-6 col-md-6">
-                    <label class="col-form-label">To</label>
-                    <input type="text" class="form-control" [minDate]="dMin" [maxDate]="dMax" #dp="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }" [ngModel]="dTo">
-                </div>
-            </div>
-            <div class="row">
-                <div class="form-group col-lg-6 col-md-6">
-                    <label class="col-form-label">Source</label>
-                    <select class="form-control" [(ngModel)]="source">
-                        <option *ngFor="let s of sources" [ngValue]="s"> {{s.source_group}} </option>
-                    </select>
-                </div>
-                <div class="form-group col-lg-3 col-md-3">
                     <label class="col-form-label">OS</label>
                     <select class="form-control" [(ngModel)]="platform" (ngModelChange)="osPickerChanged($event)">
                         <option *ngFor="let p of platforms" [ngValue]="p"> {{p.name}} </option>
                     </select>
                 </div>
-                <div class="form-group col-lg-3 col-md-3">
+                <div class="form-group col-lg-6 col-md-6">
                     <label class="col-form-label">Version</label>
                     <select class="form-control" [(ngModel)]="version" (ngModelChange)="onVersionChanged($event)">
                         <option *ngFor="let v of versionDisplay" [ngValue]="v"> {{v.version}} </option>
@@ -42,55 +23,27 @@
             <h5 class="card-title">Matrix</h5>
         </div>
         <div class="card-block">
-            <div class="card-tools">
-                <select class="sel-search" [(ngModel)]="search.field">
-                    <option *ngFor="let perheader of header" [hidden]="!perheader.is_search" value="{{perheader.id}}">{{perheader.name}}</option>
-                </select><i class="icon-arrow-down sel-ico"></i>
-                <input type="text" class="rx-cur input-search" [(ngModel)]="search.term">
-                <button class="btn btn-sm btn-default btn-search" (click)="jumpPage(1)"><i class="icon-magnifier"></i></button>
-                <button class="btn btn-sm btn-success"> <i class="icon-cloud-download"></i></button>
-            </div>
             <table class="table mb-0 table-striped table-responsive-sm table-bordered">
                 <thead class="thead-default">
                     <tr>
-                        <th *ngFor="let perheader of header" 
-                        	(click)="sort($event)" [attr.rxdata]="perheader.id" class="{{(perheader.id == paging.st_col)? 'rxsorting' : ''}} {{(paging.st_type == 1)? 'rxup' : 'rxdown'}} tMiddle">
+                        <th *ngFor="let perheader of header" [attr.rxdata]="perheader.id" class="tMiddle">
                         	{{perheader.name}}
                         </th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let d of data">
-                        <td class="tMiddle"> {{d.type}} </td>
-                        <td class="tMiddle" 
-                        	[style.background-color]="d.today < 100 ? 'rgba(255,36,16, 100)': 'rgba(50,195,54, 100)'" 
-                            [style.color]="'white'"> 
-                            <strong>{{d.today}}%</strong>
-                        </td>
-                        <td class="tMiddle" 
-                        	[style.background-color]="d.yesterday < 100 ? 'rgba(255,36,16, 100)': 'rgba(50,195,54, 100)'" 
-                            [style.color]="'white'"> 
-                            <strong>{{d.yesterday}}%</strong>
-                        </td>
-                        <td class="tMiddle" 
-                        	[style.background-color]="d.one_week_ago < 100 ? 'rgba(255,36,16, 100)': 'rgba(50,195,54, 100)'" 
-                            [style.color]="'white'"> 
-                            <strong>{{d.one_week_ago}}%</strong>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="100%" class="rx-pagin">
-                            <button class="rx-back" [disabled]="paging.pg_page <= 1" (click)="jumpPage(paging.pg_page - 1)">
-                                <</button>
-                                    <input type="number" class="rx-cur" [(ngModel)]="paging.pg_page">
-                                    <button class="rx-next" [disabled]="!isnext" (click)="jumpPage(paging.pg_page + 1)">></button>
-                                    <span class="rx-jump" (click)="jumpPage(paging.pg_page)"><i class="icon-rocket"></i></span>
-                                    <select type="number" class="rx-pg-size" (ngModelChange)="resizePage($event)" [(ngModel)]="paging.pg_size">
-                                        <option value="10" selected>10</option>
-                                        <option value="50" selected>50</option>
-                                        <option value="100" selected>100</option>
-                                    </select> / page
-                        </td>
+                    	<td class="tMiddle"> {{d.type}} </td>
+                        <td class="tMiddle"> {{d.a1}} </td>
+                        <td class="tMiddle"> {{d.a7}} </td>
+                        <td class="tMiddle"> {{d.a30}} </td>
+                        <td class="tMiddle"> {{d.n1}} </td>
+                        <td class="tMiddle"> {{d.nru}} </td>
+                        <td class="tMiddle"> {{d.gross}} </td>
+                        <td class="tMiddle"> {{d.pu}} </td>
+                        <td class="tMiddle"> {{d.pu1}} </td>
+                        <td class="tMiddle"> {{d.arpu}} </td>
+                        <td class="tMiddle"> {{d.arppu}} </td>
                     </tr>
                 </tbody>
             </table>

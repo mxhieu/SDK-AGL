@@ -8,7 +8,8 @@ enum ChartApiUrls {
 	analyze_armChart = 'report-arm/chart',
 	analyze_armPd = 'report-armPd',
 	analyze_armPdChart = 'report-armPd/chart',
-	analyze_cohort = 'report-cohort'
+	analyze_cohort = 'report-cohort',
+	analyze_kpi = 'report-kpi'
 }
 
 @Injectable()
@@ -60,50 +61,21 @@ export class ReportService extends BaseService {
 	}
 
 	cohortAnalysis(params, callback) {
-		this.get(this.getRestUrl(ChartApiUrls.analyze_cohort), params, data => {
+		this.get(this.getRestUrl(ChartApiUrls.analyze_kpi), params, data => {
 			callback(Array.isArray(data) ? data : []);
 		});
 	}
 	kpiAnalysis(params, callback) {
-
-		var data = [
-			{
-				'type': 'A7',
-				'today': '100',
-				'yesterday': '120',
-				'one_week_ago': '80'
-			},
-			{
-				'type': 'Gross Rev',
-				'today': '90',
-				'yesterday': '110',
-				'one_week_ago': '150'
-			},
-			{
-				'type': 'PU',
-				'today': '120',
-				'yesterday': '60',
-				'one_week_ago': '40'
-			},
-			{
-				'type': 'PU1',
-				'today': '100',
-				'yesterday': '140',
-				'one_week_ago': '80'
-			},
-			{
-				'type': 'ARPU',
-				'today': '90',
-				'yesterday': '120',
-				'one_week_ago': '100'
+		this.get(this.getRestUrl(ChartApiUrls.analyze_kpi), params, data => {
+			for (var i = 0; i < data.length; i++) {
+				if (i == 0)
+					data[i].type = 'To day';
+				else if (i == 1)
+					data[i].type = 'Yesterday';
+				else if (i == 2)
+					data[i].type = '1 week ago';
 			}
-			,
-			{
-				'type': 'ARPPU',
-				'today': '70',
-				'yesterday': '80',
-				'one_week_ago': '100'
-			}]
-		callback(Array.isArray(data) ? data : []);
+			callback(data);
+		});
 	}
 }
