@@ -185,22 +185,18 @@
         </div>
         <div class="card-block">
             <div class="row">
-                <div class="col-md-12 mb-10">
-                    <!-- Nav tabs -->
-                    <tabset>
-                        <tab heading="Tất cả">
-                            Chọn tất cả user trong game.
-                        </tab>
-                        <tab heading="Chưa nạp tiền">
-                            <label class="col-form-label">Chọn tất cả user <strong>chưa nạp tiền</strong> trong game.</label>
-                        </tab>
-                        <tab heading="Nhập danh sách">
-                            <label>Chọn user cụ thể (Cách nhau bằng dấu chấm phẩy ";": Vi dụ: user1; user2)</label>
-                            <br/>
-                            <textarea class="form-control" placeholder="Player id ..." rows="4"></textarea>
-                        </tab>
-                    </tabset>
-                    <button class="btn btn-sm btn-success tright" type="submit">
+                <div class="col-lg-12 col-md-12">
+                    <div class="radio" *ngFor="let entry of entries;">
+                        <input type="radio" name="radiogroup" (change)="onSelectionChange(entry)" [checked]="data.filter_type" [value]="entry.filter_type"> {{ entry.name }}
+                    </div>
+                    <br/>
+                    <textarea [(ngModel)]="playerIds" class="form-control" placeholder="Player id ..." rows="5" [hidden]="data.filter_type != 'list_defined_users'"> </textarea>
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-lg-12 col-md-12">
+                    <button class="btn btn-sm btn-success tright" type="submit" (click)="import()">
                         <i class="fa fa-clone"></i> Import
                     </button>
                 </div>
@@ -212,25 +208,16 @@
                 </select><i class="icon-arrow-down sel-ico"></i>
                 <input type="text" class="rx-cur input-search" [(ngModel)]="search.term">
                 <button class="btn btn-sm btn-default btn-search" (click)="jumpPage(1)"><i class="icon-magnifier"></i></button>
-                <button class="btn btn-sm btn-danger tright" (click)="deleteAll()"><i class="fa fa-trash-o"></i> Delete All </button>
             </div>
             <table class="table table-hover mb-0 table-striped fixed table-bordered">
                 <thead class="thead-default">
                     <tr>
-                        <th *ngFor="let perheader of header" (click)="sort($event)" [attr.rxdata]="perheader.id" class="{{(perheader.id == paging.st_col)? 'rxsorting' : ''}} {{(paging.st_type == 1)? 'rxup' : 'rxdown'}} tMiddle">{{perheader.name}}</th>
-                        <th class="tMiddle">#</th>
+                        <th *ngFor="let perheader of header" (click)="sort($event)" [attr.rxdata]="perheader.id" class="{{(perheader.id == paging.st_col)? 'rxsorting' : ''}} {{(paging.st_type == 1)? 'rxup' : 'rxdown'}}">{{perheader.name}}</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let d of data">
-                        <td class="tMiddle">{{d.player_id}}</td>
-                        <td class="tMiddle">{{d.name}}</td>
-                        <td class="tMiddle">{{d.created_at * 1000 | date:'dd/MM/yyyy'}}</td>
-                        <td class="tMiddle">
-                            <button class="btn btn-sm btn-danger" type="button" (click)="delete($event, cp)">
-                                <i class="icon-trash "></i>
-                            </button>
-                        </td>
+                    <tr *ngFor="let d of dataIds">
+                        <td>{{d}}</td>
                     </tr>
                     <tr>
                         <td colspan="100%" class="rx-pagin">

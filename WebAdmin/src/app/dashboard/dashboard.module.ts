@@ -23,6 +23,7 @@ import { MetricComponent } from './metric/metric.component';
 import { CohortComponent } from './cohort/cohort.component';
 import { CampaignComponent } from './campaign/campaign.component';
 import { AdsComponent } from './ads/ads.component';
+import { KpireportComponent } from './kpireport/kpireport.component';
 
 @NgModule({
   imports: [
@@ -37,6 +38,6 @@ import { AdsComponent } from './ads/ads.component';
   declarations: [
     PlayerComponent, AppSettingComponent, PaymentComponent,
     NotificationComponent, TelcoComponent, ArmpdComponent, ArmComponent,
-    RoiComponent, RoipdComponent, SourceslistComponent, MetricComponent, CohortComponent, CampaignComponent, AdsComponent]
+    RoiComponent, RoipdComponent, SourceslistComponent, MetricComponent, CohortComponent, CampaignComponent, AdsComponent, KpireportComponent]
 })
 export class DashboardModule { }

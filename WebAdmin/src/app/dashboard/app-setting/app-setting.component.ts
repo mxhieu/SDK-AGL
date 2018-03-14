@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GroupService } from '../../service/group.service';
+import { PlayerAdsService } from '../../service/player-ads.service';
 import { BaseComponent } from '../../service/base.component';
 
 @Component({
@@ -9,12 +10,15 @@ import { BaseComponent } from '../../service/base.component';
 })
 export class AppSettingComponent extends BaseComponent implements OnInit {
 
-	appInfo: any;
+	appInfo: any; data: any; paging: any; isnext: any; header: any; search: any; playerIds: any; dataIds = [];
 
-	data: any; paging: any; isnext: any; header: any; search: any;
+	entries = [
+		{ 'id': 1, 'name': 'Chọn tất cả', 'filter_type': 'all' },
+		{ 'id': 2, 'name': 'Chọn tất cả user chưa nạp tiền', 'filter_type': 'user_not_pay' },
+		{ 'id': 3, 'name': 'Tuỳ chọn', 'filter_type': 'list_defined_users' }
+	];
 
-
-	constructor(private service: GroupService) {
+	constructor(private service: GroupService, private playerAdsService: PlayerAdsService) {
 
 		super();
 
@@ -24,16 +28,13 @@ export class AppSettingComponent extends BaseComponent implements OnInit {
 			'icon': '',
 			'logo': ''
 		};
-
-		this.data = [{'player_id':'player_id', 'name':'name'}];
+		this.data = {
+			'player_ids': []
+		};
 		this.isnext = true;
 		this.search = { field: 'player_id', term: '' };
 		this.paging = this.service.defaultPaging();
-
-		this.header = [
-			{ id: 'player_id', name: 'Id', is_search: 1, st_col: 'player_id', st_type: 1 },
-			{ id: 'name', name: 'Name', is_search: 1, st_col: 'name', st_type: 1 },
-			{ id: 'created_at', name: 'Created', is_search: 1, st_col: 'created_at', st_type: 1 }];
+		this.header = [{ id: 'player_id', name: 'Player Id', is_search: 1, st_col: 'player_id', st_type: 1 }];
 	}
 
 	ngOnInit() {
@@ -41,8 +42,43 @@ export class AppSettingComponent extends BaseComponent implements OnInit {
 	}
 
 	refresh() {
-		if (!this.service.isExpired())
+		if (!this.service.isExpired()) {
 			this.service.detailApp({ 'id': this.service.getAppId() }, data => this.appInfo = data);
+			this.getPlayerAds();
+		}
+	}
+
+	getPlayerAds() {
+		this.playerAdsService.getAdsPlayers({
+			'search_app_id': this.service.getAppId(),
+			/*'pg_page': this.paging.pg_page,
+			'pg_size': this.paging.pg_size,
+			'st_col': this.paging.st_col,
+			'st_type': this.paging.st_type,
+			['search_' + this.search.field]: this.search.term*/
+		}, data => {
+			this.data = data;
+			this.dataIds = this.data.player_ids;
+		});
+	}
+	import() {
+
+		if (this.playerIds)
+			this.data.player_ids = this.playerIds.split(',');
+		else
+			this.data.player_ids = [];
+
+		if (this.data.player_ids) {
+			this.playerAdsService.update(this.data, data => {
+				this.getPlayerAds();
+			});
+		}
+		else {
+			this.data.app_id = this.service.getAppId();
+			this.playerAdsService.insert(this.data, data => {
+				this.getPlayerAds();
+			});
+		}
 	}
 	resetKey() {
 		this.service.resetKey({ 'id': this.service.getAppId() }, data => this.appInfo.key = data);
@@ -93,5 +129,9 @@ export class AppSettingComponent extends BaseComponent implements OnInit {
 					this.appInfo.logo = data;
 			});
 		}
+	}
+
+	onSelectionChange(entry) {
+		this.data.filter_type = entry.filter_type;
 	}
 }

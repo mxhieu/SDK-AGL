@@ -14,6 +14,7 @@ import { MetricComponent } from './metric/metric.component';
 import { CohortComponent } from './cohort/cohort.component';
 import { CampaignComponent } from './campaign/campaign.component';
 import { AdsComponent } from './ads/ads.component';
+import { KpireportComponent } from './kpireport/kpireport.component';
 
 const routes: Routes = [
   {
@@ -28,6 +29,11 @@ const routes: Routes = [
   {
     path: 'arm',
     component: ArmComponent
+  }
+  ,
+  {
+    path: 'kpireport',
+    component: KpireportComponent
   },
   {
     path: 'roi',

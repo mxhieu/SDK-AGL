@@ -64,4 +64,46 @@ export class ReportService extends BaseService {
 			callback(Array.isArray(data) ? data : []);
 		});
 	}
+	kpiAnalysis(params, callback) {
+
+		var data = [
+			{
+				'type': 'A7',
+				'today': '100',
+				'yesterday': '120',
+				'one_week_ago': '80'
+			},
+			{
+				'type': 'Gross Rev',
+				'today': '90',
+				'yesterday': '110',
+				'one_week_ago': '150'
+			},
+			{
+				'type': 'PU',
+				'today': '120',
+				'yesterday': '60',
+				'one_week_ago': '40'
+			},
+			{
+				'type': 'PU1',
+				'today': '100',
+				'yesterday': '140',
+				'one_week_ago': '80'
+			},
+			{
+				'type': 'ARPU',
+				'today': '90',
+				'yesterday': '120',
+				'one_week_ago': '100'
+			}
+			,
+			{
+				'type': 'ARPPU',
+				'today': '70',
+				'yesterday': '80',
+				'one_week_ago': '100'
+			}]
+		callback(Array.isArray(data) ? data : []);
+	}
 }
