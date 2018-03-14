@@ -61,7 +61,7 @@ export class ReportService extends BaseService {
 	}
 
 	cohortAnalysis(params, callback) {
-		this.get(this.getRestUrl(ChartApiUrls.analyze_kpi), params, data => {
+		this.get(this.getRestUrl(ChartApiUrls.analyze_cohort), params, data => {
 			callback(Array.isArray(data) ? data : []);
 		});
 	}
