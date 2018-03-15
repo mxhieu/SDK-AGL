@@ -67,14 +67,18 @@ export class ReportService extends BaseService {
 	}
 	kpiAnalysis(params, callback) {
 		this.get(this.getRestUrl(ChartApiUrls.analyze_kpi), params, data => {
-			for (var i = 0; i < data.length; i++) {
-				if (i == 0)
-					data[i].type = 'To day';
-				else if (i == 1)
-					data[i].type = 'Yesterday';
-				else if (i == 2)
-					data[i].type = '1 week ago';
-			}
+
+			var keys = {
+				'a1': 'A1',
+				'a7': 'A7',
+				'a30':'A30',
+				'nru0':'NRU0',
+				'gross_rev':'Gross Rev',
+				'pu':'PU',
+				'pu1':'PU1',
+				'arpu':'ARPU',
+				'arppu':'ARPPU'};
+			data.splice(0, 0, keys);
 			callback(data);
 		});
 	}

@@ -809,6 +809,9 @@ th.rxsorting {
 .tright {
     float: right;
 }
+.tTextRight {
+    text-align: right;
+}
 .tMiddle {
     vertical-align: middle;
     text-align: center;
@@ -821,4 +824,10 @@ th.rxsorting {
 .app-header.navbar .navbar-toggler {
     min-width: 50px;
     height: 100%;
+}
+
+.sidebar-fixed .main, .sidebar-fixed .app-footer {
+    width: 100%;
+    padding-left: 200px;
+    margin-left: 0px;
 }

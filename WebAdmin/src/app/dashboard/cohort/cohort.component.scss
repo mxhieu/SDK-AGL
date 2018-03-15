@@ -1,6 +1,5 @@
-th{
-	text-align: center;
-}
-tr > td {
-	text-align: right;	
+.tTableWraper {
+    max-width: 100%;
+    overflow: auto;
+    max-height: 368px;
 }

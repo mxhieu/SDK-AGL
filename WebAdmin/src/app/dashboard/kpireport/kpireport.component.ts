@@ -14,6 +14,7 @@ export class KpireportComponent implements OnInit {
 	version: any; versions = [{ 'version': '', 'os': '' }]; versionDisplay = [{ 'version': '', 'os': '' }];
 	source: any; sources = [{ 'source_group': "All", 'source': '-1' }];
 	platform: any; platforms = [];
+	dDate: Date = new Date(); dMin: Date; dMax: Date = new Date();
 
 	constructor(private service: ReportService) {
 		this.source = this.sources[0];
@@ -21,16 +22,10 @@ export class KpireportComponent implements OnInit {
 		this.platform = this.platforms[0];
 		this.paging = { pg_page: 1, pg_size: 30, st_col: 'a1', st_type: -1 };
 		this.header = [
-			{ id: '#', name: '', is_search: 1, st_col: 'undefined', st_type: -1 },
-			{ id: 'a1', name: 'A1', is_search: 1, st_col: 'a1', st_type: -1 },
-			{ id: 'a7', name: 'A7', is_search: 1, st_col: 'a7', st_type: 1 },
-			{ id: 'a30', name: 'A30', is_search: 1, st_col: 'a30', st_type: 1 },
-			{ id: 'nru0', name: 'NRU0', is_search: 1, st_col: 'nru', st_type: 1 },
-			{ id: 'gross', name: 'Gross Rev', is_search: 1, st_col: 'gross', st_type: 1 },
-			{ id: 'pu', name: 'PU', is_search: 1, st_col: 'pu', st_type: 1 },
-			{ id: 'pu1', name: 'PU1', is_search: 1, st_col: 'pu1', st_type: 1 },
-			{ id: 'arpu', name: 'ARPU', is_search: 1, st_col: 'arpu', st_type: 1 },
-			{ id: 'arppu', name: 'ARPPU', is_search: 1, st_col: 'arppu', st_type: 1 }
+			{ id: 'key', name: '#', is_search: 1, st_col: 'key', st_type: -1 },
+			{ id: 'today', name: 'To day', is_search: 1, st_col: 'today', st_type: -1 },
+			{ id: 'yesterday', name: 'Yesterday', is_search: 1, st_col: 'yesterday', st_type: 1 },
+			{ id: 'one_week_ago', name: 'One week ago', is_search: 1, st_col: 'one_week_ago', st_type: 1 }
 		];
 		this.getSources();
 		this.doAnalysis();
@@ -43,6 +38,7 @@ export class KpireportComponent implements OnInit {
 	doAnalysis() {
 		var params = {
 			'search_app_id': this.service.getAppId(),
+			'search_date': Math.round(this.dDate.getTime() / 1000)
 		};
 		this.service.kpiAnalysis(params, data => {
 			this.data = data;
@@ -64,7 +60,6 @@ export class KpireportComponent implements OnInit {
 
 	onVersionChanged(event) {
 		this.service.setAppId(event.app_id);
-		this.doAnalysis();
 	}
 	osPickerChanged(event) {
 

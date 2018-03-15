@@ -35,6 +35,8 @@ export class RoipdComponent implements OnInit {
 			{ id: 'source', name: 'Source', is_search: 1, st_col: 'source', st_type: 1 },
 			{ id: 'os', name: 'Device Os', is_search: 1, st_col: 'os', st_type: 1 },
 			{ id: 'install', name: 'Install', is_search: 1, st_col: 'install', st_type: 1 },
+			{ id: 'cost', name: 'Cost', is_search: 1, st_col: 'cost', st_type: 1 },
+			{ id: 'roi', name: 'ROI', is_search: 1, st_col: 'roi', st_type: 1 },
 			{ id: 'rr3', name: 'RR3', is_search: 1, st_col: 'rr3', st_type: 1 },
 			{ id: 'pd1', name: 'PD1', is_search: 1, st_col: 'pd1', st_type: 1 },
 			{ id: 'rev1', name: 'REV1', is_search: 1, st_col: 'rev1', st_type: 1 },

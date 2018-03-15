@@ -2,13 +2,17 @@
     <div class="card">
         <div class="card-block">
             <div class="row">
-                <div class="form-group col-lg-6 col-md-6">
+                <div class="form-group col-lg-4 col-md-4">
+                    <label class="col-form-label">Pick date</label>
+                    <input type="text" class="form-control" [minDate]="dMin" [maxDate]="dMax" #dp="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }" [(ngModel)]="dDate">
+                </div>
+                 <div class="form-group col-lg-4 col-md-4">
                     <label class="col-form-label">OS</label>
                     <select class="form-control" [(ngModel)]="platform" (ngModelChange)="osPickerChanged($event)">
                         <option *ngFor="let p of platforms" [ngValue]="p"> {{p.name}} </option>
                     </select>
                 </div>
-                <div class="form-group col-lg-6 col-md-6">
+                <div class="form-group col-lg-4 col-md-4">
                     <label class="col-form-label">Version</label>
                     <select class="form-control" [(ngModel)]="version" (ngModelChange)="onVersionChanged($event)">
                         <option *ngFor="let v of versionDisplay" [ngValue]="v"> {{v.version}} </option>
@@ -19,31 +23,30 @@
         </div>
     </div>
     <div class="card">
-    	<div class="card-header">
+        <div class="card-header">
             <h5 class="card-title">Matrix</h5>
         </div>
         <div class="card-block">
-            <table class="table mb-0 table-striped table-responsive-sm table-bordered">
+            <table class="table table-responsive-sm table-bordered">
                 <thead class="thead-default">
                     <tr>
                         <th *ngFor="let perheader of header" [attr.rxdata]="perheader.id" class="tMiddle">
-                        	{{perheader.name}}
+                            {{perheader.name}}
                         </th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let d of data">
-                    	<td class="tMiddle"> {{d.type}} </td>
-                        <td class="tMiddle"> {{d.a1}} </td>
-                        <td class="tMiddle"> {{d.a7}} </td>
-                        <td class="tMiddle"> {{d.a30}} </td>
-                        <td class="tMiddle"> {{d.nru0}} </td>
-                        <td class="tMiddle"> {{d.gross_rev}} </td>
-                        <td class="tMiddle"> {{d.pu}} </td>
-                        <td class="tMiddle"> {{d.pu1}} </td>
-                        <td class="tMiddle"> {{d.arpu}} </td>
-                        <td class="tMiddle"> {{d.arppu}} </td>
-                    </tr>
+                    <td *ngFor="let d of data">
+                        <tr> {{d.a1}} </tr>
+                        <tr> {{d.a7}} </tr>
+                        <tr> {{d.a30}} </tr>
+                        <tr> {{d.nru0}} </tr>
+                        <tr> {{d.gross_rev}} </tr>
+                        <tr> {{d.pu}} </tr>
+                        <tr> {{d.pu1}} </tr>
+                        <tr> {{d.arpu}} </tr>
+                        <tr> {{d.arppu}} </tr>
+                    </td>
                 </tbody>
             </table>
         </div>
