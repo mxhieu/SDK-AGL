@@ -67,7 +67,9 @@
                             <td class="tTextRight"> {{d.os }} </td>
                             <td class="tTextRight"> {{d.install }} </td>
                             <td class="tTextRight"> {{d.cost }} </td>
-                            <td class="tTextRight"> <strong>{{d.roi }}</strong></td>
+                            <td class="tTextRight" [style.color]="d.roi < 100 ? 'red' : 'green'">
+                                <strong>{{d.roi}}</strong>
+                            </td>
                             <td class="tTextRight"> {{d.rr3 }}%</td>
                             <td class="tTextRight"> {{d.pd1 }} </td>
                             <td class="tTextRight"> {{d.rev1 }} </td>

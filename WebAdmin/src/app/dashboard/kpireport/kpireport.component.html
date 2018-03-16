@@ -27,28 +27,26 @@
             <h5 class="card-title">Matrix</h5>
         </div>
         <div class="card-block">
-            <table class="table table-responsive-sm table-bordered">
-                <thead class="thead-default">
-                    <tr>
-                        <th *ngFor="let perheader of header" [attr.rxdata]="perheader.id" class="tMiddle">
-                            {{perheader.name}}
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <td *ngFor="let d of data">
-                        <tr> {{d.a1}} </tr>
-                        <tr> {{d.a7}} </tr>
-                        <tr> {{d.a30}} </tr>
-                        <tr> {{d.nru0}} </tr>
-                        <tr> {{d.gross_rev}} </tr>
-                        <tr> {{d.pu}} </tr>
-                        <tr> {{d.pu1}} </tr>
-                        <tr> {{d.arpu}} </tr>
-                        <tr> {{d.arppu}} </tr>
-                    </td>
-                </tbody>
-            </table>
+            <div class="table table-responsive-sm table-bordered kpitable">
+                <div class="thead-default">                    
+                    <div *ngFor="let perheader of header" [attr.rxdata]="perheader.id" class="tMiddle">
+                        {{perheader.name}}
+                    </div>  
+                </div>
+                <div class="tbody-default">
+                    <div class="tbody-col" *ngFor="let d of data">
+                        <div> {{d.a1}} </div>
+                        <div> {{d.a7}} </div>
+                        <div> {{d.a30}} </div>
+                        <div> {{d.nru0}} </div>
+                        <div> {{d.gross_rev}} </div>
+                        <div> {{d.pu}} </div>
+                        <div> {{d.pu1}} </div>
+                        <div> {{d.arpu}} </div>
+                        <div> {{d.arppu}} </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

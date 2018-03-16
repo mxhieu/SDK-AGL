@@ -1,0 +1,30 @@
+.kpitable .thead-default>div {
+    float: left;
+    width: 25%;
+    padding: 5px 10px;
+    background-color: #000;
+    color: #fff;
+    border-right: solid 1px #dddddd69;
+}
+
+.kpitable .thead-default>div:last-child {
+	border-right: none;
+}
+
+.kpitable .tbody-default .tbody-col {
+	float: left;
+	width: 25%;
+	border-right: solid 1px #eee;
+}
+
+.kpitable .tbody-default .tbody-col:last-child {
+	border-right: none;
+}
+
+.kpitable .tbody-default .tbody-col>div:nth-child(even) {
+	background-color: #eee;	
+}
+
+.tbody-col>div {
+    padding: 3px 10px;
+}
