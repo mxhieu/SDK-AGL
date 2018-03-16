@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PaymentService } from '../../service/payment.service';
 import { BaseComponent } from '../../service/base.component';
+import { GroupService } from '../../service/group.service';
 
 @Component({
 	selector: 'app-payment',
@@ -10,15 +11,10 @@ import { BaseComponent } from '../../service/base.component';
 
 export class PaymentComponent extends BaseComponent implements OnInit {
 
-	items: any[];
-	cardItems: any[];
-	onerow: any;
+	items: any[]; cardItems: any[]; onerow: any; isHidden: boolean; paging: any; isEdit: boolean;
+	apps: any; app = { 'app_id': '', 'os': '', 'version':''};
 
-	isHidden: boolean;
-	paging: any;
-	isEdit: boolean;
-
-	constructor(private service: PaymentService) {
+	constructor(private service: PaymentService, private gService: GroupService) {
 		super();
 	}
 
@@ -32,8 +28,25 @@ export class PaymentComponent extends BaseComponent implements OnInit {
 				'st_col': this.paging.st_col,
 				'st_type': this.paging.st_type
 			}, data => { this.items = data; });
+			this.getApps();
 		}
 	}
+
+	getApps(){
+		this.app.app_id = this.service.getAppId();
+		this.apps = this.gService.getGroupSetting();
+		for (var ap of this.apps){
+			if(ap.app_id == this.app.app_id){
+				this.app.os = ap.os;
+				this.app.version = ap.version;
+			}
+		}
+	}
+	switchApp(app){
+		this.service.setAppId(app.app_id);
+		this.refresh();
+	}
+
 	fileChange(event) {
 		let fileList: FileList = event.target.files;
 		if (fileList.length > 0) {

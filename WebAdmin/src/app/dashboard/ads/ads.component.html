@@ -128,9 +128,6 @@
                         <td align="center" class="text-center tMiddle">
                             <div>{{ad.end_date * 1000 | date:'dd/MM/yyyy'}}</div>
                         </td>
-                        <td align="center" class="text-center tMiddle">
-                            <div>{{ad.created_at * 1000 | date:'dd/MM/yyyy'}}</div>
-                        </td>
                         <td class="text-center tMiddle">
                             <button class="btn btn-sm btn-danger" type="button" (click)="delete($event, ad)">
                                 <i class="icon-trash "></i>

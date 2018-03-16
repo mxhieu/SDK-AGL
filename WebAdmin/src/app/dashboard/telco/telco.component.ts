@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TelcoService } from '../../service/telco.service';
 import { BaseComponent } from '../../service/base.component';
+import { GroupService } from '../../service/group.service';
 
 @Component({
 	selector: 'app-telco',
@@ -9,13 +10,11 @@ import { BaseComponent } from '../../service/base.component';
 })
 export class TelcoComponent extends BaseComponent implements OnInit {
 
-	items: any[]; cardItems: any[]; onerow: any;
-	isHidden: boolean; paging: any; isEdit: boolean;
+	items: any[]; cardItems: any[]; onerow: any; isHidden: boolean; paging: any; isEdit: boolean;
+	apps: any; app = { 'app_id': '', 'os': '', 'version':''};
 
-	constructor(private service: TelcoService) {
-		
+	constructor(private service: TelcoService, private gService: GroupService) {
 		super();
-
 		this.paging = this.service.defaultPaging();
 	}
 
@@ -33,8 +32,24 @@ export class TelcoComponent extends BaseComponent implements OnInit {
 			}, data => {
 				this.items = Array.isArray(data) ? data : [];
 			});
+			this.getApps();
 		}
 	}
+	getApps(){
+		this.app.app_id = this.service.getAppId();
+		this.apps = this.gService.getGroupSetting();
+		for (var ap of this.apps){
+			if(ap.app_id == this.app.app_id){
+				this.app.os = ap.os;
+				this.app.version = ap.version;
+			}
+		}
+	}
+	switchApp(app){
+		this.service.setAppId(app.app_id);
+		this.refresh();
+	}
+
 	fileChange(event) {
 		let fileList: FileList = event.target.files;
 		if (fileList.length > 0) {

@@ -38,8 +38,7 @@ export class AdsComponent extends BaseComponent implements OnInit, OnDestroy {
 			{ id: 'type', name: 'Type', is_search: 1, st_col: 'type', st_type: 1 },
 			{ id: 'cost', name: 'Cost', is_search: 1, st_col: 'cost', st_type: 1 },
 			{ id: 'start_date', name: 'Start date', is_search: 1, st_col: 'start_date', st_type: 1 },
-			{ id: 'end_date', name: 'End date', is_search: 1, st_col: 'end_date', st_type: 1 },
-			{ id: 'created_at', name: 'Created', is_search: 1, st_col: 'created_at', st_type: 1 }
+			{ id: 'end_date', name: 'End date', is_search: 1, st_col: 'end_date', st_type: 1 }
 		];
 	}
 

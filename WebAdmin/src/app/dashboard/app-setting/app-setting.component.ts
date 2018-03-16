@@ -11,6 +11,7 @@ import { BaseComponent } from '../../service/base.component';
 export class AppSettingComponent extends BaseComponent implements OnInit {
 
 	appInfo: any; data: any; paging: any; isnext: any; header: any; search: any; playerIds: any; dataIds = [];
+	apps: any; app = { 'app_id': '', 'os': '', 'version':''};
 
 	entries = [
 		{ 'id': 1, 'name': 'Chọn tất cả', 'filter_type': 'all' },
@@ -45,9 +46,24 @@ export class AppSettingComponent extends BaseComponent implements OnInit {
 		if (!this.service.isExpired()) {
 			this.service.detailApp({ 'id': this.service.getAppId() }, data => this.appInfo = data);
 			this.getPlayerAds();
+			this.getApps();
 		}
 	}
 
+	getApps(){
+		this.app.app_id = this.service.getAppId();
+		this.apps = this.service.getGroupSetting();
+		for (var ap of this.apps){
+			if(ap.app_id == this.app.app_id){
+				this.app.os = ap.os;
+				this.app.version = ap.version;
+			}
+		}
+	}
+	switchApp(app){
+		this.service.setAppId(app.app_id);
+		this.refresh();
+	}
 	getPlayerAds() {
 		this.playerAdsService.getAdsPlayers({
 			'search_app_id': this.service.getAppId(),

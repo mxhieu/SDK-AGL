@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PlayerService } from '../../service/player.service';
+import { GroupService } from '../../service/group.service';
 
 @Component({
   selector: 'app-player',
@@ -8,8 +9,9 @@ import { PlayerService } from '../../service/player.service';
 export class PlayerComponent implements OnInit {
 
   data: any; paging: any; isnext: any; header: any; search: any;
+  apps: any; app = { 'app_id': '', 'os': '', 'version': '' };
 
-  constructor(private service: PlayerService) {
+  constructor(private service: PlayerService, private gService: GroupService) {
 
     this.data = [];
     this.isnext = true;
@@ -37,7 +39,20 @@ export class PlayerComponent implements OnInit {
     this.paging.pg_size = $event;
     this.jumpPage(1);
   }
-
+  getApps() {
+    this.app.app_id = this.service.getAppId();
+    this.apps = this.gService.getGroupSetting();
+    for (var ap of this.apps) {
+      if (ap.app_id == this.app.app_id) {
+        this.app.os = ap.os;
+        this.app.version = ap.version;
+      }
+    }
+  }
+  switchApp(app) {
+    this.service.setAppId(app.app_id);
+    this.helpFetchData();
+  }
   sort($event) {
     var target = $event.target || $event.srcElement || $event.currentTarget;
     var idAttr = target.attributes.rxdata;
@@ -66,6 +81,7 @@ export class PlayerComponent implements OnInit {
         this.data = data;
         this.isnext = (this.data.length >= this.paging.pg_size) ? true : false;
       });
+    this.getApps();
   }
 
 }
