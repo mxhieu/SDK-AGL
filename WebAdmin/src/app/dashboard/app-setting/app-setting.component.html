@@ -204,7 +204,10 @@
             <div class="row">
                 <div class="col-lg-12 col-md-12">
                     <div class="radio" *ngFor="let entry of entries;">
-                        <input type="radio" name="radiogroup" (change)="onSelectionChange(entry)" [checked]="data.filter_type" [value]="entry.filter_type"> {{ entry.name }}
+                        <input type="radio" name="radiogroup" class="tpointer" 
+                        (change)="onSelectionChange(entry)" 
+                        [checked]="data.filter_type === entry.filter_type" 
+                        [value]="entry.filter_type"> {{ entry.name }}
                     </div>
                     <br/>
                     <textarea [(ngModel)]="playerIds" class="form-control" placeholder="Player id ..." rows="5" [hidden]="data.filter_type != 'list_defined_users'"> </textarea>
