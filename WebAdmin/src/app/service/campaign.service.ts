@@ -10,15 +10,19 @@ enum CampaignApiUrls {
 
 enum AdsApiUrls {
 	get = 'campaign-ad',
-	insert='campaign-ad',
-	update='campaign-ad/edit',
-	delete='campaign-ad/delete'
+	insert = 'campaign-ad',
+	update = 'campaign-ad/edit',
+	delete = 'campaign-ad/delete'
+}
+
+enum AdsReportUrls {
+	get = 'report-ads'
 }
 
 @Injectable()
 export class CampaignService extends BaseService {
 
-	private CAMPAIGN : string = "CAMPAIGN";
+	private CAMPAIGN: string = "CAMPAIGN";
 
 	getCampaigns(params, callback) {
 		this.get(this.getRestUrl(CampaignApiUrls.get), params, data => { callback(Array.isArray(data) ? data : []); });
@@ -37,6 +41,9 @@ export class CampaignService extends BaseService {
 	getAds(params, callback) {
 		this.get(this.getRestUrl(AdsApiUrls.get), params, data => { callback(Array.isArray(data) ? data : []); });
 	}
+	getAdsReport(params, callback) {
+		this.get(this.getRestUrl(AdsReportUrls.get), params, data => { callback(Array.isArray(data) ? data : []); });
+	}
 
 	createAd(params, callback) {
 		this.post(this.getRestUrl(AdsApiUrls.insert), JSON.stringify(params), null, data => { callback(data); });
@@ -49,24 +56,24 @@ export class CampaignService extends BaseService {
 	deleteAd(params, callback) {
 		this.get(this.getRestUrl(AdsApiUrls.delete), params, data => { callback(data); });
 	}
-	moveToAds(campaign: any){
+	moveToAds(campaign: any) {
 		this.setCookie(this.CAMPAIGN, JSON.stringify(campaign));
 		this.router.moveToAds();
 	}
-	moveToCampaigns(){
+	moveToCampaigns() {
 		this.router.moveToCampaigns();
 	}
 	getCampaign(): string {
 		return this.getCookie(this.CAMPAIGN);
 	}
-	removeCampaign(){
+	removeCampaign() {
 		this.removeCookie(this.CAMPAIGN);
 	}
-	getAdType(){
+	getAdType() {
 		return [
-			{ 'id': 1, 'name':'Banner' },
-			{ 'id': 2, 'name':'Facebook' },
-			{ 'id': 3, 'name':'Google' }
+			{ 'id': 1, 'name': 'Banner' },
+			{ 'id': 2, 'name': 'Facebook' },
+			{ 'id': 3, 'name': 'Google' }
 		];
 	}
 }
