@@ -85,7 +85,7 @@ export class CampaignComponent extends BaseComponent implements OnInit {
 			'search_agency_id': '5aa0ee42b887cb6691ed5b43',
 			['search_' + this.search.field]: this.search.term
 		}, data => {
-			this.campaigns = data
+			this.campaigns = data;
 		});
 	}
 	sort($event) {

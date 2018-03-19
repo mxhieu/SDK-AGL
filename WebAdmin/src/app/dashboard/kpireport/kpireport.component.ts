@@ -9,8 +9,7 @@ import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 })
 export class KpireportComponent implements OnInit {
 
-	data = []; header: any; paging: any;
-	search = { field: 'today', term: '' };
+	data = [];
 	version: any; versions = [{ 'version': '', 'os': '' }]; versionDisplay = [{ 'version': '', 'os': '' }];
 	source: any; sources = [{ 'source_group': "All", 'source': '-1' }];
 	platform: any; platforms = [];
@@ -20,13 +19,6 @@ export class KpireportComponent implements OnInit {
 		this.source = this.sources[0];
 		this.platforms = this.service.defaultPlatforms();
 		this.platform = this.platforms[0];
-		this.paging = { pg_page: 1, pg_size: 30, st_col: 'a1', st_type: -1 };
-		this.header = [
-			{ id: 'key', name: '#', is_search: 1, st_col: 'key', st_type: -1 },
-			{ id: 'today', name: 'To day', is_search: 1, st_col: 'today', st_type: -1 },
-			{ id: 'yesterday', name: 'Yesterday', is_search: 1, st_col: 'yesterday', st_type: 1 },
-			{ id: 'one_week_ago', name: 'One week ago', is_search: 1, st_col: 'one_week_ago', st_type: 1 }
-		];
 		this.getSources();
 		this.doAnalysis();
 	}

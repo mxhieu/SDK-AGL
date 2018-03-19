@@ -15,6 +15,7 @@ import { CohortComponent } from './cohort/cohort.component';
 import { CampaignComponent } from './campaign/campaign.component';
 import { AdsComponent } from './ads/ads.component';
 import { KpireportComponent } from './kpireport/kpireport.component';
+import { AdsPerformanceComponent } from './ads-performance/ads-performance.component';
 
 const routes: Routes = [
   {
@@ -54,6 +55,10 @@ const routes: Routes = [
   {
     path: 'ads',
     component: AdsComponent
+  },
+  {
+    path: 'ads-performance',
+    component: AdsPerformanceComponent
   },
   {
     path: 'payment',

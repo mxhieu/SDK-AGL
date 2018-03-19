@@ -29,9 +29,10 @@
         <div class="card-block">
             <div class="table table-responsive-sm table-bordered kpitable">
                 <div class="thead-default">                    
-                    <div *ngFor="let perheader of header" [attr.rxdata]="perheader.id" class="tMiddle">
-                        {{perheader.name}}
-                    </div>  
+                    <div class="tMiddle">#</div>
+                    <div class="tMiddle"> {{dDate | date:'dd/MM/yyyy' }}</div>
+                    <div class="tMiddle"> Yesterday </div>
+                    <div class="tMiddle"> One week ago </div>
                 </div>
                 <div class="tbody-default">
                     <div class="tbody-col" *ngFor="let d of data">
