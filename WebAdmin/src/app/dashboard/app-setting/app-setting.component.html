@@ -189,6 +189,18 @@
                     <label class="col-form-label">App version</label>
                     <input class="form-control" type="text" name="version" [(ngModel)]="appInfo.version">
                 </div>
+                <div class="col-md-3 col-lg-3">
+                    <label class="col-form-label">Mopub Ad Id</label>
+                    <input class="form-control" type="text" name="version" [(ngModel)]="appInfo.mopub_ad_unit_id">
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <label class="col-form-label">Facebook App Id</label>
+                    <input class="form-control" type="text" name="version" [(ngModel)]="appInfo.facebook_app_id">
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <label class="col-form-label">Goole Client Id</label>
+                    <input class="form-control" type="text" name="version" [(ngModel)]="appInfo.google_client_id">
+                </div>
             </div>
         </div>
         <div class="card-footer">
@@ -206,11 +218,12 @@
                     <div class="radio" *ngFor="let entry of entries;">
                         <input type="radio" name="radiogroup" class="tpointer" 
                         (change)="onSelectionChange(entry)" 
-                        [checked]="data.filter_type === entry.filter_type" 
+                        [checked]="appInfo.video_reward_filter_type === entry.filter_type" 
                         [value]="entry.filter_type"> {{ entry.name }}
                     </div>
                     <br/>
-                    <textarea [(ngModel)]="playerIds" class="form-control" placeholder="Player id ..." rows="5" [hidden]="data.filter_type != 'list_defined_users'"> </textarea>
+                    <textarea [(ngModel)]="playerIds" class="form-control" 
+                    placeholder="Player ids ..." rows="5" [hidden]="!isImportAreaShow"></textarea>
                 </div>
             </div>
             <br/>
@@ -237,7 +250,7 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let d of dataIds">
-                        <td>{{d}}</td>
+                        <td>{{d.player_id.username}}</td>
                     </tr>
                     <tr>
                         <td colspan="100%" class="rx-pagin">

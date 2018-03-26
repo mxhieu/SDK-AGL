@@ -6,7 +6,7 @@ enum PlayerApiUrls {
 }
 
 enum PlayerAdsApiUrls {
-	get = 'player-ads-config',
+	get = 'player-ads',
 	insert = 'player-ads-config',
 	edit = 'player-ads-config/edit',
 	delete = 'player-ads-config/delete'

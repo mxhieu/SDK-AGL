@@ -10,7 +10,8 @@ import { BaseComponent } from '../../service/base.component';
 })
 export class AppSettingComponent extends BaseComponent implements OnInit {
 
-	appInfo: any; data: any; paging: any; isnext: any; header: any; search: any; playerIds: any; dataIds = [];
+	appInfo: any; dataIds = []; paging: any; isnext: any; header: any; search: any; 
+	playerIds: any; isImportAreaShow: boolean;
 	apps: any; app = { 'app_id': '', 'os': '', 'version':''};
 
 	entries = [
@@ -29,10 +30,7 @@ export class AppSettingComponent extends BaseComponent implements OnInit {
 			'icon': '',
 			'logo': ''
 		};
-		this.data = {
-			'player_ids': []
-		};
-		this.isnext = true;
+		this.isnext = true; this.isImportAreaShow = false;
 		this.search = { field: 'player_id', term: '' };
 		this.paging = this.service.defaultPaging();
 		this.header = [{ id: 'player_id', name: 'Player Id', is_search: 1, st_col: 'player_id', st_type: 1 }];
@@ -44,8 +42,7 @@ export class AppSettingComponent extends BaseComponent implements OnInit {
 
 	refresh() {
 		if (!this.service.isExpired()) {
-			this.service.detailApp({ 'id': this.service.getAppId() }, data => this.appInfo = data);
-			this.getPlayerAds();
+			this.getDetail();
 			this.getApps();
 		}
 	}
@@ -60,6 +57,17 @@ export class AppSettingComponent extends BaseComponent implements OnInit {
 			}
 		}
 	}
+	getDetail(){
+		this.service.detailApp(
+			{ 'id': this.service.getAppId() }, 
+			data => {
+				this.appInfo = data;
+				if(this.appInfo.video_reward_filter_type == 'list_defined_users'){
+					this.isImportAreaShow = true;
+					this.getPlayerAds();
+				}
+			});
+	}
 	switchApp(app){
 		this.service.setAppId(app.app_id);
 		this.refresh();
@@ -73,29 +81,36 @@ export class AppSettingComponent extends BaseComponent implements OnInit {
 			'st_type': this.paging.st_type,
 			['search_' + this.search.field]: this.search.term*/
 		}, data => {
-			this.data = data;
-			this.dataIds = this.data.player_ids;
+			this.dataIds = data;
 		});
 	}
+
+	/*
+		Import player id to be show ad
+	*/
 	import() {
 
-		if (this.playerIds)
-			this.data.player_ids = this.playerIds.split(',');
-		else
-			this.data.player_ids = [];
+		/*var params = {
+	        "app_id": this.service.getAppId(),
+	        "filter_type": this.appInfo.video_reward_filter_type,
+	        "player_ids": []
+    	};
 
-		if (this.data.player_ids) {
-			this.playerAdsService.update(this.data, data => {
+		if (this.playerIds)
+			params.player_ids = this.playerIds.split(',');
+		
+		if (this.isImportAreaShow) {
+			this.playerAdsService.update(params, data => {
 				this.getPlayerAds();
 			});
 		}
 		else {
-			this.data.app_id = this.service.getAppId();
-			this.playerAdsService.insert(this.data, data => {
+			this.playerAdsService.insert(params, data => {
 				this.getPlayerAds();
 			});
-		}
+		}*/
 	}
+
 	resetKey() {
 		this.service.resetKey({ 'id': this.service.getAppId() }, data => this.appInfo.key = data);
 	}
@@ -148,6 +163,10 @@ export class AppSettingComponent extends BaseComponent implements OnInit {
 	}
 
 	onSelectionChange(entry) {
-		this.data.filter_type = entry.filter_type;
+		this.appInfo.video_reward_filter_type = entry.filter_type;
+		if(entry.filter_type == 'list_defined_users')
+			this.isImportAreaShow = true;
+		else
+			this.isImportAreaShow = false;
 	}
 }

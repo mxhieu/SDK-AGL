@@ -40,13 +40,13 @@
                             {{ad.desc}}
                         </td>
                         <td class="tTextRight">
-                            <strong>{{ad.cost}}</strong>
+                            <strong>{{ad.cost | currency:'VND':symbol:'1.0-0' }}</strong>
                         </td>
                         <td class="tTextRight">
                             <strong>{{ad.rev}}</strong>
                         </td>
                         <td class="tTextRight" [style.color]="ad.roi < 100 ? 'red' : 'green'">
-                            <strong>{{ad.roi}}</strong>
+                            <strong>{{ad.roi}}%</strong>
                         </td>
                     </tr>
                     <tr>

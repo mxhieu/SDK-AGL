@@ -161,9 +161,10 @@ export class AdsPerformanceComponent extends BaseComponent implements OnInit, On
 		this.onerow.campaign_id = this.cp._id;
 		this.service.updateAd(this.onerow, data => { this.refresh(); });
 	}
+
 	delete(e: any, ad: any) {
 		e.stopPropagation();
 		this.service.deleteAd({ 'id': ad._id }, data => { this.refresh(); });
 	}
-
+	
 }
