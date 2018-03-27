@@ -7,9 +7,8 @@ enum PlayerApiUrls {
 
 enum PlayerAdsApiUrls {
 	get = 'player-ads',
-	insert = 'player-ads-config',
-	edit = 'player-ads-config/edit',
-	delete = 'player-ads-config/delete'
+	insert = 'player-ads',
+	delete = 'player-ads/delete'
 }
 
 @Injectable()
@@ -26,14 +25,8 @@ export class PlayerAdsService extends BaseService {
 			callback(data);
 		})
 	}
-	insert(param, callback) {
+	add(param, callback) {
 		this.post(this.getRestUrl(PlayerAdsApiUrls.insert), param, null, data => {
-			callback(data);
-		});
-	}
-
-	update(param, callback) {
-		this.post(this.getRestUrl(PlayerAdsApiUrls.edit), param, null, data => {
 			callback(data);
 		});
 	}

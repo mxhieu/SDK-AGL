@@ -10,9 +10,9 @@ import { BaseComponent } from '../../service/base.component';
 })
 export class AppSettingComponent extends BaseComponent implements OnInit {
 
-	appInfo: any; dataIds = []; paging: any; isnext: any; header: any; search: any; 
+	appInfo: any; dataIds = []; paging: any; isnext: any; header: any; search: any;
 	playerIds: any; isImportAreaShow: boolean;
-	apps: any; app = { 'app_id': '', 'os': '', 'version':''};
+	apps: any; app = { 'app_id': '', 'os': '', 'version': '' };
 
 	entries = [
 		{ 'id': 1, 'name': 'Chọn tất cả', 'filter_type': 'all' },
@@ -33,7 +33,11 @@ export class AppSettingComponent extends BaseComponent implements OnInit {
 		this.isnext = true; this.isImportAreaShow = false;
 		this.search = { field: 'player_id', term: '' };
 		this.paging = this.service.defaultPaging();
-		this.header = [{ id: 'player_id', name: 'Player Id', is_search: 1, st_col: 'player_id', st_type: 1 }];
+		this.header = [
+			{ id: 'player_id', name: 'Player Id', is_search: 1, st_col: 'player_id', st_type: 1 },
+			{ id: 'email', name: 'Email', is_search: 1, st_col: 'email', st_type: 1 },
+			{ id: 'username', name: 'Username', is_search: 1, st_col: 'player_id', st_type: 1 }
+		];
 	}
 
 	ngOnInit() {
@@ -47,39 +51,39 @@ export class AppSettingComponent extends BaseComponent implements OnInit {
 		}
 	}
 
-	getApps(){
+	getApps() {
 		this.app.app_id = this.service.getAppId();
 		this.apps = this.service.getGroupSetting();
-		for (var ap of this.apps){
-			if(ap.app_id == this.app.app_id){
+		for (var ap of this.apps) {
+			if (ap.app_id == this.app.app_id) {
 				this.app.os = ap.os;
 				this.app.version = ap.version;
 			}
 		}
 	}
-	getDetail(){
+	getDetail() {
 		this.service.detailApp(
-			{ 'id': this.service.getAppId() }, 
+			{ 'id': this.service.getAppId() },
 			data => {
 				this.appInfo = data;
-				if(this.appInfo.video_reward_filter_type == 'list_defined_users'){
+				if (this.appInfo.video_reward_filter_type == 'list_defined_users') {
 					this.isImportAreaShow = true;
 					this.getPlayerAds();
 				}
 			});
 	}
-	switchApp(app){
+	switchApp(app) {
 		this.service.setAppId(app.app_id);
 		this.refresh();
 	}
 	getPlayerAds() {
 		this.playerAdsService.getAdsPlayers({
 			'search_app_id': this.service.getAppId(),
-			/*'pg_page': this.paging.pg_page,
+			'pg_page': this.paging.pg_page,
 			'pg_size': this.paging.pg_size,
 			'st_col': this.paging.st_col,
 			'st_type': this.paging.st_type,
-			['search_' + this.search.field]: this.search.term*/
+			['search_' + this.search.field]: this.search.term
 		}, data => {
 			this.dataIds = data;
 		});
@@ -88,27 +92,19 @@ export class AppSettingComponent extends BaseComponent implements OnInit {
 	/*
 		Import player id to be show ad
 	*/
+
 	import() {
-
-		/*var params = {
-	        "app_id": this.service.getAppId(),
-	        "filter_type": this.appInfo.video_reward_filter_type,
-	        "player_ids": []
-    	};
-
-		if (this.playerIds)
-			params.player_ids = this.playerIds.split(',');
-		
-		if (this.isImportAreaShow) {
-			this.playerAdsService.update(params, data => {
+		if (this.appInfo.video_reward_filter_type == 'list_defined_users') {
+			var params = {
+				"app_id": this.service.getAppId(),
+				"filter_type": this.appInfo.video_reward_filter_type,
+				"player_ids": this.playerIds
+			};
+			this.playerAdsService.add(params, data => {
 				this.getPlayerAds();
 			});
 		}
-		else {
-			this.playerAdsService.insert(params, data => {
-				this.getPlayerAds();
-			});
-		}*/
+		this.update();
 	}
 
 	resetKey() {
@@ -162,9 +158,36 @@ export class AppSettingComponent extends BaseComponent implements OnInit {
 		}
 	}
 
+	deleteAd(event: any, d: any) {
+		console.log(d);
+		var params = {
+			"app_id": this.service.getAppId(),
+			"filter_type": this.appInfo.video_reward_filter_type,
+			"player_ids": d.player_id._id
+		};
+		this.playerAdsService.delete(params, data => {
+			this.getPlayerAds();
+		});
+	}
+	deleteAll() {
+		var ids = '';
+		for (var d of this.dataIds) {
+			ids += d.player_id._id + ",";
+		}
+		ids = ids.substring(0, ids.length - 1);
+		var params = {
+			"app_id": this.service.getAppId(),
+			"filter_type": this.appInfo.video_reward_filter_type,
+			"player_ids": ids
+		};
+		this.playerAdsService.delete(params, data => {
+			this.getPlayerAds();
+		});
+	}
+
 	onSelectionChange(entry) {
 		this.appInfo.video_reward_filter_type = entry.filter_type;
-		if(entry.filter_type == 'list_defined_users')
+		if (entry.filter_type == 'list_defined_users')
 			this.isImportAreaShow = true;
 		else
 			this.isImportAreaShow = false;

@@ -8,7 +8,7 @@
                 <div class="col-md-8">
                     <div class="btn-group tright" dropdown>
                         <button dropdownToggle type="button" class="btn btn-outline-primary dropdown-toggle" style="margin:0px;">
-                            {{app.os}} - {{app.version}} <span class="caret"></span>
+                        {{app.os}} - {{app.version}} <span class="caret"></span>
                         </button>
                         <ul *dropdownMenu class="dropdown-menu" role="menu">
                             <li role="menuitem" *ngFor="let app of apps" (click)="switchApp(app)" class="tpointer">
@@ -34,7 +34,7 @@
                         </div>
                         <div class="col-lg-4 col-md-4">
                             <button class="btn btn-sm btn-danger tright" type="submit">
-                                <i class="icon-refresh"></i> Reset
+                            <i class="icon-refresh"></i> Reset
                             </button>
                         </div>
                     </div>
@@ -216,13 +216,13 @@
             <div class="row">
                 <div class="col-lg-12 col-md-12">
                     <div class="radio" *ngFor="let entry of entries;">
-                        <input type="radio" name="radiogroup" class="tpointer" 
-                        (change)="onSelectionChange(entry)" 
-                        [checked]="appInfo.video_reward_filter_type === entry.filter_type" 
+                        <input type="radio" name="radiogroup" class="tpointer"
+                        (change)="onSelectionChange(entry)"
+                        [checked]="appInfo.video_reward_filter_type === entry.filter_type"
                         [value]="entry.filter_type"> {{ entry.name }}
                     </div>
                     <br/>
-                    <textarea [(ngModel)]="playerIds" class="form-control" 
+                    <textarea [(ngModel)]="playerIds" class="form-control"
                     placeholder="Player ids ..." rows="5" [hidden]="!isImportAreaShow"></textarea>
                 </div>
             </div>
@@ -230,44 +230,57 @@
             <div class="row">
                 <div class="col-lg-12 col-md-12">
                     <button class="btn btn-sm btn-success tright" type="submit" (click)="import()">
-                        <i class="fa fa-clone"></i> Import
+                    <i class="fa fa-clone"></i> Import
                     </button>
                 </div>
             </div>
             <hr/>
-            <div class="card-tools">
-                <select class="sel-search" [(ngModel)]="search.field">
-                    <option *ngFor="let perheader of header" [hidden]="!perheader.is_search" value="{{perheader.id}}">{{perheader.name}}</option>
-                </select><i class="icon-arrow-down sel-ico"></i>
-                <input type="text" class="rx-cur input-search" [(ngModel)]="search.term">
-                <button class="btn btn-sm btn-default btn-search" (click)="jumpPage(1)"><i class="icon-magnifier"></i></button>
-            </div>
-            <table class="table table-hover mb-0 table-striped fixed table-bordered">
-                <thead class="thead-default">
-                    <tr>
-                        <th *ngFor="let perheader of header" (click)="sort($event)" [attr.rxdata]="perheader.id" class="{{(perheader.id == paging.st_col)? 'rxsorting' : ''}} {{(paging.st_type == 1)? 'rxup' : 'rxdown'}}">{{perheader.name}}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let d of dataIds">
-                        <td>{{d.player_id.username}}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="100%" class="rx-pagin">
-                            <button class="rx-back" [disabled]="paging.pg_page <= 1" (click)="jumpPage(paging.pg_page - 1)">
+            <div [hidden]="!isImportAreaShow">
+                <div class="card-tools">
+                    <select class="sel-search" [(ngModel)]="search.field">
+                        <option *ngFor="let perheader of header" [hidden]="!perheader.is_search" value="{{perheader.id}}">{{perheader.name}}</option>
+                    </select><i class="icon-arrow-down sel-ico"></i>
+                    <input type="text" class="rx-cur input-search" [(ngModel)]="search.term">
+                    <button class="btn btn-sm btn-default btn-search" (click)="jumpPage(1)"><i class="icon-magnifier"></i></button>
+                    <button class="btn btn-sm btn-danger" type="button" (click)="deleteAll()">
+                        <i class="icon-trash "></i> Delete All
+                    </button>
+                </div>
+                <table class="table table-hover mb-0 table-striped fixed table-bordered">
+                    <thead class="thead-default">
+                        <tr>
+                            <th *ngFor="let perheader of header" (click)="sort($event)" [attr.rxdata]="perheader.id" class="{{(perheader.id == paging.st_col)? 'rxsorting' : ''}} {{(paging.st_type == 1)? 'rxup' : 'rxdown'}}">{{perheader.name}}</th>
+                            <th>#</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let d of dataIds">
+                            <td>{{d.player_id._id}}</td>
+                            <td>{{d.player_id.email}}</td>
+                            <td>{{d.player_id.username}}</td>
+                            <td class="text-center tMiddle">
+                                <button class="btn btn-sm btn-danger" type="button" (click)="deleteAd($event, d)">
+                                    <i class="icon-trash "></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="100%" class="rx-pagin">
+                                <button class="rx-back" [disabled]="paging.pg_page <= 1" (click)="jumpPage(paging.pg_page - 1)">
                                 <</button>
-                                    <input type="number" class="rx-cur" [(ngModel)]="paging.pg_page">
-                                    <button class="rx-next" [disabled]="!isnext" (click)="jumpPage(paging.pg_page + 1)">></button>
-                                    <span class="rx-jump" (click)="jumpPage(paging.pg_page)"><i class="icon-rocket"></i></span>
-                                    <select type="number" class="rx-pg-size" (ngModelChange)="resizePage($event)" [(ngModel)]="paging.pg_size">
-                                        <option value="10" selected>10</option>
-                                        <option value="50" selected>50</option>
-                                        <option value="100" selected>100</option>
-                                    </select> / page
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                                <input type="number" class="rx-cur" [(ngModel)]="paging.pg_page">
+                                <button class="rx-next" [disabled]="!isnext" (click)="jumpPage(paging.pg_page + 1)">></button>
+                                <span class="rx-jump" (click)="jumpPage(paging.pg_page)"><i class="icon-rocket"></i></span>
+                                <select type="number" class="rx-pg-size" (ngModelChange)="resizePage($event)" [(ngModel)]="paging.pg_size">
+                                    <option value="10" selected>10</option>
+                                    <option value="50" selected>50</option>
+                                    <option value="100" selected>100</option>
+                                </select> / page
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
