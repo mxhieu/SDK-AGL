@@ -20,7 +20,6 @@
             </div>
         </div>
         <div class="card-block">
-            <br/>
             <div class="form-group row">
                 <div class="col-lg-6 col-md-6">
                     <label class="col-form-label">Application Id</label>
@@ -159,12 +158,12 @@
                 <div class="col-md-6 col-lg-6">
                     <label class="col-form-label">App icon</label>
                     <input type="file" (change)="fileChanged($event, 0)" placeholder="Upload file" accept="*.*">
-                    <img [src]="getUrl(appInfo.icon)" onError="this.src='./assets/img/ico_app_default.png'" class="tIcon" />
+                    <img [src]="getUrl(appInfo.icon)" (error)="onImageLoadedError($event)" class="tIcon" />
                 </div>
                 <div class="col-md-6 col-lg-6">
                     <label class="col-form-label">App logo</label>
                     <input type="file" (change)="fileLogoChanged($event, 1)" placeholder="Upload file" accept="*.*">
-                    <img [src]="getUrl(appInfo.logo)" onError="this.src='./assets/img/ico_app_default.png'" class="tIcon" />
+                    <img [src]="getUrl(appInfo.logo)" (error)="onImageLoadedError($event)" class="tIcon" />
                 </div>
             </div>
             <br/>
@@ -201,6 +200,18 @@
                     <label class="col-form-label">Goole Client Id</label>
                     <input class="form-control" type="text" name="version" [(ngModel)]="appInfo.google_client_id">
                 </div>
+                <div class="col-md-3 col-lg-3">
+                    <label class="col-form-label">Support URL</label>
+                    <input class="form-control" type="text" name="version" [(ngModel)]="appInfo.support_url">
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <label class="col-form-label">Appsflyer Id</label>
+                    <input class="form-control" type="text" name="version" [(ngModel)]="appInfo.appsflyer_id">
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <label class="col-form-label">Appsflyer Key</label>
+                    <input class="form-control" type="text" name="version" [(ngModel)]="appInfo.appsflyer_key">
+                </div>
             </div>
         </div>
         <div class="card-footer">
@@ -210,20 +221,45 @@
     </div>
     <div class="card">
         <div class="card-header">
+            <h5 class="card-title">Promote Images</h5>
+        </div>
+        <div class="card-block">
+            <div class="row form-group promote_images_wrapper" *ngFor="let item of appInfo.promote_images; let i=index">
+                <div class="col-lg-2 col-md-2">
+                    <img class="promote_image" [src]="getUrl(item.image)" (error)="onImageLoadedError($event)"/>
+                </div>
+                <div class="col-md-10 col-lg-10">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-6">
+                            <label class="col-form-label">Title</label>
+                            <input class="form-control" type="text" name="version" [(ngModel)]="item.title">
+                        </div>
+                        <div class="col-md-6 col-lg-6">
+                            <label class="col-form-label">Redirect URL</label>
+                            <input class="form-control" type="text" name="redirecturl" placeholder="Redirect URL"
+                            [(ngModel)]="item.click_url">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <button class="btn btn-sm btn-primary tright" (click)="update()"><i class="icon-check"></i> Save </button>
+        </div>
+    </div>
+    
+    <div class="card">
+        <div class="card-header">
             <h5 class="card-title">Reward videos</h5>
         </div>
         <div class="card-block">
             <div class="row">
                 <div class="col-lg-12 col-md-12">
                     <div class="radio" *ngFor="let entry of entries;">
-                        <input type="radio" name="radiogroup" class="tpointer"
-                        (change)="onSelectionChange(entry)"
-                        [checked]="appInfo.video_reward_filter_type === entry.filter_type"
-                        [value]="entry.filter_type"> {{ entry.name }}
+                        <input type="radio" name="radiogroup" class="tpointer" (change)="onSelectionChange(entry)" [checked]="appInfo.video_reward_filter_type === entry.filter_type" [value]="entry.filter_type"> {{ entry.name }}
                     </div>
                     <br/>
-                    <textarea [(ngModel)]="playerIds" class="form-control"
-                    placeholder="Player ids ..." rows="5" [hidden]="!isImportAreaShow"></textarea>
+                    <textarea [(ngModel)]="playerIds" class="form-control" placeholder="Player ids ..." rows="5" [hidden]="!isImportAreaShow"></textarea>
                 </div>
             </div>
             <br/>
@@ -243,14 +279,14 @@
                     <input type="text" class="rx-cur input-search" [(ngModel)]="search.term">
                     <button class="btn btn-sm btn-default btn-search" (click)="jumpPage(1)"><i class="icon-magnifier"></i></button>
                     <button class="btn btn-sm btn-danger" type="button" (click)="deleteAll()">
-                        <i class="icon-trash "></i> Delete All
+                    <i class="icon-trash "></i> Delete All
                     </button>
                 </div>
                 <table class="table table-hover mb-0 table-striped fixed table-bordered">
                     <thead class="thead-default">
                         <tr>
                             <th *ngFor="let perheader of header" (click)="sort($event)" [attr.rxdata]="perheader.id" class="{{(perheader.id == paging.st_col)? 'rxsorting' : ''}} {{(paging.st_type == 1)? 'rxup' : 'rxdown'}}">{{perheader.name}}</th>
-                            <th>#</th>
+                            <th class="tMiddle">#</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -260,7 +296,7 @@
                             <td>{{d.player_id.username}}</td>
                             <td class="text-center tMiddle">
                                 <button class="btn btn-sm btn-danger" type="button" (click)="deleteAd($event, d)">
-                                    <i class="icon-trash "></i>
+                                <i class="icon-trash "></i>
                                 </button>
                             </td>
                         </tr>

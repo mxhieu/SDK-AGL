@@ -1,23 +1,4 @@
-<header class="app-header navbar">
-    <a class="navbar-brand" routerLinkActive="active" [routerLink]="['/groups']"></a>
-    <ul class="nav navbar-nav ml-auto">
-        <li class="nav-item dropdown" dropdown>
-            <a href class="nav-link dropdown-toggle" dropdownToggle (click)="false">
-                <img src="assets/img/avatars/6.jpg" class="img-avatar">
-                <span class="hidden-md-down">{{fullname}}</span>
-            </a>
-            <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown" style="position: absolute;">
-                <div class="dropdown-header text-center">
-                    <strong>Account</strong>
-                </div>
-                <a class="dropdown-item tpointer" (click)="forgotPassword()"><i class="icon-lock"></i> Change password</a>
-                <a class="dropdown-item tpointer" (click)="logout()"><i class="icon-logout"></i> Logout</a>
-            </div>
-        </li>
-        <li class="nav-item hidden-md-down">
-        </li>
-    </ul>
-</header>
+<app-header></app-header>
 <div class="app-body">
     <div class="rx-floathide-form rx-isview" [hidden]="isGroupHidden">
         <div class="col-lg-12 col-md-12" style="margin-top: 1.25rem; width:100%;">
@@ -160,7 +141,7 @@
                             <tr *ngFor="let g of groups" (click)=(onItemClick(g)) class="tpointer">
                                 <td class="text-center">
                                     <div class="avatar">
-                                        <img [src]="getUrl(g.icon)" class="img-avatar" onError="this.src='./assets/img/ico_app_default.png'" style="width: 32px; height: 32px;" />
+                                        <img [src]="getUrl(g.icon)" (error)="onImageLoadedError($event)" style="width: 32px; height: 32px;">
                                     </div>
                                     <span class="badge badge-pill badge-danger">{{g.settings.length}}</span>
                                 </td>

@@ -11,7 +11,7 @@
                             <div class="col-md-8">
                                 <div class="btn-group tright" dropdown>
                                     <button dropdownToggle type="button" class="btn btn-outline-primary dropdown-toggle" style="margin:0px;">
-                                        {{app.os}} - {{app.version}} <span class="caret"></span>
+                                    {{app.os}} - {{app.version}} <span class="caret"></span>
                                     </button>
                                     <ul *dropdownMenu class="dropdown-menu" role="menu">
                                         <li role="menuitem" *ngFor="let app of apps" (click)="switchApp(app)" class="tpointer">
@@ -26,7 +26,7 @@
                         <div class="row">
                             <div class="form-group col-md-6 col-lg-6">
                                 <label class="col-form-label-none">Item Id</label>
-                                <input class="form-control" name="id" placeholder="Item Id ..." type="text" [disabled]="isEdit" [(ngModel)]="onerow.id">
+                                <input class="form-control" name="id" placeholder="Item Id ..." type="text" [(ngModel)]="onerow.id">
                             </div>
                             <div class="form-group col-md-6 col-lg-6">
                                 <label class="col-form-label-none">Item Name</label>
@@ -83,7 +83,7 @@
                 <div class="col-md-8">
                     <div class="btn-group tright" dropdown>
                         <button dropdownToggle type="button" class="btn btn-outline-primary dropdown-toggle" style="margin:0px;">
-                            {{app.os}} - {{app.version}} <span class="caret"></span>
+                        {{app.os}} - {{app.version}} <span class="caret"></span>
                         </button>
                         <ul *dropdownMenu class="dropdown-menu" role="menu">
                             <li role="menuitem" *ngFor="let app of apps" (click)="switchApp(app)" class="tpointer">
@@ -95,13 +95,15 @@
             </div>
         </div>
         <div class="card-block">
-            <button class="btn btn-sm btn-primary tright" (click)=(toggle())>
+            <div class="card-tools">
+                <button class="btn btn-sm btn-primary tright" (click)=(toggle())>
                 <i class="icon-plus"></i> Create
-            </button>
+                </button>
+            </div>
             <table class="table table-hover mb-0 table-striped fixed table-bordered">
                 <thead class="thead-default">
                     <tr>
-                        <th class="text-center rx-table-ico-head">Id</th>
+                        <th class="text-center rx-table-ico-head">Card Id</th>
                         <th class="text-center rx-table-ico-head">Name</th>
                         <th class="text-center rx-table-ico-head">Description</th>
                         <th class="text-center rx-table-ico-head">Price (USD)</th>

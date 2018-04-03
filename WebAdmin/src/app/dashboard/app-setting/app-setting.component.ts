@@ -9,25 +9,21 @@ import { BaseComponent } from '../../service/base.component';
 	styleUrls: ['./app-setting.component.scss']
 })
 export class AppSettingComponent extends BaseComponent implements OnInit {
-
 	appInfo: any; dataIds = []; paging: any; isnext: any; header: any; search: any;
 	playerIds: any; isImportAreaShow: boolean;
 	apps: any; app = { 'app_id': '', 'os': '', 'version': '' };
-
 	entries = [
 		{ 'id': 1, 'name': 'Chọn tất cả', 'filter_type': 'all' },
 		{ 'id': 2, 'name': 'Chọn tất cả user chưa nạp tiền', 'filter_type': 'user_not_pay' },
 		{ 'id': 3, 'name': 'Tuỳ chọn', 'filter_type': 'list_defined_users' }
 	];
-
 	constructor(private service: GroupService, private playerAdsService: PlayerAdsService) {
-
 		super();
-
 		this.appInfo = {
 			'settings': {},
 			'version': 1.0,
 			'icon': '',
+			'promote_images': [],
 			'logo': ''
 		};
 		this.isnext = true; this.isImportAreaShow = false;
@@ -39,18 +35,15 @@ export class AppSettingComponent extends BaseComponent implements OnInit {
 			{ id: 'username', name: 'Username', is_search: 1, st_col: 'player_id', st_type: 1 }
 		];
 	}
-
 	ngOnInit() {
 		this.refresh();
 	}
-
 	refresh() {
 		if (!this.service.isExpired()) {
 			this.getDetail();
 			this.getApps();
 		}
 	}
-
 	getApps() {
 		this.app.app_id = this.service.getAppId();
 		this.apps = this.service.getGroupSetting();
@@ -88,11 +81,9 @@ export class AppSettingComponent extends BaseComponent implements OnInit {
 			this.dataIds = data;
 		});
 	}
-
 	/*
-		Import player id to be show ad
+	Import player id to be show ad
 	*/
-
 	import() {
 		if (this.appInfo.video_reward_filter_type == 'list_defined_users') {
 			var params = {
@@ -106,7 +97,6 @@ export class AppSettingComponent extends BaseComponent implements OnInit {
 		}
 		this.update();
 	}
-
 	resetKey() {
 		this.service.resetKey({ 'id': this.service.getAppId() }, data => this.appInfo.key = data);
 	}
@@ -125,12 +115,10 @@ export class AppSettingComponent extends BaseComponent implements OnInit {
 		this.paging.pg_page = _page
 		this.refresh();
 	}
-
 	resizePage($event) {
 		this.paging.pg_size = $event;
 		this.jumpPage(1);
 	}
-
 	sort($event) {
 		var target = $event.target || $event.srcElement || $event.currentTarget;
 		var idAttr = target.attributes.rxdata;
@@ -151,13 +139,18 @@ export class AppSettingComponent extends BaseComponent implements OnInit {
 			let file: File = fileList[0];
 			this.service.upload(file, data => {
 				if (type == 0)
+				{
 					this.appInfo.icon = data;
+					this.update();
+				}
 				else
+				{
 					this.appInfo.logo = data;
+					this.update();
+				}
 			});
 		}
 	}
-
 	deleteAd(event: any, d: any) {
 		console.log(d);
 		var params = {
@@ -184,7 +177,17 @@ export class AppSettingComponent extends BaseComponent implements OnInit {
 			this.getPlayerAds();
 		});
 	}
-
+	fileChange(event) {
+		let fileList: FileList = event.target.files;
+		if (fileList.length > 0) {
+			let file: File = fileList[0];
+			this.service.upload(file, data => {
+				console.log(data);
+				this.appInfo.promote_images.push(data);
+				this.update();
+			});
+		}
+	}
 	onSelectionChange(entry) {
 		this.appInfo.video_reward_filter_type = entry.filter_type;
 		if (entry.filter_type == 'list_defined_users')

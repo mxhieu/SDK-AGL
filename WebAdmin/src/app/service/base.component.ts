@@ -1,7 +1,16 @@
 export abstract class BaseComponent {
 
-	protected getUrl(icon: string): string {
-		return 'http://apitracking.bonanhem.com/upload/image/' + icon;
+	private defaultIcon() : string {
+		return "../assets/img/ico_app_default.png";
+	}
+	public onImageLoadedError(event){
+		event.target.src = this.defaultIcon();
+	}
+
+	public getUrl(icon: string): string {
+		if(icon)
+			return 'http://apitracking.bonanhem.com/upload/image/' + icon;
+		return this.defaultIcon();
 	}
 
 }

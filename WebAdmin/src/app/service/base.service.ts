@@ -30,13 +30,14 @@ export class BaseService {
 
 	protected makeHeaders(): Headers {
 		let headers = new Headers({
-			'Content-Type': 'application/json'
+			'Content-Type': 'application/json',			
 		});
 		return headers;
 	}
 
 	upload(file: File, callback) {
 		let formData: FormData = new FormData();
+		formData.append('timeseed', '' + Date.now());
 		formData.append('uploadFile', file, file.name);
 		let headers = new Headers();
 		headers.append('Content-Type', 'multipart/form-data');
@@ -62,6 +63,7 @@ export class BaseService {
 
 		let params = new URLSearchParams();
 		params.append('authorization', this.getToken());
+		params.append('timeseed', '' + Date.now());
 
 		if (dParams)
 			for (var key in dParams)
@@ -94,7 +96,8 @@ export class BaseService {
 
 		let params = new URLSearchParams();
 		params.append('authorization', this.getToken());
-
+		params.append('timeseed', '' + Date.now());
+		
 		if (dParams)
 			for (var key in dParams)
 				params.append(key, dParams[key]);
