@@ -162,7 +162,7 @@
                 </div>
                 <div class="col-md-6 col-lg-6">
                     <label class="col-form-label">App logo</label>
-                    <input type="file" (change)="fileLogoChanged($event, 1)" placeholder="Upload file" accept="*.*">
+                    <input type="file" (change)="fileChanged($event, 1)" placeholder="Upload file" accept="*.*">
                     <img [src]="getUrl(appInfo.logo)" (error)="onImageLoadedError($event)" class="tIcon" />
                 </div>
             </div>
