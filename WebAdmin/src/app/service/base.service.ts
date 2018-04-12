@@ -23,6 +23,7 @@ export class BaseService {
 	protected KEY_AUTH = 'fAuth';
 	protected USER_TOKEN = 'ftoken';
 	protected KEY_APP_ID = 'fAppId';
+	protected KEY_GROUP_ID = 'fGroupId';
 
 	constructor(
 		protected http: Http, protected router: RoutingService,
@@ -258,7 +259,12 @@ export class BaseService {
 			callback(Array.isArray(data) ? data : []);
 		});
 	}
-
+	public setGroupId(groupId: string){
+		this.setCookie(this.KEY_GROUP_ID, groupId);
+	}
+	public getGroupId() : string {
+		return Cookie.get(this.KEY_GROUP_ID);
+	}
 	fromDate(year, month, date) {
 		return new Date(year, month, date - 1000);
 	}

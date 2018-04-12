@@ -21,6 +21,7 @@ export class CohortComponent implements OnInit {
 		{ 'id': 14, 'name': '14 ngày' },
 		{ 'id': 21, 'name': '21 ngày' },
 		{ 'id': 30, 'name': '30 ngày' }];
+	osVerionDisplay : boolean;
 
 	constructor(private service: ReportService) {
 
@@ -49,11 +50,12 @@ export class CohortComponent implements OnInit {
 	doAnalysis() {
 		this.data = [];
 		var params = {
-			'app_id': this.service.getAppId(),
 			'pg_page': 1,
 			'pg_size': 100,
 			'st_col': 'date_install',
 			'search_os': null,
+			'app_id':null,
+			'app_group_id':null,
 			'search_source': null,
 			'startdate': Math.round(this.dFrom.getTime() / 1000),
 			'enddate': Math.round(this.dTo.getTime() / 1000),
@@ -61,8 +63,13 @@ export class CohortComponent implements OnInit {
 			'filter_dates': this.tRvalues,
 			['search_' + this.search.field]: this.search.term
 		};
-		if (this.platform.id != '-1')
+		if (this.platform.id != '-1'){
 			params.search_os = this.platform.id;
+			params.app_id = this.service.getAppId();
+		}
+		else{
+			params.app_group_id = this.service.getGroupId();
+		}
 
 		if (this.source.source != '-1')
 			params.search_source = this.source.source;
@@ -182,7 +189,7 @@ export class CohortComponent implements OnInit {
 		this.doAnalysis();
 	}
 	onVersionChanged(event) {
-		console.log(event.app_id);
+		this.service.setAppId(event.app_id);
 	}
 	osPickerChanged(event) {
 
@@ -197,5 +204,6 @@ export class CohortComponent implements OnInit {
 					this.versionDisplay.push(v);
 
 		this.version = this.versionDisplay[0];
+		this.service.setAppId(this.version.app_id)
 	}
 }

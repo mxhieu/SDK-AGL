@@ -14,7 +14,7 @@ export class KpireportComponent implements OnInit {
 	source: any; sources = [{ 'source_group': "All", 'source': '-1' }];
 	platform: any; platforms = [];
 	dDate: Date = new Date(); dMin: Date; dMax: Date = new Date();
-
+	osVerionDisplay : boolean;
 	constructor(private service: ReportService) {
 		this.source = this.sources[0];
 		this.platforms = this.service.defaultPlatforms();
@@ -29,9 +29,20 @@ export class KpireportComponent implements OnInit {
 
 	doAnalysis() {
 		var params = {
-			'search_app_id': this.service.getAppId(),
-			'search_date': Math.round(this.dDate.getTime() / 1000)
+			'app_id':null,
+			'app_group_id':null,
+			'search_app_id':null,
+			'search_os':null,
+			'search_date': Math.round(this.dDate.getTime() / 1000),
+			'group_id':''
 		};
+		if (this.platform.id != '-1'){
+			params.search_os = this.platform.id;
+			params.search_app_id = this.service.getAppId();
+		}
+		else{
+			params.app_group_id = this.service.getGroupId();
+		}
 		this.service.kpiAnalysis(params, data => {
 			this.data = data;
 		});
@@ -66,5 +77,6 @@ export class KpireportComponent implements OnInit {
 					this.versionDisplay.push(v);
 
 		this.version = this.versionDisplay[0];
+		this.service.setAppId(this.version.app_id)
 	}
 }

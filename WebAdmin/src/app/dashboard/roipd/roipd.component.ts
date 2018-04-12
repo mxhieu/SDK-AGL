@@ -16,13 +16,11 @@ export class RoipdComponent implements OnInit {
 	version: any; versions = [{ 'version': '', 'os': '' }]; versionDisplay = [{ 'version': '', 'os': '' }];
 	source: any; sources = [{ 'source_group': "All", 'source': '-1' }];
 	platform : any; platforms = [];
-
+	osVerionDisplay : boolean;
 	constructor(private service: ReportService, private AmCharts: AmChartsService) {
 
 		this.source = this.sources[0];
-		
 		this.platforms =  this.service.defaultPlatforms();
-
 		this.platform = this.platforms[0];
 		
 		this.dFrom = this.service.fromDate(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate());
@@ -88,18 +86,26 @@ export class RoipdComponent implements OnInit {
 
 	doAnalysis() {
 		var params = {
-			'app_id': this.service.getAppId(),
 			'pg_page': this.paging.pg_page,
 			'pg_size': this.paging.pg_size,
 			'st_col': this.paging.st_col,
+			'app_id':null,
+			'app_group_id':null,
+			'search_os':null,
 			'startdate': Math.round(this.dFrom.getTime() / 1000),
 			'enddate': Math.round(this.dTo.getTime() / 1000),
 			'st_type': this.paging.st_type,
 			['search_' + this.search.field]: this.search.term
 		};
-		if (this.platform.id != '-1')
-			params.search_os = this.platform.id;
 
+		if (this.platform.id != '-1'){
+			params.search_os = this.platform.id;
+			params.app_id = this.service.getAppId();
+		}
+		else{
+			params.app_group_id = this.service.getGroupId();
+		}
+		
 		if (this.source.source != '-1')
 			params.search_source = this.source.source;
 
@@ -121,20 +127,21 @@ export class RoipdComponent implements OnInit {
 		});
 	}
 	onVersionChanged(event){
-		console.log(event.app_id);
+		this.service.setAppId(event.app_id);
 	}
 	osPickerChanged(event) {
 
 		this.versionDisplay = [];
 
 		if (event.id == '-1')
-			for (var v of this.versions)
-				this.versionDisplay.push(v);
-		else
+			this.osVerionDisplay = false;
+		else{
+			this.osVerionDisplay = true;
 			for (var v of this.versions)
 				if (v.os == event.id)
 					this.versionDisplay.push(v);
-
+		}
 		this.version = this.versionDisplay[0];
+		this.service.setAppId(this.version.app_id)
 	}
 }

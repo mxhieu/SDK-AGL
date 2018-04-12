@@ -166,7 +166,8 @@
                     <img [src]="getUrl(appInfo.logo)" (error)="onImageLoadedError($event)" class="tIcon" />
                 </div>
             </div>
-            <br/>
+            <hr/>
+            <span class="badge badge-success">Basic Config</span>
             <div class="row">
                 <div class="col-md-3 col-lg-3">
                     <label class="col-form-label">BundleId/Package name</label>
@@ -189,21 +190,13 @@
                     <input class="form-control" type="text" name="version" [(ngModel)]="appInfo.version">
                 </div>
                 <div class="col-md-3 col-lg-3">
-                    <label class="col-form-label">Mopub Ad Id</label>
-                    <input class="form-control" type="text" name="version" [(ngModel)]="appInfo.mopub_ad_unit_id">
-                </div>
-                <div class="col-md-3 col-lg-3">
-                    <label class="col-form-label">Facebook App Id</label>
-                    <input class="form-control" type="text" name="version" [(ngModel)]="appInfo.facebook_app_id">
-                </div>
-                <div class="col-md-3 col-lg-3">
-                    <label class="col-form-label">Goole Client Id</label>
-                    <input class="form-control" type="text" name="version" [(ngModel)]="appInfo.google_client_id">
-                </div>
-                <div class="col-md-3 col-lg-3">
                     <label class="col-form-label">Support URL</label>
                     <input class="form-control" type="text" name="version" [(ngModel)]="appInfo.support_url">
                 </div>
+            </div>
+            <hr/>
+            <span class="badge badge-success">Appsflyer Config</span>
+            <div class="row">
                 <div class="col-md-3 col-lg-3">
                     <label class="col-form-label">Appsflyer Id</label>
                     <input class="form-control" type="text" name="version" [(ngModel)]="appInfo.appsflyer_id">
@@ -211,6 +204,30 @@
                 <div class="col-md-3 col-lg-3">
                     <label class="col-form-label">Appsflyer Key</label>
                     <input class="form-control" type="text" name="version" [(ngModel)]="appInfo.appsflyer_key">
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <label class="col-form-label">Mopub Ad Id</label>
+                    <input class="form-control" type="text" name="version" [(ngModel)]="appInfo.mopub_ad_unit_id">
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <label class="col-form-label">Facebook App Id</label>
+                    <input class="form-control" type="text" name="version" [(ngModel)]="appInfo.facebook_app_id">
+                </div>
+            </div>
+            <hr/>
+            <span class="badge badge-success">Google IAP Config</span>
+            <div class="row">
+                <div class="col-md-4 col-lg-4">
+                    <label class="col-form-label">Google Client Id</label>
+                    <input class="form-control" type="text" name="version" [(ngModel)]="appInfo.google_client_id">
+                </div>
+                <div class="col-md-4 col-lg-4">
+                    <label class="col-form-label">Google Client Secret</label>
+                    <input class="form-control" type="text" name="version" [(ngModel)]="appInfo.google_client_secret">
+                </div>
+                <div class="col-md-4 col-lg-4">
+                    <label class="col-form-label">Google Refresh Token Id</label>
+                    <input class="form-control" type="text" name="version" [(ngModel)]="appInfo.google_refresh_token">
                 </div>
             </div>
         </div>
@@ -221,7 +238,9 @@
     </div>
     <div class="card">
         <div class="card-header">
-            <h5 class="card-title">Promote Images</h5>
+            <h5 class="card-title">Promote Images 
+                <span class="badge badge-danger">{{appInfo.promote_images.length}}</span>
+            </h5>
         </div>
         <div class="card-block">
             <div class="row form-group promote_images_wrapper" *ngFor="let item of appInfo.promote_images; let i=index">

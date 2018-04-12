@@ -19,13 +19,13 @@ export class GroupComponent extends BaseComponent implements OnInit {
 	isAppHidden: boolean = true;
 
 	// Group
-	isGroupHidden: boolean = true; 
+	isGroupHidden: boolean = true;
 	isGroupEdit: boolean = false;
 
 	app: any;
 
 	constructor(private service: GroupService) {
-		
+
 		super();
 
 		this.isnext = true;
@@ -37,19 +37,19 @@ export class GroupComponent extends BaseComponent implements OnInit {
 			{ id: 'is_active', name: 'Status', is_search: 1, st_col: 'is_active', st_type: 1 },
 			{ id: 'updated_at', name: 'Updated', is_search: 1, st_col: 'updated_at', st_type: 1 },
 			{ id: 'created_at', name: 'Created', is_search: 1, st_col: 'created_at', st_type: 1 }
-			
+
 		];
 	}
 
 	ngOnInit() {
 		this.refresh();
 	}
-	
+
 	/** Group function. */
 	toggleGroup() {
 		this.isGroupHidden = !this.isGroupHidden;
 	}
-	
+
 	newGroup() {
 		this.service.newGroup(this.onerow, data => { this.refresh(); });
 	}
@@ -70,8 +70,8 @@ export class GroupComponent extends BaseComponent implements OnInit {
 		this.isGroupHidden = false;
 		this.isGroupEdit = true;
 	}
-	
-	updateGroup(){
+
+	updateGroup() {
 		this.service.updateGroup(this.onerow, data => { this.refresh(); });
 	}
 
@@ -113,12 +113,21 @@ export class GroupComponent extends BaseComponent implements OnInit {
 			this.getGroups();
 		}
 	}
-	
+
 	resizePage($event) {
 		this.paging.pg_size = $event;
 		this.jumpPage(1);
 	}
-
+	fileChanged(event) {
+		let fileList: FileList = event.target.files;
+		if (fileList.length > 0) {
+			let file: File = fileList[0];
+			this.service.upload(file, data => {
+				this.onerow.icon = data;
+				this.updateGroup();
+			});
+		}
+	}
 	reset() {
 		// Group
 		this.isGroupHidden = true;
@@ -140,13 +149,13 @@ export class GroupComponent extends BaseComponent implements OnInit {
 			'icon': ''
 		};
 	}
-	
+
 	jumpPage(_page) {
 		_page = (_page <= 0) ? 1 : _page;
 		this.paging.pg_page = _page
 		this.getGroups();
 	}
-	
+
 	forgotPassword() {
 		this.service.moveToForgotPassword();
 	}
@@ -154,11 +163,12 @@ export class GroupComponent extends BaseComponent implements OnInit {
 	logout() {
 		this.service.logout();
 	}
-	onItemClick(group: any) {
+	onItemClicked(group: any) {
 		var st = group.settings;
 		if (st) {
 			var app = st[0];
 			if (app) {
+				this.service.setGroupId(group._id);
 				this.service.saveGroupSetting(st);
 				this.service.moveToAppDetail(app.app_id);
 			}
