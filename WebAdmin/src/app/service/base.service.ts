@@ -31,7 +31,7 @@ export class BaseService {
 
 	protected makeHeaders(): Headers {
 		let headers = new Headers({
-			'Content-Type': 'application/json',			
+			'Content-Type': 'application/json',
 		});
 		return headers;
 	}
@@ -98,7 +98,7 @@ export class BaseService {
 		let params = new URLSearchParams();
 		params.append('authorization', this.getToken());
 		params.append('timeseed', '' + Date.now());
-		
+
 		if (dParams)
 			for (var key in dParams)
 				params.append(key, dParams[key]);
@@ -135,7 +135,7 @@ export class BaseService {
 			this.flash.show(msg, { cssClass: 'alert-success' });*/
 	}
 
-	protected request(url, params, callback){
+	protected request(url, params, callback) {
 		this.get(this.getRestUrl(url), params, data => {
 			callback(data);
 		});
@@ -162,8 +162,8 @@ export class BaseService {
 	protected setCookie(key: any, value: any) {
 		Cookie.set(key, value);
 	}
-	
-	protected removeCookie(key: any){
+
+	protected removeCookie(key: any) {
 		Cookie.delete(key);
 	}
 
@@ -254,15 +254,15 @@ export class BaseService {
 		});
 	}
 
-	public updateSource(params, callback){
+	public updateSource(params, callback) {
 		this.post(this.getRestUrl(SourceApiUrls.update), params, null, data => {
 			callback(Array.isArray(data) ? data : []);
 		});
 	}
-	public setGroupId(groupId: string){
+	public setGroupId(groupId: string) {
 		this.setCookie(this.KEY_GROUP_ID, groupId);
 	}
-	public getGroupId() : string {
+	public getGroupId(): string {
 		return Cookie.get(this.KEY_GROUP_ID);
 	}
 	fromDate(year, month, date) {
@@ -273,4 +273,13 @@ export class BaseService {
 	defaultPaging() {
 		return { pg_page: 1, pg_size: 10, st_col: 'created_at', st_type: -1 };
 	}
+	public formatDate(date): string {
+		var mm = date.getMonth() + 1;
+		var dd = date.getDate();
+		return [date.getFullYear(),
+		(mm > 9 ? '' : '0') + mm,
+		(dd > 9 ? '' : '0') + dd
+		].join('-');
+	}
+
 }

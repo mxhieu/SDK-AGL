@@ -321,7 +321,7 @@ export class ArmComponent implements OnInit, OnDestroy {
 					this.versionDisplay.push(v);
 			}
 			this.version = this.versionDisplay[0];
-			this.service.setAppId(this.version.app_id)
+			this.service.setAppId(this.version.app_id);
 		}
 	}
 }

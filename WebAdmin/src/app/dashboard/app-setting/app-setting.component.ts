@@ -54,6 +54,10 @@ export class AppSettingComponent extends BaseComponent implements OnInit {
 			}
 		}
 	}
+	switchApp(app) {
+		this.service.setAppId(app.app_id);
+		this.refresh();
+	}
 	getDetail() {
 		this.service.detailApp(
 			{ 'id': this.service.getAppId() },
@@ -65,10 +69,7 @@ export class AppSettingComponent extends BaseComponent implements OnInit {
 				}
 			});
 	}
-	switchApp(app) {
-		this.service.setAppId(app.app_id);
-		this.refresh();
-	}
+	
 	getPlayerAds() {
 		this.playerAdsService.getAdsPlayers({
 			'search_app_id': this.service.getAppId(),

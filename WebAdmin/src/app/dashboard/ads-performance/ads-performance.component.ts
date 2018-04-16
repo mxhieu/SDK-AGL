@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BaseComponent } from '../../service/base.component';
 import { CampaignService } from '../../service/campaign.service';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
+import { GroupService } from '../../service/group.service';
 
 @Component({
 	selector: 'app-ads-performance',
@@ -13,8 +14,9 @@ export class AdsPerformanceComponent extends BaseComponent implements OnInit, On
 	headers: any; paging: any; search = { field: 'name', term: '' };
 	ads = []; onerow: any; isEdit: boolean; isHidden: boolean;
 	adType = []; cp: any; campaigns = []; startDate: Date; endDate: Date = new Date();
+	apps: any; app = { 'app_id': '', 'os': '', 'version': '' };
 
-	constructor(private service: CampaignService) {
+	constructor(private gService: GroupService, private service: CampaignService) {
 
 		super();
 
@@ -58,8 +60,18 @@ export class AdsPerformanceComponent extends BaseComponent implements OnInit, On
 		this.reset();
 		this.getCampaigns();
 		this.doAnalysis();
+		this.getApps();
 	}
-
+	getApps() {
+		this.app.app_id = this.service.getAppId();
+		this.apps = this.gService.getGroupSetting();
+		for (var ap of this.apps) {
+			if (ap.app_id == this.app.app_id) {
+				this.app.os = ap.os;
+				this.app.version = ap.version;
+			}
+		}
+	}
 	reset() {
 		this.ads = [];
 		this.isHidden = true;
@@ -76,13 +88,18 @@ export class AdsPerformanceComponent extends BaseComponent implements OnInit, On
 			'type': 1, // 1: banner, 2: facebook, 3: google
 		};
 	}
-
+	switchApp(app) {
+		this.service.setAppId(app.app_id);
+		this.refresh();
+	}
 	doAnalysis() {
 		var params = {
 			'st_col': this.paging.st_col,
 			'st_type': this.paging.st_type,
 			'pg_page': this.paging.pg_page,
 			'pg_size': this.paging.pg_size,
+			'search_type':'facebook_ad',
+			'search_app_id': this.service.getAppId(),
 			['search_' + this.search.field]: this.search.term,
 			'search_campaign_id': null
 		};
@@ -128,7 +145,7 @@ export class AdsPerformanceComponent extends BaseComponent implements OnInit, On
 	}
 
 	show() {
-		this.campaigns.splice(-1,1);
+		this.campaigns.splice(-1, 1);
 		this.isHidden = false;
 		this.isEdit = false;
 	}
@@ -141,7 +158,7 @@ export class AdsPerformanceComponent extends BaseComponent implements OnInit, On
 	}
 
 	onItemClick(ad: any) {
-		this.campaigns.splice(-1,1);
+		this.campaigns.splice(-1, 1);
 		this.onerow = ad;
 		this.cp = this.getCampaign(ad.campaign_id);
 		this.startDate = new Date(this.onerow.start_date * 1000);
@@ -166,5 +183,5 @@ export class AdsPerformanceComponent extends BaseComponent implements OnInit, On
 		e.stopPropagation();
 		this.service.deleteAd({ 'id': ad._id }, data => { this.refresh(); });
 	}
-	
+
 }

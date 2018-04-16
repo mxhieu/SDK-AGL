@@ -119,6 +119,12 @@ export class AdsComponent extends BaseComponent implements OnInit, OnDestroy {
 	}
 
 	createAd() {
+		if(this.onerow.type ==  1)
+			this.onerow.type = 'banner_ad';
+		else if(this.onerow.type ==  2)
+			this.onerow.type = 'facebook_ad';
+		else if(this.onerow.type ==  3)
+			this.onerow.type = 'google_ad';
 		this.onerow.start_date = Math.round(this.startDate.getTime() / 1000);
 		this.onerow.end_date = Math.round(this.endDate.getTime() / 1000);
 		this.service.createAd(this.onerow, data => { this.refresh();});
@@ -132,6 +138,12 @@ export class AdsComponent extends BaseComponent implements OnInit, OnDestroy {
 		this.isHidden = false;
 	}
 	update() {
+		if(this.onerow.type ==  1)
+			this.onerow.type = 'banner_ad';
+		else if(this.onerow.type ==  2)
+			this.onerow.type = 'facebook_ad';
+		else if(this.onerow.type ==  3)
+			this.onerow.type = 'google_ad';
 		this.onerow.start_date = Math.round(this.startDate.getTime() / 1000);
 		this.onerow.end_date = Math.round(this.endDate.getTime() / 1000);
 		this.service.updateAd(this.onerow, data => { this.refresh(); });

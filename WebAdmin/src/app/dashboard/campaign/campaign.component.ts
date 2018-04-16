@@ -1,26 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { BaseComponent } from '../../service/base.component';
 import { CampaignService } from '../../service/campaign.service';
-
+import { GroupService } from '../../service/group.service';
 @Component({
 	selector: 'app-campaign',
 	templateUrl: './campaign.component.html',
 	styleUrls: ['./campaign.component.scss']
 })
 export class CampaignComponent extends BaseComponent implements OnInit {
-
 	headers: any; paging: any; search = { field: 'name', term: '' };
-
+	apps: any; app = { 'app_id': '', 'os': '', 'version': '' };
 	campaigns = []; onerow: any; isEdit: boolean;
 	isHidden: boolean;
 	sources = [];
-
-	constructor(private service: CampaignService) {
-
+	constructor(private gService: GroupService, private service: CampaignService) {
 		super();
-
 		this.paging = this.service.defaultPaging();
-		
+
 		this.headers = [
 			{ id: 'name', name: 'Name', is_search: 1, st_col: 'name', st_type: 1 },
 			{ id: 'desc', name: 'Description', is_search: 1, st_col: 'desc', st_type: 1 },
@@ -32,17 +28,28 @@ export class CampaignComponent extends BaseComponent implements OnInit {
 		this.refresh();
 		this.getSources();
 	}
-
 	ngOnInit() {
-
+		
 	}
-
 	jumpPage(_page) {
 		_page = (_page <= 0) ? 1 : _page;
 		this.paging.pg_page = _page
 		this.refresh();
 	}
-
+	getApps() {
+		this.app.app_id = this.service.getAppId();
+		this.apps = this.gService.getGroupSetting();
+		for (var ap of this.apps) {
+			if (ap.app_id == this.app.app_id) {
+				this.app.os = ap.os;
+				this.app.version = ap.version;
+			}
+		}
+	}
+	switchApp(app) {
+		this.service.setAppId(app.app_id);
+		this.refresh();
+	}
 	resizePage($event) {
 		this.paging.pg_size = $event;
 		this.jumpPage(1);
@@ -50,14 +57,15 @@ export class CampaignComponent extends BaseComponent implements OnInit {
 	refresh() {
 		this.reset();
 		this.getCampaigns();
+		this.getApps();
 	}
 	reset() {
 		this.campaigns = [];
 		this.isHidden = true;
 		this.isEdit = false;
 		this.onerow = {
-			'name': 'Nạp thẻ bất kì, X2 gold',
-			'desc': 'Vina, Mobi, Viettel',
+			'name': '',
+			'desc': '',
 			'is_active': 1,
 			'utm_medium': '',
 			'utm_source': '',
@@ -66,7 +74,6 @@ export class CampaignComponent extends BaseComponent implements OnInit {
 			'agency_id': '5aa0ee42b887cb6691ed5b43',
 		};
 	}
-
 	getSources() {
 		this.service.getSources(data => {
 			this.sources = data.source;
@@ -74,7 +81,6 @@ export class CampaignComponent extends BaseComponent implements OnInit {
 				this.onerow.source_id = this.sources[0]._id;
 		});
 	}
-
 	getCampaigns() {
 		this.service.getCampaigns({
 			'st_col': this.paging.st_col,
@@ -102,7 +108,6 @@ export class CampaignComponent extends BaseComponent implements OnInit {
 			this.refresh();
 		}
 	}
-
 	show() {
 		this.isHidden = false;
 		this.isEdit = false;
@@ -116,7 +121,6 @@ export class CampaignComponent extends BaseComponent implements OnInit {
 		}
 		this.service.insert(this.onerow, data => { this.refresh(); });
 	}
-
 	onItemClick(cp: any) {
 		this.onerow = cp;
 		this.service.moveToAds(this.onerow);
@@ -127,7 +131,7 @@ export class CampaignComponent extends BaseComponent implements OnInit {
 		this.isEdit = true;
 		this.isHidden = false;
 	}
-	
+
 	update() {
 		for (var sc of this.sources) {
 			if (this.onerow.source_id == sc._id) {

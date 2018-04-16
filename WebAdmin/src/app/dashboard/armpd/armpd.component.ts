@@ -284,24 +284,24 @@ export class ArmpdComponent implements OnInit, OnDestroy {
 
 	getChart() {
 		var params = {
-			'app_id': this.service.getAppId(),
+			'app_id': null,
 			'search_os': null,
 			'search_source': null,
 			'pg_page': 1,
 			'pg_size': 100,
 			'st_col': 'date',
 			'st_type': 1,
-			'group_id':"",
+			'app_group_id':null,
 			'startdate': Math.round(this.dFrom.getTime() / 1000),
 			'enddate': Math.round(this.dTo.getTime() / 1000)
 		};
 		
-		if (this.platform.id != '-1')
+		if (this.platform.id != '-1'){
 			params.search_os = this.platform.id;
-
-		if(this.platform.id == '-1'){
-			params.group_id = this.service.getGroupId();
-			params.app_id = "";
+			params.app_id = this.service.getAppId();
+		}
+		else{
+			params.app_group_id = this.service.getGroupId();
 		}
 		
 		if (this.source.source != '-1')

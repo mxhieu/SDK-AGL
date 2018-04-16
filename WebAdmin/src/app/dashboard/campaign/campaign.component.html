@@ -9,15 +9,15 @@
                 <div class="row">
                     <div class="form-group col-md-3 col-lg-3">
                         <label class="col-form-label-none">App Id</label>
-                        <input class="form-control" name="name" placeholder="App Id" type="text" disabled [(ngModel)]="onerow.app_id">
+                        <input class="form-control"  placeholder="App Id" type="text" disabled [(ngModel)]="onerow.app_id">
                     </div>
                     <div class="form-group col-md-3 col-lg-3">
                         <label class="col-form-label-none">Agency Id</label>
-                        <input class="form-control" name="name" placeholder="Agency Id" type="text" disabled [(ngModel)]="onerow.agency_id">
+                        <input class="form-control"  placeholder="Agency Id" type="text" disabled [(ngModel)]="onerow.agency_id">
                     </div>
                     <div class="form-group col-md-3 col-lg-3">
                         <label class="col-form-label-none">Name</label>
-                        <input class="form-control" name="name" placeholder="Name ..." type="text" [ngModel]="onerow.name">
+                        <input class="form-control" placeholder="Name ..." type="text" [(ngModel)]="onerow.name">
                     </div>
                     <div class="form-group col-md-3 col-lg-3">
                         <label class="col-form-label-none">Source</label>
@@ -42,7 +42,23 @@
     </div>
     <div class="card">
         <div class="card-header">
-            <h5 class="card-title">Campaign</h5>
+            <div class="row">
+                <div class="col-md-4 col-lg-4">
+                    <h5 class="card-title">Campaign</h5>
+                </div>
+                <div class="col-md-8 col-lg-8">
+                    <div class="btn-group tright" dropdown>
+                        <button dropdownToggle type="button" class="btn btn-outline-primary dropdown-toggle" style="margin:0px;">
+                        {{app.os}} - {{app.version}} <span class="caret"></span>
+                        </button>
+                        <ul *dropdownMenu class="dropdown-menu" role="menu">
+                            <li role="menuitem" *ngFor="let app of apps" (click)="switchApp(app)" class="tpointer">
+                                <a class="dropdown-item"> {{app.os}} - {{app.version}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="card-block">
             <div class="card-tools">

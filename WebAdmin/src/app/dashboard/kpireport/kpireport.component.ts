@@ -30,18 +30,14 @@ export class KpireportComponent implements OnInit {
 	doAnalysis() {
 		var params = {
 			'app_id':null,
-			'app_group_id':null,
+			'app_group_id':this.service.getGroupId(),
 			'search_app_id':null,
 			'search_os':null,
-			'search_date': Math.round(this.dDate.getTime() / 1000),
-			'group_id':''
+			'search_date': this.service.formatDate(this.dDate)
 		};
 		if (this.platform.id != '-1'){
 			params.search_os = this.platform.id;
 			params.search_app_id = this.service.getAppId();
-		}
-		else{
-			params.app_group_id = this.service.getGroupId();
 		}
 		this.service.kpiAnalysis(params, data => {
 			this.data = data;
@@ -69,14 +65,15 @@ export class KpireportComponent implements OnInit {
 		this.versionDisplay = [];
 
 		if (event.id == '-1')
-			for (var v of this.versions)
-				this.versionDisplay.push(v);
-		else
-			for (var v of this.versions)
+			this.osVerionDisplay = false;
+		else{
+			this.osVerionDisplay = true;
+			for (var v of this.versions){
 				if (v.os == event.id)
 					this.versionDisplay.push(v);
-
-		this.version = this.versionDisplay[0];
-		this.service.setAppId(this.version.app_id)
+			}
+			this.version = this.versionDisplay[0];
+			this.service.setAppId(this.version.app_id);
+		}
 	}
 }

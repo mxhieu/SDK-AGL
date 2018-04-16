@@ -6,15 +6,15 @@
                     <label class="col-form-label">Pick date</label>
                     <input type="text" class="form-control" [minDate]="dMin" [maxDate]="dMax" #dp="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }" [(ngModel)]="dDate">
                 </div>
-                 <div class="form-group col-lg-4 col-md-4">
+                <div class="form-group col-lg-4 col-md-4">
                     <label class="col-form-label">OS</label>
-                    <select class="form-control" [(ngModel)]="platform" (ngModelChange)="osPickerChanged($event)">
+                    <select class="form-control" [(ngModel)]="platform" (ngModelChange)="osPickerChanged($event)" >
                         <option *ngFor="let p of platforms" [ngValue]="p"> {{p.name}} </option>
                     </select>
                 </div>
                 <div class="form-group col-lg-4 col-md-4" [hidden]="!osVerionDisplay">
                     <label class="col-form-label">Version</label>
-                    <select class="form-control" [(ngModel)]="version" (ngModelChange)="onVersionChanged($event)">
+                    <select class="form-control" [(ngModel)]="version" (ngModelChange)="onVersionChanged($event)" >
                         <option *ngFor="let v of versionDisplay" [ngValue]="v"> {{v.version}} </option>
                     </select>
                 </div>
