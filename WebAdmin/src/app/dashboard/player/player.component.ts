@@ -16,7 +16,7 @@ export class PlayerComponent implements OnInit {
     this.data = [];
     this.isnext = true;
     this.search = { field: 'username', term: '' };
-    this.paging = this.service.defaultPaging();
+    this.paging = this.service.defaultPaging('created_at');
 
     this.header = [
       { id: '_id', name: 'User Id', is_search: 1, st_col: '_id', st_type: 1 },

@@ -31,7 +31,7 @@ export class ArmComponent implements OnInit, OnDestroy {
 		this.dFrom = this.service.fromDate(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate());
 		this.dMin = this.service.fromDate(this.dMax.getFullYear(), this.dMax.getMonth(), this.dMax.getDate());
 
-		this.paging = this.service.defaultPaging();
+		this.paging = this.service.defaultPaging('date');
 		
 		this.header = [
 			{ id: 'date', name: 'Date', is_search: 1, st_col: 'date', st_type: 1 },
@@ -239,22 +239,20 @@ export class ArmComponent implements OnInit, OnDestroy {
 
 	doAnalysis() {
 		var params = {
-			'app_id': this.service.getAppId(),
+			'app_id': null,
 			'pg_page': this.paging.pg_page,
 			'pg_size': this.paging.pg_size,
 			'st_col': this.paging.st_col,
-			'app_group_id':'',
+			'app_group_id':this.service.getGroupId(),
 			'st_type': this.paging.st_type,
 			'startdate': Math.round(this.dFrom.getTime() / 1000),
 			'enddate': Math.round(this.dTo.getTime() / 1000),
 			['search_' + this.search.field]: this.search.term
 		};
-		if (this.platform.id != '-1')
+		if (this.platform.id != '-1'){
 			params.search_os = this.platform.id;
-		if(this.platform.id == '-1'){
-			params.app_group_id = this.service.getGroupId();
-			params.app_id = "";
-		}
+			params.app_id = this.service.getAppId();
+		}	
 		if (this.source.source != '-1')
 			params.search_source = this.source.source;
 

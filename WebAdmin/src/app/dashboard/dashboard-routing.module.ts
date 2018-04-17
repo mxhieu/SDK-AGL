@@ -13,7 +13,6 @@ import { SourceslistComponent } from './sourceslist/sourceslist.component';
 import { MetricComponent } from './metric/metric.component';
 import { CohortComponent } from './cohort/cohort.component';
 import { CampaignComponent } from './campaign/campaign.component';
-import { AdsComponent } from './ads/ads.component';
 import { KpireportComponent } from './kpireport/kpireport.component';
 import { AdsPerformanceComponent } from './ads-performance/ads-performance.component';
 import { AdsReportComponent } from './ads-report/ads-report.component';
@@ -52,10 +51,6 @@ const routes: Routes = [
   {
     path: 'setting',
     component: AppSettingComponent
-  },
-  {
-    path: 'ads',
-    component: AdsComponent
   },
   {
     path: 'ads-performance',

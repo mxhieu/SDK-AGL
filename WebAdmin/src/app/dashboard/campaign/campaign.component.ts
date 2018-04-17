@@ -15,13 +15,11 @@ export class CampaignComponent extends BaseComponent implements OnInit {
 	sources = [];
 	constructor(private gService: GroupService, private service: CampaignService) {
 		super();
-		this.paging = this.service.defaultPaging();
+		this.paging = this.service.defaultPaging('created_at');
 
 		this.headers = [
 			{ id: 'name', name: 'Name', is_search: 1, st_col: 'name', st_type: 1 },
 			{ id: 'desc', name: 'Description', is_search: 1, st_col: 'desc', st_type: 1 },
-			{ id: 'utm_source', name: 'Utm Source', is_search: 1, st_col: 'utm_source', st_type: 1 },
-			{ id: 'utm_medium', name: 'Utm Medium', is_search: 1, st_col: 'utm_medium', st_type: 1 },
 			{ id: 'created_at', name: 'Created', is_search: 1, st_col: 'created_at', st_type: 1 },
 			{ id: 'is_active', name: 'Status', is_search: 1, st_col: 'is_active', st_type: 1 }
 		];

@@ -18,7 +18,7 @@ export class AdsReportComponent extends BaseComponent implements OnInit {
 	constructor(private groupService: GroupService, private service: CampaignService) {
 		super();
 		this.adType = this.service.getAdType();
-		this.paging = this.service.defaultPaging();
+		this.paging = this.service.defaultPaging('created_at');
 		this.headers = [
 			{ id: '_id', name: 'Ad Id', is_search: 1, st_col: '_id', st_type: 1 },
 			{ id: 'name', name: 'Name', is_search: 1, st_col: 'name', st_type: 1 },

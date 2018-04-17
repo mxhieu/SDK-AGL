@@ -15,15 +15,6 @@ enum ChartApiUrls {
 @Injectable()
 export class ReportService extends BaseService {
 
-
-	defaultPlatforms() {
-		return [
-			{ 'id': '-1', 'name': 'All' },
-			{ 'id': 'android', 'name': 'Android' },
-			{ 'id': 'ios', 'name': 'iOS' },
-			{ 'id': 'web', 'name': 'Web' }];
-	}
-
 	roiAnalysis(params, callback) {
 		this.get(this.getRestUrl(ChartApiUrls.analyze_roi), params, data => {
 			callback(Array.isArray(data) ? data : []);

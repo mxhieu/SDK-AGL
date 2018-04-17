@@ -22,12 +22,6 @@
                         <input class="form-control" name="name" placeholder="Agency Id" type="text" [(ngModel)]="onerow.name">
                     </div>
                     <div class="form-group col-md-3 col-lg-3">
-                        <label class="col-form-label-none">Type</label>
-                        <select class="form-control" [(ngModel)]="onerow.type">
-                            <option *ngFor="let aT of adType" [value]="aT.id"> {{aT.name}} </option>
-                        </select>
-                    </div>
-                    <div class="form-group col-md-3 col-lg-3">
                         <label class="col-form-label-none">Description</label>
                         <input class="form-control" name="description" placeholder="Description ..." type="text" [(ngModel)]="onerow.desc">
                     </div>
@@ -82,14 +76,7 @@
     <div class="card">
         <div class="card-block">
             <div class="row">
-                <div class="form-group col-lg-3 col-md-3">
-                    <label class="col-form-label">Campaign</label>
-                    <select class="form-control" [(ngModel)]="cp">
-                        <option *ngFor="let cp of campaigns" [ngValue]="cp"> {{cp.name}}
-                        </option>
-                    </select>
-                </div>
-                <div class="form-group col-md-4 col-lg-4">
+                <div class="form-group col-md-2 col-lg-2">
                     <label class="col-form-label">Application</label>
                     <br/>
                     <div class="btn-group" dropdown>
@@ -102,6 +89,13 @@
                             </li>
                         </ul>
                     </div>
+                </div>
+                <div class="form-group col-md-3 col-lg-3">
+                    <label class="col-form-label">Campaign</label>
+                    <select class="form-control" [(ngModel)]="cp">
+                        <option *ngFor="let cp of campaigns" [ngValue]="cp"> {{cp.name}}
+                        </option>
+                    </select>
                 </div>
             </div>
             <button class="btn btn-success" (click)="doAnalysis()"><i class="icon-magic-wand"></i> Analytic </button>
@@ -126,7 +120,7 @@
                 <table class="table mb-0 table-striped table-responsive-sm table-bordered">
                     <thead class="thead-inverse">
                         <tr>
-                            <th *ngFor="let perheader of headers" (click)="sort($event)" [attr.rxdata]="perheader.id" class="{{(perheader.id == paging.st_col)? 'rxsorting' : ''}} {{(paging.st_type == 1)? 'rxup' : 'rxdown'}} text-center tMiddle" style="min-width: 128px">
+                            <th *ngFor="let perheader of headers" (click)="sort1($event)" [attr.rxdata]="perheader.id" class="{{(perheader.id == paging.st_col)? 'rxsorting' : ''}} {{(paging.st_type == 1)? 'rxup' : 'rxdown'}} text-center tMiddle" style="min-width: 128px">
                                 {{perheader.name}}
                             </th>
                             <th class="text-center tMiddle">#</th>
@@ -164,6 +158,57 @@
                                 <button class="btn btn-sm btn-danger" type="button" (click)="delete($event, ad)">
                                     <i class="icon-trash "></i>
                                 </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="100% " class="rx-pagin">
+                                <button class="rx-back" [disabled]="paging.pg_page <=1 " (click)="jumpPage(paging.pg_page - 1) ">
+                                    <</button>
+                                        <input type="number " class="rx-cur " [(ngModel)]="paging.pg_page ">
+                                        <button class="rx-next " [disabled]="!isnext " (click)="jumpPage(paging.pg_page + 1) ">></button>
+                                        <span class="rx-jump " (click)="jumpPage(paging.pg_page) "><i class="icon-rocket "></i></span>
+                                        <select type="number " class="rx-pg-size " (ngModelChange)="resizePage($event) " [(ngModel)]="paging.pg_size ">
+                                            <option value="10 " selected>10</option>
+                                            <option value="50 " selected>50</option>
+                                            <option value="100 " selected>100</option>
+                                        </select> / page
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">Facebook</h5>
+        </div>
+        <div class="card-block">
+            <div class="tTableWraper">
+                <table class="table mb-0 table-striped table-responsive-sm table-bordered">
+                    <thead class="thead-inverse">
+                        <tr>
+                            <th *ngFor="let perheader of facebookHeaders" (click)="sort2($event)" [attr.rxdata]="perheader.id" class="{{(perheader.id == paging.st_col)? 'rxsorting' : ''}} {{(paging.st_type == 1)? 'rxup' : 'rxdown'}} text-center tMiddle" style="min-width: 128px">
+                                {{perheader.name}}
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let ad of facebookAds">
+                            <td class="tTextRight">{{ad.fb_campaign_name}}</td>
+                            <td class="tTextRight">{{ad.fb_adset_name}}</td>
+                            <td class="tTextRight">{{ad.fb_adgroup_name}}</td>
+                            <!-- <td>{{ad.fb_adgroup_id}}</td>
+                            <td>{{ad.fb_adset_id}}</td>
+                            <td>{{ad.fb_adgroup_id}}</td> -->
+                            <td class="tTextRight">
+                                <strong> {{ ad.cost | currency:'USD':symbol:'1.0-3'}}</strong>
+                            </td>
+                            <td align="center" class="text-center tMiddle">
+                                <div>{{ad.start_date * 1000 | date:'dd/MM/yyyy'}}</div>
+                            </td>
+                            <td align="center" class="text-center tMiddle">
+                                <div>{{ad.end_date * 1000 | date:'dd/MM/yyyy'}}</div>
                             </td>
                         </tr>
                         <tr>

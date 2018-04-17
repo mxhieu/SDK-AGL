@@ -29,7 +29,7 @@ export class ArmpdComponent implements OnInit, OnDestroy {
 		this.dFrom = this.service.fromDate(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate());
 		this.dMin = this.service.fromDate(this.dMax.getFullYear(), this.dMax.getMonth(), this.dMax.getDate());
 
-		this.paging = this.service.defaultPaging();
+		this.paging = this.service.defaultPaging('date');
 
 		this.header = [
 			{ id: 'date', name: 'Date', is_search: 1, st_col: 'data', st_type: 1 },

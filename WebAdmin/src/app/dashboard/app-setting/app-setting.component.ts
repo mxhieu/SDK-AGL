@@ -28,7 +28,7 @@ export class AppSettingComponent extends BaseComponent implements OnInit {
 		};
 		this.isnext = true; this.isImportAreaShow = false;
 		this.search = { field: 'player_id', term: '' };
-		this.paging = this.service.defaultPaging();
+		this.paging = this.service.defaultPaging('created_at');
 		this.header = [
 			{ id: 'player_id', name: 'Player Id', is_search: 1, st_col: 'player_id', st_type: 1 },
 			{ id: 'email', name: 'Email', is_search: 1, st_col: 'email', st_type: 1 },

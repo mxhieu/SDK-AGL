@@ -13,15 +13,14 @@ export class AdsPerformanceComponent extends BaseComponent implements OnInit, On
 
 	headers: any; paging: any; search = { field: 'name', term: '' };
 	ads = []; onerow: any; isEdit: boolean; isHidden: boolean;
-	adType = []; cp: any; campaigns = []; startDate: Date; endDate: Date = new Date();
+	cp: any; campaigns = []; startDate: Date; endDate: Date = new Date();
 	apps: any; app = { 'app_id': '', 'os': '', 'version': '' };
+	facebookHeaders: any; facebookAds: any;
 
 	constructor(private gService: GroupService, private service: CampaignService) {
 
 		super();
-
-		this.adType = this.service.getAdType();
-		this.paging = this.service.defaultPaging();
+		this.paging = this.service.defaultPaging('start_date');
 		this.startDate = this.service.fromDate(this.endDate.getFullYear(), this.endDate.getMonth(), this.endDate.getDate());
 		this.headers = [
 			{ id: 'name', name: 'Name', is_search: 1, st_col: 'name', st_type: 1 },
@@ -33,6 +32,17 @@ export class AdsPerformanceComponent extends BaseComponent implements OnInit, On
 			{ id: 'utm_campaign', name: 'Utm Campaign', is_search: 1, st_col: 'utm_campaign', st_type: 1 },
 			{ id: 'link', name: 'Link', is_search: 1, st_col: 'link', st_type: 1 },
 			{ id: 'type', name: 'Type', is_search: 1, st_col: 'type', st_type: 1 },
+			{ id: 'cost', name: 'Cost', is_search: 1, st_col: 'cost', st_type: 1 },
+			{ id: 'start_date', name: 'Start date', is_search: 1, st_col: 'start_date', st_type: 1 },
+			{ id: 'end_date', name: 'End date', is_search: 1, st_col: 'end_date', st_type: 1 }
+		];
+		this.facebookHeaders = [
+			{ id: 'fb_campaign_name', name: 'Campaign Name', is_search: 1, st_col: 'fb_campaign_name', st_type: 1 },
+			{ id: 'fb_adset_name', name: 'AdSet Name', is_search: 1, st_col: 'fb_adset_name', st_type: 1 },
+			{ id: 'fb_adgroup_name', name: 'AdGroup Name', is_search: 1, st_col: 'fb_adgroup_name', st_type: 1 },
+			/*{ id: 'fb_campaign_id', name: 'Campaign Id', is_search: 1, st_col: 'fb_campaign_id', st_type: 1 },
+			{ id: 'fb_adset_id', name: 'AdSet Id', is_search: 1, st_col: 'fb_adset_id', st_type: 1 },
+			{ id: 'fb_adgroup_id', name: 'AdGroup Id', is_search: 1, st_col: 'fb_adgroup_id', st_type: 1 },*/
 			{ id: 'cost', name: 'Cost', is_search: 1, st_col: 'cost', st_type: 1 },
 			{ id: 'start_date', name: 'Start date', is_search: 1, st_col: 'start_date', st_type: 1 },
 			{ id: 'end_date', name: 'End date', is_search: 1, st_col: 'end_date', st_type: 1 }
@@ -59,8 +69,12 @@ export class AdsPerformanceComponent extends BaseComponent implements OnInit, On
 	refresh() {
 		this.reset();
 		this.getCampaigns();
-		this.doAnalysis();
 		this.getApps();
+		this.doAnalysis();
+	}
+	doAnalysis(){
+		this.syncBanner();
+		this.syncFacebookAd();
 	}
 	getApps() {
 		this.app.app_id = this.service.getAppId();
@@ -76,6 +90,7 @@ export class AdsPerformanceComponent extends BaseComponent implements OnInit, On
 		this.ads = [];
 		this.isHidden = true;
 		this.isEdit = false;
+		this.cp =  {'_id': ''};
 		this.onerow = {
 			'id': 'ad' + new Date().getMilliseconds(),
 			'name': 'ad' + new Date().getMilliseconds(),
@@ -85,14 +100,32 @@ export class AdsPerformanceComponent extends BaseComponent implements OnInit, On
 			'end_date': '',
 			'link': 'link' + new Date().getMilliseconds(),
 			'cost': new Date().getMilliseconds(),
-			'type': 1, // 1: banner, 2: facebook, 3: google
+			'type': 'banner_ad'
 		};
 	}
 	switchApp(app) {
 		this.service.setAppId(app.app_id);
 		this.refresh();
 	}
-	doAnalysis() {
+
+	syncBanner() {
+		var params = {
+			'st_col': this.paging.st_col,
+			'st_type': this.paging.st_type,
+			'pg_page': this.paging.pg_page,
+			'pg_size': this.paging.pg_size,
+			'search_type':'banner_ad',
+			'app_group_id':this.service.getGroupId(),
+			'search_app_id': this.service.getAppId(),
+			['search_' + this.search.field]: this.search.term,
+			'search_campaign_id': this.cp._id
+		};
+		this.service.getAds(params, data => { this.ads = data; });
+	}
+
+
+	syncFacebookAd(){
+
 		var params = {
 			'st_col': this.paging.st_col,
 			'st_type': this.paging.st_type,
@@ -101,35 +134,28 @@ export class AdsPerformanceComponent extends BaseComponent implements OnInit, On
 			'search_type':'facebook_ad',
 			'search_app_id': this.service.getAppId(),
 			['search_' + this.search.field]: this.search.term,
-			'search_campaign_id': null
+			'search_campaign_id': this.cp._id
 		};
-
-		if (this.cp && this.cp._id != -1)
-			params.search_campaign_id = this.cp._id;
-
-		this.service.getAds(params, data => { this.ads = data; });
+		this.service.getAds(params, data => { this.facebookAds = data; });
 	}
+
 	getCampaigns() {
-		this.service.getCampaigns({
+
+		var params = {
 			'pg_page': 1,
 			'pg_size': 100,
+			'search_source':null,
 			'search_app_id': this.service.getAppId(),
 			'search_agency_id': '5aa0ee42b887cb6691ed5b43'
-		}, data => {
+		};
+		this.service.getCampaigns(params, data => {
 			this.campaigns = data;
-			this.campaigns.push(
-				{
-					'_id': -1,
-					'name': 'All'
-				}
-			);
 			if (this.campaigns.length > 0)
 				this.cp = this.campaigns[0];
-
 		});
 	}
 
-	sort($event) {
+	sort1($event) {
 		var target = $event.target || $event.srcElement || $event.currentTarget;
 		var idAttr = target.attributes.rxdata;
 		if (typeof (idAttr) != 'undefined') {
@@ -140,10 +166,23 @@ export class AdsPerformanceComponent extends BaseComponent implements OnInit, On
 				this.paging.st_col = tempcol;
 				this.paging.st_type = -1;
 			}
-			this.refresh();
+			this.syncBanner();
 		}
 	}
-
+	sort2($event) {
+		var target = $event.target || $event.srcElement || $event.currentTarget;
+		var idAttr = target.attributes.rxdata;
+		if (typeof (idAttr) != 'undefined') {
+			var tempcol = idAttr.nodeValue;
+			if (this.paging.st_col == tempcol)
+				this.paging.st_type *= -1;
+			else {
+				this.paging.st_col = tempcol;
+				this.paging.st_type = -1;
+			}
+			this.syncFacebookAd();
+		}
+	}
 	show() {
 		this.campaigns.splice(-1, 1);
 		this.isHidden = false;
@@ -183,5 +222,4 @@ export class AdsPerformanceComponent extends BaseComponent implements OnInit, On
 		e.stopPropagation();
 		this.service.deleteAd({ 'id': ad._id }, data => { this.refresh(); });
 	}
-
 }

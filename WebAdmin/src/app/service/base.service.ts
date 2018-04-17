@@ -269,9 +269,9 @@ export class BaseService {
 		return new Date(year, month, date - 1000);
 	}
 
-	// DEFAULT
-	defaultPaging() {
-		return { pg_page: 1, pg_size: 10, st_col: 'created_at', st_type: -1 };
+	// COMMON DEFAULT SUPPORT METHOD
+	public defaultPaging(field: string) {
+		return { pg_page: 1, pg_size: 10, st_col: field, st_type: -1 };
 	}
 	public formatDate(date): string {
 		var mm = date.getMonth() + 1;
@@ -280,6 +280,14 @@ export class BaseService {
 		(mm > 9 ? '' : '0') + mm,
 		(dd > 9 ? '' : '0') + dd
 		].join('-');
+	}
+
+	public defaultPlatforms() {
+		return [
+			{ 'id': '-1', 'name': 'All' },
+			{ 'id': 'android', 'name': 'Android' },
+			{ 'id': 'ios', 'name': 'iOS' },
+			{ 'id': 'web', 'name': 'Web' }];
 	}
 
 }

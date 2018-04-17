@@ -15,7 +15,6 @@ export class TelcoComponent extends BaseComponent implements OnInit {
 
 	constructor(private service: TelcoService, private gService: GroupService) {
 		super();
-		this.paging = this.service.defaultPaging();
 	}
 
 	ngOnInit() {
@@ -88,7 +87,7 @@ export class TelcoComponent extends BaseComponent implements OnInit {
 			'is_active': 1
 		};
 		this.items = [];
-		this.paging = this.service.defaultPaging();
+		this.paging = this.service.defaultPaging('created_at');
 	}
 	toggle() {
 		this.isHidden = !this.isHidden;

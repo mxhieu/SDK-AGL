@@ -44,7 +44,7 @@
         <div class="card-header">
             <div class="row">
                 <div class="col-md-4 col-lg-4">
-                    <h5 class="card-title">Campaign</h5>
+                    <h5 class="card-title">Campaigns</h5>
                 </div>
                 <div class="col-md-8 col-lg-8">
                     <div class="btn-group tright" dropdown>
@@ -67,7 +67,7 @@
                 </select><i class="icon-arrow-down sel-ico"></i>
                 <input type="text" class="rx-cur input-search" [(ngModel)]="search.term">
                 <button class="btn btn-sm btn-default btn-search" (click)="jumpPage(1)"><i class="icon-magnifier"></i></button>
-                <button class="btn btn-sm btn-success" (click)="show()"> <i class="icon-plus"></i> Create campaign </button>
+                <button class="btn btn-sm btn-success" (click)="show()"> <i class="icon-plus"></i> Create </button>
             </div>
             <table class="table mb-0 table-striped table-responsive-sm table-bordered">
                 <thead class="thead-inverse">
@@ -79,19 +79,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let cp of campaigns" class="tpointer" (click)="onItemClick(cp)">
-                        <td>
-                            {{cp.name}}
-                        </td>
-                        <td>
-                            {{cp.desc}}
-                        </td>
-                        <td align="center" class="text-center">
-                            {{cp.utm_source}}
-                        </td>
-                        <td align="center" class="text-center">
-                            {{cp.utm_medium}}
-                        </td>
+                    <tr *ngFor="let cp of campaigns">
+                        <td> {{cp.name}} </td>
+                        <td> {{cp.desc}} </td>
                         <td align="center" class="text-center">
                             <div>{{cp.created_at * 1000 | date:'dd/MM/yyyy'}}</div>
                         </td>
