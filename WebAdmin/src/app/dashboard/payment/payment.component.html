@@ -109,8 +109,8 @@
                         <td align="center" style="vertical-align: middle;">
                             {{item.desc}}
                         </td>
-                        <td align="center" style="vertical-align: middle;">
-                            {{item.price}}
+                        <td class="tTextRight">
+                            <strong>{{item.price | currency:'USD':symbol:'1.0-3'}}</strong>
                         </td>
                         <td align="center">
                             <img [src]="getUrl(item.icon)" onError="this.src='./assets/img/ico_app_default.png'" style="width: 96px;" />

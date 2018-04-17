@@ -1,23 +1,33 @@
 <div class="animated fadeIn">
     <div class="card">
         <div class="card-header">
+            <h5 class="card-title">Ads Report</h5>
+        </div>
+        <div class="card-block">
             <div class="row">
-                <div class="col-md-4">
-                    <h5>Ads</h5>
+                <div class="form-group col-lg-4 col-md-4">
+                    <label class="col-form-label">Pick date</label>
+                    <input type="text" class="form-control" [minDate]="dMin" [maxDate]="dMax" #dp="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }" [(ngModel)]="dDate">
                 </div>
-                <div class="col-md-8">
-                    <div class="btn-group tright" dropdown>
-                        <button dropdownToggle type="button" class="btn btn-outline-primary dropdown-toggle" style="margin:0px;">
-                            {{app.os}} - {{app.version}} <span class="caret"></span>
-                        </button>
-                        <ul *dropdownMenu class="dropdown-menu" role="menu">
-                            <li role="menuitem" *ngFor="let app of apps" (click)="switchApp(app)" class="tpointer">
-                                <a class="dropdown-item"> {{app.os}} - {{app.version}}</a>
-                            </li>
-                        </ul>
-                    </div>
+                <div class="form-group col-lg-4 col-md-4">
+                    <label class="col-form-label">OS</label>
+                    <select class="form-control" [(ngModel)]="platform" (ngModelChange)="osPickerChanged($event)">
+                        <option *ngFor="let p of platforms" [ngValue]="p"> {{p.name}} </option>
+                    </select>
+                </div>
+                <div class="form-group col-lg-4 col-md-4" [hidden]="!osVerionDisplay">
+                    <label class="col-form-label">Version</label>
+                    <select class="form-control" [(ngModel)]="version" (ngModelChange)="onVersionChanged($event)">
+                        <option *ngFor="let v of versionDisplay" [ngValue]="v"> {{v.version}} </option>
+                    </select>
                 </div>
             </div>
+            <button class="btn btn-success" (click)="doAnalysis()"><i class="icon-magic-wand"></i> Analytic</button>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">Ads</h5>
         </div>
         <div class="card-block">
             <table class="table mb-0 table-striped table-responsive-sm table-bordered">

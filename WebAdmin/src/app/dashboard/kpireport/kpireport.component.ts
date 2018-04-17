@@ -19,12 +19,13 @@ export class KpireportComponent implements OnInit {
 		this.source = this.sources[0];
 		this.platforms = this.service.defaultPlatforms();
 		this.platform = this.platforms[0];
-		this.getSources();
-		this.doAnalysis();
 	}
 
 	ngOnInit() {
-
+		if (!this.service.isExpired()){ 
+			this.getSources();
+			this.doAnalysis();
+		}
 	}
 
 	doAnalysis() {

@@ -106,7 +106,7 @@
                         <th class="text-center rx-table-ico-head">Card Id</th>
                         <th class="text-center rx-table-ico-head">Name</th>
                         <th class="text-center rx-table-ico-head">Description</th>
-                        <th class="text-center rx-table-ico-head">Price (USD)</th>
+                        <th class="text-center rx-table-ico-head">Price (VND)</th>
                         <th class="text-center rx-table-ico-head">Image</th>
                         <th class="text-center rx-table-ico-head">Status</th>
                         <th class="text-center rx-table-ico-head">Created</th>
@@ -123,8 +123,8 @@
                         <td align="center" style="vertical-align: middle;">
                             {{item.desc}}
                         </td>
-                        <td align="center" style="vertical-align: middle;">
-                            {{item.price}}
+                         <td class="tTextRight">
+                            <strong>{{item.price | currency:'VND':symbol:'1.0-3'}}</strong>
                         </td>
                         <td align="center" style="vertical-align: middle;">
                             <img [src]="getUrl(item.icon)" onError="this.src='./assets/img/ico_app_default.png'" style="width: 96px;" />

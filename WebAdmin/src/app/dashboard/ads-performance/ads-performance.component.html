@@ -146,7 +146,7 @@
                                 <span class="badge badge-danger" [hidden]="!(ad.type == 3)">Google</span>
                             </td>
                             <td class="tTextRight">
-                                <strong> {{ ad.cost | currency:'VND':symbol:'1.0-0'}}</strong>
+                                <strong> {{ ad.cost | currency:'USD':symbol:'1.0-3'}}</strong>
                             </td>
                             <td align="center" class="text-center tMiddle">
                                 <div>{{ad.start_date * 1000 | date:'dd/MM/yyyy'}}</div>

@@ -13,10 +13,16 @@ export class AdsReportComponent extends BaseComponent implements OnInit {
 	headers: any; paging: any; search = { field: 'name', term: '' };
 	ads = []; onerow: any; isEdit: boolean; isHidden: boolean;
 	adType = [];
-	apps: any; app = { 'app_id': '', 'os': '', 'version':''};
-
+	apps: any; app = { 'app_id': '', 'os': '', 'version': '' };
+	version: any; versions = [{ 'version': '', 'os': '' }]; versionDisplay = [{ 'version': '', 'os': '' }];
+	source: any; sources = [{ 'source_group': "All", 'source': '-1' }];
+	dDate: Date = new Date(); dMin: Date; dMax: Date = new Date();
+	platform: any; platforms = []; osVerionDisplay: boolean;
 	constructor(private groupService: GroupService, private service: CampaignService) {
 		super();
+		this.source = this.sources[0];
+		this.platforms = this.service.defaultPlatforms();
+		this.platform = this.platforms[0];
 		this.adType = this.service.getAdType();
 		this.paging = this.service.defaultPaging('created_at');
 		this.headers = [
@@ -32,7 +38,6 @@ export class AdsReportComponent extends BaseComponent implements OnInit {
 	ngOnInit() {
 		if (!this.service.isExpired())
 			this.refresh();
-
 	}
 	jumpPage(_page) {
 		_page = (_page <= 0) ? 1 : _page;
@@ -47,9 +52,10 @@ export class AdsReportComponent extends BaseComponent implements OnInit {
 	refresh() {
 		this.reset();
 		this.getApps();
+		this.getSources();
 		this.doAnalysis();
 	}
-	switchApp(app){
+	switchApp(app) {
 		this.service.setAppId(app.app_id);
 		this.refresh();
 	}
@@ -77,16 +83,17 @@ export class AdsReportComponent extends BaseComponent implements OnInit {
 			'pg_page': this.paging.pg_page,
 			'pg_size': this.paging.pg_size,
 			'search_app_id': this.service.getAppId(),
+			'search_date': this.service.formatDate(this.dDate),
 			['search_' + this.search.field]: this.search.term
 		};
 		this.service.getAdsReport(params, data => { this.ads = data; });
 	}
 
-	getApps(){
+	getApps() {
 		this.app.app_id = this.service.getAppId();
 		this.apps = this.groupService.getGroupSetting();
-		for (var app of this.apps){
-			if(app.app_id == this.app.app_id){
+		for (var app of this.apps) {
+			if (app.app_id == this.app.app_id) {
 				this.app.os = app.os;
 				this.app.version = app.version;
 			}
@@ -106,5 +113,36 @@ export class AdsReportComponent extends BaseComponent implements OnInit {
 			this.refresh();
 		}
 	}
+	getSources() {
+		this.service.getSources(data => {
 
+			// Sources
+			this.sources = this.sources.concat(data.source);
+			this.source = this.sources[0];
+
+			// Os
+			this.versions = data.os.settings;
+			this.versionDisplay = this.versions;
+			this.version = this.versionDisplay[0];
+		});
+	}
+	onVersionChanged(event) {
+		this.service.setAppId(event.app_id);
+	}
+	osPickerChanged(event) {
+
+		this.versionDisplay = [];
+
+		if (event.id == '-1')
+			this.osVerionDisplay = false;
+		else {
+			this.osVerionDisplay = true;
+			for (var v of this.versions) {
+				if (v.os == event.id)
+					this.versionDisplay.push(v);
+			}
+			this.version = this.versionDisplay[0];
+			this.service.setAppId(this.version.app_id);
+		}
+	}
 }
