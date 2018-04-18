@@ -238,6 +238,17 @@
                     <input class="form-control" type="text" name="version" [(ngModel)]="appInfo.google_refresh_token">
                 </div>
             </div>
+            <span class="badge badge-success">Secret</span>
+            <div class="row">
+                <div class="col-md-4 col-lg-4">
+                    <label class="col-form-label">Authorization Secret</label>
+                    <input class="form-control" type="text" name="version" [(ngModel)]="appInfo.authorization_secret">
+                </div>
+                <div class="col-md-4 col-lg-4">
+                    <label class="col-form-label">Verify Authorization Secret</label>
+                    <input class="form-control" type="text" name="version" [(ngModel)]="appInfo.verify_authorization_secret">
+                </div>
+            </div>
         </div>
         <div class="card-footer">
             <button class="btn btn-sm btn-primary tright" (click)="update()"><i class="icon-check"></i> Save </button>
