@@ -13,7 +13,7 @@
                     <label class="col-form-label">To</label>
                     <input type="text" class="form-control" [minDate]="dMin" [maxDate]="dMax" #dp="bsDatepicker" bsDatepicker 
                     [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }" 
-                    [ngModel]="dTo">
+                    [(ngModel)]="dTo">
                 </div>
             </div>
             <div class="row">

@@ -1,23 +1,38 @@
 <div class="animated fadeIn">
     <div class="card">
         <div class="card-header">
-            <h5 class="card-title">Ads Report</h5>
+            <h5 class="card-title">Ad Report from {{dFrom | date: 'dd/MM/yyyy' }} to {{dTo |  date:'dd/MM/yyyy'}}</h5>
         </div>
         <div class="card-block">
             <div class="row">
-                <div class="form-group col-lg-4 col-md-4">
-                    <label class="col-form-label">Pick date</label>
-                    <input type="text" class="form-control" [minDate]="dMin" [maxDate]="dMax" #dp="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }" [(ngModel)]="dDate">
+                <div class="form-group col-lg-6 col-md-6">
+                    <label class="col-form-label">From</label>
+                    <input type="text" class="form-control" [minDate]="dMin" [maxDate]="dMax" #dp="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }" 
+                    [(ngModel)]="dFrom">
                 </div>
-                <div class="form-group col-lg-4 col-md-4">
+                <div class="form-group col-lg-6 col-md-6">
+                    <label class="col-form-label">To</label>
+                    <input type="text" class="form-control" [minDate]="dMin" [maxDate]="dMax" #dp="bsDatepicker" bsDatepicker 
+                    [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }" 
+                    [(ngModel)]="dTo">
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-6 col-md-6">
+                    <label class="col-form-label">Source</label>
+                    <select class="form-control" [(ngModel)]="source">
+                        <option *ngFor="let s of sources" [ngValue]="s"> {{s.source_group}} </option>
+                    </select>
+                </div>
+                <div class="form-group col-lg-3 col-md-3">
                     <label class="col-form-label">OS</label>
-                    <select class="form-control" [(ngModel)]="platform" (ngModelChange)="osPickerChanged($event)">
+                    <select class="form-control" [(ngModel)]="platform" (ngModelChange)="osPickerChanged($event)" >
                         <option *ngFor="let p of platforms" [ngValue]="p"> {{p.name}} </option>
                     </select>
                 </div>
-                <div class="form-group col-lg-4 col-md-4" [hidden]="!osVerionDisplay">
+                <div class="form-group col-lg-3 col-md-3" [hidden]="!osVerionDisplay">
                     <label class="col-form-label">Version</label>
-                    <select class="form-control" [(ngModel)]="version" (ngModelChange)="onVersionChanged($event)">
+                    <select class="form-control" [(ngModel)]="version" (ngModelChange)="onVersionChanged($event)" >
                         <option *ngFor="let v of versionDisplay" [ngValue]="v"> {{v.version}} </option>
                     </select>
                 </div>
@@ -50,7 +65,7 @@
                             {{ad.desc}}
                         </td>
                         <td class="tTextRight">
-                            <strong>{{ad.cost | currency:'VND':symbol:'1.0-0' }}</strong>
+                            <strong>{{ad.cost | currency:'USD':symbol:'1.0-3' }}</strong>
                         </td>
                         <td class="tTextRight">
                             <strong>{{ad.rev}}</strong>
@@ -58,6 +73,12 @@
                         <td class="tTextRight" [style.color]="ad.roi < 100 ? 'red' : 'green'">
                             <strong>{{ad.roi}}%</strong>
                         </td>
+                        <td align="center" class="text-center tMiddle">
+                                <div>{{ad.start_date * 1000 | date:'dd/MM/yyyy'}}</div>
+                            </td>
+                            <td align="center" class="text-center tMiddle">
+                                <div>{{ad.end_date * 1000 | date:'dd/MM/yyyy'}}</div>
+                            </td>
                     </tr>
                     <tr>
                         <td colspan="100% " class="rx-pagin">

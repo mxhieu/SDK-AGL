@@ -266,7 +266,7 @@ export class BaseService {
 		return Cookie.get(this.KEY_GROUP_ID);
 	}
 	fromDate(year, month, date) {
-		return new Date(year, month, date - 1000);
+		return new Date(year, month, date - 30);
 	}
 
 	// COMMON DEFAULT SUPPORT METHOD

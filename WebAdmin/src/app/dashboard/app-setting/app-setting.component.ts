@@ -144,10 +144,18 @@ export class AppSettingComponent extends BaseComponent implements OnInit {
 					this.appInfo.icon = data;
 					this.update();
 				}
-				else
+				else if(type == 1)
 				{
 					this.appInfo.logo = data;
 					this.update();
+				}
+				else
+				{
+					this.appInfo.promote_images.push({
+						'click_url':'click_url',
+						'image': data,
+						'title':'title'
+					});
 				}
 			});
 		}

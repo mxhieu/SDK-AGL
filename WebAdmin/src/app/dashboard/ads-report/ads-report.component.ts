@@ -16,7 +16,7 @@ export class AdsReportComponent extends BaseComponent implements OnInit {
 	apps: any; app = { 'app_id': '', 'os': '', 'version': '' };
 	version: any; versions = [{ 'version': '', 'os': '' }]; versionDisplay = [{ 'version': '', 'os': '' }];
 	source: any; sources = [{ 'source_group': "All", 'source': '-1' }];
-	dDate: Date = new Date(); dMin: Date; dMax: Date = new Date();
+	dFrom: Date; dMin: Date; dTo: Date = new Date(); dMax: Date = new Date();
 	platform: any; platforms = []; osVerionDisplay: boolean;
 	constructor(private groupService: GroupService, private service: CampaignService) {
 		super();
@@ -24,14 +24,18 @@ export class AdsReportComponent extends BaseComponent implements OnInit {
 		this.platforms = this.service.defaultPlatforms();
 		this.platform = this.platforms[0];
 		this.adType = this.service.getAdType();
-		this.paging = this.service.defaultPaging('created_at');
+		this.dFrom = this.service.fromDate(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate());
+		this.dMin = this.service.fromDate(this.dMax.getFullYear(), this.dMax.getMonth(), this.dMax.getDate());
+		this.paging = this.service.defaultPaging('start_date');
 		this.headers = [
 			{ id: '_id', name: 'Ad Id', is_search: 1, st_col: '_id', st_type: 1 },
 			{ id: 'name', name: 'Name', is_search: 1, st_col: 'name', st_type: 1 },
 			{ id: 'desc', name: 'Description', is_search: 1, st_col: 'desc', st_type: 1 },
 			{ id: 'cost', name: 'Cost', is_search: 1, st_col: 'cost', st_type: 1 },
 			{ id: 'rev', name: 'Rev', is_search: 1, st_col: 'rev', st_type: 1 },
-			{ id: 'roi', name: 'Roi', is_search: 1, st_col: 'roi', st_type: 1 }
+			{ id: 'roi', name: 'Roi', is_search: 1, st_col: 'roi', st_type: 1 },
+			{ id: 'start_date', name: 'Start date', is_search: 1, st_col: 'start_date', st_type: 1 },
+			{ id: 'end_date', name: 'End date', is_search: 1, st_col: 'end_date', st_type: 1 }
 		];
 	}
 
@@ -82,10 +86,20 @@ export class AdsReportComponent extends BaseComponent implements OnInit {
 			'st_type': this.paging.st_type,
 			'pg_page': this.paging.pg_page,
 			'pg_size': this.paging.pg_size,
-			'search_app_id': this.service.getAppId(),
-			'search_date': this.service.formatDate(this.dDate),
+			'app_group_id':this.service.getGroupId(),
+			'search_app_id': null,
+			'startdate': Math.round(this.dFrom.getTime() / 1000),
+			'enddate': Math.round(this.dTo.getTime() / 1000),
 			['search_' + this.search.field]: this.search.term
 		};
+
+		if (this.platform.id != '-1'){
+			params.search_os = this.platform.id;
+			params.search_app_id = this.service.getAppId();
+		}	
+		if (this.source.source != '-1')
+			params.search_source = this.source.source;
+
 		this.service.getAdsReport(params, data => { this.ads = data; });
 	}
 
