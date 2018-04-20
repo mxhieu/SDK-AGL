@@ -14,17 +14,17 @@ import { AppSettingComponent } from './app-setting/app-setting.component';
 import { PaymentComponent } from './payment/payment.component';
 import { NotificationComponent } from './notification/notification.component';
 import { TelcoComponent } from './telco/telco.component';
-import { ArmpdComponent } from './armpd/armpd.component';
-import { ArmComponent } from './arm/arm.component';
-import { RoiComponent } from './roi/roi.component';
-import { RoipdComponent } from './roipd/roipd.component';
+import { ArmpdComponent } from './reports/armpd/armpd.component';
+import { ArmComponent } from './reports/arm/arm.component';
+import { RoiComponent } from './reports/roi/roi.component';
+import { RoipdComponent } from './reports/roipd/roipd.component';
 import { SourceslistComponent } from './sourceslist/sourceslist.component';
 import { MetricComponent } from './metric/metric.component';
-import { CohortComponent } from './cohort/cohort.component';
+import { CohortComponent } from './reports/cohort/cohort.component';
 import { CampaignComponent } from './campaign/campaign.component';
-import { KpireportComponent } from './kpireport/kpireport.component';
-import { AdsPerformanceComponent } from './ads-performance/ads-performance.component';
-import { AdsReportComponent } from './ads-report/ads-report.component';
+import { KpireportComponent } from './reports/kpireport/kpireport.component';
+import { AdsPerformanceComponent } from './reports/ads-performance/ads-performance.component';
+import { AdsReportComponent } from './reports/ads-report/ads-report.component';
 
 @NgModule({
   imports: [

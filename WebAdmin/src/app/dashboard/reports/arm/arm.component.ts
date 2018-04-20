@@ -1,24 +1,26 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ReportService } from '../../../service/report.service';
 import { AmChartsService, AmChart } from "@amcharts/amcharts3-angular";
-import { ReportService } from '../../service/report.service';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 
 @Component({
-	selector: 'app-armpd',
-	styleUrls: ['./armpd.component.scss'],
-	templateUrl: './armpd.component.html'
+	selector: 'app-arm',
+	templateUrl: './arm.component.html',
+	styleUrls: ['./arm.component.scss']
 })
-export class ArmpdComponent implements OnInit, OnDestroy {
+
+export class ArmComponent implements OnInit, OnDestroy {
 
 	chart: AmChart;
 
 	dFrom: Date; dMin: Date; dTo: Date = new Date(); dMax: Date = new Date();
+
 	data = []; paging: any; isnext = true; header: any;
 	search = { field: 'source', term: '' };
 	version: any; versions = [{ 'version': '', 'os': '' }]; versionDisplay = [{ 'version': '', 'os': '' }];
 	source: any; sources = [{ 'source_group': "All", 'source': '-1' }];
 	platform: any; platforms = [];
-	osVerionDisplay : boolean;
+	osVerionDisplay: boolean;
 
 	constructor(private service: ReportService, private AmCharts: AmChartsService) {
 
@@ -32,7 +34,7 @@ export class ArmpdComponent implements OnInit, OnDestroy {
 		this.paging = this.service.defaultPaging('date');
 
 		this.header = [
-			{ id: 'date', name: 'Date', is_search: 1, st_col: 'data', st_type: 1 },
+			{ id: 'date', name: 'Date', is_search: 1, st_col: 'date', st_type: 1 },
 			{ id: 'source', name: 'Source', is_search: 1, st_col: 'source', st_type: 1 },
 			{ id: 'os', name: 'Device Os', is_search: 1, st_col: 'os', st_type: 1 },
 			{ id: 'install', name: 'Install', is_search: 1, st_col: 'install', st_type: 1 },
@@ -50,9 +52,8 @@ export class ArmpdComponent implements OnInit, OnDestroy {
 			{ id: 'cr30', name: 'CR30', is_search: 1, st_col: 'cr30', st_type: 1 },
 			{ id: 'rev30', name: 'REV30', is_search: 1, st_col: 'rev30', st_type: 1 }
 		];
-
-		this.doAnalysis();
 		this.getSources();
+		this.doAnalysis();
 	}
 
 	ngOnInit(): void {
@@ -85,14 +86,12 @@ export class ArmpdComponent implements OnInit, OnDestroy {
 				"id": "leftAxis",
 				"axisAlpha": 0,
 				"gridAlpha": 0,
-				"position": "left",
-				"title": ""
+				"position": "left"
 			}, {
 				"id": "rightAxis",
 				"axisAlpha": 0,
 				"gridAlpha": 0,
-				"position": "right",
-				"title": ""
+				"position": "right"
 			}],
 			"graphs": [{
 				"alphaField": "alpha",
@@ -207,7 +206,6 @@ export class ArmpdComponent implements OnInit, OnDestroy {
 			}
 		});
 	}
-
 	ngOnDestroy() {
 		if (this.chart)
 			this.AmCharts.destroyChart(this.chart);
@@ -229,9 +227,9 @@ export class ArmpdComponent implements OnInit, OnDestroy {
 		var idAttr = target.attributes.rxdata;
 		if (typeof (idAttr) != 'undefined') {
 			var tempcol = idAttr.nodeValue;
-			if (this.paging.st_col == tempcol) {
+			if (this.paging.st_col == tempcol)
 				this.paging.st_type *= -1;
-			} else {
+			else {
 				this.paging.st_col = tempcol;
 				this.paging.st_type = -1;
 			}
@@ -241,36 +239,32 @@ export class ArmpdComponent implements OnInit, OnDestroy {
 
 	doAnalysis() {
 		var params = {
+			'app_id': null,
 			'pg_page': this.paging.pg_page,
 			'pg_size': this.paging.pg_size,
 			'st_col': this.paging.st_col,
+			'app_group_id': this.service.getGroupId(),
 			'st_type': this.paging.st_type,
-			'search_os': null,
-			'search_source': null,
 			'startdate': Math.round(this.dFrom.getTime() / 1000),
 			'enddate': Math.round(this.dTo.getTime() / 1000),
 			['search_' + this.search.field]: this.search.term
 		};
-		if (this.platform.id != '-1'){
+		if (this.platform.id != '-1') {
 			params.search_os = this.platform.id;
 			params.app_id = this.service.getAppId();
 		}
-		else{
-			params.app_group_id = this.service.getGroupId();
-		}
-
 		if (this.source.source != '-1')
 			params.search_source = this.source.source;
 
-		this.service.armPdAnalysis(params, data => {
+		this.service.armAnalysis(params, data => {
 			this.data = data;
 			this.isnext = (this.data.length >= this.paging.pg_size) ? true : false;
 		});
 		this.getChart();
 	}
-
 	getSources() {
 		this.service.getSources(data => {
+
 			// Sources
 			this.sources = this.sources.concat(data.source);
 			this.source = this.sources[0];
@@ -284,30 +278,27 @@ export class ArmpdComponent implements OnInit, OnDestroy {
 
 	getChart() {
 		var params = {
-			'app_id': null,
-			'search_os': null,
-			'search_source': null,
 			'pg_page': 1,
 			'pg_size': 100,
 			'st_col': 'date',
 			'st_type': 1,
-			'app_group_id':null,
+			'app_id': null,
+			'app_group_id': this.service.getGroupId(),
+			'search_os': null,
+			'search_source': null,
 			'startdate': Math.round(this.dFrom.getTime() / 1000),
 			'enddate': Math.round(this.dTo.getTime() / 1000)
 		};
-		
-		if (this.platform.id != '-1'){
+		if (this.platform.id != '-1') {
 			params.search_os = this.platform.id;
 			params.app_id = this.service.getAppId();
 		}
-		else{
-			params.app_group_id = this.service.getGroupId();
-		}
-		
 		if (this.source.source != '-1')
 			params.search_source = this.source.source;
 
-		this.service.armPdChartAnalysis(params, data => { this.makeChart(data); });
+		this.service.armChartAnalysis(params, data => {
+			this.makeChart(data);
+		});
 	}
 	onVersionChanged(event) {
 		this.service.setAppId(event.app_id);
@@ -318,14 +309,14 @@ export class ArmpdComponent implements OnInit, OnDestroy {
 
 		if (event.id == '-1')
 			this.osVerionDisplay = false;
-		else{
+		else {
 			this.osVerionDisplay = true;
-			for (var v of this.versions)
+			for (var v of this.versions) {
 				if (v.os == event.id)
 					this.versionDisplay.push(v);
+			}
+			this.version = this.versionDisplay[0];
+			this.service.setAppId(this.version.app_id);
 		}
-
-		this.version = this.versionDisplay[0];
-		this.service.setAppId(this.version.app_id)
 	}
 }

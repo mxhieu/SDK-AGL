@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ReportService } from '../../service/report.service';
+import { ReportService } from '../../../service/report.service';
 
 @Component({
 	selector: 'app-cohort',
@@ -55,7 +55,7 @@ export class CohortComponent implements OnInit {
 			'st_col': 'date_install',
 			'search_os': null,
 			'app_id':null,
-			'app_group_id':null,
+			'app_group_id':this.service.getGroupId(),
 			'search_source': null,
 			'startdate': Math.round(this.dFrom.getTime() / 1000),
 			'enddate': Math.round(this.dTo.getTime() / 1000),
@@ -67,10 +67,6 @@ export class CohortComponent implements OnInit {
 			params.search_os = this.platform.id;
 			params.app_id = this.service.getAppId();
 		}
-		else{
-			params.app_group_id = this.service.getGroupId();
-		}
-
 		if (this.source.source != '-1')
 			params.search_source = this.source.source;
 

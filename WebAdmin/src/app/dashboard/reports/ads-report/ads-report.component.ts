@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { BaseComponent } from '../../service/base.component';
-import { CampaignService } from '../../service/campaign.service';
-import { GroupService } from '../../service/group.service';
+import { BaseComponent } from '../../../service/base.component';
+import { CampaignService } from '../../../service/campaign.service';
+import { GroupService } from '../../../service/group.service';
 
 @Component({
 	selector: 'app-ads-report',
@@ -87,16 +87,11 @@ export class AdsReportComponent extends BaseComponent implements OnInit {
 			'pg_page': this.paging.pg_page,
 			'pg_size': this.paging.pg_size,
 			'app_group_id':this.service.getGroupId(),
-			'search_app_id': null,
+			'search_app_id': this.service.getAppId(),
 			'startdate': Math.round(this.dFrom.getTime() / 1000),
 			'enddate': Math.round(this.dTo.getTime() / 1000),
 			['search_' + this.search.field]: this.search.term
 		};
-
-		if (this.platform.id != '-1'){
-			params.search_os = this.platform.id;
-			params.search_app_id = this.service.getAppId();
-		}	
 		if (this.source.source != '-1')
 			params.search_source = this.source.source;
 

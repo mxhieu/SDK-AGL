@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { BaseComponent } from '../../service/base.component';
-import { CampaignService } from '../../service/campaign.service';
+import { BaseComponent } from '../../../service/base.component';
+import { CampaignService } from '../../../service/campaign.service';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
-import { GroupService } from '../../service/group.service';
+import { GroupService } from '../../../service/group.service';
 
 @Component({
 	selector: 'app-ads-performance',
