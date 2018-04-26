@@ -1,3 +1,5 @@
+import { PrivateService } from './service.private';
+
 export abstract class BaseComponent {
 
 	private defaultIcon() : string {
@@ -9,7 +11,7 @@ export abstract class BaseComponent {
 
 	public getUrl(icon: string): string {
 		if(icon)
-			return 'http://apitracking.bonanhem.com/upload/image/' + icon;
+			return PrivateService.BASE_RESOURCE_URL + icon;
 		return this.defaultIcon();
 	}
 

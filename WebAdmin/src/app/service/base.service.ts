@@ -44,7 +44,7 @@ export class BaseService {
 		headers.append('Content-Type', 'multipart/form-data');
 		headers.append('Accept', 'application/json');
 		let options = new RequestOptions({ headers: headers });
-		this.http.post('http://apitracking.bonanhem.com/v1/upload', formData)
+		this.http.post(PrivateService.BASE_UPLOAD_URL, formData)
 			.subscribe(
 				data => {
 					try {
@@ -227,7 +227,7 @@ export class BaseService {
 	}
 
 	public getUrl(icon: string): string {
-		return 'http://apitracking.bonanhem.com/upload/image/' + icon;
+		return PrivateService.BASE_RESOURCE_URL + icon;
 	}
 
 	public getSources(callback) {

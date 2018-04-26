@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PlayerComponent } from './player/player.component';
 import { AppSettingComponent } from './app-setting/app-setting.component';
-import { PaymentComponent } from './payment/payment.component';
+import { InAppComponent } from './in-app/in-app.component';
 import { NotificationComponent } from './notification/notification.component';
 import { TelcoComponent } from './telco/telco.component';
 import { ArmpdComponent } from './reports/armpd/armpd.component';
@@ -62,8 +62,8 @@ const routes: Routes = [
     component: AdsReportComponent
   },
   {
-    path: 'payment',
-    component: PaymentComponent
+    path: 'in-app',
+    component: InAppComponent
   },
   {
     path: 'telco',

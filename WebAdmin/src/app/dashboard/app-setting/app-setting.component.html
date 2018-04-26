@@ -167,7 +167,7 @@
                 </div>
             </div>
             <hr/>
-            <span class="badge badge-success">Basic Config</span>
+            <span class="badge badge-warning">Basic Config</span>
             <div class="row">
                 <div class="col-md-3 col-lg-3">
                     <label class="col-form-label">BundleId/Package name</label>
@@ -195,7 +195,23 @@
                 </div>
             </div>
             <hr/>
-            <span class="badge badge-success">Appsflyer Config</span>
+            <span class="badge badge-primary">Facebook Config</span>
+            <div class="row">
+                <div class="col-md-3 col-lg-3">
+                    <label class="col-form-label">Facebook App Id</label>
+                    <input class="form-control" type="text" name="version" [(ngModel)]="appInfo.facebook_app_id">
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <label class="col-form-label">Facebook App Secret</label>
+                    <input class="form-control" type="text" name="version" [(ngModel)]="appInfo.facebook_app_secret">
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <label class="col-form-label">Facebook Access Token</label>
+                    <input class="form-control" type="text" name="version" [(ngModel)]="appInfo.facebook_access_token">
+                </div>
+            </div>
+            <hr/>
+            <span class="badge badge-dark">Appsflyer Config</span>
             <div class="row">
                 <div class="col-md-3 col-lg-3">
                     <label class="col-form-label">Appsflyer Id</label>
@@ -210,10 +226,6 @@
                     <input class="form-control" type="text" name="version" [(ngModel)]="appInfo.mopub_ad_unit_id">
                 </div>
                 <div class="col-md-3 col-lg-3">
-                    <label class="col-form-label">Facebook App Id</label>
-                    <input class="form-control" type="text" name="version" [(ngModel)]="appInfo.facebook_app_id">
-                </div>
-                <div class="col-md-3 col-lg-3">
                     <label class="col-form-label">Store Id</label>
                     <input class="form-control" type="text" name="version" [(ngModel)]="appInfo.store_id">
                 </div>
@@ -223,7 +235,7 @@
                 </div>
             </div>
             <hr/>
-            <span class="badge badge-success">Google IAP Config</span>
+            <span class="badge badge-success">Google IAP Verification</span>
             <div class="row">
                 <div class="col-md-4 col-lg-4">
                     <label class="col-form-label">Google Client Id</label>
@@ -238,15 +250,40 @@
                     <input class="form-control" type="text" name="version" [(ngModel)]="appInfo.google_refresh_token">
                 </div>
             </div>
-            <span class="badge badge-success">Secret</span>
+            <hr/>
+            <span class="badge badge-info">Google Auth Verification</span>
             <div class="row">
                 <div class="col-md-4 col-lg-4">
+                    <label class="col-form-label">Auth Google Client Id</label>
+                    <input class="form-control" type="text" name="version" [(ngModel)]="appInfo.auth_google_client_id">
+                </div>
+            </div>
+            <hr/>
+            <span class="badge badge-danger">100D Secret</span>
+            <div class="row">
+                <div class="col-md-3 col-lg-3">
                     <label class="col-form-label">Authorization Secret</label>
                     <input class="form-control" type="text" name="version" [(ngModel)]="appInfo.authorization_secret">
                 </div>
-                <div class="col-md-4 col-lg-4">
+                <div class="col-md-3 col-lg-3">
                     <label class="col-form-label">Verify Authorization Secret</label>
                     <input class="form-control" type="text" name="version" [(ngModel)]="appInfo.verify_authorization_secret">
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <label class="col-form-label">Agent</label>
+                    <input class="form-control" type="text" name="version" [(ngModel)]="appInfo.pp_agent">
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <label class="col-form-label">Secret</label>
+                    <input class="form-control" type="text" name="version" [(ngModel)]="appInfo.pp_secret">
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <label class="col-form-label">Key</label>
+                    <input class="form-control" type="text" name="version" [(ngModel)]="appInfo.pp_key">
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <label class="col-form-label">Encrypt Key</label>
+                    <input class="form-control" type="text" name="version" [(ngModel)]="appInfo.pp_encrypt_key">
                 </div>
             </div>
         </div>

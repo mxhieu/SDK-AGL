@@ -88,14 +88,8 @@
             </div>
             <table class="table table-hover mb-0 table-striped fixed table-bordered">
                 <thead class="thead-default">
-                    <tr>
-                        <th class="text-center rx-table-ico-head">Store Id</th>
-                        <th class="text-center rx-table-ico-head">Name</th>
-                        <th class="text-center rx-table-ico-head">Description</th>
-                        <th class="text-center rx-table-ico-head">Price (USD)</th>
-                        <th class="text-center rx-table-ico-head">Image</th>
-                        <th class="text-center rx-table-ico-head">Status</th>
-                        <th class="text-center rx-table-ico-head">Created</th>
+                   <tr>
+                        <th *ngFor="let perheader of header" (click)="sort($event)" [attr.rxdata]="perheader.id" class="{{(perheader.id == paging.st_col)? 'rxsorting' : ''}} {{(paging.st_type == 1)? 'rxup' : 'rxdown'}} tMiddle">{{perheader.name}}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -109,7 +103,7 @@
                         <td align="center" style="vertical-align: middle;">
                             {{item.desc}}
                         </td>
-                        <td class="tTextRight">
+                        <td class="tMiddle" style="vertical-align: middle;">
                             <strong>{{item.price | currency:'USD':symbol:'1.0-3'}}</strong>
                         </td>
                         <td align="center">
@@ -121,6 +115,20 @@
                         </td>
                         <td align="center" style="vertical-align: middle;">
                             {{item.created_at * 1000 | date:'dd/MM/yyyy'}}
+                        </td>
+                    </tr>
+                     <tr>
+                        <td colspan="100%" class="rx-pagin">
+                            <button class="rx-back" [disabled]="paging.pg_page <= 1" (click)="jumpPage(paging.pg_page - 1)">
+                                <</button>
+                                    <input type="number" class="rx-cur" [(ngModel)]="paging.pg_page">
+                                    <button class="rx-next" [disabled]="!isnext" (click)="jumpPage(paging.pg_page + 1)">></button>
+                                    <span class="rx-jump" (click)="jumpPage(paging.pg_page)"><i class="icon-rocket"></i></span>
+                                    <select type="number" class="rx-pg-size" (ngModelChange)="resizePage($event)" [(ngModel)]="paging.pg_size">
+                                        <option value="10" selected>10</option>
+                                        <option value="50" selected>50</option>
+                                        <option value="100" selected>100</option>
+                                    </select> / page
                         </td>
                     </tr>
                 </tbody>

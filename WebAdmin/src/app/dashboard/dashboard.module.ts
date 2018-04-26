@@ -11,7 +11,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 
 import { PlayerComponent } from './player/player.component';
 import { AppSettingComponent } from './app-setting/app-setting.component';
-import { PaymentComponent } from './payment/payment.component';
+import { InAppComponent } from './in-app/in-app.component';
 import { NotificationComponent } from './notification/notification.component';
 import { TelcoComponent } from './telco/telco.component';
 import { ArmpdComponent } from './reports/armpd/armpd.component';
@@ -37,7 +37,7 @@ import { AdsReportComponent } from './reports/ads-report/ads-report.component';
     AmChartsModule
   ],
   declarations: [
-    PlayerComponent, AppSettingComponent, PaymentComponent,
+    PlayerComponent, AppSettingComponent, InAppComponent,
     NotificationComponent, TelcoComponent, ArmpdComponent, ArmComponent,
     RoiComponent, RoipdComponent, SourceslistComponent, MetricComponent, CohortComponent, CampaignComponent, KpireportComponent, AdsPerformanceComponent, AdsReportComponent]
 })
