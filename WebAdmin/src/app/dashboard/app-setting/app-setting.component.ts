@@ -186,6 +186,10 @@ export class AppSettingComponent extends BaseComponent implements OnInit {
 			this.getPlayerAds();
 		});
 	}
+	deletePromoteImage(idx: any){
+		this.appInfo.promote_images.splice(idx, 1);
+		this.update();
+	}
 	fileChange(event) {
 		let fileList: FileList = event.target.files;
 		if (fileList.length > 0) {
