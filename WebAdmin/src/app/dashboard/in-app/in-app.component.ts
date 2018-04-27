@@ -22,6 +22,7 @@ export class InAppComponent extends BaseComponent implements OnInit {
 		this.header = [
 			{ id: 'id', name: 'Store Id', is_search: 1, st_col: 'id', st_type: 1 },
 			{ id: 'name', name: 'Name', is_search: 1, st_col: 'name', st_type: 1 },
+			{ id: 'game_diamond', name: 'Diamond', is_search: 1, st_col: 'game_diamond', st_type: 1 },
 			{ id: 'desc', name: 'Description', is_search: 1, st_col: 'desc', st_type: 1 },
 			{ id: 'price', name: 'Price (USD)', is_search: 1, st_col: 'price', st_type: 1 },
 			{ id: 'image', name: 'Image', is_search: -1, st_col: 'image', st_type: 1 },

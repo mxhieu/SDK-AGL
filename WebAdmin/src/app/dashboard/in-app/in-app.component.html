@@ -9,43 +9,47 @@
                     </div>
                     <div class="card-block">
                         <div class="row">
-                            <div class="form-group col-md-6 col-lg-6">
+                            <div class="form-group col-md-4 col-lg-4">
                                 <label class="col-form-label-none">Item Id</label>
                                 <input class="form-control" name="id" placeholder="Item Id ..." type="text" [(ngModel)]="onerow.id">
                             </div>
-                            <div class="form-group col-md-6 col-lg-6">
+                            <div class="form-group col-md-4 col-lg-4">
                                 <label class="col-form-label-none">Item Name</label>
                                 <input class="form-control" name="name" placeholder="Item Name ..." type="text" [(ngModel)]="onerow.name">
                             </div>
+                            <div class="form-group col-md-4 col-lg-4">
+                                <label class="col-form-label-none">Diamond</label>
+                                <input class="form-control" name="name" placeholder="Item Name ..." type="text" [(ngModel)]="onerow.game_diamond">
+                            </div>
                         </div>
                         <div class="row">
-                            <div class="form-group col-lg-6 col-md-6">
+                            <div class="form-group col-lg-4 col-md-4">
                                 <label class="col-form-label-none">Description</label>
                                 <input class="form-control" name="desc" placeholder="Description ..." type="text" [(ngModel)]="onerow.desc">
                             </div>
-                            <div class="form-group col-lg-6 col-md-6">
+                            <div class="form-group col-lg-4 col-md-4">
                                 <label class="col-form-label-none">Price (USD)</label>
                                 <input class="form-control" name="Price" placeholder="Price ..." type="number" [(ngModel)]="onerow.price">
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-lg-6 col-md-6 row">
+                            <div class="col-lg-4 col-md-4">
                                 <div class="col-lg-6 col-md-6">
                                     <label class="col-form-label-none">Status</label>
                                 </div>
                                 <div class="col-lg-6 col-md-6">
-                                    <label class="switch switch-text switch-pill switch-primary tright">
+                                    <label class="switch switch-text switch-pill switch-primary">
                                         <input type="checkbox" class="switch-input" [checked]="onerow.is_active" (change)="onerow.is_active == 1 ? onerow.is_active = 0: onerow.is_active = 1">
                                         <span class="switch-label" data-on="On" data-off="Off"></span>
                                         <span class="switch-handle"></span>
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-lg-6 col-md-6">
-                                <div class="col-lg-6 col-md-6">
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12">
+                                <div class="col-lg-12 col-md-12">
                                     <input type="file" (change)="fileChange($event)" placeholder="Upload file" accept="*.*">
                                 </div>
-                                <img [src]="onerow.icon" onError="this.src='./assets/img/ico_app_default.png'" style="width: 128px;" />
+                                <img [src]="getUrl(onerow.icon)" onError="this.src='./assets/img/ico_app_default.png'" style="width: 40%;" />
                             </div>
                         </div>
                     </div>
@@ -69,7 +73,7 @@
                 <div class="col-md-8">
                     <div class="btn-group tright" dropdown>
                         <button dropdownToggle type="button" class="btn btn-outline-primary dropdown-toggle" style="margin:0px;">
-                        {{app.os}} - {{app.version}} <span class="caret"></span>
+                            {{app.os}} - {{app.version}} <span class="caret"></span>
                         </button>
                         <ul *dropdownMenu class="dropdown-menu" role="menu">
                             <li role="menuitem" *ngFor="let app of apps" (click)="switchApp(app)" class="tpointer">
@@ -83,12 +87,12 @@
         <div class="card-block">
             <div class="card-tools">
                 <button class="btn btn-sm btn-primary tright" (click)=(toggle())>
-                <i class="icon-plus"></i> Create
+                    <i class="icon-plus"></i> Create
                 </button>
             </div>
             <table class="table table-hover mb-0 table-striped fixed table-bordered">
                 <thead class="thead-default">
-                   <tr>
+                    <tr>
                         <th *ngFor="let perheader of header" (click)="sort($event)" [attr.rxdata]="perheader.id" class="{{(perheader.id == paging.st_col)? 'rxsorting' : ''}} {{(paging.st_type == 1)? 'rxup' : 'rxdown'}} tMiddle">{{perheader.name}}</th>
                     </tr>
                 </thead>
@@ -99,6 +103,9 @@
                         </td>
                         <td align="center" style="vertical-align: middle;">
                             {{item.name}}
+                        </td>
+                        <td align="center" style="vertical-align: middle;">
+                            {{item.game_diamond}}
                         </td>
                         <td align="center" style="vertical-align: middle;">
                             {{item.desc}}
@@ -117,7 +124,7 @@
                             {{item.created_at * 1000 | date:'dd/MM/yyyy'}}
                         </td>
                     </tr>
-                     <tr>
+                    <tr>
                         <td colspan="100%" class="rx-pagin">
                             <button class="rx-back" [disabled]="paging.pg_page <= 1" (click)="jumpPage(paging.pg_page - 1)">
                                 <</button>
