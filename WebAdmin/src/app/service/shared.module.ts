@@ -7,10 +7,11 @@ import { PlayerService } from '../service/player.service';
 import { PaymentService } from '../service/payment.service';
 import { CampaignService } from '../service/campaign.service';
 import { PlayerAdsService } from '../service/player-ads.service';
+import { NotificationService } from '../service/notification.service';
 
 @NgModule({
 	providers: [
-		BaseService, GroupService, TelcoService, ReportService,
+		BaseService, GroupService, TelcoService, ReportService,NotificationService,
 		PlayerService, PaymentService, CampaignService, PlayerAdsService]
 })
 export class SharedModule { }

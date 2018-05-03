@@ -10,20 +10,19 @@
                     <div class="card-block card-block-form">
                         <form action="" class="form-horizontal col-md-12 col-sx-12 row" method="post">
                             <div class="form-group col-md-12 rx-form-group">
-                                <label class="form-control-label">Message</label>
-                                <textarea name="textarea-input" rows="9" class="form-control" placeholder="Message.." [(ngModel)]="onerow.message"></textarea>
+                                <label class="form-control-label">Title</label>
+                                <textarea name="textarea-input" rows="3" class="form-control"  placeholder="Title ..."
+                                [(ngModel)]="onerow.title"></textarea>
                             </div>
                             <div class="form-group col-md-12 rx-form-group">
-                                <label class="form-control-label">Segment</label>
-                                <select id="select" name="select" class="form-control">
-                                    <option value="0">[Please select]</option>
-                                    <option value="1">100 most active users</option>
-                                    <option value="2">All users</option>
-                                </select>
+                                <label class="form-control-label">Body</label>
+                                <textarea name="textarea-input" rows="9" class="form-control" placeholder="Message ..."
+                                 [(ngModel)]="onerow.body"></textarea> 
                             </div>
-                             <div class="form-group col-md-12 rx-form-group">
-                                <label class="form-control-label">Users</label>
-                                <textarea name="textarea-input" rows="3" class="form-control"></textarea>
+                            <div class="form-group col-md-12 rx-form-group">
+                                <label class="form-control-label">User Ids</label>
+                                <textarea name="textarea-input" rows="3" class="form-control" placeholder="Player Ids ..."
+                                [(ngModel)]="onerow.player_ids"></textarea>
                             </div>
                         </form>
                     </div>
@@ -41,46 +40,47 @@
         </div>
     </div>
     <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Push notification</h5>
+                </div>
+                <div class="col-md-8">
+                    <div class="btn-group tright" dropdown>
+                        <button dropdownToggle type="button" class="btn btn-outline-primary dropdown-toggle" style="margin:0px;">
+                            {{app.os}} - {{app.version}} <span class="caret"></span>
+                        </button>
+                        <ul *dropdownMenu class="dropdown-menu" role="menu">
+                            <li role="menuitem" *ngFor="let app of apps" (click)="switchApp(app)" class="tpointer">
+                                <a class="dropdown-item"> {{app.os}} - {{app.version}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="card-block">
-            <h4>Push notification
-			<button class="btn btn-sm btn-primary tright" (click)=(toggle())>
-			<i class="icon-plus"></i> New message
-			</button>
-			</h4>
-            <p class="text-muted">Manage notification campaigns and send messages to engage the right users at the right moment</p>
+            <button class="btn btn-sm btn-primary tright" (click)=(toggle())> Push </button>
             <table class="table table-hover table-outline mb-0 hidden-sm-down table-striped">
                 <thead class="thead-default">
                     <tr>
-                        <th class="rx-table-ico-head">Message</th>
-                        <th class="text-center rx-table-ico-head">Status <i class="icon-question"></i> </th>
-                        <th class="text-center rx-table-ico-head">Delivery date <i class="icon-question"></i> </th>
-                        <th class="text-center rx-table-ico-head">Target estimate <i class="icon-question"></i> </th>
-                        <th class="text-center rx-table-ico-head">Open rate <i class="icon-question"></i></th>
-                        <th class="text-center rx-table-ico-head">##</th>
+                        <th *ngFor="let perheader of header" (click)="sort($event)" [attr.rxdata]="perheader.id" class="{{(perheader.id == paging.st_col)? 'rxsorting' : ''}} {{(paging.st_type == 1)? 'rxup' : 'rxdown'}}">{{perheader.name}}</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let msg of msgs">
                         <td>
-                            {{msg.message}}
+                            {{msg.title}}
                         </td>
-                        <td align="center">
-                            <span class="tag tag-success" *ngIf="msgs.status">Sent</span>
-                            <span class="tag tag-danger" *ngIf="!msg.status">Waiting</span>
+                        <td>
+                            {{msg.body}}
                         </td>
-                        <td align="center">
-                            <div class="small">{{msg.created_at * 1000 | date:'dd/MM/yyyy HH:mm:ss'}}</div>
+                        <td>
+                            <div>{{msg.created_at * 1000 | date:'dd/MM/yyyy HH:mm:ss'}}</div>
                         </td>
-                        <td align="center">
-                            {{msg.target}}
-                        </td>
-                        <td align="center">
-                            {{msg.open}}
-                        </td>
-                        <td align="center">
-                            <button class="btn btn-sm btn-danger" type="submit" (click)=(delete())>
-                                <i class="icon-trash"></i>
-                            </button>
+                        <td>
+                            <span class="tag tag-success" *ngIf="msg.status == 'done'">Done</span>
+                            <span class="tag tag-danger" *ngIf="msg.status == 'waiting'">Waiting</span>
                         </td>
                     </tr>
                 </tbody>
