@@ -69,7 +69,7 @@ export class AppSettingComponent extends BaseComponent implements OnInit {
 				}
 			});
 	}
-	
+
 	getPlayerAds() {
 		this.playerAdsService.getAdsPlayers({
 			'search_app_id': this.service.getAppId(),
@@ -139,23 +139,27 @@ export class AppSettingComponent extends BaseComponent implements OnInit {
 		if (fileList.length > 0) {
 			let file: File = fileList[0];
 			this.service.upload(file, data => {
-				if (type == 0)
-				{
+				if (type == 0) {
 					this.appInfo.icon = data;
 					this.update();
 				}
-				else if(type == 1)
-				{
+				else if (type == 1) {
 					this.appInfo.logo = data;
 					this.update();
 				}
-				else
-				{
+				else if (type == 2) {
 					this.appInfo.promote_images.push({
-						'click_url':'click_url',
+						'click_url': 'click_url',
 						'image': data,
-						'title':'title'
+						'title': 'title'
 					});
+				}
+				else if (type == 3) {
+					this.appInfo.fcm_private_file = data;
+					this.update();
+				} else if (type == 4) {
+					this.appInfo.apns_private_file = data;
+					this.update();
 				}
 			});
 		}
@@ -186,7 +190,7 @@ export class AppSettingComponent extends BaseComponent implements OnInit {
 			this.getPlayerAds();
 		});
 	}
-	deletePromoteImage(idx: any){
+	deletePromoteImage(idx: any) {
 		this.appInfo.promote_images.splice(idx, 1);
 		this.update();
 	}

@@ -11,17 +11,17 @@
                         <form action="" class="form-horizontal col-md-12 col-sx-12 row" method="post">
                             <div class="form-group col-md-12 rx-form-group">
                                 <label class="form-control-label">Title</label>
-                                <textarea name="textarea-input" rows="3" class="form-control"  placeholder="Title ..."
+                                <textarea name="textarea-input" rows="2" class="form-control"  placeholder="Title ..."
                                 [(ngModel)]="onerow.title"></textarea>
                             </div>
                             <div class="form-group col-md-12 rx-form-group">
                                 <label class="form-control-label">Body</label>
-                                <textarea name="textarea-input" rows="9" class="form-control" placeholder="Message ..."
+                                <textarea name="textarea-input" rows="7" class="form-control" placeholder="Message ..."
                                  [(ngModel)]="onerow.body"></textarea> 
                             </div>
                             <div class="form-group col-md-12 rx-form-group">
                                 <label class="form-control-label">User Ids</label>
-                                <textarea name="textarea-input" rows="3" class="form-control" placeholder="Player Ids ..."
+                                <textarea name="textarea-input" rows="2" class="form-control" placeholder="Player Ids ..."
                                 [(ngModel)]="onerow.player_ids"></textarea>
                             </div>
                         </form>
@@ -41,23 +41,7 @@
     </div>
     <div class="card">
         <div class="card-header">
-            <div class="row">
-                <div class="col-md-4">
-                    <h5>Push notification</h5>
-                </div>
-                <div class="col-md-8">
-                    <div class="btn-group tright" dropdown>
-                        <button dropdownToggle type="button" class="btn btn-outline-primary dropdown-toggle" style="margin:0px;">
-                            {{app.os}} - {{app.version}} <span class="caret"></span>
-                        </button>
-                        <ul *dropdownMenu class="dropdown-menu" role="menu">
-                            <li role="menuitem" *ngFor="let app of apps" (click)="switchApp(app)" class="tpointer">
-                                <a class="dropdown-item"> {{app.os}} - {{app.version}}</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+            <h5>Push notification</h5>
         </div>
         <div class="card-block">
             <button class="btn btn-sm btn-primary tright" (click)=(toggle())> Push </button>

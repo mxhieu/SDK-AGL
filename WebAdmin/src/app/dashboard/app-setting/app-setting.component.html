@@ -267,6 +267,52 @@
                 </div>
             </div>
             <hr/>
+            <span class="badge badge-success">Firebase FCM</span>
+            <div class="row">
+                <div class="col-md-4 col-lg-4">
+                    <label class="col-form-label">FCM Database Url</label>
+                    <input class="form-control" type="text" name="version" [(ngModel)]="appInfo.fcm_database_url">
+                </div>
+                <div class="col-md-4 col-lg-4">
+                    <label class="col-form-label">FCM Private File</label>
+                    <label for="imageUpload3" class="col-form-label btn btn-outline-primary" style="background: #fff">
+                        <i class="icon-cloud-upload"> </i>
+                    </label>
+                    <input id = "imageUpload3" type="file" (change)="fileChanged($event, 3)" 
+                    placeholder="Upload file" accept="image/*" style="display: none">
+                    <input class="form-control"  disabled="true" type="text" name="version" [(ngModel)]="appInfo.fcm_private_file">
+                </div>
+            </div>
+            <hr/>
+            <span class="badge badge-success">APNS Config</span>
+            <div class="row">
+                <div class="col-md-4 col-lg-4">
+                    <label class="col-form-label">APNS Key Id</label>
+                    <input class="form-control" type="text" name="version" [(ngModel)]="appInfo.apns_key_id">
+                </div>
+                <div class="col-md-4 col-lg-4">
+                    <label class="col-form-label">APNS Team Id</label>
+                    <input class="form-control" type="text" name="version" [(ngModel)]="appInfo.apns_team_id">
+                </div>
+                <div class="col-md-4 col-lg-4">
+                    <label class="col-form-label">APNS Private File</label>
+                    <label for="imageUpload3" class="col-form-label btn btn-outline-primary" style="background: #fff">
+                        <i class="icon-cloud-upload"> </i>
+                    </label>
+                    <input id = "imageUpload3" type="file" (change)="fileChanged($event, 4)" 
+                    placeholder="Upload file" accept="image/*" style="display: none">
+                    <input class="form-control"  disabled="true" type="text" name="version" [(ngModel)]="appInfo.apns_private_file">
+                </div>
+            </div>
+            <hr/>
+            <span class="badge badge-info">Google Auth Verification</span>
+            <div class="row">
+                <div class="col-md-4 col-lg-4">
+                    <label class="col-form-label">Auth Google Client Id</label>
+                    <input class="form-control" type="text" name="version" [(ngModel)]="appInfo.auth_google_client_id">
+                </div>
+            </div>
+            <hr/>
             <span class="badge badge-danger">100D Secret</span>
             <div class="row">
                 <div class="col-md-3 col-lg-3">

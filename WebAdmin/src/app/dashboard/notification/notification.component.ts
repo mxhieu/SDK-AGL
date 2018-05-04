@@ -9,7 +9,7 @@ import { GroupService } from '../../service/group.service';
 export class NotificationComponent implements OnInit {
 
 	msgs: any[]; header = []; onerow: any; paging: any;
-	isHidden: boolean; apps: any; app = { 'app_id': '', 'os': '', 'version': '' }; 
+	isHidden: boolean;
 
 	constructor(private service: NotificationService, private gService: GroupService) {
 
@@ -27,30 +27,18 @@ export class NotificationComponent implements OnInit {
 		if (!this.service.isExpired()) {
 			this.reset();
 			this.syncData();
-			this.getApps();
+			
 		}
 	}
 	send() {
-		this.onerow.app_id = this.service.getAppId();
+		this.onerow.app_group_id = this.service.getGroupId();
 		this.service.sendMessage(this.onerow, data => {this.refresh();})
 	}
-	switchApp(app) {
-		this.service.setAppId(app.app_id);
-		this.refresh();
-	}
+	
 	cancel() {
 		this.refresh();
 	}
-	getApps() {
-		this.app.app_id = this.service.getAppId();
-		this.apps = this.gService.getGroupSetting();
-		for (var ap of this.apps) {
-			if (ap.app_id == this.app.app_id) {
-				this.app.os = ap.os;
-				this.app.version = ap.version;
-			}
-		}
-	}
+	
 	sort($event) {
 		var target = $event.target || $event.srcElement || $event.currentTarget;
 		var idAttr = target.attributes.rxdata;
@@ -94,7 +82,7 @@ export class NotificationComponent implements OnInit {
 
 	syncData() {
 		this.service.getNotifications({
-			'search_app_id': this.service.getAppId(),
+			'search_app_group_id': this.service.getGroupId(),
 			'pg_page': this.paging.pg_page,
 			'pg_size': this.paging.pg_size,
 			'st_col': this.paging.st_col,
