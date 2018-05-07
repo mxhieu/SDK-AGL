@@ -8,21 +8,27 @@
                         <h4 class="card-title">New message</h4>
                     </div>
                     <div class="card-block card-block-form">
-                        <form action="" class="form-horizontal col-md-12 col-sx-12 row" method="post">
-                            <div class="form-group col-md-12 rx-form-group">
+                        <form action="" class="form-horizontal col-md-12 col-sx-12" method="post">
+                            <div class="form-group col-md-12 col-lg-12 rx-form-group">
                                 <label class="form-control-label">Title</label>
-                                <textarea name="textarea-input" rows="2" class="form-control"  placeholder="Title ..."
-                                [(ngModel)]="onerow.title"></textarea>
+                                <textarea name="textarea-input" rows="2" class="form-control" placeholder="Title ..." [(ngModel)]="onerow.title"></textarea>
+                            </div>
+                            <div class="col-md-12 col-lg-12 rx-form-group">
+                                <label class="col-form-label">Platform</label>
+                                <br/>
+                                <label class="radio-inline" *ngFor="let st of platforms">
+                                    <input type="radio" 
+                                    [checked]="st == onerow.platform" 
+                                    [value]="st" (change)="onPlatformChanged(st)" name="st"> {{ st }}
+                                </label>
                             </div>
                             <div class="form-group col-md-12 rx-form-group">
                                 <label class="form-control-label">Body</label>
-                                <textarea name="textarea-input" rows="7" class="form-control" placeholder="Message ..."
-                                 [(ngModel)]="onerow.body"></textarea> 
+                                <textarea name="textarea-input" rows="7" class="form-control" placeholder="Message ..." [(ngModel)]="onerow.body"></textarea>
                             </div>
                             <div class="form-group col-md-12 rx-form-group">
                                 <label class="form-control-label">User Ids</label>
-                                <textarea name="textarea-input" rows="2" class="form-control" placeholder="Player Ids ..."
-                                [(ngModel)]="onerow.player_ids"></textarea>
+                                <textarea name="textarea-input" rows="2" class="form-control" placeholder="Player Ids ..." [(ngModel)]="onerow.player_ids"></textarea>
                             </div>
                         </form>
                     </div>
@@ -60,11 +66,16 @@
                             {{msg.body}}
                         </td>
                         <td>
-                            <div>{{msg.created_at * 1000 | date:'dd/MM/yyyy HH:mm:ss'}}</div>
+                            <span class="badge badge-success" *ngIf="msg.platform == 'all'">All</span>
+                            <span class="badge badge-info" *ngIf="msg.platform == 'ios'">iOS</span>
+                            <span class="badge badge-danger" *ngIf="msg.platform == 'android'">Android</span>
                         </td>
                         <td>
-                            <span class="tag tag-success" *ngIf="msg.status == 'done'">Done</span>
-                            <span class="tag tag-danger" *ngIf="msg.status == 'waiting'">Waiting</span>
+                            <span class="badge badge-success" *ngIf="msg.status == 'done'">Done</span>
+                            <span class="badge badge-danger" *ngIf="msg.status == 'waiting'">Waiting</span>
+                        </td>
+                        <td>
+                            {{msg.created_at * 1000 | date:'dd/MM/yyyy HH:mm:ss'}}
                         </td>
                     </tr>
                 </tbody>

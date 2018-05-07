@@ -279,7 +279,7 @@
                         <i class="icon-cloud-upload"> </i>
                     </label>
                     <input id = "imageUpload3" type="file" (change)="fileChanged($event, 3)" 
-                    placeholder="Upload file" accept="image/*" style="display: none">
+                    placeholder="Upload file" accept="*/*" style="display: none">
                     <input class="form-control"  disabled="true" type="text" name="version" [(ngModel)]="appInfo.fcm_private_file">
                 </div>
             </div>
@@ -300,7 +300,7 @@
                         <i class="icon-cloud-upload"> </i>
                     </label>
                     <input id = "imageUpload3" type="file" (change)="fileChanged($event, 4)" 
-                    placeholder="Upload file" accept="image/*" style="display: none">
+                    placeholder="Upload file" accept="*/*" style="display: none">
                     <input class="form-control"  disabled="true" type="text" name="version" [(ngModel)]="appInfo.apns_private_file">
                 </div>
             </div>

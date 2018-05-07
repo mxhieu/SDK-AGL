@@ -10,14 +10,16 @@ export class NotificationComponent implements OnInit {
 
 	msgs: any[]; header = []; onerow: any; paging: any;
 	isHidden: boolean;
+	platforms = ['all', 'android', 'ios'];
 
 	constructor(private service: NotificationService, private gService: GroupService) {
 
 		this.header = [
 			{ id: 'title', name: 'Title', is_search: 1, st_col: 'title', st_type: 1 },
 			{ id: 'body', name: 'Body', is_search: 1, st_col: 'body', st_type: 1 },
-			{ id: 'created_at', name: 'Created', is_search: 1, st_col: 'created_at', st_type: 1 },
-			{ id: 'status', name: 'Status', is_search: 1, st_col: 'status', st_type: 1 }];
+			{ id: 'platform', name: 'Platform', is_search: 1, st_col: 'platform', st_type: 1 },
+			{ id: 'status', name: 'Status', is_search: 1, st_col: 'status', st_type: 1 },
+			{ id: 'created_at', name: 'Created', is_search: 1, st_col: 'created_at', st_type: 1 }];
 
 	}
 	ngOnInit() {
@@ -27,7 +29,6 @@ export class NotificationComponent implements OnInit {
 		if (!this.service.isExpired()) {
 			this.reset();
 			this.syncData();
-			
 		}
 	}
 	send() {
@@ -54,7 +55,9 @@ export class NotificationComponent implements OnInit {
 		}
 	}
 
-
+	onPlatformChanged(entry){
+		this.onerow.platform = entry;
+	}
 	jumpPage(_page) {
 		_page = (_page <= 0) ? 1 : _page;
 		this.paging.pg_page = _page
@@ -70,14 +73,12 @@ export class NotificationComponent implements OnInit {
 		this.onerow = {
 			'message': 'New message',
 			'status': 0,
-			'open': '0',
-			'target': '1000',
 			'app_id': '',
-			'is_active': 1,
 			'created_at': '0'
 		};
 		this.msgs = [];
 		this.paging = { pg_page: 1, pg_size: 100 };
+		this.onerow.platform = this.platforms[0];
 	}
 
 	syncData() {
