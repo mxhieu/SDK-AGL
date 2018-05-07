@@ -40,11 +40,37 @@ export class BaseService {
 		let formData: FormData = new FormData();
 		formData.append('timeseed', '' + Date.now());
 		formData.append('uploadFile', file, file.name);
+		formData.append('authorization', this.getToken());
 		let headers = new Headers();
 		headers.append('Content-Type', 'multipart/form-data');
 		headers.append('Accept', 'application/json');
 		let options = new RequestOptions({ headers: headers });
 		this.http.post(PrivateService.BASE_UPLOAD_URL, formData)
+			.subscribe(
+				data => {
+					try {
+						let json = JSON.parse(data.text());
+						if (json['success'] && json['success'] == 1)
+							callback(json['data']);
+						else this.failure(json['msg']);
+					} catch (err) {
+						this.failure(err);
+					}
+				},
+				err => {
+					this.failure(err);
+				});
+	}
+	uploadFile(file: File, callback) {
+		let formData: FormData = new FormData();
+		formData.append('timeseed', '' + Date.now());
+		formData.append('uploadFile', file, file.name);
+		formData.append('authorization', this.getToken());
+		let headers = new Headers();
+		headers.append('Content-Type', 'multipart/form-data');
+		headers.append('Accept', 'application/json');
+		let options = new RequestOptions({ headers: headers });
+		this.http.post(PrivateService.BASE_UPLOAD_URL_FILE, formData)
 			.subscribe(
 				data => {
 					try {

@@ -11,4 +11,5 @@ export class PrivateService {
 	static BASE_URL = PrivateService.BASE_DOMAIN + 'v1/';
 	static BASE_UPLOAD_URL = PrivateService.BASE_DOMAIN + 'v1/upload';
 	static BASE_RESOURCE_URL = PrivateService.BASE_DOMAIN + 'upload/image/';
+	static BASE_UPLOAD_URL_FILE = PrivateService.BASE_DOMAIN + 'v1/upload/file';
 }

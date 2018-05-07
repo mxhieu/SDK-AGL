@@ -137,31 +137,40 @@ export class AppSettingComponent extends BaseComponent implements OnInit {
 	fileChanged(event, type: number) {
 		let fileList: FileList = event.target.files;
 		if (fileList.length > 0) {
+			
 			let file: File = fileList[0];
-			this.service.upload(file, data => {
-				if (type == 0) {
-					this.appInfo.icon = data;
-					this.update();
-				}
-				else if (type == 1) {
-					this.appInfo.logo = data;
-					this.update();
-				}
-				else if (type == 2) {
-					this.appInfo.promote_images.push({
-						'click_url': 'click_url',
-						'image': data,
-						'title': 'title'
-					});
-				}
-				else if (type == 3) {
+
+			if (type == 3) {
+				this.service.uploadFile(file, data => {
 					this.appInfo.fcm_private_file = data;
 					this.update();
-				} else if (type == 4) {
+				});
+			}
+			else if (type == 4) {
+				this.service.uploadFile(file, data => {
 					this.appInfo.apns_private_file = data;
 					this.update();
-				}
-			});
+				});
+			}
+			else {
+				this.service.upload(file, data => {
+					if (type == 0) {
+						this.appInfo.icon = data;
+						this.update();
+					}
+					else if (type == 1) {
+						this.appInfo.logo = data;
+						this.update();
+					}
+					else if (type == 2) {
+						this.appInfo.promote_images.push({
+							'click_url': 'click_url',
+							'image': data,
+							'title': 'title'
+						});
+					}
+				});
+			}
 		}
 	}
 	deleteAd(event: any, d: any) {
