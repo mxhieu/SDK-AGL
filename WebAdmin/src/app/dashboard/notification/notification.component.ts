@@ -9,8 +9,12 @@ import { GroupService } from '../../service/group.service';
 export class NotificationComponent implements OnInit {
 
 	msgs: any[]; header = []; onerow: any; paging: any;
-	isHidden: boolean;
-	platforms = ['all', 'android', 'ios'];
+	isHidden: boolean; platforms = ['all', 'android', 'ios'];
+	filter_types = [
+		{'id': 'all', 'name': 'Tất cả'},
+		{'id': 'user_not_pay', 'name': 'User chưa nạp tiền'},
+		{'id': 'list_defined_users', 'name': 'Danh sách users'}
+	]; filter_type : any;
 
 	constructor(private service: NotificationService, private gService: GroupService) {
 
@@ -20,7 +24,15 @@ export class NotificationComponent implements OnInit {
 			{ id: 'platform', name: 'Platform', is_search: 1, st_col: 'platform', st_type: 1 },
 			{ id: 'status', name: 'Status', is_search: 1, st_col: 'status', st_type: 1 },
 			{ id: 'created_at', name: 'Created', is_search: 1, st_col: 'created_at', st_type: 1 }];
+		
+		this.filter_type = this.filter_types[0];
 
+		this.onerow = {
+			'status': 0,
+			'created_at': '0',
+			'filter_type': this.filter_type.id,
+			'platform': this.platforms[0]
+		};
 	}
 	ngOnInit() {
 		this.refresh();
@@ -33,6 +45,7 @@ export class NotificationComponent implements OnInit {
 	}
 	send() {
 		this.onerow.app_group_id = this.service.getGroupId();
+		this.onerow.filter_type = this.filter_type.id;
 		this.service.sendMessage(this.onerow, data => {this.refresh();})
 	}
 	
@@ -70,17 +83,10 @@ export class NotificationComponent implements OnInit {
 	}
 	reset() {
 		this.isHidden = true;
-		this.onerow = {
-			'message': 'New message',
-			'status': 0,
-			'app_id': '',
-			'created_at': '0'
-		};
+		
 		this.msgs = [];
 		this.paging = { pg_page: 1, pg_size: 100 };
-		this.onerow.platform = this.platforms[0];
 	}
-
 	syncData() {
 		this.service.getNotifications({
 			'search_app_group_id': this.service.getGroupId(),
@@ -91,7 +97,6 @@ export class NotificationComponent implements OnInit {
 		}, data => {
 			this.msgs = data;
 		});
-
 	}
 	toggle() {
 		this.isHidden = !this.isHidden;

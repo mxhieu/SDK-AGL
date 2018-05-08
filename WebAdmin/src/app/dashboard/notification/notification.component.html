@@ -9,24 +9,32 @@
                     </div>
                     <div class="card-block card-block-form">
                         <form action="" class="form-horizontal col-md-12 col-sx-12" method="post">
+                            <div class="col-md-12 col-lg-12 rx-form-group">
+                                <label class="form-control-label">Platform</label>
+                                <br/>
+                                <label class="radio-inline" *ngFor="let st of platforms">
+                                    <input type="radio" [checked]="st == onerow.platform" [value]="st" (change)="onPlatformChanged(st)" name="st"> {{ st }}
+                                </label>
+                            </div>
                             <div class="form-group col-md-12 col-lg-12 rx-form-group">
                                 <label class="form-control-label">Title</label>
                                 <textarea name="textarea-input" rows="2" class="form-control" placeholder="Title ..." [(ngModel)]="onerow.title"></textarea>
-                            </div>
-                            <div class="col-md-12 col-lg-12 rx-form-group">
-                                <label class="col-form-label">Platform</label>
-                                <br/>
-                                <label class="radio-inline" *ngFor="let st of platforms">
-                                    <input type="radio" 
-                                    [checked]="st == onerow.platform" 
-                                    [value]="st" (change)="onPlatformChanged(st)" name="st"> {{ st }}
-                                </label>
                             </div>
                             <div class="form-group col-md-12 rx-form-group">
                                 <label class="form-control-label">Body</label>
                                 <textarea name="textarea-input" rows="7" class="form-control" placeholder="Message ..." [(ngModel)]="onerow.body"></textarea>
                             </div>
-                            <div class="form-group col-md-12 rx-form-group">
+                            <div class="col-md-12 col-lg-12 rx-form-group">
+                                <label class="form-control-label">Filter Type</label>
+                                <select class="form-control" 
+                                [ngModelOptions]="{standalone: true}"
+                                [(ngModel)]="filter_type">
+                                    <option *ngFor="let ft of filter_types" 
+                                    [ngValue]="ft">{{ft.name}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-12 rx-form-group"
+                            [hidden]="filter_type.id != 'list_defined_users'">
                                 <label class="form-control-label">User Ids</label>
                                 <textarea name="textarea-input" rows="2" class="form-control" placeholder="Player Ids ..." [(ngModel)]="onerow.player_ids"></textarea>
                             </div>
