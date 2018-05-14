@@ -1,0 +1,130 @@
+<div class="animated fadeIn">
+    <div class="card-block rx-floathide-form" [hidden]="isHidden">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title" [hidden]="isEdit">Create User</h5>
+                <h5 class="card-title" [hidden]="!isEdit">Edit User</h5>
+            </div>
+            <div class="card-block">
+                <div class="row">
+                    <div class="form-group col-md-3 col-lg-3">
+                        <label class="col-form-label-none">Username</label>
+                        <input class="form-control"  placeholder="UserName" type="text" [disabled]="isEdit" [(ngModel)]="onerow.username">
+                    </div>
+                    <div class="form-group col-md-3 col-lg-3">
+                        <label class="col-form-label-none">Fullname</label>
+                        <input class="form-control"  placeholder="FullName" type="text" [(ngModel)]="onerow.fullname">
+                    </div>
+                    <div class="form-group col-md-3 col-lg-3">
+                        <label class="col-form-label-none">Password</label>
+                        <input class="form-control"  placeholder="Password" type="password" [disabled]="isEdit" [(ngModel)]="onerow.password">
+                    </div>
+                    <div class="form-group col-md-3 col-lg-3">
+                        <label class="col-form-label-none">Email</label>
+                        <input class="form-control" placeholder="Email" type="text" [(ngModel)]="onerow.email">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-3 col-lg-3">
+                        <label class="col-form-label-none">Address</label>
+                        <input class="form-control"  placeholder="Address" type="text" [(ngModel)]="onerow.address">
+                    </div>
+                    <div class="form-group col-md-3 col-lg-3">
+                        <label class="col-form-label-none">Phone</label>
+                        <input class="form-control" placeholder="Phone" type="text" [(ngModel)]="onerow.phone">
+                    </div>
+                    <div class="form-group col-md-3 col-lg-3">
+                        <label class="col-form-label-none">Role</label>
+                        <select class="form-control" [(ngModel)]="onerow.roleid">
+                            <option *ngFor="let role of roles" [value]="role._id"> {{role.name}}</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- <div class="row">
+                    <div class="form-group col-md-3 col-lg-3">
+                        <label class="col-form-label-none">GroupApp</label>
+                        <div class="lk-multi-selectbox-result clearfix form-control">
+                            <div *ngFor="let groupchoose of arrgroupschoose" >
+                            </div>
+                        </div>
+                        <select class="form-control" (change)="onChange($event.target.value)">
+                            <option *ngFor="let group of groups_tmp" [value]="group._id"> {{group.name}}</option>
+                        </select>
+                    </div>
+                </div> -->
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-sm btn-primary" (click)=(save(onerow)) [hidden]="isEdit"><i class="icon-plus"></i> Create </button>
+                <button class="btn btn-sm btn-primary" (click)=(update()) [hidden]="!isEdit"><i class="icon-check"></i> Save</button>
+                <button class="btn btn-sm btn-secondary tright" (click)="refresh()"><i class="icon-close"></i> Cancel</button>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-4 col-lg-4">
+                    <h5 class="card-title">Users</h5>
+                </div>
+            </div>
+        </div>
+        <div class="card-block">
+            <div class="card-tools">
+                <select class="sel-search" [(ngModel)]="search.field">
+                    <option *ngFor="let perheader of headers" [hidden]="!perheader.is_search" value="{{perheader.id}}">{{perheader.name}}</option>
+                </select><i class="icon-arrow-down sel-ico"></i>
+                <input type="text" class="rx-cur input-search" [(ngModel)]="search.term" [value]="search.term">
+                <button class="btn btn-sm btn-default btn-search" (click)="jumpPage(1)"><i class="icon-magnifier"></i></button>
+                <button class="btn btn-sm btn-success" (click)="show()"> <i class="icon-plus"></i> Create </button>
+            </div>
+            <table class="table mb-0 table-striped table-responsive-sm table-bordered">
+                <thead class="thead-inverse">
+                    <tr>
+                        <th *ngFor="let perheader of headers" (click)="sort($event)" [attr.rxdata]="perheader.id" class="{{(perheader.id == paging.st_col)? 'rxsorting' : ''}} {{(paging.st_type == 1)? 'rxup' : 'rxdown'}} text-center">
+                            {{perheader.name}}
+                        </th>
+                        <th class="text-center">#</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let cp of users">
+                        <td> {{cp.username}} </td>
+                        <td> {{cp.fullname}} </td>
+                        <td> {{cp.phone}} </td>
+                        <td> {{cp.email}} </td>
+                        <td> {{cp.address}} </td>
+                        <td align="center" class="text-center">
+                            <div>{{cp.created_at * 1000 | date:'dd/MM/yyyy'}}</div>
+                        </td>
+                        <td align="center" class="text-center">
+                            <span class="tag tag-success" [hidden]="!(cp.is_active || 0)">Active</span>
+                            <span class="tag tag-default" [hidden]="(cp.is_active || 0)">Inactive</span>
+                        </td>
+                        <td class="text-center">
+                            <button class="btn btn-sm btn-primary" type="button" (click)="onEdit($event, cp)">
+                            <i class="fa fa-pencil-square-o"></i>
+                            </button>
+                            <button class="btn btn-sm btn-danger" type="button" (click)="delete($event, cp)">
+                            <i class="icon-trash "></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="100% " class="rx-pagin">
+                            <button class="rx-back " [disabled]="paging.pg_page <=1 " (click)="jumpPage(paging.pg_page - 1) ">
+                            <</button>
+                            <input type="number " class="rx-cur " [(ngModel)]="paging.pg_page ">
+                            <button class="rx-next " [disabled]="!isnext " (click)="jumpPage(paging.pg_page + 1) ">></button>
+                            <span class="rx-jump " (click)="jumpPage(paging.pg_page) "><i class="icon-rocket "></i></span>
+                            <select type="number " class="rx-pg-size " (ngModelChange)="resizePage($event) " [(ngModel)]="paging.pg_size ">
+                                <option value="10 " selected>10</option>
+                                <option value="50 " selected>50</option>
+                                <option value="100 " selected>100</option>
+                            </select> / page
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

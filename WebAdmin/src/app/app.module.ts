@@ -24,6 +24,7 @@ import { RoutingService } from './service/routing.service';
 
 // Layouts
 import { FullLayoutComponent } from './dashboard/full-layout.component';
+import { RbacLayoutComponent } from './rbac/rbac-layout.component';
 import { LoginComponent } from './user/login.component';
 import { FooterComponent } from './shared/footer.component';
 import { p404Component } from './shared/404.component';
@@ -74,7 +75,8 @@ import { SharedModule } from './service/shared.module';
         HelpComponent,
         ResourceComponent,
         ForgotPasswordComponent,
-        GroupComponent
+        GroupComponent,
+        RbacLayoutComponent
     ],
     providers: [
         ConfigService,
