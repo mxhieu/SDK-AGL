@@ -5,33 +5,46 @@
             <div class="rx-floathide-form rx-isview" [hidden]="isHidden">
                 <div class="card">
                     <div class="card-header">
-                        <h5> In-apps </h5>
+                        <h5> IAP items config </h5>
                     </div>
                     <div class="card-block">
                         <div class="row">
-                            <div class="form-group col-md-4 col-lg-4">
+                            <div class="form-group col-md-3 col-lg-3">
                                 <label class="col-form-label-none">Item Id</label>
                                 <input class="form-control" name="id" placeholder="Item Id ..." type="text" [(ngModel)]="onerow.id">
                             </div>
-                            <div class="form-group col-md-4 col-lg-4">
+                            <div class="form-group col-md-3 col-lg-3">
                                 <label class="col-form-label-none">Item Name</label>
                                 <input class="form-control" name="name" placeholder="Item Name ..." type="text" [(ngModel)]="onerow.name">
                             </div>
-                            <div class="form-group col-md-4 col-lg-4">
+                            <div class="form-group col-md-3 col-lg-3">
                                 <label class="col-form-label-none">Diamond</label>
-                                <input class="form-control" name="name" placeholder="Item Name ..." type="text" [(ngModel)]="onerow.game_diamond">
+                                <input class="form-control" name="name" placeholder="Diamond ..." type="text" [(ngModel)]="onerow.game_diamond">
+                            </div>
+                            <div class="form-group col-md-3 col-lg-3">
+                                <label class="col-form-label-none">Currency</label>
+                                <select class="form-control" 
+                                [ngModelOptions]="{standalone: true}"
+                                [(ngModel)]="onerow.currency">
+                                    <option *ngFor="let currency of currencies" 
+                                    [ngValue]="currency">{{currency}}</option>
+                                </select>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="form-group col-lg-4 col-md-4">
+                            <div class="form-group col-lg-3 col-md-3">
                                 <label class="col-form-label-none">Description</label>
                                 <input class="form-control" name="desc" placeholder="Description ..." type="text" [(ngModel)]="onerow.desc">
                             </div>
-                            <div class="form-group col-lg-4 col-md-4">
+                            <div class="form-group col-lg-3 col-md-3">
                                 <label class="col-form-label-none">Price (USD)</label>
-                                <input class="form-control" name="Price" placeholder="Price ..." type="number" [(ngModel)]="onerow.price">
+                                <input class="form-control" name="Price" placeholder="Price(USD) ..." type="number" [(ngModel)]="onerow.price">
                             </div>
-                            <div class="col-lg-4 col-md-4">
+                            <div class="form-group col-lg-3 col-md-3">
+                                <label class="col-form-label-none">Price (VND)</label>
+                                <input class="form-control" name="Price" placeholder="Price(VND)..." type="number" [(ngModel)]="onerow.price_vnd">
+                            </div>
+                            <div class="col-lg-3 col-md-3">
                                 <div class="col-lg-6 col-md-6">
                                     <label class="col-form-label-none">Status</label>
                                 </div>
@@ -104,14 +117,21 @@
                         <td align="center" style="vertical-align: middle;">
                             {{item.name}}
                         </td>
-                        <td align="center" style="vertical-align: middle;">
-                            {{item.game_diamond}}
-                        </td>
+                       
                         <td align="center" style="vertical-align: middle;">
                             {{item.desc}}
                         </td>
                         <td class="tMiddle" style="vertical-align: middle;">
                             <strong>{{item.price | currency:'USD':symbol:'1.0-3'}}</strong>
+                        </td>
+                        <td class="tMiddle" style="vertical-align: middle;">
+                            <strong>{{item.price_vnd | currency:'VND':symbol:'1.0-3'}}</strong>
+                        </td>
+                         <td align="center" style="vertical-align: middle;">
+                            {{item.game_diamond}}
+                        </td>
+                        <td align="center" style="vertical-align: middle;">
+                            {{item.currency}}
                         </td>
                         <td align="center">
                             <img [src]="getUrl(item.icon)" onError="this.src='./assets/img/ico_app_default.png'" style="width: 96px;" />

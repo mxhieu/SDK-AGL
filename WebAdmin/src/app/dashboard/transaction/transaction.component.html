@@ -1,0 +1,70 @@
+    <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Transaction Logs</h5>
+                </div>
+                <div class="col-md-8">
+                    <div class="btn-group tright" dropdown>
+                        <button dropdownToggle type="button" class="btn btn-outline-primary dropdown-toggle" style="margin:0px;">
+                            {{app.os}} - {{app.version}} <span class="caret"></span>
+                        </button>
+                        <ul *dropdownMenu class="dropdown-menu" role="menu">
+                            <li role="menuitem" *ngFor="let app of apps" (click)="switchApp(app)" class="tpointer">
+                                <a class="dropdown-item"> {{app.os}} - {{app.version}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-block">
+            <table class="table table-hover mb-0 table-striped fixed table-bordered">
+                <thead class="thead-default">
+                    <tr>
+                        <th *ngFor="let perheader of header" (click)="sort($event)" [attr.rxdata]="perheader.id" class="{{(perheader.id == paging.st_col)? 'rxsorting' : ''}} {{(paging.st_type == 1)? 'rxup' : 'rxdown'}} tMiddle">{{perheader.name}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of items" style="cursor: pointer;">
+                        <td align="center" style="vertical-align: middle;">
+                            {{item.trans_id}}
+                        </td>
+                        <!-- <td align="center" 
+                        style="vertical-align: middle;">
+                            {{item.payload}}
+                        </td> -->
+                        <td align="center" style="vertical-align: middle;">
+                            {{item.product_currency}}
+                        </td>
+                        <td align="center" style="vertical-align: middle;">
+                            {{item.product_id}}
+                        </td>
+                        <td align="center"  style="vertical-align: middle;">
+                            <strong>{{item.product_price | currency:'USD':symbol:'1.0-3'}}</strong>
+                        </td>
+                        <td align="center" style="vertical-align: middle;">
+                            {{item.purchase_date_ms | date:'dd/MM/yyyy'}}
+                        </td>
+                        <td align="center" style="vertical-align: middle;">
+                            {{item.created_at * 1000 | date:'dd/MM/yyyy'}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="100%" class="rx-pagin">
+                            <button class="rx-back" [disabled]="paging.pg_page <= 1" (click)="jumpPage(paging.pg_page - 1)">
+                                <</button>
+                                    <input type="number" class="rx-cur" [(ngModel)]="paging.pg_page">
+                                    <button class="rx-next" [disabled]="!isnext" (click)="jumpPage(paging.pg_page + 1)">></button>
+                                    <span class="rx-jump" (click)="jumpPage(paging.pg_page)"><i class="icon-rocket"></i></span>
+                                    <select type="number" class="rx-pg-size" (ngModelChange)="resizePage($event)" [(ngModel)]="paging.pg_size">
+                                        <option value="10" selected>10</option>
+                                        <option value="50" selected>50</option>
+                                        <option value="100" selected>100</option>
+                                    </select> / page
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>

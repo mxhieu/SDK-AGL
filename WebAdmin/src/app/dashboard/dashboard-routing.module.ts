@@ -14,6 +14,7 @@ import { MetricComponent } from './metric/metric.component';
 import { CohortComponent } from './reports/cohort/cohort.component';
 import { CampaignComponent } from './campaign/campaign.component';
 import { KpireportComponent } from './reports/kpireport/kpireport.component';
+import { TransactionComponent } from './transaction/transaction.component';
 import { AdsPerformanceComponent } from './reports/ads-performance/ads-performance.component';
 import { AdsReportComponent } from './reports/ads-report/ads-report.component';
 
@@ -39,6 +40,10 @@ const routes: Routes = [
   {
     path: 'report-roi',
     component: RoiComponent
+  },
+  {
+    path: 'transaction',
+    component: TransactionComponent
   },
   {
     path: 'report-roipd',
