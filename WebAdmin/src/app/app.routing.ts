@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { FullLayoutComponent } from './dashboard/full-layout.component';
+import { RbacLayoutComponent } from './rbac/rbac-layout.component';
 import { LoginComponent } from './user/login.component';
 import { RegisterComponent } from './user/register.component';
 import { p404Component } from './shared/404.component';
@@ -39,6 +40,16 @@ export const routes: Routes = [
       {
         path: 'admin',
         loadChildren: './dashboard/dashboard.module#DashboardModule'
+      }
+    ]
+  },
+  {
+    path: 'settings',
+    component: RbacLayoutComponent,
+    children: [
+      {
+        path: 'admin',
+        loadChildren: './rbac/rbac.module#RbacModule'
       }
     ]
   },

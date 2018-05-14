@@ -4,108 +4,150 @@
         <nav class="sidebar-nav">
             <ul class="nav">
                 <li class="nav-title"> Report </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/report-arm']">
-                        <i class="icon-graph"></i> 
-                        ARM Report
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/report-armpd']">
-                        <i class="icon-chart"></i> 
-                        ARM PD Report
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/report-roi']">
-                        <i class="icon-pie-chart"></i> 
-                        ROI Report
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/report-roipd']">
-                        <i class="icon-chart"></i> 
-                        ROI PD Report
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/report-cohort']">
-                        <i class="icon-pie-chart"></i> 
-                        Cohort
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/report-kpi']">
-                        <i class="icon-pie-chart"></i> 
-                        KPI Report
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/report-ads']">
-                        <i class="icon-ghost"></i> 
-                        Ads Report
-                    </a>
-                </li>
+                <div *ngIf="service.checkpermission('report-arm')">
+                    <li class="nav-item">
+                        <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/report-arm']">
+                            <i class="icon-graph"></i> 
+                            ARM Report
+                        </a>
+                    </li>
+                </div>
+                
+                <div *ngIf="service.checkpermission('report-armPd')">    
+                    <li class="nav-item">
+                        <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/report-armpd']">
+                            <i class="icon-chart"></i> 
+                            ARM PD Report
+                        </a>
+                    </li>
+                </div>
+
+                <div *ngIf="service.checkpermission('report-roi')">
+                    <li class="nav-item">
+                        <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/report-roi']">
+                            <i class="icon-pie-chart"></i> 
+                            ROI Report
+                        </a>
+                    </li>
+                </div>
+
+                <div *ngIf="service.checkpermission('report-roipd')">
+                    <li class="nav-item">
+                        <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/report-roipd']">
+                            <i class="icon-chart"></i> 
+                            ROI PD Report
+                        </a>
+                    </li>
+                </div>
+
+                <div *ngIf="service.checkpermission('report-cohort')">
+                    <li class="nav-item">
+                        <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/report-cohort']">
+                            <i class="icon-pie-chart"></i> 
+                            Cohort
+                        </a>
+                    </li>
+                </div>
+
+                <div *ngIf="service.checkpermission('report-kpi')">
+                    <li class="nav-item">
+                        <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/report-kpi']">
+                            <i class="icon-pie-chart"></i> 
+                            KPI Report
+                        </a>
+                    </li>
+                </div>
+
+                <div *ngIf="service.checkpermission('report-ads')">
+                    <li class="nav-item">
+                        <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/report-ads']">
+                            <i class="icon-ghost"></i> 
+                            Ads Report
+                        </a>
+                    </li>
+                </div>
+
                 <li class="divider"></li>
                 <li class="nav-title"> Admin </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/report-ads-performance']">
-                        <i class="icon-speedometer"></i> 
-                        Campaign Ads
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/campaign']">
-                        <i class="icon-layers"></i> 
-                        Campaign
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/sourceslist']">
-                        <i class="icon-folder-alt"></i> 
-                        Source
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/metric']">
-                        <i class="icon-key"></i> 
-                        Metric
-                    </a>
-                </li>
+                <div *ngIf="service.checkpermission('campaign-ad')">
+                    <li class="nav-item">
+                        <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/report-ads-performance']">
+                            <i class="icon-speedometer"></i> 
+                            Campaign Ads
+                        </a>
+                    </li>
+                </div>
+
+                <div *ngIf="service.checkpermission('campaign')">
+                    <li class="nav-item">
+                        <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/campaign']">
+                            <i class="icon-layers"></i> 
+                            Campaign
+                        </a>
+                    </li>
+                </div>
+
+                <div *ngIf="service.checkpermission('listsource')">
+                    <li class="nav-item">
+                        <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/sourceslist']">
+                            <i class="icon-folder-alt"></i> 
+                            Source
+                        </a>
+                    </li>
+                </div>
+
+                <div>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/metric']">
+                            <i class="icon-key"></i> 
+                            Metric
+                        </a>
+                    </li>
+                </div>
                 <li class="divider"></li>
                 <li class="nav-title"> Configuration </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/setting']">
-                        <i class="icon-settings"></i> 
-                        Setting
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/player']">
-                        <i class="icon-user"></i> 
-                        Player
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/in-app']">
-                        <i class="icon-basket-loaded"></i> 
-                        In-App
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/telco']">
-                        <i class="icon-credit-card"></i> 
-                        Telco
-                    </a>
-                </li>
+                <div *ngIf="service.checkpermission('app')">
+                    <li class="nav-item">
+                        <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/setting']">
+                            <i class="icon-settings"></i> 
+                            Setting
+                        </a>
+                    </li>
+                </div>
+                <div *ngIf="service.checkpermission('player')">
+                    <li class="nav-item">
+                        <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/player']">
+                            <i class="icon-user"></i> 
+                            Player
+                        </a>
+                    </li>
+                </div>
+                <div *ngIf="service.checkpermission('inapp-item')">
+                    <li class="nav-item">
+                        <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/in-app']">
+                            <i class="icon-basket-loaded"></i> 
+                            In-App
+                        </a>
+                    </li>
+                </div>
+                <div *ngIf="service.checkpermission('card-item')">
+                    <li class="nav-item">
+                        <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/telco']">
+                            <i class="icon-credit-card"></i> 
+                            Telco
+                        </a>
+                    </li>
+                </div>
                 <li class="divider"></li>
                 <li class="nav-title"> Grow </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/notification']">
-                        <i class="icon-fire"></i> 
-                        Push notification
-                    </a>
-                </li>
+                <div *ngIf="service.checkpermission('notification')">
+                    <li class="nav-item">
+                        <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/notification']">
+                            <i class="icon-fire"></i> 
+                            Push notification
+                        </a>
+                    </li>
+                </div>
             </ul>
         </nav>
     </div>

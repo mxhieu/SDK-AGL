@@ -108,6 +108,8 @@ export class BaseService {
 						if (json['success'] && (json['success'] == 1 || json['success'] == 100)) {
 							callback(json['data']);
 							this.successful(json['msg'], json['success']);
+						} else if(json['success'] && json['success'] == -3 ) {
+							this.logout();
 						}
 						else this.failure(json['msg']);
 					} catch (err) {
@@ -142,6 +144,8 @@ export class BaseService {
 						if (json['success'] && (json['success'] == 1 || json['success'] == 100)) {
 							callback(json['data']);
 							this.successful(json['msg'], json['success']);
+						} else if(json['success'] && json['success'] == -3 ) {
+							this.logout();
 						}
 						else this.failure(json['msg']);
 					} catch (err) {
@@ -238,8 +242,9 @@ export class BaseService {
 
 	public login(params) {
 		this.post(this.config.API_LOGIN, null, params, data => {
-			this.setToken(data.authorization);
-			this.setAuth(JSON.stringify(data));
+			this.setToken(data.user.authorization);
+			this.setAuth(JSON.stringify(data.user));
+			this.rxsetLocal('arrper', data.arrper )
 			this.moveToApps();
 		});
 	}
@@ -314,6 +319,37 @@ export class BaseService {
 			{ 'id': 'android', 'name': 'Android' },
 			{ 'id': 'ios', 'name': 'iOS' },
 			{ 'id': 'web', 'name': 'Web' }];
+	}
+
+	public rxsetLocal(cname, cvalue) {
+	  if (typeof window !== 'undefined') {
+	    localStorage.setItem(cname, cvalue)
+	  }
+	}
+
+	public rxgetLocal(cname, cdefault) {  
+	  if (typeof window !== 'undefined') {
+	    return localStorage.getItem(cname)
+	  } else {
+	    return cdefault
+	  }
+	}
+
+	checkpermission(strcheck) {
+		let strper = this.rxgetLocal('arrper','')
+		let arrper = []
+		if (strper && strper.length > 0 && strper.indexOf(',') !== -1) {
+			arrper = strper.split(',')
+		}
+		if (arrper.length !== 0) {
+			if (arrper.indexOf(strcheck) !== -1) {
+			  return true
+			} else {
+			  return false
+			}
+		} else {
+			return true
+		}
 	}
 
 }

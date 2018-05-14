@@ -21,7 +21,7 @@ export class RegisterComponent {
       'fullname': this.model.username,
       'email': this.model.email
     }, data => {
-      if (data.success == 1) {
+      if (data && data._id) {
         this.service.moveToLogin();
       }
     });
