@@ -10,23 +10,24 @@ import { GroupService } from '../../service/group.service';
 })
 export class TransactionComponent extends BaseComponent implements OnInit {
 
-	items : any[]; header : any[];
+	items: any[]; header: any[];
 	apps: any; app = { 'app_id': '', 'os': '', 'version': '' }; search: any;
 	isHidden: boolean; paging: any; isnext: any;
-
-	constructor(private service: TransactionService, private gService: GroupService) { 
-		super(); 
+	totalSUSD = 0; totalSVND = 0; totalFUSD = 0; totalFVND = 0;
+	constructor(private service: TransactionService, private gService: GroupService) {
+		super();
 		this.search = { field: 'created_at', term: '' };
 		this.isnext = true;
 		this.paging = this.service.defaultPaging('created_at');
 		this.header = [
 			{ id: 'trans_id', name: 'Id', is_search: 1, st_col: 'trans_id', st_type: 1 },
-			/*{ id: 'payload', name: 'Payload', is_search: 1, st_col: 'payload', st_type: 1 },*/
 			{ id: 'product_currency', name: 'Currency', is_search: 1, st_col: 'product_currency', st_type: 1 },
 			{ id: 'product_id', name: 'Product Id', is_search: 1, st_col: 'product_id', st_type: 1 },
 			{ id: 'product_price', name: 'Price', is_search: 1, st_col: 'product_price', st_type: 1 },
 			{ id: 'purchase_date_ms', name: 'Purchase Date', is_search: 1, st_col: 'purchase_date_ms', st_type: 1 },
-			{ id: 'created_at', name: 'Created', is_search: 1, st_col: 'created_at', st_type: 1 }
+			{ id: 'created_at', name: 'Created', is_search: 1, st_col: 'created_at', st_type: 1 },
+			{ id: 'status', name: 'Status', is_search: 1, st_col: 'status', st_type: 1 },
+			{ id: 'payload', name: 'Payload', is_search: 1, st_col: 'payload', st_type: 1 }
 		];
 	}
 
@@ -43,7 +44,23 @@ export class TransactionComponent extends BaseComponent implements OnInit {
 				'pg_size': this.paging.pg_size,
 				'st_col': this.paging.st_col,
 				'st_type': this.paging.st_type
-			}, data => { this.items = data; });
+			}, data => {
+				this.items = data;
+				for (var it of this.items) {
+					if (it.status == 1) {
+						if (it.product_currency == 'USD')
+							this.totalSUSD += it.product_price;
+						else if (it.product_currency == 'VND')
+							this.totalSVND += it.product_price;
+					}
+					else if (it.status == 0) {
+						if (it.product_currency == 'USD')
+							this.totalFUSD += it.product_price;
+						else if (it.product_currency == 'VND')
+							this.totalFVND += it.product_price;
+					}
+				}
+			});
 		}
 	}
 	getApps() {

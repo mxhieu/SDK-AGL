@@ -1,24 +1,75 @@
-    <div class="card">
-        <div class="card-header">
-            <div class="row">
-                <div class="col-md-4">
-                    <h5>Transaction Logs</h5>
-                </div>
-                <div class="col-md-8">
-                    <div class="btn-group tright" dropdown>
-                        <button dropdownToggle type="button" class="btn btn-outline-primary dropdown-toggle" style="margin:0px;">
-                            {{app.os}} - {{app.version}} <span class="caret"></span>
-                        </button>
-                        <ul *dropdownMenu class="dropdown-menu" role="menu">
-                            <li role="menuitem" *ngFor="let app of apps" (click)="switchApp(app)" class="tpointer">
-                                <a class="dropdown-item"> {{app.os}} - {{app.version}}</a>
-                            </li>
-                        </ul>
+<div class="row">
+    <div class="col-6 col-lg-3">
+        <div class="card">
+            <div class="card-body p-0 d-flex align-items-center">
+                <i class="fa fa-money bg-success p-4 font-2xl mr-3"></i>
+                <div>
+                    <div class="text-value-sm text-primary">
+                        <strong>{{totalSUSD | currency:'USD':symbol:'1.0-3'}}</strong>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="card-block">
+    </div>
+    <div class="col-6 col-lg-3">
+        <div class="card">
+            <div class="card-body p-0 d-flex align-items-center">
+                <i class="fa fa-money bg-success p-4 font-2xl mr-3"></i>
+                <div>
+                    <div class="text-value-sm text-primary">
+                        <strong>{{totalSVND | currency:'VND':symbol:'1.0-3'}}</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-lg-3">
+        <div class="card">
+            <div class="card-body p-0 d-flex align-items-center">
+                <i class="fa fa-money bg-danger p-4 font-2xl mr-3"></i>
+                <div>
+                    <div class="text-value-sm text-primary">
+                        <strong>{{totalFUSD | currency:'USD':symbol:'1.0-3'}}</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-lg-3">
+        <div class="card">
+            <div class="card-body p-0 d-flex align-items-center">
+                <i class="fa fa-money bg-danger p-4 font-2xl mr-3"></i>
+                <div>
+                    <div class="text-value-sm text-primary">
+                        <strong>{{totalFVND | currency:'VND':symbol:'1.0-3'}}</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-md-4">
+                <h5>Transaction Logs</h5>
+            </div>
+            <div class="col-md-8">
+                <div class="btn-group tright" dropdown>
+                    <button dropdownToggle type="button" class="btn btn-outline-primary dropdown-toggle" style="margin:0px;">
+                    {{app.os}} - {{app.version}} <span class="caret"></span>
+                    </button>
+                    <ul *dropdownMenu class="dropdown-menu" role="menu">
+                        <li role="menuitem" *ngFor="let app of apps" (click)="switchApp(app)" class="tpointer">
+                            <a class="dropdown-item"> {{app.os}} - {{app.version}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-block">
+        <div class="tTableWraper">
             <table class="table table-hover mb-0 table-striped fixed table-bordered">
                 <thead class="thead-default">
                     <tr>
@@ -30,14 +81,10 @@
                         <td align="center" style="vertical-align: middle;">
                             {{item.trans_id}}
                         </td>
-                        <!-- <td align="center" 
-                        style="vertical-align: middle;">
-                            {{item.payload}}
-                        </td> -->
                         <td align="center" style="vertical-align: middle;">
                             {{item.product_currency}}
                         </td>
-                        <td align="center" style="vertical-align: middle;">
+                        <td style="vertical-align: middle;">
                             {{item.product_id}}
                         </td>
                         <td align="center"  style="vertical-align: middle;">
@@ -49,22 +96,30 @@
                         <td align="center" style="vertical-align: middle;">
                             {{item.created_at * 1000 | date:'dd/MM/yyyy'}}
                         </td>
+                        <td align="center" style="vertical-align: middle;">
+                            <span class="tag tag-success" *ngIf="item.status == 1">Success</span>
+                            <span class="tag tag-danger" *ngIf="item.status == 0">Failed</span>
+                        </td>
+                        <td style="vertical-align: middle;">
+                            {{item.payload}}
+                        </td>
                     </tr>
                     <tr>
                         <td colspan="100%" class="rx-pagin">
                             <button class="rx-back" [disabled]="paging.pg_page <= 1" (click)="jumpPage(paging.pg_page - 1)">
-                                <</button>
-                                    <input type="number" class="rx-cur" [(ngModel)]="paging.pg_page">
-                                    <button class="rx-next" [disabled]="!isnext" (click)="jumpPage(paging.pg_page + 1)">></button>
-                                    <span class="rx-jump" (click)="jumpPage(paging.pg_page)"><i class="icon-rocket"></i></span>
-                                    <select type="number" class="rx-pg-size" (ngModelChange)="resizePage($event)" [(ngModel)]="paging.pg_size">
-                                        <option value="10" selected>10</option>
-                                        <option value="50" selected>50</option>
-                                        <option value="100" selected>100</option>
-                                    </select> / page
+                            <</button>
+                            <input type="number" class="rx-cur" [(ngModel)]="paging.pg_page">
+                            <button class="rx-next" [disabled]="!isnext" (click)="jumpPage(paging.pg_page + 1)">></button>
+                            <span class="rx-jump" (click)="jumpPage(paging.pg_page)"><i class="icon-rocket"></i></span>
+                            <select type="number" class="rx-pg-size" (ngModelChange)="resizePage($event)" [(ngModel)]="paging.pg_size">
+                                <option value="10" selected>10</option>
+                                <option value="50" selected>50</option>
+                                <option value="100" selected>100</option>
+                            </select> / page
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
+</div>
