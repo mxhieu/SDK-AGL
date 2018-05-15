@@ -66,11 +66,11 @@
                         </a>
                     </li>
                 </div>
-                 <div *ngIf="service.checkpermission('transaction')">
+                 <div *ngIf="service.checkpermission('iap-transaction')">
                    <li class="nav-item">
                         <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/transaction']">
-                            <i class="icon-ghost"></i> 
-                            Transaction
+                            <i class="icon-wallet"></i> 
+                            IAP Transaction
                         </a>
                     </li>
                 </div>
