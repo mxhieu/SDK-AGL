@@ -28,7 +28,6 @@ import { RbacLayoutComponent } from './rbac/rbac-layout.component';
 import { LoginComponent } from './user/login.component';
 import { FooterComponent } from './shared/footer.component';
 import { p404Component } from './shared/404.component';
-import { p500Component } from './shared/500.component';
 import { RegisterComponent } from './user/register.component';
 import { AppsComponent } from './apps/apps.component';
 import { HeaderComponent } from './shared/header.component';
@@ -38,7 +37,7 @@ import { DocumentsComponent } from './document/documents.component';
 import { PrivacyComponent } from './privacy/privacy.component';
 import { HelpComponent } from './help/help.component';
 import { ResourceComponent } from './resource/resource.component';
-import { ForgotPasswordComponent } from './forgotpassword/forgotpassword.component';
+import { ForgotPasswordComponent } from './user/forgotpassword.component';
 import { GroupComponent } from './group/group.component';
 import { BaseComponent } from './service/base.component';
 import { SharedModule } from './service/shared.module';
@@ -64,7 +63,6 @@ import { SharedModule } from './service/shared.module';
         LoginComponent,
         FooterComponent,
         p404Component,
-        p500Component,
         RegisterComponent,
         AppsComponent,
         HeaderComponent,

@@ -5,7 +5,6 @@ import { RbacLayoutComponent } from './rbac/rbac-layout.component';
 import { LoginComponent } from './user/login.component';
 import { RegisterComponent } from './user/register.component';
 import { p404Component } from './shared/404.component';
-import { p500Component } from './shared/500.component';
 import { AppsComponent } from './apps/apps.component';
 import { ContactComponent } from './contact/contact.component';
 import { BlogComponent } from './blog/blog.component';
@@ -13,7 +12,7 @@ import { DocumentsComponent } from './document/documents.component';
 import { PrivacyComponent } from './privacy/privacy.component';
 import { HelpComponent } from './help/help.component';
 import { ResourceComponent } from './resource/resource.component';
-import { ForgotPasswordComponent } from './forgotpassword/forgotpassword.component';
+import { ForgotPasswordComponent } from './user/forgotpassword.component';
 import { GroupComponent } from './group/group.component';
 
 export const routes: Routes = [
