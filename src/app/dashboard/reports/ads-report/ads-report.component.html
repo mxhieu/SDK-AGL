@@ -65,7 +65,7 @@
                                 <strong> {{ ad.rev | currency:'USD':symbol:'1.0-3'}}</strong>
                             </td>
                             <td class="tTextRight">
-                                <strong> {{ (ad.cost > 0 ? (ad.rev * 1.0 / ad.cost) : 0) | currency:'USD':symbol:'1.0-3'}}</strong>
+                                <strong> {{ (ad.cost > 0 ? (ad.rev * 1.0 / ad.cost) : 0) | number:'1.0-3'}}%</strong>
                             </td>  
                         </tr>
                         <tr>
