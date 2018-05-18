@@ -5,7 +5,6 @@ import { RbacLayoutComponent } from './rbac/rbac-layout.component';
 import { LoginComponent } from './user/login.component';
 import { RegisterComponent } from './user/register.component';
 import { p404Component } from './shared/404.component';
-import { AppsComponent } from './apps/apps.component';
 import { ContactComponent } from './contact/contact.component';
 import { BlogComponent } from './blog/blog.component';
 import { DocumentsComponent } from './document/documents.component';
@@ -23,10 +22,6 @@ export const routes: Routes = [
   {
     path: 'register',
     component: RegisterComponent
-  },
-  {
-    path: 'apps',
-    component: AppsComponent
   },
   {
     path: 'groups',

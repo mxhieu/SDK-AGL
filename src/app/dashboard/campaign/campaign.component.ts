@@ -10,13 +10,13 @@ import { GroupService } from '../../service/group.service';
 export class CampaignComponent extends BaseComponent implements OnInit {
 	headers: any; paging: any; search = { field: 'name', term: '' };
 	apps: any; app = { 'app_id': '', 'os': '', 'version': '' };
-	campaigns = []; onerow: any; isEdit: boolean;
+	campaigns = []; onerow: any; isEdit: boolean; isnext: any;
 	isHidden: boolean;
 	sources = [];
-	constructor(private gService: GroupService, private service: CampaignService) {
+	constructor(public gService: GroupService, public service: CampaignService) {
 		super();
 		this.paging = this.service.defaultPaging('created_at');
-
+		this.isnext = true;
 		this.headers = [
 			{ id: 'name', name: 'Name', is_search: 1, st_col: 'name', st_type: 1 },
 			{ id: 'desc', name: 'Description', is_search: 1, st_col: 'desc', st_type: 1 },

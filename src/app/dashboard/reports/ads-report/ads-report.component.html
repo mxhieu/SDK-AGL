@@ -54,8 +54,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let ad of facebookAds; let i = index">
-                            <td class="tTextRight tTextCursor" (click)=(calAdCampain(i,ad))>{{ad.campaign_id}}</td>
+                        <tr *ngFor="let ad of facebookAds; let i = index" class="tpointer">
+                            <td class="tTextRight tTextCursor" (click)=(calAdCampain(i,ad))>{{ad.campaign_name}}</td>
                             <td class="tTextRight tTextCursor" (click)=(calAdCampain(i,ad))>{{ad.adset_name}}</td>
                             <td class="tTextRight">{{ad.adgroup_name}}</td>
                             <td class="tTextRight">
@@ -65,7 +65,7 @@
                                 <strong> {{ ad.rev | currency:'USD':symbol:'1.0-3'}}</strong>
                             </td>
                             <td class="tTextRight">
-                                <strong> {{ (ad.cost > 0 ? (ad.rev * 1.0 / ad.cost) : 0) * 100 | number:'1.0-3'}}%</strong>
+                                <strong> {{ (ad.cost > 0 ? (ad.rev * 1.0 / ad.cost) : 0) | percent }}</strong>
                             </td>  
                         </tr>
                         <tr>

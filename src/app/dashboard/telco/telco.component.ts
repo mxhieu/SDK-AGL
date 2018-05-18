@@ -13,7 +13,7 @@ export class TelcoComponent extends BaseComponent implements OnInit {
 	items: any[]; cardItems: any[]; onerow: any; isHidden: boolean; paging: any; isEdit: boolean;
 	apps: any; app = { 'app_id': '', 'os': '', 'version':''};
 
-	constructor(private service: TelcoService, private gService: GroupService) {
+	constructor(public service: TelcoService, public gService: GroupService) {
 		super();
 	}
 

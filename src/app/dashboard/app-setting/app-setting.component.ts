@@ -17,7 +17,7 @@ export class AppSettingComponent extends BaseComponent implements OnInit {
 		{ 'id': 2, 'name': 'Chọn tất cả user chưa nạp tiền', 'filter_type': 'user_not_pay' },
 		{ 'id': 3, 'name': 'Tuỳ chọn', 'filter_type': 'list_defined_users' }
 	];
-	constructor(private service: GroupService, private playerAdsService: PlayerAdsService) {
+	constructor(public service: GroupService, public playerAdsService: PlayerAdsService) {
 		super();
 		this.appInfo = {
 			'settings': {},

@@ -12,7 +12,7 @@ export class RbacLayoutComponent implements OnInit {
 
   fullname: string = '';
 
-  constructor(private service: BaseService) {
+  constructor(public service: BaseService) {
     
   }
 

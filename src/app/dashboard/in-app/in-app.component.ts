@@ -15,7 +15,7 @@ export class InAppComponent extends BaseComponent implements OnInit {
 	items: any[]; cardItems: any[]; onerow: any; isHidden: boolean; paging: any; isEdit: boolean; isnext: any;
 	apps: any; app = { 'app_id': '', 'os': '', 'version': '' }; header: any; search: any;
 
-	constructor(private service: PaymentService, private gService: GroupService) {
+	constructor(public service: PaymentService, public gService: GroupService) {
 		super();
 		this.search = { field: 'created_at', term: '' };
 		this.isnext = true;

@@ -11,7 +11,7 @@ export class PlayerComponent implements OnInit {
   data: any; paging: any; isnext: any; header: any; search: any;
   apps: any; app = { 'app_id': '', 'os': '', 'version': '' };
 
-  constructor(private service: PlayerService, private gService: GroupService) {
+  constructor(public service: PlayerService, private gService: GroupService) {
 
     this.data = [];
     this.isnext = true;

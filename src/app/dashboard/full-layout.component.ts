@@ -12,7 +12,7 @@ export class FullLayoutComponent implements OnInit {
 
   fullname: string = '';
 
-  constructor(private service: BaseService) {
+  constructor(public service: BaseService) {
     
   }
 

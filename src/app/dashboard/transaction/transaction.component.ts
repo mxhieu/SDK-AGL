@@ -14,7 +14,7 @@ export class TransactionComponent extends BaseComponent implements OnInit {
 	apps: any; app = { 'app_id': '', 'os': '', 'version': '' }; search: any;
 	isHidden: boolean; paging: any; isnext: any;
 	totalSUSD = 0; totalSVND = 0; totalFUSD = 0; totalFVND = 0;
-	constructor(private service: TransactionService, private gService: GroupService) {
+	constructor(public service: TransactionService, public gService: GroupService) {
 		super();
 		this.search = { field: 'created_at', term: '' };
 		this.isnext = true;

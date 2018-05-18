@@ -14,7 +14,7 @@ export class RegisterComponent {
   ngOnInit() {
 
   }
-  register(event) {
+  register() {
     this.service.register({
       'username': this.model.username,
       'password': this.model.password,

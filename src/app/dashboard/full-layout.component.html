@@ -76,15 +76,6 @@
                 </div>
                 <li class="divider"></li>
                 <li class="nav-title"> Admin </li>
-                <div *ngIf="service.checkpermission('campaign-ad')">
-                    <li class="nav-item">
-                        <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/report-ads-performance']">
-                            <i class="icon-speedometer"></i> 
-                            Campaign Ads
-                        </a>
-                    </li>
-                </div>
-
                 <div *ngIf="service.checkpermission('campaign')">
                     <li class="nav-item">
                         <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/campaign']">

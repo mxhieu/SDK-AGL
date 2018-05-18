@@ -9,18 +9,12 @@ import { GroupService } from '../../service/group.service';
 })
 export class UserComponent extends BaseComponent implements OnInit {
   headers: any; paging: any; search = { field: 'username', term: '' };
-  apps: any; app = { 'app_id': '', 'os': '', 'version': '' };
-  users = [];
-  groups: any;
-  groups_tmp: any[];
-  arrgroupschoose = []; 
-  onerow: any; isEdit: boolean;
-  isHidden: boolean;
-  roles = [];
+  apps: any; app = { 'app_id': '', 'os': '', 'version': '' }; users = []; groups: any;
+  groups_tmp: any[]; arrgroupschoose = [];  onerow: any; isEdit: boolean; isHidden: boolean; isnext: any;  roles = [];
   constructor(private service: RbacService,private gservice: GroupService) {
     super();
     this.paging = this.service.defaultPaging('created_at');
-
+    this.isnext = true;
     this.headers = [
       { id: 'username', name: 'Username', is_search: 1, st_col: 'username', st_type: 1 },
       { id: 'fullname', name: 'Fullname', is_search: 1, st_col: 'fullname', st_type: 1 },

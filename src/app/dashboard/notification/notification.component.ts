@@ -16,7 +16,7 @@ export class NotificationComponent implements OnInit {
 		{'id': 'list_defined_users', 'name': 'Danh sách users'}
 	]; filter_type : any;
 
-	constructor(private service: NotificationService, private gService: GroupService) {
+	constructor(public service: NotificationService, public gService: GroupService) {
 
 		this.header = [
 			{ id: 'title', name: 'Title', is_search: 1, st_col: 'title', st_type: 1 },

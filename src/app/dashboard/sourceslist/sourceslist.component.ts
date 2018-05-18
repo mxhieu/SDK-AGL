@@ -10,7 +10,7 @@ export class SourceslistComponent implements OnInit {
 	data: any; headers: any; search = { field: 'source', term: '' };
 	onerow: any; paging: any; isHidden: boolean; isEdit: boolean;
 
-	constructor(private service: BaseService) {
+	constructor(public service: BaseService) {
 		this.isHidden = true; this.isEdit = false;
 		this.data = [];
 		this.paging = { pg_page: 1, pg_size: 10, st_col: 'created_at', st_type: -1 };

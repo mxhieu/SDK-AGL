@@ -30,11 +30,6 @@
         </div>
         <div class="card-block">
             <div class="card-tools">
-                <select class="sel-search" [(ngModel)]="search.field">
-                    <option *ngFor="let perheader of headers" [hidden]="!perheader.is_search" value="{{perheader.id}}">{{perheader.name}}</option>
-                </select><i class="icon-arrow-down sel-ico"></i>
-                <input type="text" class="rx-cur input-search" [(ngModel)]="search.term">
-                <button class="btn btn-sm btn-default btn-search" (click)="jumpPage(1)"><i class="icon-magnifier"></i></button>
                 <button class="btn btn-sm btn-success" (click)="show()"> <i class="icon-plus"></i> Create </button>
             </div>
             <table class="table table-hover mb-0 table-striped fixed table-bordered">
@@ -49,20 +44,6 @@
                         <td align="center" style="vertical-align: middle;">{{d.source}}</td>
                         <td align="center" style="vertical-align: middle;">
                             {{d.created_at * 1000 | date:'dd/MM/yyyy'}}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="100%" class="rx-pagin">
-                            <button class="rx-back" [disabled]="paging.pg_page <= 1" (click)="jumpPage(paging.pg_page - 1)">
-                                <</button>
-                                    <input type="number" class="rx-cur" [(ngModel)]="paging.pg_page">
-                                    <button class="rx-next" [disabled]="!isnext" (click)="jumpPage(paging.pg_page + 1)">></button>
-                                    <span class="rx-jump" (click)="jumpPage(paging.pg_page)"><i class="icon-rocket"></i></span>
-                                    <select type="number" class="rx-pg-size" (ngModelChange)="resizePage($event)" [(ngModel)]="paging.pg_size">
-                                        <option value="10" selected>10</option>
-                                        <option value="50" selected>50</option>
-                                        <option value="100" selected>100</option>
-                                    </select> / page
                         </td>
                     </tr>
                 </tbody>

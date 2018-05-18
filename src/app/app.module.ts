@@ -29,7 +29,6 @@ import { LoginComponent } from './user/login.component';
 import { FooterComponent } from './shared/footer.component';
 import { p404Component } from './shared/404.component';
 import { RegisterComponent } from './user/register.component';
-import { AppsComponent } from './apps/apps.component';
 import { HeaderComponent } from './shared/header.component';
 import { ContactComponent } from './contact/contact.component';
 import { BlogComponent } from './blog/blog.component';
@@ -64,7 +63,6 @@ import { SharedModule } from './service/shared.module';
         FooterComponent,
         p404Component,
         RegisterComponent,
-        AppsComponent,
         HeaderComponent,
         ContactComponent,
         BlogComponent,

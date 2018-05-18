@@ -41,10 +41,10 @@
                         </form>
                     </div>
                     <div class="card-footer">
-                        <button class="btn btn-sm btn-primary" type="submit" (click)=(send()) [hidden]="isEdit">
+                        <button class="btn btn-sm btn-primary" type="submit" (click)="send()">
                             <i class="icon-cursor"></i> Send
                         </button>
-                        <button class="btn btn-sm btn-secondary" type="reset" (click)=(cancel())>
+                        <button class="btn btn-sm btn-secondary" type="reset" (click)="cancel()">
                             <i class="icon-close"></i> Cancel
                         </button>
                     </div>
