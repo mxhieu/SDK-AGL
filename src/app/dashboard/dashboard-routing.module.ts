@@ -15,7 +15,6 @@ import { CohortComponent } from './reports/cohort/cohort.component';
 import { CampaignComponent } from './campaign/campaign.component';
 import { KpireportComponent } from './reports/kpireport/kpireport.component';
 import { TransactionComponent } from './transaction/transaction.component';
-import { AdsPerformanceComponent } from './reports/ads-performance/ads-performance.component';
 import { AdsReportComponent } from './reports/ads-report/ads-report.component';
 
 const routes: Routes = [
@@ -56,10 +55,6 @@ const routes: Routes = [
   {
     path: 'setting',
     component: AppSettingComponent
-  },
-  {
-    path: 'report-ads-performance',
-    component: AdsPerformanceComponent
   }
   ,
   {

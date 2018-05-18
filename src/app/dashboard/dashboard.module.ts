@@ -23,7 +23,6 @@ import { MetricComponent } from './metric/metric.component';
 import { CohortComponent } from './reports/cohort/cohort.component';
 import { CampaignComponent } from './campaign/campaign.component';
 import { KpireportComponent } from './reports/kpireport/kpireport.component';
-import { AdsPerformanceComponent } from './reports/ads-performance/ads-performance.component';
 import { AdsReportComponent } from './reports/ads-report/ads-report.component';
 import { TransactionComponent } from './transaction/transaction.component';
 
@@ -40,6 +39,8 @@ import { TransactionComponent } from './transaction/transaction.component';
   declarations: [
     PlayerComponent, AppSettingComponent, InAppComponent,
     NotificationComponent, TelcoComponent, ArmpdComponent, ArmComponent,
-    RoiComponent, RoipdComponent, SourceslistComponent, MetricComponent, CohortComponent, CampaignComponent, KpireportComponent, AdsPerformanceComponent, AdsReportComponent, TransactionComponent]
+    RoiComponent, RoipdComponent, SourceslistComponent, MetricComponent, 
+    CohortComponent, CampaignComponent, KpireportComponent,
+     AdsReportComponent, TransactionComponent]
 })
 export class DashboardModule { }
