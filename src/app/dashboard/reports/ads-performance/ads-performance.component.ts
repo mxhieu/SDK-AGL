@@ -13,7 +13,8 @@ export class AdsPerformanceComponent extends BaseComponent implements OnInit, On
 	ads = []; onerow: any; isEdit: boolean; isHidden: boolean;
 	cp: any; campaigns = []; startDate: Date; endDate: Date = new Date();
 	apps: any; app = { 'app_id': '', 'os': '', 'version': '' };
-	facebookHeaders: any; facebookAds: any; isnext: any;
+	facebookHeaders: any; facebookAds: any; isnext: any; googleAds =  []; googleHeaders : any;
+
 	constructor(private gService: GroupService, private service: CampaignService) {
 		super();
 		this.paging = this.service.defaultPaging('start_date');
@@ -36,9 +37,14 @@ export class AdsPerformanceComponent extends BaseComponent implements OnInit, On
 			{ id: 'fb_campaign_name', name: 'Campaign Name', is_search: 1, st_col: 'fb_campaign_name', st_type: 1 },
 			{ id: 'fb_adset_name', name: 'AdSet Name', is_search: 1, st_col: 'fb_adset_name', st_type: 1 },
 			{ id: 'fb_adgroup_name', name: 'AdGroup Name', is_search: 1, st_col: 'fb_adgroup_name', st_type: 1 },
-			/*{ id: 'fb_campaign_id', name: 'Campaign Id', is_search: 1, st_col: 'fb_campaign_id', st_type: 1 },
-			{ id: 'fb_adset_id', name: 'AdSet Id', is_search: 1, st_col: 'fb_adset_id', st_type: 1 },
-			{ id: 'fb_adgroup_id', name: 'AdGroup Id', is_search: 1, st_col: 'fb_adgroup_id', st_type: 1 },*/
+			{ id: 'cost', name: 'Cost', is_search: 1, st_col: 'cost', st_type: 1 },
+			{ id: 'start_date', name: 'Start date', is_search: 1, st_col: 'start_date', st_type: 1 },
+			{ id: 'end_date', name: 'End date', is_search: 1, st_col: 'end_date', st_type: 1 }
+		];
+		this.googleHeaders = [
+			{ id: 'name', name: 'Campaign Name', is_search: 1, st_col: 'name', st_type: 1 },
+			{ id: 'gg_campaign_id', name: 'Campaign Id', is_search: 1, st_col: 'gg_campaign_id', st_type: 1 },
+			{ id: 'gg_campaign_name', name: 'Campaign Name', is_search: 1, st_col: 'gg_campaign_name', st_type: 1 },
 			{ id: 'cost', name: 'Cost', is_search: 1, st_col: 'cost', st_type: 1 },
 			{ id: 'start_date', name: 'Start date', is_search: 1, st_col: 'start_date', st_type: 1 },
 			{ id: 'end_date', name: 'End date', is_search: 1, st_col: 'end_date', st_type: 1 }
@@ -69,6 +75,7 @@ export class AdsPerformanceComponent extends BaseComponent implements OnInit, On
 	doAnalysis(){
 		this.syncBanner();
 		this.syncFacebookAd();
+		this.syncGoogleAd();
 	}
 	getApps() {
 		this.app.app_id = this.service.getAppId();
@@ -123,10 +130,21 @@ export class AdsPerformanceComponent extends BaseComponent implements OnInit, On
 			'pg_size': this.paging.pg_size,
 			'search_type':'facebook_ad',
 			'search_app_id': this.service.getAppId(),
-			['search_' + this.search.field]: this.search.term,
-			'search_campaign_id': this.cp._id
+			['search_' + this.search.field]: this.search.term
 		};
 		this.service.getAds(params, data => { this.facebookAds = data; });
+	}
+	syncGoogleAd(){
+		var params = {
+			'st_col': this.paging.st_col,
+			'st_type': this.paging.st_type,
+			'pg_page': this.paging.pg_page,
+			'pg_size': this.paging.pg_size,
+			'search_type':'google_ad',
+			'search_app_id': this.service.getAppId(),
+			['search_' + this.search.field]: this.search.term
+		};
+		this.service.getAds(params, data => { this.googleAds = data; });
 	}
 	getCampaigns() {
 		var params = {
