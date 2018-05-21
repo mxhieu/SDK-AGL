@@ -940,3 +940,37 @@ span.rs-checkbox-group-all .lk-ch{
 .lk-multi-selectbox-result {
     min-height: 35px;
 }
+
+@media only screen and (max-width: 990px) {
+    .sidebar-fixed .main {
+        padding-left: 0px;
+    }
+
+    .app-header .navbar-toggler {
+        color: rgba(0, 0, 0, 0.3);
+        display: block;
+        width: 40px !important;
+        height: 40px !important;
+        position: absolute;
+        background: #fff;
+        border-radius: 3px;
+        left: 10px;
+        top: 6px;
+        box-shadow: 1px 1px 7px rgba(0,0,0,.5);
+    }
+
+    .nav-icon {
+        position: absolute;
+        margin-left: -25px;
+        margin-top: 1px;
+        font-size: 14px;
+        color: #90949a;
+    }
+
+    .navbar-toggler .icon-menu {
+        font-size: 23px;
+        left: 37px;
+        top: 7px;
+        color: #000;
+    }
+}

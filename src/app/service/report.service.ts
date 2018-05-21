@@ -9,7 +9,9 @@ enum ChartApiUrls {
 	analyze_armPd = 'report-armPd',
 	analyze_armPdChart = 'report-armPd/chart',
 	analyze_cohort = 'report-cohort',
-	analyze_kpi = 'report-kpi'
+	analyze_kpi = 'report-kpi',
+	analyze_card = 'report-card',
+	analyze_cardChart = 'report-card/chart'
 }
 
 @Injectable()
@@ -70,6 +72,18 @@ export class ReportService extends BaseService {
 				'arpu':'ARPU',
 				'arppu':'ARPPU'};
 			data.splice(0, 0, keys);
+			callback(data);
+		});
+	}
+
+	cardAnalysis(params, callback) {
+		this.get(this.getRestUrl(ChartApiUrls.analyze_card), params, data => {
+			callback(Array.isArray(data) ? data : []);
+		});
+	}
+
+	cardChartAnalysis(params, callback) {
+		this.get(this.getRestUrl(ChartApiUrls.analyze_cardChart), params, data => {
 			callback(data);
 		});
 	}

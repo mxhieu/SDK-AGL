@@ -16,6 +16,7 @@ import { CampaignComponent } from './campaign/campaign.component';
 import { KpireportComponent } from './reports/kpireport/kpireport.component';
 import { TransactionComponent } from './transaction/transaction.component';
 import { AdsReportComponent } from './reports/ads-report/ads-report.component';
+import { CardComponent } from './reports/card/card.component';
 
 const routes: Routes = [
   {
@@ -88,6 +89,10 @@ const routes: Routes = [
   {
     path: 'report-cohort',
     component: CohortComponent
+  },
+  {
+    path: 'report-cards',
+    component: CardComponent
   }
 ];
 

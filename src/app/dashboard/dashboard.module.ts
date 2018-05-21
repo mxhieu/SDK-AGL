@@ -25,6 +25,7 @@ import { CampaignComponent } from './campaign/campaign.component';
 import { KpireportComponent } from './reports/kpireport/kpireport.component';
 import { AdsReportComponent } from './reports/ads-report/ads-report.component';
 import { TransactionComponent } from './transaction/transaction.component';
+import { CardComponent } from './reports/card/card.component';
 
 @NgModule({
   imports: [
@@ -41,6 +42,6 @@ import { TransactionComponent } from './transaction/transaction.component';
     NotificationComponent, TelcoComponent, ArmpdComponent, ArmComponent,
     RoiComponent, RoipdComponent, SourceslistComponent, MetricComponent, 
     CohortComponent, CampaignComponent, KpireportComponent,
-     AdsReportComponent, TransactionComponent]
+     AdsReportComponent, TransactionComponent, CardComponent]
 })
 export class DashboardModule { }
