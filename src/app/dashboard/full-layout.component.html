@@ -92,7 +92,14 @@
                         </a>
                     </li>
                 </div>
-
+                <div *ngIf="service.checkpermission('campaign-ad')">
+                    <li class="nav-item">
+                        <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/report-ads-performance']">
+                            <i class="icon-ghost"></i> 
+                            Ads Performance
+                        </a>
+                    </li>
+                </div>
                 <div *ngIf="service.checkpermission('listsource')">
                     <li class="nav-item">
                         <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/sourceslist']">

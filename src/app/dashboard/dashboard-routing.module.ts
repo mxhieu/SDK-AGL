@@ -17,6 +17,7 @@ import { KpireportComponent } from './reports/kpireport/kpireport.component';
 import { TransactionComponent } from './transaction/transaction.component';
 import { AdsReportComponent } from './reports/ads-report/ads-report.component';
 import { CardComponent } from './reports/card/card.component';
+import { AdsPerformanceComponent } from './reports/ads-performance/ads-performance.component';
 
 const routes: Routes = [
   {
@@ -31,11 +32,14 @@ const routes: Routes = [
   {
     path: 'report-arm',
     component: ArmComponent
-  }
-  ,
+  },
   {
     path: 'report-kpi',
     component: KpireportComponent
+  },
+  {
+    path: 'report-ads-performance',
+    component: AdsPerformanceComponent
   },
   {
     path: 'report-roi',
