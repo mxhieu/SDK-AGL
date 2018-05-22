@@ -148,6 +148,9 @@
                             <td class="tTextRight">
                                 <strong> {{ ad.cost | currency:'USD':symbol:'1.0-3'}}</strong>
                             </td>
+                            <td class="tTextRight">
+                                <strong> {{ ad.cost_vnd | currency:'VND':symbol:'1.0-3'}}</strong>
+                            </td>
                             <td align="center" class="text-center tMiddle">
                                 <div>{{ad.start_date * 1000 | date:'dd/MM/yyyy'}}</div>
                             </td>
@@ -201,6 +204,9 @@
                             <td class="tTextRight">
                                 <strong> {{ ad.cost | currency:'USD':symbol:'1.0-3'}}</strong>
                             </td>
+                            <td class="tTextRight">
+                                <strong> {{ ad.cost_vnd | currency:'VND':symbol:'1.0-3'}}</strong>
+                            </td>
                             <td align="center" class="text-center tMiddle">
                                 <div>{{ad.start_date * 1000 | date:'dd/MM/yyyy'}}</div>
                             </td>
@@ -243,11 +249,12 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let ad of googleAds">
-                            <td>{{ad.name}}</td>
-                            <td>{{ad.gg_campaign_id}}</td>
                             <td>{{ad.gg_campaign_name}}</td>
                             <td class="tTextRight">
                                 <strong> {{ ad.cost | currency:'USD':symbol:'1.0-3'}}</strong>
+                            </td>
+                            <td class="tTextRight">
+                                <strong> {{ ad.cost_vnd | currency:'VND':symbol:'1.0-3'}}</strong>
                             </td>
                             <td align="center" class="text-center tMiddle">
                                 <div>{{ad.start_date * 1000 | date:'dd/MM/yyyy'}}</div>

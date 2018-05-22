@@ -37,15 +37,15 @@ export class AdsPerformanceComponent extends BaseComponent implements OnInit, On
 			{ id: 'fb_campaign_name', name: 'Campaign Name', is_search: 1, st_col: 'fb_campaign_name', st_type: 1 },
 			{ id: 'fb_adset_name', name: 'AdSet Name', is_search: 1, st_col: 'fb_adset_name', st_type: 1 },
 			{ id: 'fb_adgroup_name', name: 'AdGroup Name', is_search: 1, st_col: 'fb_adgroup_name', st_type: 1 },
-			{ id: 'cost', name: 'Cost', is_search: 1, st_col: 'cost', st_type: 1 },
+			{ id: 'cost', name: 'Cost(USD)', is_search: 1, st_col: 'cost', st_type: 1 },
+			{ id: 'cost_vnd', name: 'Cost(VND)', is_search: 1, st_col: 'cost_vnd', st_type: 1 },
 			{ id: 'start_date', name: 'Start date', is_search: 1, st_col: 'start_date', st_type: 1 },
 			{ id: 'end_date', name: 'End date', is_search: 1, st_col: 'end_date', st_type: 1 }
 		];
 		this.googleHeaders = [
-			{ id: 'name', name: 'Campaign Name', is_search: 1, st_col: 'name', st_type: 1 },
-			{ id: 'gg_campaign_id', name: 'Campaign Id', is_search: 1, st_col: 'gg_campaign_id', st_type: 1 },
 			{ id: 'gg_campaign_name', name: 'Campaign Name', is_search: 1, st_col: 'gg_campaign_name', st_type: 1 },
-			{ id: 'cost', name: 'Cost', is_search: 1, st_col: 'cost', st_type: 1 },
+			{ id: 'cost', name: 'Cost(USD)', is_search: 1, st_col: 'cost', st_type: 1 },
+			{ id: 'cost_vnd', name: 'Cost(VND)', is_search: 1, st_col: 'cost_vnd', st_type: 1 },
 			{ id: 'start_date', name: 'Start date', is_search: 1, st_col: 'start_date', st_type: 1 },
 			{ id: 'end_date', name: 'End date', is_search: 1, st_col: 'end_date', st_type: 1 }
 		];
