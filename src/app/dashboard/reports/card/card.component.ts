@@ -17,14 +17,14 @@ export class CardComponent implements OnInit, OnDestroy {
 	data = []; paging: any; isnext = true; header: any;
 	search = { field: 'product', term: '' };
 	
-	products: any; product: any;
+	products: any; 
 	cardTypes: any; cardType: any;
 	titlechart: any;
 
 	constructor(private service: ReportService, private AmCharts: AmChartsService) {
 		this.products = ['m001','m002','m003','m004']
 		this.cardTypes = [{name: 'VTT'},{name: 'VMS'},{name: 'VNP'},{name: 'VTC'}]
-		this.product = 'm001'; this.cardType = 'all'; this.titlechart = 'm001'
+		this.cardType = 'all';
 
 		this.dFrom = this.service.fromDate(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate());
 		this.dMin = this.service.fromDate(this.dMax.getFullYear(), this.dMax.getMonth(), this.dMax.getDate());
@@ -136,6 +136,7 @@ export class CardComponent implements OnInit, OnDestroy {
 
 	doAnalysis() {
 		var params = {
+			'id': this.service.getAppId(),
 			'pg_page': this.paging.pg_page,
 			'pg_size': this.paging.pg_size,
 			'st_col': this.paging.st_col,
@@ -143,7 +144,6 @@ export class CardComponent implements OnInit, OnDestroy {
 			'startdate': Math.round(this.dFrom.getTime() / 1000),
 			'enddate': Math.round(this.dTo.getTime() / 1000)
 		};
-		if (this.product != 'all') { params['product'] = this.product }
 		if (this.cardType != 'all') { params['cardType'] = this.cardType }
 		if (this.search.term && this.search.term.length > 0) { params['search_' + this.search.field] = this.search.term}
 
@@ -151,12 +151,12 @@ export class CardComponent implements OnInit, OnDestroy {
 			this.data = data;
 			this.isnext = (this.data.length >= this.paging.pg_size) ? true : false;
 		});
-		this.titlechart = (this.product != 'all') ? this.product : 'm001'
 		this.getChart();
 	}
 	
 	getChart() {
 		var params = {
+			'id': this.service.getAppId(),
 			'pg_page': 1,
 			'pg_size': 100,
 			'st_col': 'date',
@@ -165,7 +165,6 @@ export class CardComponent implements OnInit, OnDestroy {
 			'enddate': Math.round(this.dTo.getTime() / 1000)
 		};
 		
-		if (this.product != 'all') { params['product'] = this.product } else {params['cardType'] == 'm001'}
 		if (this.cardType != 'all') { params['cardType'] = this.cardType } 
 		if (this.search.term && this.search.term.length > 0) { params['search_' + this.search.field] = this.search.term }
 
