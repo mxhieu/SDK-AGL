@@ -7,13 +7,13 @@
             <div class="row">
                 <div class="form-group col-lg-6 col-md-6">
                     <label class="col-form-label">From</label>
-                    <input type="text" class="form-control" [minDate]="dMin" [maxDate]="dMax" #dp="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }" 
+                    <input type="text" class="form-control" [minDate]="dMin" [maxDate]="dMax" #dp="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }"
                     [(ngModel)]="dFrom">
                 </div>
                 <div class="form-group col-lg-6 col-md-6">
                     <label class="col-form-label">To</label>
-                    <input type="text" class="form-control" [minDate]="dMin" [maxDate]="dMax" #dp="bsDatepicker" bsDatepicker 
-                    [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }" 
+                    <input type="text" class="form-control" [minDate]="dMin" [maxDate]="dMax" #dp="bsDatepicker" bsDatepicker
+                    [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }"
                     [(ngModel)]="dTo">
                 </div>
             </div>
@@ -50,49 +50,52 @@
     </div>
     <div class="card">
         <div class="card-block">
-            <div class="card-tools">
-                <select class="sel-search" [(ngModel)]="search.field">
-                    <option *ngFor="let perheader of header" [hidden]="!perheader.is_search" value="{{perheader.id}}">{{perheader.name}}</option>
-                </select><i class="icon-arrow-down sel-ico"></i>
-                <input type="text" class="rx-cur input-search" [(ngModel)]="search.term">
-                <button class="btn btn-sm btn-default btn-search" (click)="jumpPage(1)"><i class="icon-magnifier"></i></button>
-                <button class="btn btn-sm btn-success"> <i class="icon-cloud-download"></i></button>
+            <div class="clearfix">
+                <div class="card-tools">
+                    <select class="sel-search" [(ngModel)]="search.field">
+                        <option *ngFor="let perheader of header" [hidden]="!perheader.is_search" value="{{perheader.id}}">{{perheader.name}}</option>
+                    </select><i class="icon-arrow-down sel-ico"></i>
+                    <input type="text" class="rx-cur input-search" [(ngModel)]="search.term">
+                    <button class="btn btn-sm btn-default btn-search" (click)="jumpPage(1)"><i class="icon-magnifier"></i></button>
+                    <button class="btn btn-sm btn-success"> <i class="icon-cloud-download"></i></button>
+                </div>
             </div>
-            <table class="table mb-0 table-striped table-responsive-sm table-bordered">
-                <thead class="thead-default">
-                    <tr>
-                        <th colspan="3" class="rx-table-head-border"></th>
-                        <th colspan="6" class="rx-table-head-border">Acquisition</th>
-                        <th colspan="3" class="rx-table-head-border">Retention</th>
-                        <th colspan="5" class="rx-table-head-border">Monitization</th>
+            <div class="tTableWraper">
+                <table class="table mb-0 table-striped table-responsive-sm table-bordered">
+                    <thead class="thead-default">
                         <tr>
-                            <th *ngFor="let perheader of header" (click)="sort($event)" [attr.rxdata]="perheader.id" class="{{(perheader.id == paging.st_col)? 'rxsorting' : ''}} {{(paging.st_type == 1)? 'rxup' : 'rxdown'}}">{{perheader.name}}</th>
-                        </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let d of data">
-                        <td class="text-center">{{d.date * 1000 | date:'dd/MM/yyyy'}} </td>
-                        <td> {{d.source}}</td>
-                        <td> {{d.os}}</td>
-                        <td> {{d.install}} </td>
-                        <td> {{d.nru0}}</td>
-                        <td> {{d.nru}}</td>
-                        <td> {{d.nru0_install}}%</td>
-                        <td> {{d.cost}}</td>
-                        <td> {{d.cpi}}</td>
-                        <td> {{d.rr1}}%</td>
-                        <td> {{d.rr7}}%</td>
-                        <td> {{d.rr30}}%</td>
-                        <td> {{d.uv30}}</td>
-                        <td> {{d.cr7}}%</td>
-                        <td> {{d.rev7}}</td>
-                        <td> {{d.cr30}}%</td>
-                        <td> {{d.rev30}}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="100%" class="rx-pagin">
-                            <button class="rx-back" [disabled]="paging.pg_page <= 1" (click)="jumpPage(paging.pg_page - 1)">
-                                <</button>
+                            <th colspan="3" class="rx-table-head-border"></th>
+                            <th colspan="6" class="rx-table-head-border">Acquisition</th>
+                            <th colspan="3" class="rx-table-head-border">Retention</th>
+                            <th colspan="5" class="rx-table-head-border">Monitization</th>
+                            <tr>
+                                <th *ngFor="let perheader of header" (click)="sort($event)" [attr.rxdata]="perheader.id" class="{{(perheader.id == paging.st_col)? 'rxsorting' : ''}} {{(paging.st_type == 1)? 'rxup' : 'rxdown'}}">{{perheader.name}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let d of data">
+                                <td class="text-center">{{d.date * 1000 | date:'dd/MM/yyyy'}} </td>
+                                <td> {{d.source}}</td>
+                                <td> {{d.os}}</td>
+                                <td> {{d.install}} </td>
+                                <td> {{d.nru0}}</td>
+                                <td> {{d.nru}}</td>
+                                <td> {{d.nru0_install}}%</td>
+                                <td> {{d.cost}}</td>
+                                <td> {{d.cpi}}</td>
+                                <td> {{d.rr1}}%</td>
+                                <td> {{d.rr7}}%</td>
+                                <td> {{d.rr30}}%</td>
+                                <td> {{d.uv30}}</td>
+                                <td> {{d.cr7}}%</td>
+                                <td> {{d.rev7}}</td>
+                                <td> {{d.cr30}}%</td>
+                                <td> {{d.rev30}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="100%" class="rx-pagin">
+                                    <button class="rx-back" [disabled]="paging.pg_page <= 1" (click)="jumpPage(paging.pg_page - 1)">
+                                    <</button>
                                     <input type="number" class="rx-cur" [(ngModel)]="paging.pg_page">
                                     <button class="rx-next" [disabled]="!isnext" (click)="jumpPage(paging.pg_page + 1)">></button>
                                     <span class="rx-jump" (click)="jumpPage(paging.pg_page)"><i class="icon-rocket"></i></span>
@@ -101,10 +104,11 @@
                                         <option value="50" selected>50</option>
                                         <option value="100" selected>100</option>
                                     </select> / page
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
-</div>

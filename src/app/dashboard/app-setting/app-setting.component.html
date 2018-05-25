@@ -113,6 +113,27 @@
                             </label>
                         </div>
                     </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-lg-3 col-md-3">
+                            <label class="col-form-label-none" style="vertical-align: middle;">Full registeration</label>
+                        </div>
+                        <div class="col-lg-5 col-md-5">
+                            <input class="form-control" type="text" style="vertical-align: middle;" 
+                            [(ngModel)]="appInfo.full_register_url">
+                        </div>
+                        <div class="col-lg-2 col-md-2">
+                            <button class="btn btn-primary btn-sm" (click)="update()"><i class="icon-check"></i> Save</button>
+                        </div>
+                        <div class="col-lg-2 col-md-2">
+                            <label class="switch switch-text switch-pill switch-info tright" style="vertical-align: middle;">
+                                <input type="checkbox" class="switch-input" [(ngModel)]="appInfo.settings.is_full_register_enable"
+                                 (change)=(update())>
+                                <span class="switch-label" data-on="On" data-off="Off"></span>
+                                <span class="switch-handle"></span>
+                            </label>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-lg-6 col-md-6">
                     <div class="row">
@@ -261,14 +282,6 @@
                 <div class="col-md-4 col-lg-4">
                     <label class="col-form-label">Google Refresh Token Id</label>
                     <input class="form-control" type="text" name="version" [(ngModel)]="appInfo.google_refresh_token">
-                </div>
-            </div>
-            <hr/>
-            <span class="badge badge-info">Google Auth Verification</span>
-            <div class="row">
-                <div class="col-md-4 col-lg-4">
-                    <label class="col-form-label">Auth Google Client Id</label>
-                    <input class="form-control" type="text" name="version" [(ngModel)]="appInfo.auth_google_client_id">
                 </div>
             </div>
             <hr/>

@@ -11,7 +11,7 @@ import { GroupService } from '../../service/group.service';
 
 export class InAppComponent extends BaseComponent implements OnInit {
 
-	currencies = ['VND', 'USD']; currency: any;
+	currencies = ['VND', 'USD']; currency: any; display_currency: any;
 	items: any[]; cardItems: any[]; onerow: any; isHidden: boolean; paging: any; isEdit: boolean; isnext: any;
 	apps: any; app = { 'app_id': '', 'os': '', 'version': '' }; header: any; search: any;
 
@@ -21,14 +21,17 @@ export class InAppComponent extends BaseComponent implements OnInit {
 		this.isnext = true;
 		this.paging = this.service.defaultPaging('created_at');
 		this.currency = this.currencies[0];
+		this.display_currency = this.currencies[0];
 		this.header = [
 			{ id: 'id', name: 'Store Id', is_search: 1, st_col: 'id', st_type: 1 },
 			{ id: 'name', name: 'Name', is_search: 1, st_col: 'name', st_type: 1 },
 			{ id: 'desc', name: 'Description', is_search: 1, st_col: 'desc', st_type: 1 },
-			{ id: 'price', name: 'Price (USD)', is_search: 1, st_col: 'price', st_type: 1 },
-			{ id: 'price_vnd', name: 'Price (VND)', is_search: 1, st_col: 'price_vnd', st_type: 1 },
-			{ id: 'game_diamond', name: 'Diamond', is_search: 1, st_col: 'game_diamond', st_type: 1 },
+			{ id: 'price', name: 'Price', is_search: 1, st_col: 'price', st_type: 1 },
 			{ id: 'currency', name: 'Currency', is_search: 1, st_col: 'currency', st_type: 1 },
+			/*{ id: 'price_vnd', name: 'Price (VND)', is_search: 1, st_col: 'price_vnd', st_type: 1 },*/
+			{ id: 'display_price', name: 'Display Price', is_search: 1, st_col: 'display_price', st_type: 1 },
+			{ id: 'display_currency', name: 'Display Currency', is_search: 1, st_col: 'display_currency', st_type: 1 },
+			{ id: 'game_diamond', name: 'Diamond', is_search: 1, st_col: 'game_diamond', st_type: 1 },
 			{ id: 'image', name: 'Image', is_search: -1, st_col: 'image', st_type: 1 },
 			{ id: 'is_active', name: 'Status', is_search: 1, st_col: 'is_active', st_type: 1 },
 			{ id: 'created_at', name: 'Created', is_search: 1, st_col: 'created_at', st_type: 1 }];
@@ -124,6 +127,7 @@ export class InAppComponent extends BaseComponent implements OnInit {
 			'desc': 'New in-app items',
 			'icon': '',
 			'currency': this.currency,
+			'display_currency': this.display_currency,
 			'app_id': this.service.getAppId(),
 			'is_active': 1
 		};

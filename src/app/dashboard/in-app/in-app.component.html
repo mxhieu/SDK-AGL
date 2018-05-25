@@ -21,6 +21,8 @@
                                 <label class="col-form-label-none">Diamond</label>
                                 <input class="form-control" name="name" placeholder="Diamond ..." type="text" [(ngModel)]="onerow.game_diamond">
                             </div>
+                        </div>
+                        <div class="row">
                             <div class="form-group col-md-3 col-lg-3">
                                 <label class="col-form-label-none">Currency</label>
                                 <select class="form-control" 
@@ -30,6 +32,15 @@
                                     [ngValue]="currency">{{currency}}</option>
                                 </select>
                             </div>
+                            <div class="form-group col-md-3 col-lg-3">
+                                <label class="col-form-label-none">Display Currency</label>
+                                <select class="form-control" 
+                                [ngModelOptions]="{standalone: true}"
+                                [(ngModel)]="onerow.display_currency">
+                                    <option *ngFor="let c of currencies" 
+                                    [ngValue]="c">{{c}}</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="form-group col-lg-3 col-md-3">
@@ -37,12 +48,18 @@
                                 <input class="form-control" name="desc" placeholder="Description ..." type="text" [(ngModel)]="onerow.desc">
                             </div>
                             <div class="form-group col-lg-3 col-md-3">
-                                <label class="col-form-label-none">Price (USD)</label>
-                                <input class="form-control" name="Price" placeholder="Price(USD) ..." type="number" [(ngModel)]="onerow.price">
+                                <label class="col-form-label-none">Price</label>
+                                <input class="form-control" name="Price" placeholder="Price ..." type="number" 
+                                [(ngModel)]="onerow.price">
                             </div>
-                            <div class="form-group col-lg-3 col-md-3">
+                           <!--  <div class="form-group col-lg-3 col-md-3">
                                 <label class="col-form-label-none">Price (VND)</label>
                                 <input class="form-control" name="Price" placeholder="Price(VND)..." type="number" [(ngModel)]="onerow.price_vnd">
+                            </div> -->
+                            <div class="form-group col-lg-3 col-md-3">
+                                <label class="col-form-label-none">Display Price</label>
+                                <input class="form-control" name="Price" placeholder="Display price ..." type="number" 
+                                [(ngModel)]="onerow.display_price">
                             </div>
                             <div class="col-lg-3 col-md-3">
                                 <div class="col-lg-6 col-md-6">
@@ -98,67 +115,77 @@
             </div>
         </div>
         <div class="card-block">
-            <div class="card-tools">
-                <button class="btn btn-sm btn-primary tright" (click)=(toggle())>
+            <div class="clearfix">
+                <div class="card-tools">
+                    <button class="btn btn-sm btn-primary tright" (click)=(toggle())>
                     <i class="icon-plus"></i> Create
-                </button>
+                    </button>
+                </div>
             </div>
-            <table class="table table-hover mb-0 table-striped fixed table-bordered">
-                <thead class="thead-default">
-                    <tr>
-                        <th *ngFor="let perheader of header" (click)="sort($event)" [attr.rxdata]="perheader.id" class="{{(perheader.id == paging.st_col)? 'rxsorting' : ''}} {{(paging.st_type == 1)? 'rxup' : 'rxdown'}} tMiddle">{{perheader.name}}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let item of items" style="cursor: pointer;" (click)=(onRowClick(item))>
-                        <td align="center" style="vertical-align: middle;">
-                            {{item.id}}
-                        </td>
-                        <td align="center" style="vertical-align: middle;">
-                            {{item.name}}
-                        </td>
-                       
-                        <td align="center" style="vertical-align: middle;">
-                            {{item.desc}}
-                        </td>
-                        <td class="tMiddle" style="vertical-align: middle;">
-                            <strong>{{item.price | currency:'USD':symbol:'1.0-3'}}</strong>
-                        </td>
-                        <td class="tMiddle" style="vertical-align: middle;">
-                            <strong>{{item.price_vnd | currency:'VND':symbol:'1.0-3'}}</strong>
-                        </td>
-                         <td align="center" style="vertical-align: middle;">
-                            {{item.game_diamond}}
-                        </td>
-                        <td align="center" style="vertical-align: middle;">
-                            {{item.currency}}
-                        </td>
-                        <td align="center">
-                            <img [src]="getUrl(item.icon)" onError="this.src='./assets/img/ico_app_default.png'" style="width: 96px;" />
-                        </td>
-                        <td align="center" style="vertical-align: middle;">
-                            <span class="tag tag-success" *ngIf="item.is_active">Active</span>
-                            <span class="tag tag-danger" *ngIf="!item.is_active">Inactive</span>
-                        </td>
-                        <td align="center" style="vertical-align: middle;">
-                            {{item.created_at * 1000 | date:'dd/MM/yyyy'}}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="100%" class="rx-pagin">
-                            <button class="rx-back" [disabled]="paging.pg_page <= 1" (click)="jumpPage(paging.pg_page - 1)">
-                                <</button>
-                                    <input type="number" class="rx-cur" [(ngModel)]="paging.pg_page">
-                                    <button class="rx-next" [disabled]="!isnext" (click)="jumpPage(paging.pg_page + 1)">></button>
-                                    <span class="rx-jump" (click)="jumpPage(paging.pg_page)"><i class="icon-rocket"></i></span>
-                                    <select type="number" class="rx-pg-size" (ngModelChange)="resizePage($event)" [(ngModel)]="paging.pg_size">
-                                        <option value="10" selected>10</option>
-                                        <option value="50" selected>50</option>
-                                        <option value="100" selected>100</option>
-                                    </select> / page
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="tTableWraper">
+                <table class="table table-hover mb-0 table-striped fixed table-bordered">
+                    <thead class="thead-default">
+                        <tr>
+                            <th *ngFor="let perheader of header" (click)="sort($event)" [attr.rxdata]="perheader.id" class="{{(perheader.id == paging.st_col)? 'rxsorting' : ''}} {{(paging.st_type == 1)? 'rxup' : 'rxdown'}} tMiddle">{{perheader.name}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of items" style="cursor: pointer;" (click)=(onRowClick(item))>
+                            <td align="center" style="vertical-align: middle;">
+                                {{item.id}}
+                            </td>
+                            <td align="center" style="vertical-align: middle;">
+                                {{item.name}}
+                            </td>
+                           
+                            <td align="center" style="vertical-align: middle;">
+                                {{item.desc}}
+                            </td>
+                            <td class="tMiddle" style="vertical-align: middle;">
+                                <strong>{{item.price | currency:'VND':symbol:'1.0-3'}}</strong>
+                            </td>
+                            <td align="center" style="vertical-align: middle;">
+                                {{item.currency}}
+                            </td>
+                            <!-- <td class="tMiddle" style="vertical-align: middle;">
+                                <strong>{{item.price_vnd | currency:'VND':symbol:'1.0-3'}}</strong>
+                            </td> -->
+                            <td class="tMiddle" style="vertical-align: middle;">
+                                <strong>{{item.display_price | currency:'VND':symbol:'1.0-3'}}</strong>
+                            </td>
+                            <td align="center" style="vertical-align: middle;">
+                                {{item.display_currency}}
+                            </td>
+                             <td align="center" style="vertical-align: middle;">
+                                {{item.game_diamond}}
+                            </td>
+                            <td align="center">
+                                <img [src]="getUrl(item.icon)" onError="this.src='./assets/img/ico_app_default.png'" style="width: 96px;" />
+                            </td>
+                            <td align="center" style="vertical-align: middle;">
+                                <span class="tag tag-success" *ngIf="item.is_active">Active</span>
+                                <span class="tag tag-danger" *ngIf="!item.is_active">Inactive</span>
+                            </td>
+                            <td align="center" style="vertical-align: middle;">
+                                {{item.created_at * 1000 | date:'dd/MM/yyyy'}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="100%" class="rx-pagin">
+                                <button class="rx-back" [disabled]="paging.pg_page <= 1" (click)="jumpPage(paging.pg_page - 1)">
+                                    <</button>
+                                        <input type="number" class="rx-cur" [(ngModel)]="paging.pg_page">
+                                        <button class="rx-next" [disabled]="!isnext" (click)="jumpPage(paging.pg_page + 1)">></button>
+                                        <span class="rx-jump" (click)="jumpPage(paging.pg_page)"><i class="icon-rocket"></i></span>
+                                        <select type="number" class="rx-pg-size" (ngModelChange)="resizePage($event)" [(ngModel)]="paging.pg_size">
+                                            <option value="10" selected>10</option>
+                                            <option value="50" selected>50</option>
+                                            <option value="100" selected>100</option>
+                                        </select> / page
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
