@@ -115,7 +115,9 @@ export class InAppComponent extends BaseComponent implements OnInit {
 		this.service.insert(this.onerow, data => { this.refresh(); });
 	}
 	delete() {
-		this.service.delete(this.onerow, data => { this.refresh(); });
+		if (window.confirm('Bạn chắc chắn muốn xoá?')) {
+			this.service.delete(this.onerow, data => { this.refresh(); });
+		}
 	}
 
 	reset() {

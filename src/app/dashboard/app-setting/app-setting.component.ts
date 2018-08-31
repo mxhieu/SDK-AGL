@@ -99,13 +99,17 @@ export class AppSettingComponent extends BaseComponent implements OnInit {
 		this.update();
 	}
 	resetKey() {
-		this.service.resetKey({ 'id': this.service.getAppId() }, data => this.appInfo.key = data);
+		if (window.confirm('Bạn chắc chắn muốn reset?')) {
+			this.service.resetKey({ 'id': this.service.getAppId() }, data => this.appInfo.key = data);
+		}
 	}
 	update() {
 		this.service.updateApp(JSON.stringify(this.appInfo), { 'id': this.service.getAppId() }, data => this.refresh());
 	}
 	delete() {
-		this.service.deleteApp({ 'id': this.service.getAppId() }, data => this.service.moveToApps());
+		if (window.confirm('Bạn chắc chắn muốn xoá app này? Rất có thể sẽ ảnh hưởng đến hệ thống.')) {
+			this.service.resetKey({ 'id': this.service.getAppId() }, data => this.appInfo.key = data);
+		}
 	}
 	onStatusChange() {
 		this.appInfo.is_active = (this.appInfo.is_active == 1 ? 0 : 1);
@@ -137,7 +141,7 @@ export class AppSettingComponent extends BaseComponent implements OnInit {
 	fileChanged(event, type: number) {
 		let fileList: FileList = event.target.files;
 		if (fileList.length > 0) {
-			
+
 			let file: File = fileList[0];
 
 			if (type == 3) {

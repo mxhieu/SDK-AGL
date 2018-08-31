@@ -11,7 +11,7 @@ import { GroupService } from '../../service/group.service';
 export class TelcoComponent extends BaseComponent implements OnInit {
 
 	items: any[]; cardItems: any[]; onerow: any; isHidden: boolean; paging: any; isEdit: boolean;
-	apps: any; app = { 'app_id': '', 'os': '', 'version':''};
+	apps: any; app = { 'app_id': '', 'os': '', 'version': '' };
 
 	constructor(public service: TelcoService, public gService: GroupService) {
 		super();
@@ -34,17 +34,17 @@ export class TelcoComponent extends BaseComponent implements OnInit {
 			this.getApps();
 		}
 	}
-	getApps(){
+	getApps() {
 		this.app.app_id = this.service.getAppId();
 		this.apps = this.gService.getGroupSetting();
-		for (var ap of this.apps){
-			if(ap.app_id == this.app.app_id){
+		for (var ap of this.apps) {
+			if (ap.app_id == this.app.app_id) {
 				this.app.os = ap.os;
 				this.app.version = ap.version;
 			}
 		}
 	}
-	switchApp(app){
+	switchApp(app) {
 		this.service.setAppId(app.app_id);
 		this.refresh();
 	}
@@ -73,7 +73,9 @@ export class TelcoComponent extends BaseComponent implements OnInit {
 		this.service.insert(this.onerow, data => { this.refresh(); });
 	}
 	delete() {
-		this.service.delete(this.onerow, data => { this.refresh(); });
+		if (window.confirm('Bạn chắc chắn muốn xoá?')) {
+			this.service.delete(this.onerow, data => { this.refresh(); });
+		}
 	}
 	reset() {
 		this.isEdit = false;

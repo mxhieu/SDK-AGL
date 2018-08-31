@@ -18,7 +18,11 @@ export class LoginComponent {
       this.service.moveToApps();
     }
   }
-
+  keyDownFunction(event) {
+    if (event.keyCode == 13) {
+      this.clicked();
+    }
+  }
   clicked() {
     this.service.login({
       'username': this.model.username,

@@ -301,6 +301,13 @@
                     <input class="form-control"  disabled="true" type="text" name="version" [(ngModel)]="appInfo.fcm_private_file">
                 </div>
             </div>
+            <span class="badge badge-info">Google Auth Verification</span>
+            <div class="row">
+                <div class="col-md-4 col-lg-4">
+                    <label class="col-form-label">Auth Google Client Id</label>
+                    <input class="form-control" type="text" name="version" [(ngModel)]="appInfo.auth_google_client_id">
+                </div>
+            </div>
             <hr/>
             <span class="badge badge-success">APNS Config</span>
             <div class="row">
@@ -320,14 +327,6 @@
                     <input id = "imageUpload4" type="file" (change)="fileChanged($event, 4)" 
                     placeholder="Upload file" accept="*/*" style="display: none">
                     <input class="form-control"  disabled="true" type="text" name="version" [(ngModel)]="appInfo.apns_private_file">
-                </div>
-            </div>
-            <hr/>
-            <span class="badge badge-info">Google Auth Verification</span>
-            <div class="row">
-                <div class="col-md-4 col-lg-4">
-                    <label class="col-form-label">Auth Google Client Id</label>
-                    <input class="form-control" type="text" name="version" [(ngModel)]="appInfo.auth_google_client_id">
                 </div>
             </div>
             <hr/>
@@ -356,6 +355,18 @@
                 <div class="col-md-3 col-lg-3">
                     <label class="col-form-label">Encrypt Key</label>
                     <input class="form-control" type="text" name="version" [(ngModel)]="appInfo.pp_encrypt_key">
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <label class="col-form-label">100d ID Endpoint</label>
+                    <input class="form-control" type="text" name="id_endpoint" [(ngModel)]="appInfo.id_endpoint">
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <label class="col-form-label">100d Passport Endpoint</label>
+                    <input class="form-control" type="text" name="passport_endpoint" [(ngModel)]="appInfo.passport_endpoint">
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <label class="col-form-label">100d IAP Endpoint</label>
+                    <input class="form-control" type="text" name="iap_endpoint" [(ngModel)]="appInfo.iap_endpoint">
                 </div>
             </div>
         </div>

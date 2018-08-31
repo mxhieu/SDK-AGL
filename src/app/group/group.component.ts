@@ -76,8 +76,10 @@ export class GroupComponent extends BaseComponent implements OnInit {
 	}
 
 	deleteGroup(e: any, id: any) {
-		e.stopPropagation();
-		this.service.deleteGroup({ 'id': id }, data => { this.refresh() });
+		if (window.confirm('Bạn chắc chắn muốn xoá?')) {
+			e.stopPropagation();
+			this.service.deleteGroup({ 'id': id }, data => { this.refresh() });
+		}
 	}
 	/** App function. */
 	toggleApp(e: any, item: any) {
