@@ -6,6 +6,7 @@ enum GroupApiUrls {
 	new = 'groupApp',
 	delete = 'groupApp/delete',
 	update = 'groupApp/edit',
+	get_all = 'groupApp/all',
 	app_get = 'app',
 	app_new = 'app/index'
 }
@@ -43,6 +44,13 @@ export class GroupService extends BaseService {
 	}
 	getGroups(params, callback) {
 		this.get(this.baseUrl() + GroupApiUrls.get, params,
+			data => {
+				callback(Array.isArray(data) ? data : []);
+			});
+	}
+
+	getallGroups(params, callback) {
+		this.get(this.baseUrl() + GroupApiUrls.get_all, params,
 			data => {
 				callback(Array.isArray(data) ? data : []);
 			});

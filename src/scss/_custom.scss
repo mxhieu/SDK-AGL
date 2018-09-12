@@ -971,3 +971,168 @@ span.rs-checkbox-group-all .lk-ch{
         color: #000;
     }
 }
+
+/*Dropdown multi select*/
+.form-min-height {
+    min-height: 42px;
+}
+
+.item-inform-parent {
+    display: inline-block;
+    margin-left: 10px;
+    border: 1px solid #eee;
+    border-radius: 3px;
+}
+
+.item-inform-text {
+    list-style: none;
+    padding: 2px 8px;
+    border-radius: 2px;
+    margin-right: 4px;
+    margin-top: 2px;
+    float: left;
+    position: relative;
+    padding-right: 25px;
+}
+
+.item-inform-remove {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    width: 10px;
+    font-size: 23px;
+    margin-top: -4px;
+    cursor: pointer;
+}
+
+.dropdown-list ul li:hover{
+    background:#f5f5f5;
+}
+
+.rs-checkbox-group-one {
+    width: 20px;
+    height: 20px;
+    display: block;
+    float: left;
+    border: solid 1px #aaa;
+    border-radius: 5px;
+    margin-top: 2px;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+.arrow-up { 
+    border-bottom:15px solid #fff;
+}
+
+.arrow-2 { 
+    border-bottom:15px solid #ccc; 
+}
+
+.list-area {
+    border:1px solid #ccc;
+    background:#fff;
+    box-shadow:0px 1px 5px #959595;
+}
+
+.select-all {
+    border-bottom:1px solid #ccc;
+}
+
+.list-filter{
+    border-bottom:1px solid #ccc;
+}
+
+.selected-item{
+    background:#e9f4ff;
+}
+.dropdown-list{
+    position:absolute;
+    padding-top:14px;
+    z-index:9999;
+}
+.dropdown-list ul {
+    padding:0px;
+    list-style:none;
+    overflow:auto;
+    margin:0px;
+}
+.dropdown-list ul li{
+    padding:10px 10px;
+    cursor:pointer;
+    text-align:left;
+}
+.arrow-up{
+    width:0;
+    height:0;
+    border-left:13px solid transparent;
+    border-right:13px solid transparent;
+    border-bottom:15px solid #fff;
+    margin-left:15px;
+    position:absolute;
+    top:0;
+}
+.icon-arrow-down.icon-right, .icon-arrow-up.icon-right {
+    float: right;
+    margin-top: 1px;
+    font-size: 18px;
+}
+
+.arrow-2{
+    border-bottom:15px solid #ccc;
+    top:-1px;
+}
+
+.select-all{
+    padding:10px;
+    border-bottom:1px solid #ccc;
+    text-align:left;
+}
+
+.list-filter{
+    border-bottom:1px solid #ccc;
+    position:relative;
+    padding-left:35px;
+    height:35px;
+}
+
+.list-filter input{
+    border:0px;
+    width:100%;
+    height:100%;
+    padding:0px;
+}
+
+.list-filter input:focus{
+    outline:none;
+}
+
+.list-filter .c-search{
+    position:absolute;
+    top:9px;
+    left:10px;
+    width:15px;
+    height:15px;
+}
+
+.list-filter .c-search svg{
+    fill:#888;
+}
+
+.list-filter .c-clear{
+    position:absolute;
+    top:10px;
+    right:10px;
+    width:15px;
+    height:15px;
+}
+
+.list-filter .c-clear svg{
+    fill:#888;
+}
+
+
+
+

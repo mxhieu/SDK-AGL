@@ -1,21 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { BaseComponent } from '../../service/base.component';
 import { RbacService } from '../../service/rbac.service';
+import { GroupService } from '../../service/group.service';
 @Component({
   selector: 'app-role',
   templateUrl: './role.component.html',
   styleUrls: ['./role.component.scss']
 })
 export class RoleComponent extends BaseComponent implements OnInit {
+  @ViewChild('container') container;
+  @ViewChild('dropdown') dropdown;
+
   headers: any; paging: any; 
   isnext = true; 
   search = { field: 'name', term: '' };
-  roles = []; onerow: any; 
+  roles = []; onerow: any;
+  groups = []; 
+  groupstmp = []; 
+  groupsorigin = [];
+  groupsselect = []; 
   isHidden: boolean;
   
   router: any;
   http: any;
   data: any;
+  product: any;
   permission_array: any;
   selected_array = [];
   showselected_array = [];
@@ -23,6 +32,9 @@ export class RoleComponent extends BaseComponent implements OnInit {
   data_permission: any;
   dataopt: any;
   // isEdit: any;
+  showmultiselect: any;
+  checkmultiall: any;
+  psearch: any;
   isEdit: boolean;
   isDelete: any;
   isPermission: any;
@@ -31,7 +43,7 @@ export class RoleComponent extends BaseComponent implements OnInit {
   pagin: any;
   connect: any;
 
-  constructor(private service: RbacService) {
+  constructor(private service: RbacService, private gservice: GroupService) {
     super();
     this.paging = this.service.defaultPaging('id');
     this.headers = [
@@ -43,6 +55,8 @@ export class RoleComponent extends BaseComponent implements OnInit {
     ];
     
     this.isEdit = false;
+    this.showmultiselect = false;
+    this.checkmultiall = false;
     this.isDelete = false;
     this.isView = false
     this.onerow  = {};
@@ -50,6 +64,9 @@ export class RoleComponent extends BaseComponent implements OnInit {
     
     this.refresh();
     this.getAllPermissions();
+    this.getGroups();
+
+    document.addEventListener('click', this.offClickHandler.bind(this));
   }
 
   ngOnInit() {  
@@ -95,6 +112,17 @@ export class RoleComponent extends BaseComponent implements OnInit {
     });
   }
 
+  getGroups() {
+    this.gservice.getallGroups({
+      'st_col': this.paging.st_col,
+      'st_type': this.paging.st_type,
+      'pg_page': this.paging.pg_page,
+      'pg_size': 500
+    }, data => {
+      this.groups = this.groupstmp = this.groupsorigin = data;
+    });
+  }
+
   getAllPermissions() {
     this.service.getallPermissions({}, data => {
       this.permission_array = []
@@ -129,6 +157,12 @@ export class RoleComponent extends BaseComponent implements OnInit {
       if (typeof(paramrole.permission) == "string") {paramrole.permission = paramrole.permission.split(',')}
       paramrole.permission = paramrole.permission.map(Number)
     }
+
+    paramrole.products = []
+    for (let i in this.groupsselect) {
+      let objtmp = this.groupsselect[i]
+      paramrole.products.push(objtmp._id)
+    }
     
     this.service.updateRole(paramrole, data => { this.refresh(); });
   }
@@ -151,6 +185,11 @@ export class RoleComponent extends BaseComponent implements OnInit {
     this.isEdit = false;
     this.selected_array = [];
     this.showselected_array = [];
+    this.groupsselect = [];
+    this.groups = this.groupsorigin;
+    this.groups.forEach(obj => { delete (obj.checked) });
+    this.groupstmp = this.groups; 
+    this.checkmultiall = false;
   }
 
   onEdit(e: any, cp: any) { 
@@ -161,6 +200,22 @@ export class RoleComponent extends BaseComponent implements OnInit {
     var init_per = this.initialPermission();
     this.checkPermission(init_per);
     this.show_permission(init_per);
+
+    // add multi select
+    let arrmulti = []
+    this.groupsselect = []
+    this.groups = this.groupstmp = this.groupsorigin;
+    for (let i in this.groups) {
+      let objtmp = this.groups[i]
+      if (this.onerow.products.indexOf(objtmp._id) != -1) {
+        this.groupsselect.push(objtmp)
+        objtmp.checked = true
+        arrmulti.push(true)
+      } else {
+        arrmulti.push(false)
+      }
+    }
+    this.checkmultiall = (arrmulti.constructor == Array && arrmulti.indexOf(false) != -1) ? false : true 
   }
 
   editCancel(event) {
@@ -209,6 +264,13 @@ export class RoleComponent extends BaseComponent implements OnInit {
     tempparams['desc'] = this.onerow.desc;
     tempparams['code'] = this.onerow.code;
     tempparams['permission'] = this.onerow.permission;
+
+    tempparams['products'] = []
+    for (let i in this.groupsselect) {
+      let objtmp = this.groupsselect[i]
+      tempparams['products'].push(objtmp._id)
+    }
+
     this.service.insertRole(tempparams, data => { this.refresh(); this.resetState(); });
   }
 
@@ -225,12 +287,73 @@ export class RoleComponent extends BaseComponent implements OnInit {
   }
 
   ///////////////////
+  // MULTI SELECT ///
+  ///////////////////
+  offClickHandler(event:any) {
+    if (!event.target.parentElement.classList.contains('show-select') && this.showmultiselect == true) {
+      this.showmultiselect = false
+    }
+  }
+
+  showSelect() {
+    this.showmultiselect = !this.showmultiselect;
+  }
+
+  chooseGroup(index) {
+    let objtmp = this.groups[index]
+    let objfind = this.groupsselect.find(obj => obj._id == objtmp._id)
+    if (!objfind) {
+      this.groupsselect.push(objtmp)  
+    } else {
+      this.groupsselect = this.groupsselect.filter(function( obj ) {return obj._id !== objtmp._id})
+    }
+
+    if (!objtmp.checked) {
+      objtmp.checked = true
+    } else {
+      objtmp.checked = false
+    }
+
+    let objcheck = this.groups.find(obj => (obj.checked == false || typeof(obj.checked) == 'undefined'))
+    this.checkmultiall = (typeof(objcheck) == 'undefined' && this.groups.length == this.groupstmp.length) ? true : false
+  }
+
+  deleteGroup(objtmp) {
+    let objfind = this.groups.find(obj => obj._id == objtmp._id)
+    this.showmultiselect = true;
+    this.groupsselect = this.groupsselect.filter(function( obj ) {return obj._id !== objtmp._id})
+    if (objfind) {
+      objtmp.checked = false
+      this.checkmultiall = false
+    } 
+  }
+
+  searchGroup() {
+    for (let i in this.groups) {
+      this.groupstmp[i]['checked'] = (this.groups[i]['checked']) ? this.groups[i]['checked'] : false   
+    }
+    this.groups = this.groupstmp.filter(x => x.name.indexOf(this.psearch) != -1)
+  }
+
+  checkMultiAll() {
+    this.checkmultiall = !this.checkmultiall
+    if (this.checkmultiall) {
+      this.groupsselect = this.groups
+      this.groups.forEach(obj => obj.checked = true)
+    } else {
+      this.groupsselect = []
+      this.groups.forEach(obj => obj.checked = false)
+    }
+  }
+  ///////////////////
   // H E L P E R S //
   ///////////////////
   resetState() {
     this.isEdit = false;
     this.isView = false;
     this.onerow = {};
+    this.groupsselect = [];
+    this.groups = this.groupsorigin;
   }
 
   checkedExist(data) {
