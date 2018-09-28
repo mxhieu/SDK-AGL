@@ -14,7 +14,6 @@
                     <strong>Account</strong>
                 </div>
                 <a *ngIf="service.checkpermission('user') || service.checkpermission('role') || service.checkpermission('permission')" class="dropdown-item tpointer" routerLinkActive="active" [routerLink]="['/settings/admin/user']"><i class="icon-lock"></i> Change Permission</a>
-                <a class="dropdown-item tpointer" (click)="forgotPassword()"><i class="icon-lock"></i> Change password</a>
                 <a class="dropdown-item tpointer" (click)="logout()"><i class="icon-logout"></i> Logout</a>
             </div>
         </li>

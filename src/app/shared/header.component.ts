@@ -17,9 +17,6 @@ export class HeaderComponent implements OnInit {
     this.fullname = this.service.getFullName();
     this.getApps();
   }
-  forgotPassword() {
-    this.service.moveToForgotPassword();
-  }
   logout() {
     this.service.logout();
   }
