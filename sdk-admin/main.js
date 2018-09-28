@@ -1648,6 +1648,7 @@ var GroupApiUrls;
     GroupApiUrls["new"] = "groupApp";
     GroupApiUrls["delete"] = "groupApp/delete";
     GroupApiUrls["update"] = "groupApp/edit";
+    GroupApiUrls["get_all"] = "groupApp/all";
     GroupApiUrls["app_get"] = "app";
     GroupApiUrls["app_new"] = "app/index";
 })(GroupApiUrls || (GroupApiUrls = {}));
@@ -1682,6 +1683,11 @@ var GroupService = /** @class */ (function (_super) {
     };
     GroupService.prototype.getGroups = function (params, callback) {
         this.get(this.baseUrl() + GroupApiUrls.get, params, function (data) {
+            callback(Array.isArray(data) ? data : []);
+        });
+    };
+    GroupService.prototype.getallGroups = function (params, callback) {
+        this.get(this.baseUrl() + GroupApiUrls.get_all, params, function (data) {
             callback(Array.isArray(data) ? data : []);
         });
     };

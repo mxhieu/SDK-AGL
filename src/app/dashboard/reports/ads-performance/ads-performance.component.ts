@@ -28,8 +28,8 @@ export class AdsPerformanceComponent extends BaseComponent implements OnInit, On
 			{ id: 'utm_content', name: 'Utm Content', is_search: 1, st_col: 'utm_content', st_type: 1 },
 			{ id: 'utm_campaign', name: 'Utm Campaign', is_search: 1, st_col: 'utm_campaign', st_type: 1 },
 			{ id: 'link', name: 'Link', is_search: 1, st_col: 'link', st_type: 1 },
-			{ id: 'type', name: 'Type', is_search: 1, st_col: 'type', st_type: 1 },
-			{ id: 'cost', name: 'Cost', is_search: 1, st_col: 'cost', st_type: 1 },
+			{ id: 'cost', name: 'Cost($)', is_search: 1, st_col: 'cost', st_type: 1 },
+			{ id: 'cost_vnd', name: 'Cost(đ)', is_search: 1, st_col: 'cost_vnd', st_type: 1 },
 			{ id: 'start_date', name: 'Start date', is_search: 1, st_col: 'start_date', st_type: 1 },
 			{ id: 'end_date', name: 'End date', is_search: 1, st_col: 'end_date', st_type: 1 }
 		];
@@ -37,15 +37,15 @@ export class AdsPerformanceComponent extends BaseComponent implements OnInit, On
 			{ id: 'fb_campaign_name', name: 'Campaign Name', is_search: 1, st_col: 'fb_campaign_name', st_type: 1 },
 			{ id: 'fb_adset_name', name: 'AdSet Name', is_search: 1, st_col: 'fb_adset_name', st_type: 1 },
 			{ id: 'fb_adgroup_name', name: 'AdGroup Name', is_search: 1, st_col: 'fb_adgroup_name', st_type: 1 },
-			{ id: 'cost', name: 'Cost(USD)', is_search: 1, st_col: 'cost', st_type: 1 },
-			{ id: 'cost_vnd', name: 'Cost(VND)', is_search: 1, st_col: 'cost_vnd', st_type: 1 },
+			{ id: 'cost', name: 'Cost($)', is_search: 1, st_col: 'cost', st_type: 1 },
+			{ id: 'cost_vnd', name: 'Cost(đ)', is_search: 1, st_col: 'cost_vnd', st_type: 1 },
 			{ id: 'start_date', name: 'Start date', is_search: 1, st_col: 'start_date', st_type: 1 },
 			{ id: 'end_date', name: 'End date', is_search: 1, st_col: 'end_date', st_type: 1 }
 		];
 		this.googleHeaders = [
 			{ id: 'gg_campaign_name', name: 'Campaign Name', is_search: 1, st_col: 'gg_campaign_name', st_type: 1 },
-			{ id: 'cost', name: 'Cost(USD)', is_search: 1, st_col: 'cost', st_type: 1 },
-			{ id: 'cost_vnd', name: 'Cost(VND)', is_search: 1, st_col: 'cost_vnd', st_type: 1 },
+			{ id: 'cost', name: 'Cost($)', is_search: 1, st_col: 'cost', st_type: 1 },
+			{ id: 'cost_vnd', name: 'Cost(đ)', is_search: 1, st_col: 'cost_vnd', st_type: 1 },
 			{ id: 'start_date', name: 'Start date', is_search: 1, st_col: 'start_date', st_type: 1 },
 			{ id: 'end_date', name: 'End date', is_search: 1, st_col: 'end_date', st_type: 1 }
 		];
@@ -197,6 +197,7 @@ export class AdsPerformanceComponent extends BaseComponent implements OnInit, On
 		this.onerow.start_date = Math.round(this.startDate.getTime() / 1000);
 		this.onerow.end_date = Math.round(this.endDate.getTime() / 1000);
 		this.onerow.campaign_id = this.cp._id;
+		this.onerow.app_id = this.service.getAppId();
 		this.service.createAd(this.onerow, data => { this.refresh(); });
 	}
 	onItemClick(ad: any) {

@@ -298,7 +298,7 @@ var RbacModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"animated fadeIn\">\n    <div class=\"card-block lk-floathide-form\" [hidden]=\"isHidden\">\n        <div class=\"card\">\n            <div class=\"card-header\">\n              <h5 class=\"card-title\" [hidden]=\"isEdit\">Create Role</h5>\n              <h5 class=\"card-title\" [hidden]=\"!isEdit\">Edit Role {{onerow.name}}</h5>\n            </div>\n            <div class=\"card-block\">\n                <div class=\"row\">\n                    <div class=\"form-group col-md-3 col-lg-3\">\n                        <label class=\"col-form-label-none\">Role Name</label>\n                        <input class=\"form-control\"  placeholder=\"Role Name\" type=\"text\" [(ngModel)]=\"onerow.name\">\n                    </div>\n                    <div class=\"form-group col-md-3 col-lg-3\">\n                        <label class=\"col-form-label-none\">Role Code</label>\n                        <input class=\"form-control\"  placeholder=\"Role Code\" type=\"text\" [(ngModel)]=\"onerow.code\">\n                    </div>\n                    <div class=\"form-group col-md-3 col-lg-3\">\n                        <label class=\"col-form-label-none\">Role Description</label>\n                        <input class=\"form-control\"  placeholder=\"Role Description\" type=\"text\" [(ngModel)]=\"onerow.desc\">\n                    </div>\n                </div>\n                <div class=\"row\">\n                  <div class=\"form-group col-md-3 col-lg-3\">\n                    <button class=\"btn btn-default\" type=\"submit\" (click)=\"addPermission()\" [hidden]=\"!onerow.id\">Sửa chi tiết vai trò</button>\n                    <button class=\"btn btn-default\" type=\"submit\" (click)=\"addPermission()\" [hidden]=\"onerow.id\">Thêm chi tiết vai trò</button>\n                  </div>\n                </div>\n\n                <div class=\"row\" [hidden]=\"!(showselected_array && showselected_array.length > 0)\">\n                  <div class=\"rx-permission-show\">          \n                    <div class=\"rx-permission-group clearfix\" *ngFor=\"let permissiongroup of showselected_array\" >            \n                      <b>{{permissiongroup.key}}</b>\n                      <div><span *ngFor=\"let permission of permissiongroup.value\" class=\"rx-permission-perele\">{{permission.action}}</span></div>\n                    </div>\n                  </div> \n                </div>\n            </div>\n            <div class=\"card-footer\">\n                <button class=\"btn btn-sm btn-primary\" (click)=(save()) [hidden]=\"isEdit\"><i class=\"icon-plus\"></i> Create </button>\n                <button class=\"btn btn-sm btn-primary\" (click)=(update(onerow)) [hidden]=\"!isEdit\"><i class=\"icon-check\"></i> Save</button>\n                <button class=\"btn btn-sm btn-secondary tright\" (click)=\"refresh()\"><i class=\"icon-close\"></i> Cancel</button>\n            </div>\n        </div>\n    </div>\n\n\n    <div class=\"card\" [hidden]=\"!isPermission\">\n        <div class=\"card-header\">\n            <div class=\"row\">\n                <div class=\"col-md-4 col-lg-4\">\n                    <h5 class=\"card-title\">Edit Permission</h5>\n                </div>\n            </div>\n        </div>\n        <div class=\"card-block\">\n            <div class=\"row\">\n              <div class=\"col-lg-4 col-xs-6 rs-box-group\" *ngFor=\"let perdata of permission_array\" >\n                \n                <div class=\"rs-checkbox-group\">\n                  <div class=\"rs-checkbox-group-name\" >\n                           \n                  <span class=\"rs-checkbox-group-all\" [ngClass]=\"(checkedAll(perdata))?'lk_checkall': checkedExist(perdata) ? 'lk_checkexist':''\" (click)=\"toggleAll(perdata)\"></span> \n\n                  <span class=\"rs-checkbox-group-nametext\"><b>{{perdata.key}}</b></span></div>\n                    <div class=\"rs-checkbox-group-body\" >\n                    <div *ngFor=\"let permission of perdata.value\">\n                      <input type=\"checkbox\" class=\"rx-checkbox-iteminput\" (ngModelChange)=\"toggleOne(permission,!permission.checked)\" [(ngModel)]=\"permission.checked\"> <span>{{permission.action}}</span>\n                    </div>\n                    </div>\n                </div>\n\n              </div>\n            </div>\n\n            <div>\n              <button class=\"btn btn-sm btn-primary\" type=\"submit\" (click)=\"addSavePermission()\" ><i class=\"fa fa-dot-circle-o\"></i> Cập nhật</button>        \n              <button class=\"btn btn-sm btn-danger\" type=\"reset\" (click)=\"addResetPermission()\"><i class=\"fa fa-ban\"></i> Huỷ bỏ</button>\n            </div>\n        </div>\n    </div>\n\n\n    <div class=\"card\" [hidden]=\"isPermission || !isHidden\">\n        <div class=\"card-header\">\n            <div class=\"row\">\n                <div class=\"col-md-4 col-lg-4\">\n                    <h5 class=\"card-title\">Role</h5>\n                </div>\n            </div>\n        </div>\n        <div class=\"card-block\">\n            <div class=\"card-tools\">\n                <select class=\"sel-search\" [(ngModel)]=\"search.field\">\n                    <option *ngFor=\"let perheader of headers\" [hidden]=\"!perheader.is_search\" value=\"{{perheader.id}}\">{{perheader.name}}</option>\n                </select><i class=\"icon-arrow-down sel-ico\"></i>\n                <input type=\"text\" class=\"rx-cur input-search\" [(ngModel)]=\"search.term\">\n                <button class=\"btn btn-sm btn-default btn-search\" (click)=\"jumpPage(1)\"><i class=\"icon-magnifier\"></i></button>\n                <button class=\"btn btn-sm btn-success\" (click)=\"show()\"> <i class=\"icon-plus\"></i> Create </button>\n            </div>\n            <table class=\"table mb-0 table-striped table-responsive-sm table-bordered\">\n                <thead class=\"thead-inverse\">\n                    <tr>\n                        <th *ngFor=\"let perheader of headers\" (click)=\"sort($event)\" [attr.rxdata]=\"perheader.id\" class=\"{{(perheader.id == paging.st_col)? 'rxsorting' : ''}} {{(paging.st_type == 1)? 'rxup' : 'rxdown'}} text-center\">\n                            {{perheader.name}}\n                        </th>\n                        <th class=\"text-center\">#</th>\n                    </tr>\n                </thead>\n                <tbody>\n                    <tr *ngFor=\"let cp of roles\">\n                        <td> {{cp.name}} </td>\n                        <td> {{cp.desc}} </td>\n                        <td> {{cp.code}} </td>\n                        <td align=\"center\" class=\"text-center\">\n                            <div>{{cp.created_at * 1000 | date:'dd/MM/yyyy'}}</div>\n                        </td>\n                        <td align=\"center\" class=\"text-center\">\n                            <span class=\"tag tag-success\" [hidden]=\"!(cp.is_active || 0)\">Active</span>\n                            <span class=\"tag tag-default\" [hidden]=\"(cp.is_active || 0)\">Inactive</span>\n                        </td>\n                        <td class=\"text-center\">\n                            <button class=\"btn btn-sm btn-primary\" type=\"button\" (click)=\"onEdit($event, cp)\">\n                            <i class=\"fa fa-pencil-square-o\"></i>\n                            </button>\n                            <button class=\"btn btn-sm btn-danger\" type=\"button\" (click)=\"delete($event, cp)\">\n                            <i class=\"icon-trash \"></i>\n                            </button>\n                        </td>\n                    </tr>\n                    <tr>\n                        <td colspan=\"100% \" class=\"rx-pagin\">\n                            <button class=\"rx-back \" [disabled]=\"paging.pg_page <=1 \" (click)=\"jumpPage(paging.pg_page - 1) \">\n                            <</button>\n                            <input type=\"number \" class=\"rx-cur \" [(ngModel)]=\"paging.pg_page \">\n                            <button class=\"rx-next \" [disabled]=\"!isnext \" (click)=\"jumpPage(paging.pg_page + 1) \">></button>\n                            <span class=\"rx-jump \" (click)=\"jumpPage(paging.pg_page) \"><i class=\"icon-rocket \"></i></span>\n                            <select type=\"number \" class=\"rx-pg-size \" (ngModelChange)=\"resizePage($event) \" [(ngModel)]=\"paging.pg_size \">\n                                <option value=\"10 \" selected>10</option>\n                                <option value=\"50 \" selected>50</option>\n                                <option value=\"100 \" selected>100</option>\n                            </select> / page\n                        </td>\n                    </tr>\n                </tbody>\n            </table>\n        </div>\n    </div>\n</div>"
+module.exports = "<div class=\"animated fadeIn\">\n    <div class=\"card-block lk-floathide-form\" [hidden]=\"isHidden\">\n        <div class=\"card\">\n            <div class=\"card-header\">\n              <h5 class=\"card-title\" [hidden]=\"isEdit\">Create Role</h5>\n              <h5 class=\"card-title\" [hidden]=\"!isEdit\">Edit Role {{onerow.name}}</h5>\n            </div>\n            <div class=\"card-block\">\n                <div class=\"row\">\n                    <div class=\"form-group col-md-3 col-lg-3\">\n                        <label class=\"col-form-label-none\">Role Name</label>\n                        <input class=\"form-control\"  placeholder=\"Role Name\" type=\"text\" [(ngModel)]=\"onerow.name\">\n                    </div>\n                    <div class=\"form-group col-md-3 col-lg-3\">\n                        <label class=\"col-form-label-none\">Role Code</label>\n                        <input class=\"form-control\"  placeholder=\"Role Code\" type=\"text\" [(ngModel)]=\"onerow.code\">\n                    </div>\n                    <div class=\"form-group col-md-3 col-lg-3\">\n                        <label class=\"col-form-label-none\">Role Description</label>\n                        <input class=\"form-control\"  placeholder=\"Role Description\" type=\"text\" [(ngModel)]=\"onerow.desc\">\n                    </div>\n                </div>\n\n                <div class=\"row\">\n                  <div class=\"form-group col-lg-3 col-md-3 show-select\">\n                    <label class=\"col-form-label\">Product</label>\n                    <div class=\"form-control form-min-height\" (click)=\"showSelect()\">\n                      <div *ngFor=\"let groupitem of groupsselect; let i = index\" (click)=\"deleteGroup(groupitem)\" class=\"item-inform-parent\">\n                        <div class=\"item-inform-text\">\n                          <div>{{groupitem.name}}</div>\n                          <div class=\"item-inform-remove\">x</div>\n                        </div>\n                      </div>\n                      <div [ngClass]=\"(!showmultiselect)?'icon-arrow-down icon-right show-select':'icon-arrow-up icon-right'\"></div>\n                    </div>\n                    \n                    <div class=\"dropdown-list\" [hidden]=\"!showmultiselect\">\n                      <div class=\"arrow-2 arrow-up\" ></div>\n                      <div class=\"arrow-up\"></div>\n                      <div class=\"list-area\">\n                        <div class=\"pure-checkbox select-all show-select\">\n                          <span [ngClass]=\"(checkmultiall)?'rs-checkbox-group-one lk_checkall':'rs-checkbox-group-one'\" (click)=\"checkMultiAll()\"></span>\n                          <label>\n                            <span [hidden]=\"checkmultiall\">Select All</span>\n                            <span [hidden]=\"!checkmultiall\">UnSelect All</span>\n                          </label>\n                        </div>\n                        \n                        <div class=\"list-filter show-select\">\n                          <span class=\"c-search icon-magnifier\"></span>    \n                          <input class=\"c-input\" type=\"text\" placeholder=\"Search\" [(ngModel)]=\"psearch\" (ngModelChange)=\"searchGroup()\">\n                        </div>\n\n                        <div class=\"filter-select-all\"></div>\n                        <ul>\n                          <div *ngFor=\"let group of groups; let i = index\" class=\"show-select\">\n                            <li [ngClass]=\"(group.checked)?'pure-checkbox selected-item show-select':'pure-checkbox show-select'\" (click)=\"chooseGroup(i)\">\n                              <span [ngClass]=\"(group.checked)?'rs-checkbox-group-one lk_checkall':'rs-checkbox-group-one'\"></span>\n                              <label>{{group.name}}</label>\n                            </li>  \n                          </div>\n                        </ul>\n                      </div>\n                    </div>\n                  </div>\n                </div>\n\n                <div class=\"row\">\n                  <div class=\"form-group col-md-3 col-lg-3\">\n                    <button class=\"btn btn-default\" type=\"submit\" (click)=\"addPermission()\" [hidden]=\"!onerow.id\">Sửa chi tiết vai trò</button>\n                    <button class=\"btn btn-default\" type=\"submit\" (click)=\"addPermission()\" [hidden]=\"onerow.id\">Thêm chi tiết vai trò</button>\n                  </div>\n                </div>\n\n                <div class=\"row\" [hidden]=\"!(showselected_array && showselected_array.length > 0)\">\n                  <div class=\"rx-permission-show\">          \n                    <div class=\"rx-permission-group clearfix\" *ngFor=\"let permissiongroup of showselected_array\" >            \n                      <b>{{permissiongroup.key}}</b>\n                      <div><span *ngFor=\"let permission of permissiongroup.value\" class=\"rx-permission-perele\">{{permission.action}}</span></div>\n                    </div>\n                  </div> \n                </div>\n            </div>\n            <div class=\"card-footer\">\n                <button class=\"btn btn-sm btn-primary\" (click)=(save()) [hidden]=\"isEdit\"><i class=\"icon-plus\"></i> Create </button>\n                <button class=\"btn btn-sm btn-primary\" (click)=(update(onerow)) [hidden]=\"!isEdit\"><i class=\"icon-check\"></i> Save</button>\n                <button class=\"btn btn-sm btn-secondary tright\" (click)=\"refresh()\"><i class=\"icon-close\"></i> Cancel</button>\n            </div>\n        </div>\n    </div>\n\n\n    <div class=\"card\" [hidden]=\"!isPermission\">\n        <div class=\"card-header\">\n            <div class=\"row\">\n                <div class=\"col-md-4 col-lg-4\">\n                    <h5 class=\"card-title\">Edit Permission</h5>\n                </div>\n            </div>\n        </div>\n        <div class=\"card-block\">\n            <div class=\"row\">\n              <div class=\"col-lg-4 col-xs-6 rs-box-group\" *ngFor=\"let perdata of permission_array\" >\n                \n                <div class=\"rs-checkbox-group\">\n                  <div class=\"rs-checkbox-group-name\" >\n                           \n                  <span class=\"rs-checkbox-group-all\" [ngClass]=\"(checkedAll(perdata))?'lk_checkall': checkedExist(perdata) ? 'lk_checkexist':''\" (click)=\"toggleAll(perdata)\"></span> \n\n                  <span class=\"rs-checkbox-group-nametext\"><b>{{perdata.key}}</b></span></div>\n                    <div class=\"rs-checkbox-group-body\" >\n                    <div *ngFor=\"let permission of perdata.value\">\n                      <input type=\"checkbox\" class=\"rx-checkbox-iteminput\" (ngModelChange)=\"toggleOne(permission,!permission.checked)\" [(ngModel)]=\"permission.checked\"> <span>{{permission.action}}</span>\n                    </div>\n                    </div>\n                </div>\n\n              </div>\n            </div>\n\n            <div>\n              <button class=\"btn btn-sm btn-primary\" type=\"submit\" (click)=\"addSavePermission()\" ><i class=\"fa fa-dot-circle-o\"></i> Cập nhật</button>        \n              <button class=\"btn btn-sm btn-danger\" type=\"reset\" (click)=\"addResetPermission()\"><i class=\"fa fa-ban\"></i> Huỷ bỏ</button>\n            </div>\n        </div>\n    </div>\n\n\n    <div class=\"card\" [hidden]=\"isPermission || !isHidden\">\n        <div class=\"card-header\">\n            <div class=\"row\">\n                <div class=\"col-md-4 col-lg-4\">\n                    <h5 class=\"card-title\">Role</h5>\n                </div>\n            </div>\n        </div>\n        <div class=\"card-block\">\n            <div class=\"card-tools\">\n                <select class=\"sel-search\" [(ngModel)]=\"search.field\">\n                    <option *ngFor=\"let perheader of headers\" [hidden]=\"!perheader.is_search\" value=\"{{perheader.id}}\">{{perheader.name}}</option>\n                </select><i class=\"icon-arrow-down sel-ico\"></i>\n                <input type=\"text\" class=\"rx-cur input-search\" [(ngModel)]=\"search.term\">\n                <button class=\"btn btn-sm btn-default btn-search\" (click)=\"jumpPage(1)\"><i class=\"icon-magnifier\"></i></button>\n                <button class=\"btn btn-sm btn-success\" (click)=\"show()\"> <i class=\"icon-plus\"></i> Create </button>\n            </div>\n            <table class=\"table mb-0 table-striped table-responsive-sm table-bordered\">\n                <thead class=\"thead-inverse\">\n                    <tr>\n                        <th *ngFor=\"let perheader of headers\" (click)=\"sort($event)\" [attr.rxdata]=\"perheader.id\" class=\"{{(perheader.id == paging.st_col)? 'rxsorting' : ''}} {{(paging.st_type == 1)? 'rxup' : 'rxdown'}} text-center\">\n                            {{perheader.name}}\n                        </th>\n                        <th class=\"text-center\">#</th>\n                    </tr>\n                </thead>\n                <tbody>\n                    <tr *ngFor=\"let cp of roles\">\n                        <td> {{cp.name}} </td>\n                        <td> {{cp.desc}} </td>\n                        <td> {{cp.code}} </td>\n                        <td align=\"center\" class=\"text-center\">\n                            <div>{{cp.created_at * 1000 | date:'dd/MM/yyyy'}}</div>\n                        </td>\n                        <td align=\"center\" class=\"text-center\">\n                            <span class=\"tag tag-success\" [hidden]=\"!(cp.is_active || 0)\">Active</span>\n                            <span class=\"tag tag-default\" [hidden]=\"(cp.is_active || 0)\">Inactive</span>\n                        </td>\n                        <td class=\"text-center\">\n                            <button class=\"btn btn-sm btn-primary\" type=\"button\" (click)=\"onEdit($event, cp)\">\n                            <i class=\"fa fa-pencil-square-o\"></i>\n                            </button>\n                            <button class=\"btn btn-sm btn-danger\" type=\"button\" (click)=\"delete($event, cp)\">\n                            <i class=\"icon-trash \"></i>\n                            </button>\n                        </td>\n                    </tr>\n                    <tr>\n                        <td colspan=\"100% \" class=\"rx-pagin\">\n                            <button class=\"rx-back \" [disabled]=\"paging.pg_page <=1 \" (click)=\"jumpPage(paging.pg_page - 1) \">\n                            <</button>\n                            <input type=\"number \" class=\"rx-cur \" [(ngModel)]=\"paging.pg_page \">\n                            <button class=\"rx-next \" [disabled]=\"!isnext \" (click)=\"jumpPage(paging.pg_page + 1) \">></button>\n                            <span class=\"rx-jump \" (click)=\"jumpPage(paging.pg_page) \"><i class=\"icon-rocket \"></i></span>\n                            <select type=\"number \" class=\"rx-pg-size \" (ngModelChange)=\"resizePage($event) \" [(ngModel)]=\"paging.pg_size \">\n                                <option value=\"10 \" selected>10</option>\n                                <option value=\"50 \" selected>50</option>\n                                <option value=\"100 \" selected>100</option>\n                            </select> / page\n                        </td>\n                    </tr>\n                </tbody>\n            </table>\n        </div>\n    </div>\n</div>"
 
 /***/ }),
 
@@ -326,6 +326,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _service_base_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../service/base.component */ "./src/app/service/base.component.ts");
 /* harmony import */ var _service_rbac_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../service/rbac.service */ "./src/app/service/rbac.service.ts");
+/* harmony import */ var _service_group_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../service/group.service */ "./src/app/service/group.service.ts");
 var __extends = (undefined && undefined.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -348,14 +349,20 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var RoleComponent = /** @class */ (function (_super) {
     __extends(RoleComponent, _super);
-    function RoleComponent(service) {
+    function RoleComponent(service, gservice) {
         var _this = _super.call(this) || this;
         _this.service = service;
+        _this.gservice = gservice;
         _this.isnext = true;
         _this.search = { field: 'name', term: '' };
         _this.roles = [];
+        _this.groups = [];
+        _this.groupstmp = [];
+        _this.groupsorigin = [];
+        _this.groupsselect = [];
         _this.selected_array = [];
         _this.showselected_array = [];
         _this.select_tmp_array = [];
@@ -368,12 +375,16 @@ var RoleComponent = /** @class */ (function (_super) {
             { id: 'is_active', name: 'Status', st_col: 'is_active', st_type: 1 }
         ];
         _this.isEdit = false;
+        _this.showmultiselect = false;
+        _this.checkmultiall = false;
         _this.isDelete = false;
         _this.isView = false;
         _this.onerow = {};
         _this.dataopt = { page: [1, 2, 3] };
         _this.refresh();
         _this.getAllPermissions();
+        _this.getGroups();
+        document.addEventListener('click', _this.offClickHandler.bind(_this));
         return _this;
     }
     RoleComponent.prototype.ngOnInit = function () {
@@ -416,6 +427,17 @@ var RoleComponent = /** @class */ (function (_super) {
         });
         var _a;
     };
+    RoleComponent.prototype.getGroups = function () {
+        var _this = this;
+        this.gservice.getallGroups({
+            'st_col': this.paging.st_col,
+            'st_type': this.paging.st_type,
+            'pg_page': this.paging.pg_page,
+            'pg_size': 500
+        }, function (data) {
+            _this.groups = _this.groupstmp = _this.groupsorigin = data;
+        });
+    };
     RoleComponent.prototype.getAllPermissions = function () {
         var _this = this;
         this.service.getallPermissions({}, function (data) {
@@ -452,6 +474,11 @@ var RoleComponent = /** @class */ (function (_super) {
             }
             paramrole.permission = paramrole.permission.map(Number);
         }
+        paramrole.products = [];
+        for (var i in this.groupsselect) {
+            var objtmp = this.groupsselect[i];
+            paramrole.products.push(objtmp._id);
+        }
         this.service.updateRole(paramrole, function (data) { _this.refresh(); });
     };
     RoleComponent.prototype.delete = function (e, cp) {
@@ -471,6 +498,11 @@ var RoleComponent = /** @class */ (function (_super) {
         this.isEdit = false;
         this.selected_array = [];
         this.showselected_array = [];
+        this.groupsselect = [];
+        this.groups = this.groupsorigin;
+        this.groups.forEach(function (obj) { delete (obj.checked); });
+        this.groupstmp = this.groups;
+        this.checkmultiall = false;
     };
     RoleComponent.prototype.onEdit = function (e, cp) {
         e.stopPropagation();
@@ -480,6 +512,22 @@ var RoleComponent = /** @class */ (function (_super) {
         var init_per = this.initialPermission();
         this.checkPermission(init_per);
         this.show_permission(init_per);
+        // add multi select
+        var arrmulti = [];
+        this.groupsselect = [];
+        this.groups = this.groupstmp = this.groupsorigin;
+        for (var i in this.groups) {
+            var objtmp = this.groups[i];
+            if (this.onerow.products.indexOf(objtmp._id) != -1) {
+                this.groupsselect.push(objtmp);
+                objtmp.checked = true;
+                arrmulti.push(true);
+            }
+            else {
+                arrmulti.push(false);
+            }
+        }
+        this.checkmultiall = (arrmulti.constructor == Array && arrmulti.indexOf(false) != -1) ? false : true;
     };
     RoleComponent.prototype.editCancel = function (event) {
         this.resetState();
@@ -526,6 +574,11 @@ var RoleComponent = /** @class */ (function (_super) {
         tempparams['desc'] = this.onerow.desc;
         tempparams['code'] = this.onerow.code;
         tempparams['permission'] = this.onerow.permission;
+        tempparams['products'] = [];
+        for (var i in this.groupsselect) {
+            var objtmp = this.groupsselect[i];
+            tempparams['products'].push(objtmp._id);
+        }
         this.service.insertRole(tempparams, function (data) { _this.refresh(); _this.resetState(); });
     };
     RoleComponent.prototype.addMeta = function () {
@@ -541,12 +594,70 @@ var RoleComponent = /** @class */ (function (_super) {
         this.checkPermission(this.selected_array);
     };
     ///////////////////
+    // MULTI SELECT ///
+    ///////////////////
+    RoleComponent.prototype.offClickHandler = function (event) {
+        if (!event.target.parentElement.classList.contains('show-select') && this.showmultiselect == true) {
+            this.showmultiselect = false;
+        }
+    };
+    RoleComponent.prototype.showSelect = function () {
+        this.showmultiselect = !this.showmultiselect;
+    };
+    RoleComponent.prototype.chooseGroup = function (index) {
+        var objtmp = this.groups[index];
+        var objfind = this.groupsselect.find(function (obj) { return obj._id == objtmp._id; });
+        if (!objfind) {
+            this.groupsselect.push(objtmp);
+        }
+        else {
+            this.groupsselect = this.groupsselect.filter(function (obj) { return obj._id !== objtmp._id; });
+        }
+        if (!objtmp.checked) {
+            objtmp.checked = true;
+        }
+        else {
+            objtmp.checked = false;
+        }
+        var objcheck = this.groups.find(function (obj) { return (obj.checked == false || typeof (obj.checked) == 'undefined'); });
+        this.checkmultiall = (typeof (objcheck) == 'undefined' && this.groups.length == this.groupstmp.length) ? true : false;
+    };
+    RoleComponent.prototype.deleteGroup = function (objtmp) {
+        var objfind = this.groups.find(function (obj) { return obj._id == objtmp._id; });
+        this.showmultiselect = true;
+        this.groupsselect = this.groupsselect.filter(function (obj) { return obj._id !== objtmp._id; });
+        if (objfind) {
+            objtmp.checked = false;
+            this.checkmultiall = false;
+        }
+    };
+    RoleComponent.prototype.searchGroup = function () {
+        var _this = this;
+        for (var i in this.groups) {
+            this.groupstmp[i]['checked'] = (this.groups[i]['checked']) ? this.groups[i]['checked'] : false;
+        }
+        this.groups = this.groupstmp.filter(function (x) { return x.name.indexOf(_this.psearch) != -1; });
+    };
+    RoleComponent.prototype.checkMultiAll = function () {
+        this.checkmultiall = !this.checkmultiall;
+        if (this.checkmultiall) {
+            this.groupsselect = this.groups;
+            this.groups.forEach(function (obj) { return obj.checked = true; });
+        }
+        else {
+            this.groupsselect = [];
+            this.groups.forEach(function (obj) { return obj.checked = false; });
+        }
+    };
+    ///////////////////
     // H E L P E R S //
     ///////////////////
     RoleComponent.prototype.resetState = function () {
         this.isEdit = false;
         this.isView = false;
         this.onerow = {};
+        this.groupsselect = [];
+        this.groups = this.groupsorigin;
     };
     RoleComponent.prototype.checkedExist = function (data) {
         var arrchecked = data.value.map(function (x) { return x.checked; });
@@ -666,13 +777,21 @@ var RoleComponent = /** @class */ (function (_super) {
         this.isView = false;
         this.onerow = event;
     };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('container'),
+        __metadata("design:type", Object)
+    ], RoleComponent.prototype, "container", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('dropdown'),
+        __metadata("design:type", Object)
+    ], RoleComponent.prototype, "dropdown", void 0);
     RoleComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-role',
             template: __webpack_require__(/*! ./role.component.html */ "./src/app/rbac/role/role.component.html"),
             styles: [__webpack_require__(/*! ./role.component.scss */ "./src/app/rbac/role/role.component.scss")]
         }),
-        __metadata("design:paramtypes", [_service_rbac_service__WEBPACK_IMPORTED_MODULE_2__["RbacService"]])
+        __metadata("design:paramtypes", [_service_rbac_service__WEBPACK_IMPORTED_MODULE_2__["RbacService"], _service_group_service__WEBPACK_IMPORTED_MODULE_3__["GroupService"]])
     ], RoleComponent);
     return RoleComponent;
 }(_service_base_component__WEBPACK_IMPORTED_MODULE_1__["BaseComponent"]));

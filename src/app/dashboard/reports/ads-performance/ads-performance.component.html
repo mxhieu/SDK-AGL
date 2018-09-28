@@ -140,11 +140,6 @@
                             <td>{{ad.utm_content}}</td>
                             <td>{{ad.utm_campaign}}</td>
                             <td>{{ad.link}}</td>
-                            <td align="center" class="text-center tMiddle">
-                                <span class="badge badge-dark" [hidden]="!(ad.type == 1)">Banner</span>
-                                <span class="badge badge-info" [hidden]="!(ad.type == 2)">Facebook</span>
-                                <span class="badge badge-danger" [hidden]="!(ad.type == 3)">Google</span>
-                            </td>
                             <td class="tTextRight">
                                 <strong> {{ ad.cost | currency:'USD':symbol:'1.0-3'}}</strong>
                             </td>
@@ -159,22 +154,22 @@
                             </td>
                             <td class="text-center tMiddle">
                                 <button class="btn btn-sm btn-danger" type="button" (click)="delete($event, ad)">
-                                    <i class="icon-trash "></i>
+                                <i class="icon-trash "></i>
                                 </button>
                             </td>
                         </tr>
                         <tr>
                             <td colspan="100% " class="rx-pagin">
                                 <button class="rx-back" [disabled]="paging.pg_page <=1 " (click)="jumpPage(paging.pg_page - 1) ">
-                                    <</button>
-                                        <input type="number " class="rx-cur " [(ngModel)]="paging.pg_page ">
-                                        <button class="rx-next " [disabled]="!isnext " (click)="jumpPage(paging.pg_page + 1) ">></button>
-                                        <span class="rx-jump " (click)="jumpPage(paging.pg_page) "><i class="icon-rocket "></i></span>
-                                        <select type="number " class="rx-pg-size " (ngModelChange)="resizePage($event) " [(ngModel)]="paging.pg_size ">
-                                            <option value="10 " selected>10</option>
-                                            <option value="50 " selected>50</option>
-                                            <option value="100 " selected>100</option>
-                                        </select> / page
+                                <</button>
+                                <input type="number " class="rx-cur " [(ngModel)]="paging.pg_page ">
+                                <button class="rx-next " [disabled]="!isnext " (click)="jumpPage(paging.pg_page + 1) ">></button>
+                                <span class="rx-jump " (click)="jumpPage(paging.pg_page) "><i class="icon-rocket "></i></span>
+                                <select type="number " class="rx-pg-size " (ngModelChange)="resizePage($event) " [(ngModel)]="paging.pg_size ">
+                                    <option value="10 " selected>10</option>
+                                    <option value="50 " selected>50</option>
+                                    <option value="100 " selected>100</option>
+                                </select> / page
                             </td>
                         </tr>
                     </tbody>
@@ -217,15 +212,15 @@
                         <tr>
                             <td colspan="100% " class="rx-pagin">
                                 <button class="rx-back" [disabled]="paging.pg_page <=1 " (click)="jumpPage(paging.pg_page - 1) ">
-                                    <</button>
-                                        <input type="number " class="rx-cur " [(ngModel)]="paging.pg_page ">
-                                        <button class="rx-next " [disabled]="!isnext " (click)="jumpPage(paging.pg_page + 1) ">></button>
-                                        <span class="rx-jump " (click)="jumpPage(paging.pg_page) "><i class="icon-rocket "></i></span>
-                                        <select type="number " class="rx-pg-size " (ngModelChange)="resizePage($event) " [(ngModel)]="paging.pg_size ">
-                                            <option value="10 " selected>10</option>
-                                            <option value="50 " selected>50</option>
-                                            <option value="100 " selected>100</option>
-                                        </select> / page
+                                <</button>
+                                <input type="number " class="rx-cur " [(ngModel)]="paging.pg_page ">
+                                <button class="rx-next " [disabled]="!isnext " (click)="jumpPage(paging.pg_page + 1) ">></button>
+                                <span class="rx-jump " (click)="jumpPage(paging.pg_page) "><i class="icon-rocket "></i></span>
+                                <select type="number " class="rx-pg-size " (ngModelChange)="resizePage($event) " [(ngModel)]="paging.pg_size ">
+                                    <option value="10 " selected>10</option>
+                                    <option value="50 " selected>50</option>
+                                    <option value="100 " selected>100</option>
+                                </select> / page
                             </td>
                         </tr>
                     </tbody>
@@ -233,7 +228,7 @@
             </div>
         </div>
     </div>
-        <div class="card">
+    <div class="card">
         <div class="card-header">
             <h5 class="card-title">Google Ads</h5>
         </div>
@@ -266,15 +261,15 @@
                         <tr>
                             <td colspan="100% " class="rx-pagin">
                                 <button class="rx-back" [disabled]="paging.pg_page <=1 " (click)="jumpPage(paging.pg_page - 1) ">
-                                    <</button>
-                                        <input type="number " class="rx-cur " [(ngModel)]="paging.pg_page ">
-                                        <button class="rx-next " [disabled]="!isnext " (click)="jumpPage(paging.pg_page + 1) ">></button>
-                                        <span class="rx-jump " (click)="jumpPage(paging.pg_page) "><i class="icon-rocket "></i></span>
-                                        <select type="number " class="rx-pg-size " (ngModelChange)="resizePage($event) " [(ngModel)]="paging.pg_size ">
-                                            <option value="10 " selected>10</option>
-                                            <option value="50 " selected>50</option>
-                                            <option value="100 " selected>100</option>
-                                        </select> / page
+                                <</button>
+                                <input type="number " class="rx-cur " [(ngModel)]="paging.pg_page ">
+                                <button class="rx-next " [disabled]="!isnext " (click)="jumpPage(paging.pg_page + 1) ">></button>
+                                <span class="rx-jump " (click)="jumpPage(paging.pg_page) "><i class="icon-rocket "></i></span>
+                                <select type="number " class="rx-pg-size " (ngModelChange)="resizePage($event) " [(ngModel)]="paging.pg_size ">
+                                    <option value="10 " selected>10</option>
+                                    <option value="50 " selected>50</option>
+                                    <option value="100 " selected>100</option>
+                                </select> / page
                             </td>
                         </tr>
                     </tbody>
