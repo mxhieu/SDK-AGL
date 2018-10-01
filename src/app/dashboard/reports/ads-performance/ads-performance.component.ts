@@ -13,7 +13,7 @@ export class AdsPerformanceComponent extends BaseComponent implements OnInit, On
 	ads = []; onerow: any; isEdit: boolean; isHidden: boolean;
 	cp: any; campaigns = []; startDate: Date; endDate: Date = new Date();
 	apps: any; app = { 'app_id': '', 'os': '', 'version': '' };
-	facebookHeaders: any; facebookAds: any; isnext: any; googleAds =  []; googleHeaders : any;
+	facebookHeaders: any; facebookAds: any; isnext: any; googleAds = []; googleHeaders: any;
 
 	constructor(private gService: GroupService, private service: CampaignService) {
 		super();
@@ -22,14 +22,13 @@ export class AdsPerformanceComponent extends BaseComponent implements OnInit, On
 		this.headers = [
 			{ id: 'name', name: 'Name', is_search: 1, st_col: 'name', st_type: 1 },
 			{ id: 'desc', name: 'Description', is_search: 1, st_col: 'desc', st_type: 1 },
+			{ id: 'cost', name: 'Cost(USD)', is_search: 1, st_col: 'cost', st_type: 1 },
 			{ id: 'utm_source', name: 'Utm Source', is_search: 1, st_col: 'utm_source', st_type: 1 },
 			{ id: 'utm_medium', name: 'Utm Medium', is_search: 1, st_col: 'utm_medium', st_type: 1 },
 			{ id: 'utm_term', name: 'Utm Term', is_search: 1, st_col: 'utm_term', st_type: 1 },
 			{ id: 'utm_content', name: 'Utm Content', is_search: 1, st_col: 'utm_content', st_type: 1 },
 			{ id: 'utm_campaign', name: 'Utm Campaign', is_search: 1, st_col: 'utm_campaign', st_type: 1 },
 			{ id: 'link', name: 'Link', is_search: 1, st_col: 'link', st_type: 1 },
-			{ id: 'cost', name: 'Cost($)', is_search: 1, st_col: 'cost', st_type: 1 },
-			{ id: 'cost_vnd', name: 'Cost(đ)', is_search: 1, st_col: 'cost_vnd', st_type: 1 },
 			{ id: 'start_date', name: 'Start date', is_search: 1, st_col: 'start_date', st_type: 1 },
 			{ id: 'end_date', name: 'End date', is_search: 1, st_col: 'end_date', st_type: 1 }
 		];
@@ -37,15 +36,15 @@ export class AdsPerformanceComponent extends BaseComponent implements OnInit, On
 			{ id: 'fb_campaign_name', name: 'Campaign Name', is_search: 1, st_col: 'fb_campaign_name', st_type: 1 },
 			{ id: 'fb_adset_name', name: 'AdSet Name', is_search: 1, st_col: 'fb_adset_name', st_type: 1 },
 			{ id: 'fb_adgroup_name', name: 'AdGroup Name', is_search: 1, st_col: 'fb_adgroup_name', st_type: 1 },
-			{ id: 'cost', name: 'Cost($)', is_search: 1, st_col: 'cost', st_type: 1 },
-			{ id: 'cost_vnd', name: 'Cost(đ)', is_search: 1, st_col: 'cost_vnd', st_type: 1 },
+			{ id: 'cost', name: 'Cost(USD)', is_search: 1, st_col: 'cost', st_type: 1 },
+			{ id: 'cost_vnd', name: 'Cost(VND)', is_search: 1, st_col: 'cost_vnd', st_type: 1 },
 			{ id: 'start_date', name: 'Start date', is_search: 1, st_col: 'start_date', st_type: 1 },
 			{ id: 'end_date', name: 'End date', is_search: 1, st_col: 'end_date', st_type: 1 }
 		];
 		this.googleHeaders = [
 			{ id: 'gg_campaign_name', name: 'Campaign Name', is_search: 1, st_col: 'gg_campaign_name', st_type: 1 },
-			{ id: 'cost', name: 'Cost($)', is_search: 1, st_col: 'cost', st_type: 1 },
-			{ id: 'cost_vnd', name: 'Cost(đ)', is_search: 1, st_col: 'cost_vnd', st_type: 1 },
+			{ id: 'cost', name: 'Cost(USD)', is_search: 1, st_col: 'cost', st_type: 1 },
+			{ id: 'cost_vnd', name: 'Cost(VND)', is_search: 1, st_col: 'cost_vnd', st_type: 1 },
 			{ id: 'start_date', name: 'Start date', is_search: 1, st_col: 'start_date', st_type: 1 },
 			{ id: 'end_date', name: 'End date', is_search: 1, st_col: 'end_date', st_type: 1 }
 		];
@@ -72,7 +71,7 @@ export class AdsPerformanceComponent extends BaseComponent implements OnInit, On
 		this.getApps();
 		this.doAnalysis();
 	}
-	doAnalysis(){
+	doAnalysis() {
 		this.syncBanner();
 		this.syncFacebookAd();
 		this.syncGoogleAd();
@@ -91,7 +90,7 @@ export class AdsPerformanceComponent extends BaseComponent implements OnInit, On
 		this.ads = [];
 		this.isHidden = true;
 		this.isEdit = false;
-		this.cp =  {'_id': ''};
+		this.cp = { '_id': '' };
 		this.onerow = {
 			'id': 'ad' + new Date().getMilliseconds(),
 			'name': 'ad' + new Date().getMilliseconds(),
@@ -100,7 +99,7 @@ export class AdsPerformanceComponent extends BaseComponent implements OnInit, On
 			'start_date': '',
 			'end_date': '',
 			'link': 'link' + new Date().getMilliseconds(),
-			'cost': new Date().getMilliseconds(),
+			'cost': 0,
 			'type': 'banner_ad'
 		};
 	}
@@ -114,33 +113,33 @@ export class AdsPerformanceComponent extends BaseComponent implements OnInit, On
 			'st_type': this.paging.st_type,
 			'pg_page': this.paging.pg_page,
 			'pg_size': this.paging.pg_size,
-			'search_type':'banner_ad',
-			'app_group_id':this.service.getGroupId(),
+			'search_type': 'banner_ad',
+			'app_group_id': this.service.getGroupId(),
 			'search_app_id': this.service.getAppId(),
 			['search_' + this.search.field]: this.search.term,
 			'search_campaign_id': this.cp._id
 		};
 		this.service.getAds(params, data => { this.ads = data; });
 	}
-	syncFacebookAd(){
+	syncFacebookAd() {
 		var params = {
 			'st_col': this.paging.st_col,
 			'st_type': this.paging.st_type,
 			'pg_page': this.paging.pg_page,
 			'pg_size': this.paging.pg_size,
-			'search_type':'facebook_ad',
+			'search_type': 'facebook_ad',
 			'search_app_id': this.service.getAppId(),
 			['search_' + this.search.field]: this.search.term
 		};
 		this.service.getAds(params, data => { this.facebookAds = data; });
 	}
-	syncGoogleAd(){
+	syncGoogleAd() {
 		var params = {
 			'st_col': this.paging.st_col,
 			'st_type': this.paging.st_type,
 			'pg_page': this.paging.pg_page,
 			'pg_size': this.paging.pg_size,
-			'search_type':'google_ad',
+			'search_type': 'google_ad',
 			'search_app_id': this.service.getAppId(),
 			['search_' + this.search.field]: this.search.term
 		};
@@ -150,7 +149,7 @@ export class AdsPerformanceComponent extends BaseComponent implements OnInit, On
 		var params = {
 			'pg_page': 1,
 			'pg_size': 100,
-			'search_source':null,
+			'search_source': null,
 			'search_app_id': this.service.getAppId(),
 			'search_agency_id': '5aa0ee42b887cb6691ed5b43'
 		};
@@ -223,6 +222,8 @@ export class AdsPerformanceComponent extends BaseComponent implements OnInit, On
 	}
 	delete(e: any, ad: any) {
 		e.stopPropagation();
-		this.service.deleteAd({ 'id': ad._id }, data => { this.refresh(); });
+		if (window.confirm('Có phải bạn muốn xoá không?')) {
+			this.service.deleteAd({ 'id': ad._id }, data => { this.refresh(); });
+		}
 	}
 }

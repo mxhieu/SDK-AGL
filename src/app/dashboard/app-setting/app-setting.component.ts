@@ -204,8 +204,10 @@ export class AppSettingComponent extends BaseComponent implements OnInit {
 		});
 	}
 	deletePromoteImage(idx: any) {
-		this.appInfo.promote_images.splice(idx, 1);
-		this.update();
+		if (window.confirm('Có phải bạn muốn xoá không?')) {
+			this.appInfo.promote_images.splice(idx, 1);
+			this.update();
+		}
 	}
 	fileChange(event) {
 		let fileList: FileList = event.target.files;
