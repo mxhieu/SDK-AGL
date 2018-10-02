@@ -6,7 +6,7 @@ import { GroupService } from '../../../service/group.service';
 @Component({
 	selector: 'app-ads-performance',
 	templateUrl: './ads-performance.component.html',
-	styleUrls: ['./ads-performance.component.scss']
+	styleUrls: ['../report.component.scss']
 })
 export class AdsPerformanceComponent extends BaseComponent implements OnInit, OnDestroy {
 	headers: any; paging: any; search = { field: 'name', term: '' };

@@ -74,31 +74,34 @@
         </div>
     </div>
     <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">Campaign Ads</h5>
+        </div>
         <div class="card-block">
-            <div class="row">
-                <div class="form-group col-md-2 col-lg-2">
-                    <label >Application</label>
-                    <br/>
-                    <div class="btn-group" dropdown>
-                        <button dropdownToggle type="button" class="btn btn-outline-primary dropdown-toggle" style="margin:0px;">
-                        {{app.os}} - {{app.version}} <span class="caret"></span>
-                        </button>
-                        <ul *dropdownMenu class="dropdown-menu" role="menu">
-                            <li role="menuitem" *ngFor="let app of apps" (click)="switchApp(app)" class="tpointer">
-                                <a class="dropdown-item"> {{app.os}} - {{app.version}}</a>
-                            </li>
-                        </ul>
+            <div class="row col-md-12">
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Application</span>
+                        </div>
+                        <div class="input-group-prepend" style="width: 100%">
+                            <div class="btn-group" dropdown style="width: 100%">
+                                <button dropdownToggle type="button" class="btn btn-outline-primary dropdown-toggle" style="width: 100%">
+                                {{app.os}} - {{app.version}} <span class="caret"></span>
+                                </button>
+                                <ul *dropdownMenu class="dropdown-menu" role="menu" style="width: 100%">
+                                    <li role="menuitem" *ngFor="let app of apps" (click)="switchApp(app)" class="tpointer" style="width: 100%">
+                                        <a class="dropdown-item"> {{app.os}} - {{app.version}}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="form-group col-md-3 col-lg-3" hidden="true">
-                    <label >Campaign</label>
-                    <select class="form-control" [(ngModel)]="cp">
-                        <option *ngFor="let cp of campaigns" [ngValue]="cp"> {{cp.name}}
-                        </option>
-                    </select>
+                <div class="col-md-8">
+                    <button class="btn btn-success tright" (click)="doAnalysis()"><i class="icon-magic-wand"></i> Analytic </button>
                 </div>
             </div>
-            <button class="btn btn-success" (click)="doAnalysis()"><i class="icon-magic-wand"></i> Analytic </button>
         </div>
     </div>
     <div class="card">
