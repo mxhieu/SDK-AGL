@@ -37,6 +37,8 @@ export class AdsReportComponent extends BaseComponent implements OnInit, OnDestr
 			{ id: 'utm_campaign', name: 'Utm Campaign', is_search: 1, st_col: 'utm_campaign', st_type: 1 },
 			{ id: 'link', name: 'Link', is_search: 1, st_col: 'link', st_type: 1 },
 			{ id: 'cost', name: 'Cost', is_search: 1, st_col: 'cost', st_type: 1 },
+			{ id: 'rev', name: 'Rev', is_search: 1, st_col: 'cost', st_type: 1 },
+			{ id: 'roi', name: 'Roi', is_search: 1 },
 			{ id: 'start_date', name: 'Start date', is_search: 1, st_col: 'start_date', st_type: 1 },
 			{ id: 'end_date', name: 'End date', is_search: 1, st_col: 'end_date', st_type: 1 }
 		];

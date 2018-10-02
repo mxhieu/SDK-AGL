@@ -114,6 +114,12 @@
                             <td class="tTextRight">
                                 <strong> {{ ad.cost | currency:'USD':symbol:'1.0-3'}}</strong>
                             </td>
+                            <td class="tTextRight">
+                                <strong> {{ ad.rev | currency:'USD':symbol:'1.0-3'}}</strong>
+                            </td>
+                            <td class="tTextRight" [style.color]="getRoi(ad) < 1 ? 'red' : 'green'">
+                                <strong> {{ getRoi(ad) | percent }}</strong>
+                            </td>
                             <td align="center" class="text-center tMiddle">
                                 <div>{{ad.start_date * 1000 | date:'dd/MM/yyyy'}}</div>
                             </td>
