@@ -4,46 +4,91 @@
             <h5 class="card-title">ARM PD Report from {{dFrom | date: 'dd/MM/yyyy' }} to {{dTo |  date:'dd/MM/yyyy'}}</h5>
         </div>
         <div class="card-block">
-            <div class="row">
-                <div class="form-group col-lg-6 col-md-6">
-                    <label class="col-form-label">From</label>
-                    <input type="text" class="form-control" [minDate]="dMin" [maxDate]="dMax" #dp="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }" [(ngModel)]="dFrom">
+            <div class="row col-md-12 form-group">
+                <div class="col-md-3">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Source</span>
+                        </div>
+                        <div class="input-group-prepend" style="width: 100%">
+                            <select class="form-control" [(ngModel)]="source" (ngModelChange)="onSourceChanged($event)"
+                                style="width: 100%; flex-direction: unset !important" >
+                                <option *ngFor="let s of sources" [ngValue]="s"> {{s.source_group}} </option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group col-lg-6 col-md-6">
-                    <label class="col-form-label">To</label>
-                    <input type="text" class="form-control" [minDate]="dMin" [maxDate]="dMax" #dp="bsDatepicker" bsDatepicker
-                    [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }"
-                    [(ngModel)]="dTo">
+                <div class="col-md-3">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Audience</span>
+                        </div>
+                        <div class="input-group-prepend" style="width: 100%">
+                            <select class="form-control" [(ngModel)]="currentAudience" [disabled] = "isAudienceHidden"
+                                style="width: 100%; flex-direction: unset !important" >
+                                <option *ngFor="let audience of audiences" [ngValue]="audience"> {{audience.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">OS</span>
+                        </div>
+                        <div class="input-group-prepend" style="width: 100%">
+                            <select class="form-control" [(ngModel)]="platform" (ngModelChange)="osPickerChanged($event)"
+                                style="width: 100%; flex-direction: unset !important" >
+                                <option *ngFor="let p of platforms" [ngValue]="p"> {{p.name}} </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div [hidden]="!isVersionHidden">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Version</span>
+                            </div>
+                            <div class="input-group-prepend" style="width: 100%">
+                                <select class="form-control" [(ngModel)]="version"
+                                    (ngModelChange)="onVersionChanged($event)"
+                                    style="width: 100%; flex-direction: unset !important" >
+                                    <option *ngFor="let v of versionDisplay" [ngValue]="v"> {{v.version}} </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="form-group col-lg-3 col-md-3">
-                    <label class="col-form-label">Source</label>
-                    <select class="form-control" [(ngModel)]="source" (ngModelChange)="onSourceChanged($event)" >
-                        <option *ngFor="let s of sources" [ngValue]="s"> {{s.source_group}} </option>
-                    </select>
+            <div class="row col-md-12">
+                <div class="col-md-3">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">From</span>
+                        </div>
+                        <div class="input-group-prepend" style="width: 100%">
+                            <input type="text" class="form-control" [minDate]="dMin" [maxDate]="dMax" #dp="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }"
+                            [(ngModel)]="dFrom" style="width: 100%; height: 100%">
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group col-lg-3 col-md-3">
-                    <label class="col-form-label">Audience</label>
-                    <select class="form-control" [(ngModel)]="currentAudience" [disabled] = "isAudienceHidden">
-                        <option *ngFor="let audience of audiences" [ngValue]="audience"> {{audience.name}} </option>
-                    </select>
+                <div class="col-md-3">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">To</span>
+                        </div>
+                        <div class="input-group-prepend" style="width: 100%">
+                            <input type="text" class="form-control" [minDate]="dMin" [maxDate]="dMax" #dp="bsDatepicker" bsDatepicker
+                            [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }"
+                            [(ngModel)]="dTo" style="width: 100%; height: 100%">
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group col-lg-3 col-md-3">
-                    <label class="col-form-label">OS</label>
-                    <select class="form-control" [(ngModel)]="platform" (ngModelChange)="osPickerChanged($event)" >
-                        <option *ngFor="let p of platforms" [ngValue]="p"> {{p.name}} </option>
-                    </select>
-                </div>
-                <div class="form-group col-lg-3 col-md-3" [hidden]="!isVersionHidden">
-                    <label class="col-form-label">Version</label>
-                    <select class="form-control" [(ngModel)]="version" 
-                        (ngModelChange)="onVersionChanged($event)" >
-                        <option *ngFor="let v of versionDisplay" [ngValue]="v"> {{v.version}} </option>
-                    </select>
+                <div class="col-md-6">
+                    <button class="btn btn-success tright" (click)="doAnalysis()"><i class="icon-magic-wand"></i> Analytic</button>
                 </div>
             </div>
-            <button class="btn btn-success tright" (click)="doAnalysis()"><i class="icon-magic-wand"></i> Analytic</button>
         </div>
     </div>
     <div class="card">

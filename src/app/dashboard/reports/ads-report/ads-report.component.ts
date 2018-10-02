@@ -7,7 +7,7 @@ import { GroupService } from '../../../service/group.service';
 @Component({
 	selector: 'app-ads-report',
 	templateUrl: './ads-report.component.html',
-	styleUrls: ['./ads-report.component.scss']
+	styleUrls: ['../report.component.scss']
 })
 export class AdsReportComponent extends BaseComponent implements OnInit, OnDestroy {
 
