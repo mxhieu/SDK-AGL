@@ -317,8 +317,7 @@ export class BaseService {
 		return [
 			{ 'id': '-1', 'name': 'All' },
 			{ 'id': 'android', 'name': 'Android' },
-			{ 'id': 'ios', 'name': 'iOS' },
-			{ 'id': 'web', 'name': 'Web' }];
+			{ 'id': 'ios', 'name': 'iOS' }];
 	}
 
 	public rxsetLocal(cname, cvalue) {

@@ -1,12 +1,14 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AmChartsService, AmChart } from "@amcharts/amcharts3-angular";
-import { ReportService } from '../../../service/report.service';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
+
+import { ReportService } from '../../../service/report.service';
+import { CampaignService } from '../../../service/campaign.service';
 
 @Component({
 	selector: 'app-armpd',
-	styleUrls: ['./armpd.component.scss'],
-	templateUrl: './armpd.component.html'
+	templateUrl: './armpd.component.html',
+	styleUrls: ['../report.component.scss']
 })
 export class ArmpdComponent implements OnInit, OnDestroy {
 
@@ -15,14 +17,28 @@ export class ArmpdComponent implements OnInit, OnDestroy {
 	dFrom: Date; dMin: Date; dTo: Date = new Date(); dMax: Date = new Date();
 	data = []; paging: any; isnext = true; header: any;
 	search = { field: 'source', term: '' };
-	version: any; versions = [{ 'version': '', 'os': '' }]; versionDisplay = [{ 'version': '', 'os': '' }];
-	source: any; sources = [{ 'source_group': "All", 'source': '-1' }];
+	
 	platform: any; platforms = [];
-	osVerionDisplay : boolean;
 
-	constructor(private service: ReportService, private AmCharts: AmChartsService) {
+	// Source
+	source: any; sources = [{ 'source_group': "All", 'source': '-1' }];
+
+	// Version
+	version: any; versions = [{ 'version': '', 'os': '' }]; 
+	versionDisplay = [{ 'version': '', 'os': '' }];
+	isVersionHidden: boolean;
+
+	// Audiences
+	audiences = [{ _id: -1, name: 'All' }]; isAudienceHidden: boolean = true; currentAudience : any;
+
+	constructor(
+		private service: ReportService, 
+		private AmCharts: AmChartsService,
+		private campaignService: CampaignService) {
 
 		this.source = this.sources[0];
+		this.currentAudience = this.audiences[0];
+		
 		this.platforms = this.service.defaultPlatforms();
 		this.platform = this.platforms[0];
 
@@ -246,8 +262,6 @@ export class ArmpdComponent implements OnInit, OnDestroy {
 			'pg_size': this.paging.pg_size,
 			'st_col': this.paging.st_col,
 			'st_type': this.paging.st_type,
-			'search_os': null,
-			'search_source': null,
 			'app_group_id': this.service.getGroupId(),
 			'startdate': Math.round(this.dFrom.getTime() / 1000),
 			'enddate': Math.round(this.dTo.getTime() / 1000),
@@ -259,6 +273,9 @@ export class ArmpdComponent implements OnInit, OnDestroy {
 		}
 		if (this.source.source != '-1')
 			params.search_source = this.source.source;
+
+		if (this.currentAudience._id != -1)
+			params.ad_id = this.currentAudience._id;
 
 		this.service.armPdAnalysis(params, data => {
 			this.data = data;
@@ -306,20 +323,43 @@ export class ArmpdComponent implements OnInit, OnDestroy {
 	onVersionChanged(event) {
 		this.service.setAppId(event.app_id);
 	}
+	onSourceChanged(selectedSource: any) {
+		if (selectedSource.source == -1) {
+			this.isAudienceHidden = true;
+			this.currentAudience = this.audiences[0];
+		}
+		else {
+			this.isAudienceHidden = false;
+			var params = {
+				'st_col': this.paging.st_col,
+				'st_type': this.paging.st_type,
+				'pg_page': this.paging.pg_page,
+				'pg_size': this.paging.pg_size,
+				'search_type': selectedSource.source,
+				'app_group_id': this.service.getGroupId()
+			};
+			this.campaignService.getAds(params, data => {
+				this.audiences = data;
+				this.audiences.splice(0, 0, { _id: -1, name: 'All' });
+				this.currentAudience = this.audiences[0];
+			});
+		}
+	}
+
 	osPickerChanged(event) {
 
 		this.versionDisplay = [];
 
 		if (event.id == '-1')
-			this.osVerionDisplay = false;
-		else{
-			this.osVerionDisplay = true;
-			for (var v of this.versions)
+			this.isVersionHidden = false;
+		else {
+			this.isVersionHidden = true;
+			for (var v of this.versions) {
 				if (v.os == event.id)
 					this.versionDisplay.push(v);
+			}
+			this.version = this.versionDisplay[0];
+			this.service.setAppId(this.version.app_id);
 		}
-
-		this.version = this.versionDisplay[0];
-		this.service.setAppId(this.version.app_id)
 	}
 }

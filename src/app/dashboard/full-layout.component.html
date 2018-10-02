@@ -94,9 +94,9 @@
                 </div>
                 <div *ngIf="service.checkpermission('campaign-ad')">
                     <li class="nav-item">
-                        <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/report-ads-performance']">
+                        <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/adslist']">
                             <i class="icon-ghost"></i> 
-                            Ads
+                            Campaign Ads
                         </a>
                     </li>
                 </div>
@@ -104,11 +104,10 @@
                     <li class="nav-item">
                         <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/sourceslist']">
                             <i class="icon-folder-alt"></i> 
-                            Source
+                            Source List
                         </a>
                     </li>
                 </div>
-
                 <div>
                     <li class="nav-item">
                         <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/metric']">

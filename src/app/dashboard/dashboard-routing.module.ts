@@ -38,7 +38,7 @@ const routes: Routes = [
     component: KpireportComponent
   },
   {
-    path: 'report-ads-performance',
+    path: 'adslist',
     component: AdsPerformanceComponent
   },
   {
