@@ -85,13 +85,13 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let d of data">
-                                <td class="text-center">{{d.date * 1000 | date:'dd-MM-yyyy'}} </td>
+                                <td class="text-center">{{d._id * 1000 | date:'dd-MM-yyyy'}} </td>
                                 <td> {{d.source}} </td>
                                 <td> {{d.os }} </td>
                                 <td> {{d.install }} </td>
                                 <td> {{d.nru0 }} </td>
                                 <td> {{d.nru }} </td>
-                                <td> {{d.nru0_install == null ? 0 : d.nru0_install }}% </td>
+                                <td> {{d.nru0_install == null ? 0 : d.nru0_install | number:'1.0-2' }}% </td>
                                 <td> {{d.cost }} </td>
                                 <td> {{d.cpi }} </td>
                                 <td> {{d.rr1 }}% </td>

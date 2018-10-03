@@ -48,7 +48,7 @@ export class ArmpdComponent implements OnInit, OnDestroy {
 		this.paging = this.service.defaultPaging('date');
 
 		this.header = [
-			{ id: 'date', name: 'Date', is_search: 1, st_col: 'data', st_type: 1 },
+			{ id: '_id', name: 'Date', is_search: 1, st_col: '_id', st_type: 1 },
 			{ id: 'source', name: 'Source', is_search: 1, st_col: 'source', st_type: 1 },
 			{ id: 'os', name: 'Device Os', is_search: 1, st_col: 'os', st_type: 1 },
 			{ id: 'install', name: 'Install', is_search: 1, st_col: 'install', st_type: 1 },
@@ -278,7 +278,13 @@ export class ArmpdComponent implements OnInit, OnDestroy {
 			params.ad_id = this.currentAudience._id;
 
 		this.service.armPdAnalysis(params, data => {
-			this.data = data;
+			this.data = [];
+			for (let item of data) {
+				this.data.push(item);
+				for (let doc of item.docs) {
+					this.data.push(doc);
+				}
+			}
 			this.isnext = (this.data.length >= this.paging.pg_size) ? true : false;
 		});
 		this.getChart();
@@ -304,6 +310,7 @@ export class ArmpdComponent implements OnInit, OnDestroy {
 			'search_source': null,
 			'pg_page': 1,
 			'pg_size': 100,
+			'ad_id': null,
 			'st_col': 'date',
 			'st_type': 1,
 			'app_group_id':this.service.getGroupId(),
@@ -317,6 +324,9 @@ export class ArmpdComponent implements OnInit, OnDestroy {
 		}
 		if (this.source.source != '-1')
 			params.search_source = this.source.source;
+
+		if (this.currentAudience._id != -1)
+			params.ad_id = this.currentAudience._id;
 
 		this.service.armPdChartAnalysis(params, data => { this.makeChart(data); });
 	}
