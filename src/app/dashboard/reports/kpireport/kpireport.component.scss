@@ -8,23 +8,39 @@
 }
 
 .kpitable .thead-default>div:last-child {
-	border-right: none;
+    border-right: none;
 }
 
 .kpitable .tbody-default .tbody-col {
-	float: left;
-	width: 25%;
-	border-right: solid 1px #eee;
+    float: left;
+    width: 25%;
+    border-right: solid 1px #eee;
 }
 
 .kpitable .tbody-default .tbody-col:last-child {
-	border-right: none;
+    border-right: none;
 }
 
 .kpitable .tbody-default .tbody-col>div:nth-child(even) {
-	background-color: #eee;	
+    background-color: #eee;
 }
 
 .tbody-col>div {
     padding: 3px 10px;
+}
+
+.input-group-text {
+    display: flex;
+    align-items: center;
+    padding: .375rem .75rem;
+    margin-bottom: 0;
+    font-size: 12px;
+    line-height: 1.5;
+    color: #495057;
+    height: 100%;
+    text-align: center;
+    white-space: nowrap;
+    background-color: #e9ecef;
+    border: 1px solid #ced4da;
+    border-radius: .25rem 0 0 .25rem;
 }
