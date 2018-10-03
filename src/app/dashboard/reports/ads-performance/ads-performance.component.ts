@@ -25,8 +25,6 @@ export class AdsPerformanceComponent extends BaseComponent implements OnInit, On
 			{ id: 'cost', name: 'Cost(USD)', is_search: 1, st_col: 'cost', st_type: 1 },
 			{ id: 'utm_source', name: 'Utm Source', is_search: 1, st_col: 'utm_source', st_type: 1 },
 			{ id: 'utm_medium', name: 'Utm Medium', is_search: 1, st_col: 'utm_medium', st_type: 1 },
-			{ id: 'utm_term', name: 'Utm Term', is_search: 1, st_col: 'utm_term', st_type: 1 },
-			{ id: 'utm_content', name: 'Utm Content', is_search: 1, st_col: 'utm_content', st_type: 1 },
 			{ id: 'utm_campaign', name: 'Utm Campaign', is_search: 1, st_col: 'utm_campaign', st_type: 1 },
 			{ id: 'link', name: 'Link', is_search: 1, st_col: 'link', st_type: 1 },
 			{ id: 'start_date', name: 'Start date', is_search: 1, st_col: 'start_date', st_type: 1 },
