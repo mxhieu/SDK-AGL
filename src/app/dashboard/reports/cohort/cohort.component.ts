@@ -3,8 +3,8 @@ import { ReportService } from '../../../service/report.service';
 
 @Component({
 	selector: 'app-cohort',
-	styleUrls: ['./cohort.component.scss'],
-	templateUrl: './cohort.component.html'
+	templateUrl: './cohort.component.html',
+	styleUrls: ['../report.component.scss']
 })
 export class CohortComponent implements OnInit {
 
@@ -15,14 +15,13 @@ export class CohortComponent implements OnInit {
 	version: any; versions = [{ 'version': '', 'os': '' }]; versionDisplay = [{ 'version': '', 'os': '' }];
 	source: any; sources = [{ 'source_group': "All", 'source': '-1' }];
 	platform: any; platforms = [];
-
+	isVersionHidden: boolean;
 	timeRange: any; tRvalues = []; timeRanges = [
 		{ 'id': 7, 'name': '7 ngày' },
 		{ 'id': 14, 'name': '14 ngày' },
 		{ 'id': 21, 'name': '21 ngày' },
 		{ 'id': 30, 'name': '30 ngày' }];
-	osVerionDisplay : boolean;
-
+	
 	constructor(private service: ReportService) {
 
 		this.source = this.sources[0];
@@ -192,13 +191,12 @@ export class CohortComponent implements OnInit {
 		this.versionDisplay = [];
 
 		if (event.id == '-1')
-			for (var v of this.versions)
-				this.versionDisplay.push(v);
+			this.isVersionHidden = false;
 		else
+			this.isVersionHidden = true;
 			for (var v of this.versions)
 				if (v.os == event.id)
 					this.versionDisplay.push(v);
-
 		this.version = this.versionDisplay[0];
 		this.service.setAppId(this.version.app_id)
 	}

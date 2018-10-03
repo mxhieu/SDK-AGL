@@ -1,11 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ReportService } from '../../../service/report.service';
 import { AmChartsService, AmChart } from "@amcharts/amcharts3-angular";
+import { CampaignService } from '../../../service/campaign.service';
 
 @Component({
 	selector: 'app-roi',
 	templateUrl: './roi.component.html',
-	styleUrls: ['./roi.component.scss']
+	styleUrls: ['../report.component.scss']
 })
 export class RoiComponent implements OnInit {
 
@@ -13,22 +14,35 @@ export class RoiComponent implements OnInit {
 
 	data = []; paging: any; isnext = true; header: any;
 	search = { field: 'source', term: '' };
-	version: any; versions = [{ 'version': '', 'os': '' }]; versionDisplay = [{ 'version': '', 'os': '' }];
-	source: any; sources = [{ 'source_group': "All", 'source': '-1' }];
+
 	platform: any; platforms = [];
-	osVerionDisplay : boolean;
-	constructor(private service: ReportService, private AmCharts: AmChartsService) {
+
+	// Source
+	source: any; sources = [{ 'source_group': "All", 'source': '-1' }];
+
+	// Version
+	version: any; versions = [{ 'version': '', 'os': '' }];
+	versionDisplay = [{ 'version': '', 'os': '' }];
+	isVersionHidden: boolean;
+
+	// Audiences
+	audiences = [{ _id: -1, name: 'All' }]; isAudienceHidden: boolean = true; currentAudience: any;
+
+	constructor(private service: ReportService,
+		private AmCharts: AmChartsService,
+		private campaignService: CampaignService) {
 
 		this.source = this.sources[0];
+		this.currentAudience = this.audiences[0];
 
 		this.platforms = this.service.defaultPlatforms();
 		this.platform = this.platforms[0];
-		
+
 		this.dFrom = this.service.fromDate(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate());
 		this.dMin = this.service.fromDate(this.dMax.getFullYear(), this.dMax.getMonth(), this.dMax.getDate());
 
 		this.paging = this.service.defaultPaging('date');
-		
+
 		this.header = [
 			{ id: 'date', name: 'Date', is_search: 1, st_col: 'data', st_type: 1 },
 			{ id: 'source', name: 'Source', is_search: 1, st_col: 'source', st_type: 1 },
@@ -92,21 +106,24 @@ export class RoiComponent implements OnInit {
 			'pg_page': this.paging.pg_page,
 			'pg_size': this.paging.pg_size,
 			'st_col': this.paging.st_col,
-			'app_id':null,
-			'app_group_id':this.service.getGroupId(),
-			'search_os':null,
+			'app_id': null,
+			'app_group_id': this.service.getGroupId(),
+			'search_os': null,
 			'startdate': Math.round(this.dFrom.getTime() / 1000),
 			'enddate': Math.round(this.dTo.getTime() / 1000),
 			'st_type': this.paging.st_type,
 			['search_' + this.search.field]: this.search.term
 		};
-		if (this.platform.id != '-1'){
+		if (this.platform.id != '-1') {
 			params.search_os = this.platform.id;
 			params.app_id = this.service.getAppId();
 		}
 
 		if (this.source.source != '-1')
 			params.search_source = this.source.source;
+
+		if (this.currentAudience._id != -1)
+			params.ad_id = this.currentAudience._id;
 
 		this.service.roiAnalysis(params, data => {
 			this.data = data;
@@ -125,6 +142,28 @@ export class RoiComponent implements OnInit {
 			this.version = this.versionDisplay[0];
 		});
 	}
+	onSourceChanged(selectedSource: any) {
+		if (selectedSource.source == -1) {
+			this.isAudienceHidden = true;
+			this.currentAudience = this.audiences[0];
+		}
+		else {
+			this.isAudienceHidden = false;
+			var params = {
+				'st_col': this.paging.st_col,
+				'st_type': this.paging.st_type,
+				'pg_page': this.paging.pg_page,
+				'pg_size': this.paging.pg_size,
+				'search_type': selectedSource.source,
+				'app_group_id': this.service.getGroupId()
+			};
+			this.campaignService.getAds(params, data => {
+				this.audiences = data;
+				this.audiences.splice(0, 0, { _id: -1, name: 'All' });
+				this.currentAudience = this.audiences[0];
+			});
+		}
+	}
 	onVersionChanged(event) {
 		this.service.setAppId(event.app_id);
 	}
@@ -133,10 +172,9 @@ export class RoiComponent implements OnInit {
 		this.versionDisplay = [];
 
 		if (event.id == '-1')
-			this.osVerionDisplay = false;
-		else
-		{
-			this.osVerionDisplay = true;
+			this.isVersionHidden = false;
+		else {
+			this.isVersionHidden = true;
 			for (var v of this.versions)
 				if (v.os == event.id)
 					this.versionDisplay.push(v);
