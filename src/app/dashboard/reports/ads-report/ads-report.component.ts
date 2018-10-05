@@ -14,7 +14,7 @@ export class AdsReportComponent extends BaseComponent implements OnInit, OnDestr
 	headers: any; paging: any; search = { field: 'name', term: '' };
 	ads = []; onerow: any; isEdit: boolean; isHidden: boolean;
 	cp: any; campaigns = []; isnext: any;
-	startDate: Date; endDate: Date = new Date();
+	endDate: Date = new Date();
 	dFrom: Date; dMin: Date; dTo: Date = new Date(); dMax: Date = new Date();
 
 	apps: any; app = { 'app_id': '', 'os': '', 'version': '' };
@@ -24,9 +24,9 @@ export class AdsReportComponent extends BaseComponent implements OnInit, OnDestr
 
 		super();
 		this.paging = this.service.defaultPaging('date');
-		this.startDate = this.service.fromDate(this.endDate.getFullYear(), this.endDate.getMonth(), this.endDate.getDate());
-		this.dFrom = this.service.fromDate(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate());
-		this.dMin = this.service.fromDate(this.dMax.getFullYear(), this.dMax.getMonth(), this.dMax.getDate());
+		this.dFrom = this.service.fromDate(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate(), 30);
+		this.dMin = this.service.fromDate(this.dMax.getFullYear(), this.dMax.getMonth(), this.dMax.getDate(), 365);
+
 		this.isnext = true;
 		this.headers = [
 			{ id: 'name', name: 'Name', is_search: 1, st_col: 'name', st_type: 1 },

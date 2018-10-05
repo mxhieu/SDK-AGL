@@ -32,8 +32,8 @@ export class CohortComponent implements OnInit {
 		this.timeRange = this.timeRanges[0];
 		this.makeFilterDataArray(this.timeRange.id);
 
-		this.dFrom = this.service.fromDate(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate());
-		this.dMin = this.service.fromDate(this.dMax.getFullYear(), this.dMax.getMonth(), this.dMax.getDate());
+		this.dFrom = this.service.fromDate(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate(), 30);
+		this.dMin = this.service.fromDate(this.dMax.getFullYear(), this.dMax.getMonth(), this.dMax.getDate(), 365);
 
 		this.paging = { pg_page: 1, pg_size: 30, st_col: 'date', st_type: -1 };
 		this.changeHeader(7);

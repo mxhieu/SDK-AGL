@@ -38,8 +38,8 @@ export class RoiComponent implements OnInit {
 		this.platforms = this.service.defaultPlatforms();
 		this.platform = this.platforms[0];
 
-		this.dFrom = this.service.fromDate(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate());
-		this.dMin = this.service.fromDate(this.dMax.getFullYear(), this.dMax.getMonth(), this.dMax.getDate());
+		this.dFrom = this.service.fromDate(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate(), 30);
+		this.dMin = this.service.fromDate(this.dMax.getFullYear(), this.dMax.getMonth(), this.dMax.getDate(), 365);
 
 		this.paging = this.service.defaultPaging('date');
 

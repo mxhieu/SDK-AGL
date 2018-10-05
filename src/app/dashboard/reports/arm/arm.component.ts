@@ -30,9 +30,11 @@ export class ArmComponent implements OnInit, OnDestroy {
 		this.currentAudience = this.audiences[0];
 		this.platforms = this.service.defaultPlatforms();
 		this.platform = this.platforms[0];
-		this.dFrom = this.service.fromDate(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate());
-		this.dMin = this.service.fromDate(this.dMax.getFullYear(), this.dMax.getMonth(), this.dMax.getDate());
-		this.paging = this.service.defaultPaging('date');
+
+		this.dFrom = this.service.fromDate(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate(), 30);
+		this.dMin = this.service.fromDate(this.dMax.getFullYear(), this.dMax.getMonth(), this.dMax.getDate(), 365);
+		
+		this.paging = this.service.defaultPaging('_id');
 		this.header = [
 			{ id: '_id', name: 'Date', is_search: 1, st_col: '_id', st_type: 1 },
 			{ id: 'source', name: 'Source', is_search: 1, st_col: 'source', st_type: 1 },

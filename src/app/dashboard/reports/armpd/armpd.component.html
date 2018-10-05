@@ -75,7 +75,7 @@
                 <table class="table mb-0 table-striped table-responsive-sm table-bordered">
                     <thead class="thead-default">
                         <tr>
-                            <th colspan="3" class="rx-table-head-border"></th>
+                            <th colspan="5" class="rx-table-head-border"></th>
                             <th colspan="6" class="rx-table-head-border">Acquisition</th>
                             <th colspan="3" class="rx-table-head-border">Retention</th>
                             <th colspan="6" class="rx-table-head-border">Monitization</th>
@@ -88,6 +88,8 @@
                                 <td class="text-center">{{d._id * 1000 | date:'dd-MM-yyyy'}} </td>
                                 <td> {{d.source}} </td>
                                 <td> {{d.os }} </td>
+                                <td> {{d.campaign_name}}</td>
+                                <td> {{d.ad_name}}</td>
                                 <td> {{d.install }} </td>
                                 <td> {{d.nru0 }} </td>
                                 <td> {{d.nru }} </td>

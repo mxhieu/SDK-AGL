@@ -1,14 +1,18 @@
+
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BaseComponent } from '../../../service/base.component';
 import { CampaignService } from '../../../service/campaign.service';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { GroupService } from '../../../service/group.service';
+
 @Component({
 	selector: 'app-ads-performance',
 	templateUrl: './ads-performance.component.html',
 	styleUrls: ['../report.component.scss']
 })
+
 export class AdsPerformanceComponent extends BaseComponent implements OnInit, OnDestroy {
+
 	headers: any; paging: any; search = { field: 'name', term: '' };
 	ads = []; onerow: any; isEdit: boolean; isHidden: boolean;
 	cp: any; campaigns = []; startDate: Date; endDate: Date = new Date();
@@ -18,7 +22,7 @@ export class AdsPerformanceComponent extends BaseComponent implements OnInit, On
 	constructor(private gService: GroupService, private service: CampaignService) {
 		super();
 		this.paging = this.service.defaultPaging('start_date');
-		this.startDate = this.service.fromDate(this.endDate.getFullYear(), this.endDate.getMonth(), this.endDate.getDate());
+		this.startDate = this.service.fromDate(this.endDate.getFullYear(), this.endDate.getMonth(), this.endDate.getDate(), 30);
 		this.headers = [
 			{ id: 'name', name: 'Name', is_search: 1, st_col: 'name', st_type: 1 },
 			{ id: 'desc', name: 'Description', is_search: 1, st_col: 'desc', st_type: 1 },

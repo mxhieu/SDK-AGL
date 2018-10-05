@@ -1,22 +1,22 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ReportService } from '../../../service/report.service';
 import { AmChartsService, AmChart } from "@amcharts/amcharts3-angular";
 import { CampaignService } from '../../../service/campaign.service';
 
 @Component({
-  selector: 'app-roipd',
-  templateUrl: './roipd.component.html',
-  styleUrls: ['../report.component.scss']
+	selector: 'app-roipd',
+	templateUrl: './roipd.component.html',
+	styleUrls: ['../report.component.scss']
 })
 export class RoipdComponent implements OnInit {
 
-	dFrom: Date ; dMin: Date;
+	dFrom: Date; dMin: Date;
 	dTo: Date = new Date(); dMax: Date = new Date();
-	data = []; paging: any; isnext = true; header: any; 
+	data = []; paging: any; isnext = true; header: any;
 	search = { field: 'source', term: '' };
-	
-	platform : any; platforms = [];
-	
+
+	platform: any; platforms = [];
+
 	source: any; sources = [{ 'source_group': "All", 'source': '-1' }];
 
 	// Version
@@ -33,14 +33,14 @@ export class RoipdComponent implements OnInit {
 
 		this.source = this.sources[0];
 		this.currentAudience = this.audiences[0];
-		this.platforms =  this.service.defaultPlatforms();
+		this.platforms = this.service.defaultPlatforms();
 		this.platform = this.platforms[0];
-		
-		this.dFrom = this.service.fromDate(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate());
-		this.dMin = this.service.fromDate(this.dMax.getFullYear(), this.dMax.getMonth(), this.dMax.getDate());
+
+		this.dFrom = this.service.fromDate(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate(), 30);
+		this.dMin = this.service.fromDate(this.dMax.getFullYear(), this.dMax.getMonth(), this.dMax.getDate(), 365);
 
 		this.paging = this.service.defaultPaging('date');
-		
+
 		this.header = [
 			{ id: 'date', name: 'Date', is_search: 1, st_col: 'date', st_type: 1 },
 			{ id: 'source', name: 'Source', is_search: 1, st_col: 'source', st_type: 1 },
@@ -103,22 +103,22 @@ export class RoipdComponent implements OnInit {
 			'pg_page': this.paging.pg_page,
 			'pg_size': this.paging.pg_size,
 			'st_col': this.paging.st_col,
-			'app_id':null,
-			'app_group_id':this.service.getGroupId(),
-			'search_os':null,
+			'app_id': null,
+			'app_group_id': this.service.getGroupId(),
+			'search_os': null,
 			'startdate': Math.round(this.dFrom.getTime() / 1000),
 			'enddate': Math.round(this.dTo.getTime() / 1000),
 			'st_type': this.paging.st_type,
 			['search_' + this.search.field]: this.search.term
 		};
 
-		if (this.platform.id != '-1'){
+		if (this.platform.id != '-1') {
 			params.search_os = this.platform.id;
 			params.app_id = this.service.getAppId();
 		}
 		if (this.source.source != '-1')
 			params.search_source = this.source.source;
-		
+
 		if (this.currentAudience._id != -1)
 			params.ad_id = this.currentAudience._id;
 

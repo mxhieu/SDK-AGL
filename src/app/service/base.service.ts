@@ -108,7 +108,7 @@ export class BaseService {
 						if (json['success'] && (json['success'] == 1 || json['success'] == 100)) {
 							callback(json['data']);
 							this.successful(json['msg'], json['success']);
-						} else if(json['success'] && json['success'] == -3 ) {
+						} else if (json['success'] && json['success'] == -3) {
 							this.logout();
 						}
 						else this.failure(json['msg']);
@@ -144,7 +144,7 @@ export class BaseService {
 						if (json['success'] && (json['success'] == 1 || json['success'] == 100)) {
 							callback(json['data']);
 							this.successful(json['msg'], json['success']);
-						} else if(json['success'] && json['success'] == -3 ) {
+						} else if (json['success'] && json['success'] == -3) {
 							this.logout();
 						}
 						else this.failure(json['msg']);
@@ -244,7 +244,7 @@ export class BaseService {
 		this.post(this.config.API_LOGIN, null, params, data => {
 			this.setToken(data.user.authorization);
 			this.setAuth(JSON.stringify(data.user));
-			this.rxsetLocal('arrper', data.arrper )
+			this.rxsetLocal('arrper', data.arrper)
 			this.moveToApps();
 		});
 	}
@@ -296,8 +296,9 @@ export class BaseService {
 	public getGroupId(): string {
 		return Cookie.get(this.KEY_GROUP_ID);
 	}
-	fromDate(year, month, date) {
-		return new Date(year, month, date - 200);
+
+	public fromDate(year, month, date, gap) {
+		return new Date(year, month, date - gap);
 	}
 
 	// COMMON DEFAULT SUPPORT METHOD
@@ -321,30 +322,30 @@ export class BaseService {
 	}
 
 	public rxsetLocal(cname, cvalue) {
-	  if (typeof window !== 'undefined') {
-	    localStorage.setItem(cname, cvalue)
-	  }
+		if (typeof window !== 'undefined') {
+			localStorage.setItem(cname, cvalue)
+		}
 	}
 
-	public rxgetLocal(cname, cdefault) {  
-	  if (typeof window !== 'undefined') {
-	    return localStorage.getItem(cname)
-	  } else {
-	    return cdefault
-	  }
+	public rxgetLocal(cname, cdefault) {
+		if (typeof window !== 'undefined') {
+			return localStorage.getItem(cname)
+		} else {
+			return cdefault
+		}
 	}
 
 	checkpermission(strcheck) {
-		let strper = this.rxgetLocal('arrper','')
+		let strper = this.rxgetLocal('arrper', '')
 		let arrper = []
 		if (strper && strper.length > 0 && strper.indexOf(',') !== -1) {
 			arrper = strper.split(',')
 		}
 		if (arrper.length !== 0) {
 			if (arrper.indexOf(strcheck) !== -1) {
-			  return true
+				return true
 			} else {
-			  return false
+				return false
 			}
 		} else {
 			return true
