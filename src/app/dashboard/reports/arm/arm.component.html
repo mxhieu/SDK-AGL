@@ -93,7 +93,7 @@
                                 <td> {{d.install}} </td>
                                 <td> {{d.nru0}}</td>
                                 <td> {{d.nru}}</td>
-                                <td> {{d.nru0_install | number:'1.0-2'}} %</td>
+                                <td> {{d.nru0_install == null ? 0 : d.nru0_install | number:'1.0-2' }}% </td>
                                 <td> {{d.cost}}</td>
                                 <td> {{d.cpi}}</td>
                                 <td> {{d.rr1}}%</td>
