@@ -27,6 +27,7 @@ export class TransactionComponent extends BaseComponent implements OnInit {
 			{ id: 'purchase_date_ms', name: 'Purchase Date', is_search: 1, st_col: 'purchase_date_ms', st_type: 1 },
 			{ id: 'created_at', name: 'Created', is_search: 1, st_col: 'created_at', st_type: 1 },
 			{ id: 'status', name: 'Status', is_search: 1, st_col: 'status', st_type: 1 },
+			{ id: 'message', name: 'Message', is_search: 1, st_col: 'message', st_type: 1 },
 			{ id: 'payload', name: 'Payload', is_search: 1, st_col: 'payload', st_type: 1 }
 		];
 	}

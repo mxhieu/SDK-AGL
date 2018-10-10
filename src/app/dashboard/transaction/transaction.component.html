@@ -100,7 +100,10 @@
                             <span class="tag tag-success" *ngIf="item.status == 1">Success</span>
                             <span class="tag tag-danger" *ngIf="item.status == 0">Failed</span>
                         </td>
-                        <td style="vertical-align: middle;">
+                        <td align="center" style="vertical-align: middle; max-width: 256px">
+                            {{item.message}} 
+                        </td>
+                        <td style="vertical-align: middle; max-width: 256px">
                             {{item.payload}}
                         </td>
                     </tr>
