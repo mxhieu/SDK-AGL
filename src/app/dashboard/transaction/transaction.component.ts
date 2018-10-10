@@ -49,6 +49,11 @@ export class TransactionComponent extends BaseComponent implements OnInit {
 				'st_type': this.paging.st_type
 			}, data => {
 				this.items = data;
+				this.totalSUSD = 0;
+				this.totalSVND = 0;
+				this.totalFUSD = 0;
+				this.totalFVND = 0;
+
 				for (var it of this.items) {
 					if (it.status == 1) {
 						if (it.product_currency == 'USD')
@@ -56,7 +61,7 @@ export class TransactionComponent extends BaseComponent implements OnInit {
 						else if (it.product_currency == 'VND')
 							this.totalSVND += it.product_price;
 					}
-					else if (it.status == 0) {
+					else {
 						if (it.product_currency == 'USD')
 							this.totalFUSD += it.product_price;
 						else if (it.product_currency == 'VND')
