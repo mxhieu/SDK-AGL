@@ -144,6 +144,7 @@ export class AppSettingComponent extends BaseComponent implements OnInit {
 
 			let file: File = fileList[0];
 
+			
 			if (type == 3) {
 				this.service.uploadFile(file, data => {
 					this.appInfo.fcm_private_file = data;
@@ -167,6 +168,7 @@ export class AppSettingComponent extends BaseComponent implements OnInit {
 						this.update();
 					}
 					else if (type == 2) {
+						console.log(data);
 						this.appInfo.promote_images.push({
 							'click_url': 'click_url',
 							'image': data,

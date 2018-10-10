@@ -26,7 +26,7 @@
                     <label for="imageUpload1" class="col-form-label btn btn-outline-primary tBottomButton" style="background: #fff">
                         <i class="icon-cloud-upload"> </i>
                     </label>
-                    <input id = "imageUpload1" type="file" (change)="fileChanged($event, 0)" 
+                    <input id = "imageUpload1" type="file" (change)="fileChanged($event, 0)"
                     placeholder="Upload file" accept="image/*" style="display: none">
                     <img [src]="getUrl(appInfo.icon)" (error)="onImageLoadedError($event)" class="tIconX2 tCenterImage" />
                 </div>
@@ -119,7 +119,7 @@
                             <label class="col-form-label-none" style="vertical-align: middle;">Full registeration</label>
                         </div>
                         <div class="col-lg-5 col-md-5">
-                            <input class="form-control" type="text" style="vertical-align: middle;" 
+                            <input class="form-control" type="text" style="vertical-align: middle;"
                             [(ngModel)]="appInfo.full_register_url">
                         </div>
                         <div class="col-lg-2 col-md-2">
@@ -128,7 +128,7 @@
                         <div class="col-lg-2 col-md-2">
                             <label class="switch switch-text switch-pill switch-info tright" style="vertical-align: middle;">
                                 <input type="checkbox" class="switch-input" [(ngModel)]="appInfo.settings.is_full_register_enable"
-                                 (change)=(update())>
+                                (change)=(update())>
                                 <span class="switch-label" data-on="On" data-off="Off"></span>
                                 <span class="switch-handle"></span>
                             </label>
@@ -266,7 +266,6 @@
                     <label class="col-form-label">Exchange rate (Tỉ giá USD - VND)</label>
                     <input class="form-control" type="text" name="version" [(ngModel)]="appInfo.currency_USD_VND">
                 </div>
-
             </div>
             <hr/>
             <span class="badge badge-success">Google IAP Verification</span>
@@ -296,7 +295,7 @@
                     <label for="imageUpload3" class="col-form-label btn btn-outline-primary" style="background: #fff">
                         <i class="icon-cloud-upload"> </i>
                     </label>
-                    <input id = "imageUpload3" type="file" (change)="fileChanged($event, 3)" 
+                    <input id = "imageUpload3" type="file" (change)="fileChanged($event, 3)"
                     placeholder="Upload file" accept="*/*" style="display: none">
                     <input class="form-control"  disabled="true" type="text" name="version" [(ngModel)]="appInfo.fcm_private_file">
                 </div>
@@ -324,7 +323,7 @@
                     <label for="imageUpload4" class="col-form-label btn btn-outline-primary" style="background: #fff">
                         <i class="icon-cloud-upload"> </i>
                     </label>
-                    <input id = "imageUpload4" type="file" (change)="fileChanged($event, 4)" 
+                    <input id = "imageUpload4" type="file" (change)="fileChanged($event, 4)"
                     placeholder="Upload file" accept="*/*" style="display: none">
                     <input class="form-control"  disabled="true" type="text" name="version" [(ngModel)]="appInfo.apns_private_file">
                 </div>
@@ -388,10 +387,10 @@
                     </h5>
                 </div>
                 <div class="col-lg-6 col-md-6">
-                    <label for="imageUpload3" class="col-form-label btn btn-outline-primary tright" style="margin: 0;">
+                    <label for="imageUpload5" class="col-form-label btn btn-outline-primary tright" style="margin: 0;">
                         <i class="icon-cloud-upload"> </i> Upload
                     </label>
-                    <input id="imageUpload3" class="tright" type="file" (change)="fileChanged($event, 2)" 
+                    <input id="imageUpload5" class="tright" type="file" (change)="fileChanged($event, 2)"
                     placeholder="Upload" accept="image/*" style="display: none;">
                 </div>
             </div>
@@ -400,7 +399,7 @@
             <div class="row form-group promote_images_wrapper" *ngFor="let item of appInfo.promote_images; let i=index">
                 <div class="col-lg-2 col-md-2 tBoxWrapper">
                     <button class="btn btn-danger tBottomButton" (click)="deletePromoteImage(i)">
-                        <i class="icon-trash"></i>
+                    <i class="icon-trash"></i>
                     </button>
                     <img class="promote_image tCenterImage" [src]="getUrl(item.image)" (error)="onImageLoadedError($event)"/>
                 </div>
