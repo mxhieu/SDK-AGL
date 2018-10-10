@@ -88,7 +88,8 @@
                             {{item.product_id}}
                         </td>
                         <td align="center"  style="vertical-align: middle;">
-                            <strong>{{item.product_price | currency:'USD':'symbol':'1.0-0'}}</strong>
+                            <strong *ngIf="item.product_currency == 'VND'">{{item.product_price | currency:'VND':'symbol':'1.0-0'}}</strong>
+                            <strong *ngIf="item.product_currency == 'USD'">{{item.product_price | currency:'USD':'symbol':'1.0-0'}}</strong>
                         </td>
                         <td align="center" style="vertical-align: middle;">
                             {{item.purchase_date_ms | date:'dd/MM/yyyy'}}
@@ -98,7 +99,7 @@
                         </td>
                         <td align="center" style="vertical-align: middle;">
                             <span class="tag tag-success" *ngIf="item.status == 1">Success</span>
-                            <span class="tag tag-danger" *ngIf="item.status == 0">Failed</span>
+                            <span class="tag tag-danger" *ngIf="item.status != 1">Failed ({{item.status}})</span>
                         </td>
                         <td align="center" style="vertical-align: middle; max-width: 256px">
                             {{item.message}} 
