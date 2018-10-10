@@ -109,7 +109,7 @@
                         <option *ngFor="let perheader of headers" [hidden]="!perheader.is_search" value="{{perheader.id}}">{{perheader.name}}</option>
                     </select><i class="icon-arrow-down sel-ico"></i>
                     <input type="text" class="rx-cur input-search" [(ngModel)]="search.term">
-                    <button class="btn btn-sm btn-default btn-search" (click)="jumpPage(1)"><i class="icon-magnifier"></i></button>
+                    <button class="btn btn-sm btn-default btn-search" (click)="jumpBannerPage(1)"><i class="icon-magnifier"></i></button>
                     <button class="btn btn-sm btn-success" (click)="show()"> <i class="icon-plus"></i> Create ad </button>
                 </div>
             </div>
@@ -117,7 +117,7 @@
                 <table class="table mb-0 table-striped table-responsive-sm table-bordered">
                     <thead class="thead-inverse">
                         <tr>
-                            <th *ngFor="let perheader of headers" (click)="sort1($event)" [attr.rxdata]="perheader.id" class="{{(perheader.id == paging.st_col)? 'rxsorting' : ''}} {{(paging.st_type == 1)? 'rxup' : 'rxdown'}} text-center tMiddle" style="min-width: 128px">
+                            <th *ngFor="let perheader of headers" (click)="sortBanner($event)" [attr.rxdata]="perheader.id" class="{{(perheader.id == paging.st_col)? 'rxsorting' : ''}} {{(paging.st_type == 1)? 'rxup' : 'rxdown'}} text-center tMiddle" style="min-width: 128px">
                                 {{perheader.name}}
                             </th>
                             <th class="text-center tMiddle">#</th>
@@ -150,22 +150,20 @@
                                 </button>
                             </td>
                         </tr>
-                        <tr>
-                            <td colspan="100% " class="rx-pagin">
-                                <button class="rx-back" [disabled]="paging.pg_page <=1 " (click)="jumpPage(paging.pg_page - 1) ">
-                                <</button>
-                                <input type="number " class="rx-cur " [(ngModel)]="paging.pg_page ">
-                                <button class="rx-next " [disabled]="!isnext " (click)="jumpPage(paging.pg_page + 1) ">></button>
-                                <span class="rx-jump " (click)="jumpPage(paging.pg_page) "><i class="icon-rocket "></i></span>
-                                <select type="number " class="rx-pg-size " (ngModelChange)="resizePage($event) " [(ngModel)]="paging.pg_size ">
-                                    <option value="10 " selected>10</option>
-                                    <option value="50 " selected>50</option>
-                                    <option value="100 " selected>100</option>
-                                </select> / page
-                            </td>
-                        </tr>
                     </tbody>
                 </table>
+            </div>
+            <div class="rx-pagin" style="float:right;">
+                <button class="rx-back" [disabled]="paging.pg_page <=1 " (click)="jumpBannerPage(paging.pg_page - 1) "><
+                </button>
+                <input type="number " class="rx-cur " [(ngModel)]="paging.pg_page">
+                <button class="rx-next " [disabled]="!isnext " (click)="jumpBannerPage(paging.pg_page + 1) ">></button>
+                <span class="rx-jump " (click)="jumpBannerPage(paging.pg_page) "><i class="icon-rocket "></i></span>
+                <select type="number " class="rx-pg-size " (ngModelChange)="resizeBannerPage($event) " [(ngModel)]="paging.pg_size">
+                    <option value="10 " selected>10</option>
+                    <option value="50 " selected>50</option>
+                    <option value="100 " selected>100</option>
+                </select> / page
             </div>
         </div>
     </div>
@@ -178,7 +176,7 @@
                 <table class="table mb-0 table-striped table-responsive-sm table-bordered">
                     <thead class="thead-inverse">
                         <tr>
-                            <th *ngFor="let perheader of facebookHeaders" (click)="sort2($event)" [attr.rxdata]="perheader.id" class="{{(perheader.id == paging.st_col)? 'rxsorting' : ''}} {{(paging.st_type == 1)? 'rxup' : 'rxdown'}} text-center tMiddle" style="min-width: 128px">
+                            <th *ngFor="let perheader of facebookHeaders" (click)="sortFacebook($event)" [attr.rxdata]="perheader.id" class="{{(perheader.id == fbPaging.st_col)? 'rxsorting' : ''}} {{(fbPaging.st_type == 1)? 'rxup' : 'rxdown'}} text-center tMiddle" style="min-width: 128px">
                                 {{perheader.name}}
                             </th>
                         </tr>
@@ -201,22 +199,20 @@
                                 <div>{{ad.end_date * 1000 | date:'dd/MM/yyyy'}}</div>
                             </td>
                         </tr>
-                        <tr>
-                            <td colspan="100% " class="rx-pagin">
-                                <button class="rx-back" [disabled]="paging.pg_page <=1 " (click)="jumpPage(paging.pg_page - 1) ">
-                                <</button>
-                                <input type="number " class="rx-cur " [(ngModel)]="paging.pg_page ">
-                                <button class="rx-next " [disabled]="!isnext " (click)="jumpPage(paging.pg_page + 1) ">></button>
-                                <span class="rx-jump " (click)="jumpPage(paging.pg_page) "><i class="icon-rocket "></i></span>
-                                <select type="number " class="rx-pg-size " (ngModelChange)="resizePage($event) " [(ngModel)]="paging.pg_size ">
-                                    <option value="10 " selected>10</option>
-                                    <option value="50 " selected>50</option>
-                                    <option value="100 " selected>100</option>
-                                </select> / page
-                            </td>
-                        </tr>
                     </tbody>
                 </table>
+            </div>
+            <div class="rx-pagin" style="float: right;">
+                <button class="rx-back" [disabled]="fbPaging.pg_page <=1 " (click)="jumpFacebookPage(fbPaging.pg_page - 1) ">
+                <</button>
+                <input type="number " class="rx-cur " [(ngModel)]="fbPaging.pg_page ">
+                <button class="rx-next " [disabled]="!isnext " (click)="jumpFacebookPage(fbPaging.pg_page + 1) ">></button>
+                <span class="rx-jump " (click)="jumpFacebookPage(fbPaging.pg_page) "><i class="icon-rocket "></i></span>
+                <select type="number " class="rx-pg-size " (ngModelChange)="resizeFacebookPage($event) " [(ngModel)]="fbPaging.pg_size ">
+                    <option value="10 " selected>10</option>
+                    <option value="50 " selected>50</option>
+                    <option value="100 " selected>100</option>
+                </select> / page
             </div>
         </div>
     </div>
@@ -229,7 +225,7 @@
                 <table class="table mb-0 table-striped table-responsive-sm table-bordered">
                     <thead class="thead-inverse">
                         <tr>
-                            <th *ngFor="let perheader of googleHeaders" (click)="sort2($event)" [attr.rxdata]="perheader.id" class="{{(perheader.id == paging.st_col)? 'rxsorting' : ''}} {{(paging.st_type == 1)? 'rxup' : 'rxdown'}} text-center tMiddle" style="min-width: 128px">
+                            <th *ngFor="let perheader of googleHeaders" (click)="sortGoogle($event)" [attr.rxdata]="perheader.id" class="{{(perheader.id == ggPaging.st_col)? 'rxsorting' : ''}} {{(ggPaging.st_type == 1)? 'rxup' : 'rxdown'}} text-center tMiddle" style="min-width: 128px">
                                 {{perheader.name}}
                             </th>
                         </tr>
@@ -250,22 +246,20 @@
                                 <div>{{ad.end_date * 1000 | date:'dd/MM/yyyy'}}</div>
                             </td>
                         </tr>
-                        <tr>
-                            <td colspan="100% " class="rx-pagin">
-                                <button class="rx-back" [disabled]="paging.pg_page <=1 " (click)="jumpPage(paging.pg_page - 1) ">
-                                <</button>
-                                <input type="number " class="rx-cur " [(ngModel)]="paging.pg_page ">
-                                <button class="rx-next " [disabled]="!isnext " (click)="jumpPage(paging.pg_page + 1) ">></button>
-                                <span class="rx-jump " (click)="jumpPage(paging.pg_page) "><i class="icon-rocket "></i></span>
-                                <select type="number " class="rx-pg-size " (ngModelChange)="resizePage($event) " [(ngModel)]="paging.pg_size ">
-                                    <option value="10 " selected>10</option>
-                                    <option value="50 " selected>50</option>
-                                    <option value="100 " selected>100</option>
-                                </select> / page
-                            </td>
-                        </tr>
                     </tbody>
                 </table>
+            </div>
+            <div class="rx-pagin" style="float: right;">
+                <button class="rx-back" [disabled]="ggPaging.pg_page.pg_page <=1 " (click)="jumpGooglePage(ggPaging.pg_page - 1) ">
+                <</button>
+                <input type="number " class="rx-cur " [(ngModel)]="ggPaging.pg_page ">
+                <button class="rx-next " [disabled]="!isnext " (click)="jumpGooglePage(ggPaging.pg_page + 1) ">></button>
+                <span class="rx-jump " (click)="jumpGooglePage(ggPaging.pg_page) "><i class="icon-rocket "></i></span>
+                <select type="number " class="rx-pg-size " (ngModelChange)="resizeGoolePage($event) " [(ngModel)]="ggPaging.pg_size ">
+                    <option value="10 " selected>10</option>
+                    <option value="50 " selected>50</option>
+                    <option value="100 " selected>100</option>
+                </select> / page
             </div>
         </div>
     </div>

@@ -13,15 +13,21 @@ import { GroupService } from '../../../service/group.service';
 
 export class AdsPerformanceComponent extends BaseComponent implements OnInit, OnDestroy {
 
-	headers: any; paging: any; search = { field: 'name', term: '' };
+	headers: any; search = { field: 'name', term: '' };
 	ads = []; onerow: any; isEdit: boolean; isHidden: boolean;
 	cp: any; campaigns = []; startDate: Date; endDate: Date = new Date();
 	apps: any; app = { 'app_id': '', 'os': '', 'version': '' };
 	facebookHeaders: any; facebookAds: any; isnext: any; googleAds = []; googleHeaders: any;
 
+	paging: any; fbPaging: any; ggPaging: any;
+
 	constructor(private gService: GroupService, private service: CampaignService) {
 		super();
+		
 		this.paging = this.service.defaultPaging('start_date');
+		this.fbPaging = this.service.defaultPaging('start_date');
+		this.ggPaging = this.service.defaultPaging('start_date');
+
 		this.startDate = this.service.fromDate(this.endDate.getFullYear(), this.endDate.getMonth(), this.endDate.getDate(), 30);
 		this.headers = [
 			{ id: 'name', name: 'Name', is_search: 1, st_col: 'name', st_type: 1 },
@@ -58,15 +64,36 @@ export class AdsPerformanceComponent extends BaseComponent implements OnInit, On
 	ngOnDestroy() {
 		this.service.removeCampaign();
 	}
-	jumpPage(_page) {
+
+	jumpBannerPage(_page) {
 		_page = (_page <= 0) ? 1 : _page;
 		this.paging.pg_page = _page
 		this.refresh();
 	}
-	resizePage($event) {
+	resizeBannerPage($event) {
 		this.paging.pg_size = $event;
-		this.jumpPage(1);
+		this.jumpBannerPage(1);
 	}
+
+	jumpFacebookPage(_page) {
+		_page = (_page <= 0) ? 1 : _page;
+		this.fbPaging.pg_page = _page
+		this.refresh();
+	}
+	resizeFacebookPage($event) {
+		this.fbPaging.pg_size = $event;
+		this.jumpFacebookPage(1);
+	}
+	jumpGooglePage(_page) {
+		_page = (_page <= 0) ? 1 : _page;
+		this.ggPaging.pg_page = _page
+		this.refresh();
+	}
+	resizeGoolePage($event) {
+		this.ggPaging.pg_size = $event;
+		this.jumpGooglePage(1);
+	}
+
 	refresh() {
 		this.reset();
 		this.getCampaigns();
@@ -125,10 +152,10 @@ export class AdsPerformanceComponent extends BaseComponent implements OnInit, On
 	}
 	syncFacebookAd() {
 		var params = {
-			'st_col': this.paging.st_col,
-			'st_type': this.paging.st_type,
-			'pg_page': this.paging.pg_page,
-			'pg_size': this.paging.pg_size,
+			'st_col': this.fbPaging.st_col,
+			'st_type': this.fbPaging.st_type,
+			'pg_page': this.fbPaging.pg_page,
+			'pg_size': this.fbPaging.pg_size,
 			'search_type': 'facebook_ad',
 			'search_app_id': this.service.getAppId(),
 			['search_' + this.search.field]: this.search.term
@@ -137,10 +164,10 @@ export class AdsPerformanceComponent extends BaseComponent implements OnInit, On
 	}
 	syncGoogleAd() {
 		var params = {
-			'st_col': this.paging.st_col,
-			'st_type': this.paging.st_type,
-			'pg_page': this.paging.pg_page,
-			'pg_size': this.paging.pg_size,
+			'st_col': this.ggPaging.st_col,
+			'st_type': this.ggPaging.st_type,
+			'pg_page': this.ggPaging.pg_page,
+			'pg_size': this.ggPaging.pg_size,
 			'search_type': 'google_ad',
 			'search_app_id': this.service.getAppId(),
 			['search_' + this.search.field]: this.search.term
@@ -161,7 +188,7 @@ export class AdsPerformanceComponent extends BaseComponent implements OnInit, On
 				this.cp = this.campaigns[0];
 		});
 	}
-	sort1($event) {
+	sortBanner($event) {
 		var target = $event.target || $event.srcElement || $event.currentTarget;
 		var idAttr = target.attributes.rxdata;
 		if (typeof (idAttr) != 'undefined') {
@@ -175,18 +202,32 @@ export class AdsPerformanceComponent extends BaseComponent implements OnInit, On
 			this.syncBanner();
 		}
 	}
-	sort2($event) {
+	sortFacebook($event) {
 		var target = $event.target || $event.srcElement || $event.currentTarget;
 		var idAttr = target.attributes.rxdata;
 		if (typeof (idAttr) != 'undefined') {
 			var tempcol = idAttr.nodeValue;
-			if (this.paging.st_col == tempcol)
-				this.paging.st_type *= -1;
+			if (this.fbPaging.st_col == tempcol)
+				this.fbPaging.st_type *= -1;
 			else {
-				this.paging.st_col = tempcol;
-				this.paging.st_type = -1;
+				this.fbPaging.st_col = tempcol;
+				this.fbPaging.st_type = -1;
 			}
 			this.syncFacebookAd();
+		}
+	}
+	sortGoogle($event) {
+		var target = $event.target || $event.srcElement || $event.currentTarget;
+		var idAttr = target.attributes.rxdata;
+		if (typeof (idAttr) != 'undefined') {
+			var tempcol = idAttr.nodeValue;
+			if (this.ggPaging.st_col == tempcol)
+				this.ggPaging.st_type *= -1;
+			else {
+				this.ggPaging.st_col = tempcol;
+				this.ggPaging.st_type = -1;
+			}
+			this.syncGoogleAd();
 		}
 	}
 	show() {

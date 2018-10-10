@@ -18,7 +18,9 @@ export class TransactionComponent extends BaseComponent implements OnInit {
 		super();
 		this.search = { field: 'created_at', term: '' };
 		this.isnext = true;
+		
 		this.paging = this.service.defaultPaging('created_at');
+
 		this.header = [
 			{ id: 'trans_id', name: 'Id', is_search: 1, st_col: 'trans_id', st_type: 1 },
 			{ id: 'product_currency', name: 'Currency', is_search: 1, st_col: 'product_currency', st_type: 1 },
