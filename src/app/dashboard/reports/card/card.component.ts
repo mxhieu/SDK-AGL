@@ -16,14 +16,14 @@ export class CardComponent implements OnInit, OnDestroy {
 
 	data = []; paging: any; isnext = true; header: any;
 	search = { field: 'product', term: '' };
-	
-	products: any; 
+
+	products: any;
 	cardTypes: any; cardType: any;
 	titlechart: any;
 
 	constructor(private service: ReportService, private AmCharts: AmChartsService) {
-		this.products = ['m001','m002','m003','m004']
-		this.cardTypes = [{name: 'VTT'},{name: 'VMS'},{name: 'VNP'},{name: 'VTC'}]
+		this.products = ['m001', 'm002', 'm003', 'm004']
+		this.cardTypes = [{ name: 'VTT' }, { name: 'VMS' }, { name: 'VNP' }, { name: 'VTC' }, { name: 'HPC' }, { name: 'ATM' }]
 		this.cardType = 'all';
 
 		this.dFrom = this.service.fromDate(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate(), 30);
@@ -57,47 +57,63 @@ export class CardComponent implements OnInit, OnDestroy {
 				"valueWidth": 120
 			},
 			"dataProvider": chartData,
-		    "valueAxes": [{
-		        "stackType": "regular",
-		        "axisAlpha": 0.3,
-		        "gridAlpha": 0
-		    }],
+			"valueAxes": [{
+				"stackType": "regular",
+				"axisAlpha": 0.3,
+				"gridAlpha": 0
+			}],
 			"graphs": [{
-		        "balloonText": "<b>[[title]]</b><br><span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>",
-		        "fillAlphas": 0.8,
-		        "lineAlpha": 0.3,
-		        "title": "Rev VMS",
-		        "type": "column",
-		        "valueField": "rev_VMS"
-		    }, {
-		        "balloonText": "<b>[[title]]</b><br><span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>",
-		        "fillAlphas": 0.8,
-		        "lineAlpha": 0.3,
-		        "title": "Rev VNP",
-		        "type": "column",
+				"balloonText": "<b>[[title]]</b><br><span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>",
+				"fillAlphas": 0.8,
+				"lineAlpha": 0.3,
+				"title": "Rev VMS",
+				"type": "column",
+				"valueField": "rev_VMS"
+			}, {
+				"balloonText": "<b>[[title]]</b><br><span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>",
+				"fillAlphas": 0.8,
+				"lineAlpha": 0.3,
+				"title": "Rev VNP",
+				"type": "column",
 				"valueField": "rev_VNP"
-		    }, {
-		        "balloonText": "<b>[[title]]</b><br><span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>",
-		        "fillAlphas": 0.8,
-		        "lineAlpha": 0.3,
-		        "title": "Rev VTC",
-		        "type": "column",
+			}, {
+				"balloonText": "<b>[[title]]</b><br><span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>",
+				"fillAlphas": 0.8,
+				"lineAlpha": 0.3,
+				"title": "Rev VTC",
+				"type": "column",
 				"valueField": "rev_VTC"
-		    }, {
-		        "balloonText": "<b>[[title]]</b><br><span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>",
-		        "fillAlphas": 0.8,
-		        "lineAlpha": 0.3,
-		        "title": "Rev VTT",
-		        "type": "column",
+			}, {
+				"balloonText": "<b>[[title]]</b><br><span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>",
+				"fillAlphas": 0.8,
+				"lineAlpha": 0.3,
+				"title": "Rev VTT",
+				"type": "column",
 				"valueField": "rev_VTT"
-		    }],
+			},
+			{
+				"balloonText": "<b>[[title]]</b><br><span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>",
+				"fillAlphas": 0.8,
+				"lineAlpha": 0.3,
+				"title": "Rev HPC",
+				"type": "column",
+				"valueField": "rev_HPC"
+			},
+			{
+				"balloonText": "<b>[[title]]</b><br><span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>",
+				"fillAlphas": 0.8,
+				"lineAlpha": 0.3,
+				"title": "Rev ATM",
+				"type": "column",
+				"valueField": "rev_ATM"
+			}],
 			"categoryField": "date",
-		    "categoryAxis": {
-		        "gridPosition": "start",
-		        "axisAlpha": 0,
-		        "gridAlpha": 0,
-		        "position": "left"
-		    },
+			"categoryAxis": {
+				"gridPosition": "start",
+				"axisAlpha": 0,
+				"gridAlpha": 0,
+				"position": "left"
+			},
 			"export": {
 				"enabled": true
 			}
@@ -145,7 +161,7 @@ export class CardComponent implements OnInit, OnDestroy {
 			'enddate': Math.round(this.dTo.getTime() / 1000)
 		};
 		if (this.cardType != 'all') { params['cardType'] = this.cardType }
-		if (this.search.term && this.search.term.length > 0) { params['search_' + this.search.field] = this.search.term}
+		if (this.search.term && this.search.term.length > 0) { params['search_' + this.search.field] = this.search.term }
 
 		this.service.cardAnalysis(params, data => {
 			this.data = data;
@@ -153,7 +169,7 @@ export class CardComponent implements OnInit, OnDestroy {
 		});
 		this.getChart();
 	}
-	
+
 	getChart() {
 		var params = {
 			'id': this.service.getAppId(),
@@ -164,8 +180,8 @@ export class CardComponent implements OnInit, OnDestroy {
 			'startdate': Math.round(this.dFrom.getTime() / 1000),
 			'enddate': Math.round(this.dTo.getTime() / 1000)
 		};
-		
-		if (this.cardType != 'all') { params['cardType'] = this.cardType } 
+
+		if (this.cardType != 'all') { params['cardType'] = this.cardType }
 		if (this.search.term && this.search.term.length > 0) { params['search_' + this.search.field] = this.search.term }
 
 		this.service.cardChartAnalysis(params, data => {

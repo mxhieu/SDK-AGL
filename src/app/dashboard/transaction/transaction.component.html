@@ -52,7 +52,7 @@
     <div class="card-header">
         <div class="row">
             <div class="col-md-4">
-                <h5>Transaction Logs</h5>
+                <h5 class="col-form-label">Transaction Logs</h5>
             </div>
             <div class="col-md-8">
                 <div class="btn-group tright" dropdown>
@@ -69,6 +69,16 @@
         </div>
     </div>
     <div class="card-block">
+        <div class="row form-group col-md-12 col-lg-12">
+            <div class="input-group">
+                <label class="col-form-label" style="margin-right: 8px;">Transaction ID</label>
+                <input class="form-control" placeholder="..." type="text" [(ngModel)]="search.query">
+                <span class="input-group-prepend">
+                    <button class="btn btn-primary" type="button" (click)="sync()">
+                    <i class="fa fa-search"></i></button>
+                </span>
+            </div>
+        </div>
         <div class="tTableWraper">
             <table class="table table-hover mb-0 table-striped fixed table-bordered">
                 <thead class="thead-default">
@@ -92,17 +102,17 @@
                             <strong *ngIf="item.product_currency == 'USD'">{{item.product_price | currency:'USD':'symbol':'1.0-0'}}</strong>
                         </td>
                         <td align="center" style="vertical-align: middle;">
-                            {{item.purchase_date_ms | date:'dd/MM/yyyy'}}
+                            {{item.purchase_date_ms | date:'dd/MM/yyyy hh:mm'}}
                         </td>
                         <td align="center" style="vertical-align: middle;">
-                            {{item.created_at * 1000 | date:'dd/MM/yyyy'}}
+                            {{item.created_at * 1000 | date:'dd/MM/yyyy hh:mm'}}
                         </td>
                         <td align="center" style="vertical-align: middle;">
                             <span class="tag tag-success" *ngIf="item.status == 1">Success</span>
                             <span class="tag tag-danger" *ngIf="item.status != 1">Failed ({{item.status}})</span>
                         </td>
                         <td align="center" style="vertical-align: middle; max-width: 256px">
-                            {{item.message}} 
+                            {{item.message}}
                         </td>
                         <td style="vertical-align: middle; max-width: 256px">
                             {{item.payload}}

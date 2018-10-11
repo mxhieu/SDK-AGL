@@ -16,7 +16,7 @@ export class TransactionComponent extends BaseComponent implements OnInit {
 	totalSUSD = 0; totalSVND = 0; totalFUSD = 0; totalFVND = 0;
 	constructor(public service: TransactionService, public gService: GroupService) {
 		super();
-		this.search = { field: 'created_at', term: '' };
+		this.search = { field: 'created_at', query: '' };
 		this.isnext = true;
 		
 		this.paging = this.service.defaultPaging('created_at');
@@ -43,6 +43,7 @@ export class TransactionComponent extends BaseComponent implements OnInit {
 			this.getApps();
 			this.service.getTransactions({
 				'search_app_id': this.service.getAppId(),
+				'search_trans_id': this.search.query,
 				'pg_page': this.paging.pg_page,
 				'pg_size': this.paging.pg_size,
 				'st_col': this.paging.st_col,
@@ -53,7 +54,6 @@ export class TransactionComponent extends BaseComponent implements OnInit {
 				this.totalSVND = 0;
 				this.totalFUSD = 0;
 				this.totalFVND = 0;
-
 				for (var it of this.items) {
 					if (it.status == 1) {
 						if (it.product_currency == 'USD')
