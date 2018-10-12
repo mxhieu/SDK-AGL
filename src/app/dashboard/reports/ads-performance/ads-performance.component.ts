@@ -66,6 +66,7 @@ export class AdsPerformanceComponent extends BaseComponent implements OnInit, On
 	}
 
 	jumpBannerPage(_page) {
+		console.log(_page);
 		_page = (_page <= 0) ? 1 : _page;
 		this.paging.pg_page = _page
 		this.refresh();

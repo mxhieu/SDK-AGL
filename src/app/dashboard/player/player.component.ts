@@ -19,7 +19,7 @@ export class PlayerComponent implements OnInit {
     this.paging = this.service.defaultPaging('created_at');
 
     this.header = [
-      { id: '_id', name: 'User Id', is_search: 1, st_col: '_id', st_type: 1 },
+      { id: 'id', name: 'User Id', is_search: 1, st_col: '_id', st_type: 1 },
       { id: 'username', name: 'User Name', is_search: 1, st_col: 'username', st_type: 1 },
       { id: 'email', name: 'Email', is_search: 1, st_col: 'email', st_type: 1 },
       { id: 'created_at', name: 'Created', is_search: 1, st_col: 'created_at', st_type: 1 }];

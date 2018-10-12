@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { PrivateService } from './service.private';
 import { Cookie } from 'ng2-cookies';
 
-
 @Injectable()
 export class ConfigService {
 
