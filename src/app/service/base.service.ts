@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { FlashMessagesService } from 'angular2-flash-messages';
 import {
 	Http, Response, RequestOptions, Headers, URLSearchParams,
 	Request, RequestOptionsArgs, RequestMethod
