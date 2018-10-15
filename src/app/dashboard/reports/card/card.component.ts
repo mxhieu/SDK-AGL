@@ -23,7 +23,7 @@ export class CardComponent implements OnInit, OnDestroy {
 
 	constructor(private service: ReportService, private AmCharts: AmChartsService) {
 		this.products = ['m001', 'm002', 'm003', 'm004']
-		this.cardTypes = [{ name: 'VTT' }, { name: 'VMS' }, { name: 'VNP' }, { name: 'VTC' }, { name: 'HPC' }, { name: 'ATM' }]
+		this.cardTypes = [{ name: 'VTT' }, { name: 'VMS' }, { name: 'VNP' }, { name: 'VTC' }, { name: 'HPC' }, { name: 'ATM' }], { name: 'GATE' }
 		this.cardType = 'all';
 
 		this.dFrom = this.service.fromDate(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate(), 30);
@@ -106,6 +106,14 @@ export class CardComponent implements OnInit, OnDestroy {
 				"title": "Rev ATM",
 				"type": "column",
 				"valueField": "rev_ATM"
+			},
+			{
+				"balloonText": "<b>[[title]]</b><br><span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>",
+				"fillAlphas": 0.8,
+				"lineAlpha": 0.3,
+				"title": "Rev GATE",
+				"type": "column",
+				"valueField": "rev_GATE"
 			}],
 			"categoryField": "date",
 			"categoryAxis": {

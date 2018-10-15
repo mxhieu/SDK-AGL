@@ -8,7 +8,7 @@ import { Cookie } from 'ng2-cookies';
 import { RoutingService } from './routing.service';
 import { ConfigService } from './service.config';
 import { PrivateService } from './service.private';
-
+import { ToastrService } from 'ngx-toastr';
 
 enum SourceApiUrls {
 	get = 'listsource',
@@ -27,7 +27,7 @@ export class BaseService {
 
 	constructor(
 		protected http: Http, protected router: RoutingService,
-		protected config: ConfigService, protected flash: FlashMessagesService) { }
+		protected config: ConfigService, private toastr: ToastrService) { }
 
 	protected makeHeaders(): Headers {
 		let headers = new Headers({
@@ -157,8 +157,8 @@ export class BaseService {
 				});
 	}
 
-	protected failure(error: any) {
-		// this.flash.show('Request failed\n' + error, { cssClass: 'alert-warning' });
+	protected failure(error: string) {
+		this.toastr.error(error, 'Kết nối thất bại');
 	}
 	protected successful(msg: any, code: any) {
 		/*if(code == 1)

@@ -3,13 +3,10 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { HttpModule } from '@angular/http';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { NAV_DROPDOWN_DIRECTIVES } from './shared/nav-dropdown.directive';
-
-import { FlashMessagesModule } from 'angular2-flash-messages';
-
 // Ngx Module
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
@@ -40,6 +37,7 @@ import { ForgotPasswordComponent } from './user/forgotpassword.component';
 import { GroupComponent } from './group/group.component';
 import { BaseComponent } from './service/base.component';
 import { SharedModule } from './service/shared.module';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
     imports: [
@@ -47,11 +45,15 @@ import { SharedModule } from './service/shared.module';
         FormsModule,
         AppRoutingModule,
         HttpModule,
-        FlashMessagesModule,
         BsDropdownModule.forRoot(),
         BsDatepickerModule.forRoot(),
         TabsModule.forRoot(),
-        SharedModule
+        SharedModule,
+        BrowserAnimationsModule,
+        ToastrModule.forRoot({
+            timeOut: 2000, progressBar: true, progressAnimation: 'decreasing',
+            tapToDismiss: true, maxOpened: 1, preventDuplicates: true
+        })
     ],
     declarations: [
         AppComponent,

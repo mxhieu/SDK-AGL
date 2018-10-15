@@ -6,21 +6,15 @@
         <div class="card-block">
             <div class="row col-md-12">
                 <div class="col-md-3">
-                    
                     <span class="input-group-text">From</span>
-                    
                     <input type="text" class="form-control" [minDate]="dMin" [maxDate]="dMax" #dp="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }"
                     [(ngModel)]="dFrom" >
-                    
                 </div>
                 <div class="col-md-3">
-                    
                     <span class="input-group-text">To</span>
-                    
                     <input type="text" class="form-control" [minDate]="dMin" [maxDate]="dMax" #dp="bsDatepicker" bsDatepicker
                     [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }"
                     [(ngModel)]="dTo" >
-                    
                 </div>
                 <div class="col-md-3">
                     <span class="input-group-text">CardType</span>
