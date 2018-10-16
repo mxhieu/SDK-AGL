@@ -107,6 +107,9 @@
                         <td align="center" style="vertical-align: middle;">
                             {{item.created_at * 1000 | date:'dd/MM/yyyy hh:mm'}}
                         </td>
+                        <td style="vertical-align: middle;">
+                            {{item.username}}
+                        </td>
                         <td align="center" style="vertical-align: middle;">
                             <span class="tag tag-success" *ngIf="item.status == 1">Success</span>
                             <span class="tag tag-danger" *ngIf="item.status != 1">Failed ({{item.status}})</span>

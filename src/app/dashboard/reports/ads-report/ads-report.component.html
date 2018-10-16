@@ -129,7 +129,7 @@
                                 <input type="number " class="rx-cur " [(ngModel)]="paging.pg_page ">
                                 <button class="rx-next " [disabled]="!isnext " (click)="jumpPage(paging.pg_page + 1) ">></button>
                                 <span class="rx-jump " (click)="jumpPage(paging.pg_page) "><i class="icon-rocket "></i></span>
-                                <select type="number " class="rx-pg-size " (ngModelChange)="resizePage($event) " [(ngModel)]="paging.pg_size ">
+                                <select type="number " class="rx-pg-size " (ngModelChange)="resizePage($event) " [(ngModel)]="paging.pg_size">
                                     <option value="10 " selected>10</option>
                                     <option value="50 " selected>50</option>
                                     <option value="100 " selected>100</option>

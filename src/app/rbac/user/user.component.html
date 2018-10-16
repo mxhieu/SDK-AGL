@@ -17,7 +17,7 @@
                     </div>
                     <div class="form-group col-md-3 col-lg-3">
                         <label class="col-form-label-none">Password</label>
-                        <input class="form-control"  placeholder="Password" type="password" [disabled]="isEdit" [(ngModel)]="onerow.password">
+                        <input class="form-control"  placeholder="Password" type="password" [hidden]="isEdit" [(ngModel)]="onerow.password">
                     </div>
                     <div class="form-group col-md-3 col-lg-3">
                         <label class="col-form-label-none">Email</label>
@@ -40,18 +40,6 @@
                         </select>
                     </div>
                 </div>
-                <!-- <div class="row">
-                    <div class="form-group col-md-3 col-lg-3">
-                        <label class="col-form-label-none">GroupApp</label>
-                        <div class="lk-multi-selectbox-result clearfix form-control">
-                            <div *ngFor="let groupchoose of arrgroupschoose" >
-                            </div>
-                        </div>
-                        <select class="form-control" (change)="onChange($event.target.value)">
-                            <option *ngFor="let group of groups_tmp" [value]="group._id"> {{group.name}}</option>
-                        </select>
-                    </div>
-                </div> -->
             </div>
             <div class="card-footer">
                 <button class="btn btn-sm btn-primary" (click)=(save(onerow)) [hidden]="isEdit"><i class="icon-plus"></i> Create </button>

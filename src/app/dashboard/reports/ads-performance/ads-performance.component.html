@@ -157,12 +157,12 @@
                 <button class="rx-back" [disabled]="paging.pg_page <=1 " (click)="jumpBannerPage(paging.pg_page - 1) "><
                 </button>
                 <input type="number " class="rx-cur " [(ngModel)]="paging.pg_page">
-                <button class="rx-next " [disabled]="!isnext " (click)="jumpBannerPage(paging.pg_page + 1) ">></button>
+                <button class="rx-next " (click)="jumpBannerPage(paging.pg_page + 1) ">></button>
                 <span class="rx-jump " (click)="jumpBannerPage(paging.pg_page) "><i class="icon-rocket "></i></span>
                 <select type="number " class="rx-pg-size " (ngModelChange)="resizeBannerPage($event) " [(ngModel)]="paging.pg_size">
-                    <option value="10 " selected>10</option>
-                    <option value="50 " selected>50</option>
-                    <option value="100 " selected>100</option>
+                    <option value="10" selected>10</option>
+                    <option value="50" selected>50</option>
+                    <option value="100" selected>100</option>
                 </select> / page
             </div>
         </div>
@@ -203,15 +203,15 @@
                 </table>
             </div>
             <div class="rx-pagin" style="float: right;">
-                <button class="rx-back" [disabled]="fbPaging.pg_page <=1 " (click)="jumpFacebookPage(fbPaging.pg_page - 1) ">
+                <button class="rx-back" [disabled]="fbPaging.pg_page <=1" (click)="jumpFacebookPage(fbPaging.pg_page - 1) ">
                 <</button>
                 <input type="number " class="rx-cur " [(ngModel)]="fbPaging.pg_page ">
-                <button class="rx-next " [disabled]="!isnext " (click)="jumpFacebookPage(fbPaging.pg_page + 1) ">></button>
-                <span class="rx-jump " (click)="jumpFacebookPage(fbPaging.pg_page) "><i class="icon-rocket "></i></span>
-                <select type="number " class="rx-pg-size " (ngModelChange)="resizeFacebookPage($event) " [(ngModel)]="fbPaging.pg_size ">
-                    <option value="10 " selected>10</option>
-                    <option value="50 " selected>50</option>
-                    <option value="100 " selected>100</option>
+                <button class="rx-next" (click)="jumpFacebookPage(fbPaging.pg_page + 1) ">></button>
+                <span class="rx-jump" (click)="jumpFacebookPage(fbPaging.pg_page) "><i class="icon-rocket "></i></span>
+                <select type="number" class="rx-pg-size " (ngModelChange)="resizeFacebookPage($event) " [(ngModel)]="fbPaging.pg_size ">
+                    <option value="10" selected>10</option>
+                    <option value="50" selected>50</option>
+                    <option value="100" selected>100</option>
                 </select> / page
             </div>
         </div>
@@ -250,15 +250,15 @@
                 </table>
             </div>
             <div class="rx-pagin" style="float: right;">
-                <button class="rx-back" [disabled]="ggPaging.pg_page.pg_page <=1 " (click)="jumpGooglePage(ggPaging.pg_page - 1) ">
+                <button class="rx-back" [disabled]="ggPaging.pg_page <=1" (click)="jumpGooglePage(ggPaging.pg_page - 1)">
                 <</button>
                 <input type="number " class="rx-cur " [(ngModel)]="ggPaging.pg_page ">
-                <button class="rx-next " [disabled]="!isnext " (click)="jumpGooglePage(ggPaging.pg_page + 1) ">></button>
+                <button class="rx-next" (click)="jumpGooglePage(ggPaging.pg_page + 1) ">></button>
                 <span class="rx-jump " (click)="jumpGooglePage(ggPaging.pg_page) "><i class="icon-rocket "></i></span>
-                <select type="number " class="rx-pg-size " (ngModelChange)="resizeGoolePage($event) " [(ngModel)]="ggPaging.pg_size ">
-                    <option value="10 " selected>10</option>
-                    <option value="50 " selected>50</option>
-                    <option value="100 " selected>100</option>
+                <select type="number " class="rx-pg-size " (ngModelChange)="resizeGoolePage($event) " [(ngModel)]="ggPaging.pg_size">
+                    <option value="10" selected>10</option>
+                    <option value="50" selected>50</option>
+                    <option value="100" selected>100</option>
                 </select> / page
             </div>
         </div>

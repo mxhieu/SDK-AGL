@@ -17,11 +17,12 @@ export class AdsPerformanceComponent extends BaseComponent implements OnInit, On
 	ads = []; onerow: any; isEdit: boolean; isHidden: boolean;
 	cp: any; campaigns = []; startDate: Date; endDate: Date = new Date();
 	apps: any; app = { 'app_id': '', 'os': '', 'version': '' };
-	facebookHeaders: any; facebookAds: any; isnext: any; googleAds = []; googleHeaders: any;
+	facebookHeaders: any; facebookAds: any; googleAds = []; googleHeaders: any;
 
 	paging: any; fbPaging: any; ggPaging: any;
 
 	constructor(private gService: GroupService, private service: CampaignService) {
+
 		super();
 		
 		this.paging = this.service.defaultPaging('start_date');
@@ -66,20 +67,18 @@ export class AdsPerformanceComponent extends BaseComponent implements OnInit, On
 	}
 
 	jumpBannerPage(_page) {
-		console.log(_page);
 		_page = (_page <= 0) ? 1 : _page;
 		this.paging.pg_page = _page
-		this.refresh();
+		this.syncBanner();
 	}
 	resizeBannerPage($event) {
 		this.paging.pg_size = $event;
 		this.jumpBannerPage(1);
 	}
-
 	jumpFacebookPage(_page) {
 		_page = (_page <= 0) ? 1 : _page;
 		this.fbPaging.pg_page = _page
-		this.refresh();
+		this.syncFacebookAd();
 	}
 	resizeFacebookPage($event) {
 		this.fbPaging.pg_size = $event;
@@ -88,7 +87,7 @@ export class AdsPerformanceComponent extends BaseComponent implements OnInit, On
 	jumpGooglePage(_page) {
 		_page = (_page <= 0) ? 1 : _page;
 		this.ggPaging.pg_page = _page
-		this.refresh();
+		this.syncGoogleAd();
 	}
 	resizeGoolePage($event) {
 		this.ggPaging.pg_size = $event;

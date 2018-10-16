@@ -44,21 +44,6 @@ export class UserComponent extends BaseComponent implements OnInit {
     });
   }
 
-  // getApps() {
-  //   this.app.app_id = this.service.getAppId();
-  //   this.apps = this.gService.getGroupSetting();
-  //   for (var ap of this.apps) {
-  //     if (ap.app_id == this.app.app_id) {
-  //       this.app.os = ap.os;
-  //       this.app.version = ap.version;
-  //     }
-  //   }
-  // }
-  
-  switchApp(app) {
-    this.service.setAppId(app.app_id);
-    this.refresh();
-  }
   resizePage($event) {
     this.paging.pg_size = $event;
     this.jumpPage(1);
