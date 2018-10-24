@@ -113,6 +113,7 @@ export class CardComponent implements OnInit, OnDestroy {
 				"lineAlpha": 0.3,
 				"title": "Rev GATE",
 				"type": "column",
+				'color': "#000000",
 				"valueField": "rev_GATE"
 			}],
 			"categoryField": "date",
