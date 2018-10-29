@@ -145,8 +145,8 @@ export class AdsPerformanceComponent extends BaseComponent implements OnInit, On
 			'search_type': 'banner_ad',
 			'app_group_id': this.service.getGroupId(),
 			'search_app_id': this.service.getAppId(),
-			['search_' + this.search.field]: this.search.term,
-			'search_campaign_id': this.cp._id
+			['search_' + this.search.field]: this.search.term
+			/*'search_campaign_id': this.cp._id*/
 		};
 		this.service.getAds(params, data => { this.ads = data; });
 	}
