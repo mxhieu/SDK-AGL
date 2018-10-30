@@ -5,17 +5,36 @@
         </div>
         <div class="card-block">
             <div class="row col-md-12 form-group">
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <span class="input-group-text">Source</span>
                     <select class="form-control" [(ngModel)]="source" (ngModelChange)="onSourceChanged($event)">
                         <option *ngFor="let s of sources" [ngValue]="s"> {{s.source_group}} </option>
                     </select>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
+                    <span class="input-group-text">Campaign</span>
+                    <select class="form-control" [(ngModel)]="currentCampaign">
+                        <option *ngFor="let campaign of campaigns" [ngValue]="campaign"> {{campaign.name}}</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
                     <span class="input-group-text">Audience</span>
                     <select class="form-control" [(ngModel)]="currentAudience" [disabled] = "isAudienceHidden">
                         <option *ngFor="let audience of audiences" [ngValue]="audience"> {{audience.name}}</option>
                     </select>
+                </div>
+            </div>
+            <div class="row col-md-12 form-group">
+                <div class="col-md-3">
+                    <span class="input-group-text">From</span>
+                    <input type="text" class="form-control" [minDate]="dMin" [maxDate]="dMax" #dp="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }"
+                    [(ngModel)]="dFrom">
+                </div>
+                <div class="col-md-3">
+                    <span class="input-group-text">To</span>
+                    <input type="text" class="form-control" [minDate]="dMin" [maxDate]="dMax" #dp="bsDatepicker" bsDatepicker
+                    [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }"
+                    [(ngModel)]="dTo">
                 </div>
                 <div class="col-md-3">
                     <span class="input-group-text">OS</span>
@@ -33,19 +52,8 @@
                     </div>
                 </div>
             </div>
-            <div class="row col-md-12">
-                <div class="col-md-3">
-                    <span class="input-group-text">From</span>
-                    <input type="text" class="form-control" [minDate]="dMin" [maxDate]="dMax" #dp="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }"
-                    [(ngModel)]="dFrom">
-                </div>
-                <div class="col-md-3">
-                    <span class="input-group-text">To</span>
-                    <input type="text" class="form-control" [minDate]="dMin" [maxDate]="dMax" #dp="bsDatepicker" bsDatepicker
-                    [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }"
-                    [(ngModel)]="dTo">
-                </div>
-                <div class="col-md-6">
+            <div class="row col-md-12 form-group">
+                <div class="col-md-12">
                     <button class="btn btn-success tright" (click)="doAnalysis()"><i class="icon-magic-wand"></i> Analytic</button>
                 </div>
             </div>

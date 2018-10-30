@@ -14,14 +14,21 @@ export class ArmComponent implements OnInit, OnDestroy {
 	data = []; paging: any; isnext = true; header: any;
 	search = { field: 'source', term: '' };
 	platform: any; platforms = [];
+
 	// Source
 	source: any; sources = [{ 'source_group': "All", 'source': '-1' }];
+
 	// Version
 	version: any; versions = [{ 'version': '', 'os': '' }];
 	versionDisplay = [{ 'version': '', 'os': '' }];
 	isVersionHidden: boolean;
+
+	// Campaigns
+	campaigns = [{ _id: -1, name: 'Tất cả' }]; currentCampaign: any;
+
 	// Audiences
 	audiences = [{ _id: -1, name: 'All' }]; isAudienceHidden: boolean = true; currentAudience: any;
+
 	constructor(
 		private service: ReportService,
 		private AmCharts: AmChartsService,
@@ -30,10 +37,10 @@ export class ArmComponent implements OnInit, OnDestroy {
 		this.currentAudience = this.audiences[0];
 		this.platforms = this.service.defaultPlatforms();
 		this.platform = this.platforms[0];
-
+		this.currentCampaign = this.campaigns[0];
 		this.dFrom = this.service.fromDate(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate(), 30);
 		this.dMin = this.service.fromDate(this.dMax.getFullYear(), this.dMax.getMonth(), this.dMax.getDate(), 365);
-		
+
 		this.paging = this.service.defaultPaging('_id');
 		this.header = [
 			{ id: '_id', name: 'Date', is_search: 1, st_col: '_id', st_type: 1 },
@@ -240,6 +247,7 @@ export class ArmComponent implements OnInit, OnDestroy {
 			'st_col': this.paging.st_col,
 			'st_type': this.paging.st_type,
 			'app_group_id': this.service.getGroupId(),
+			'search_compaign_id': null,
 			'startdate': Math.round(this.dFrom.getTime() / 1000),
 			'enddate': Math.round(this.dTo.getTime() / 1000),
 			['search_' + this.search.field]: this.search.term
@@ -248,10 +256,16 @@ export class ArmComponent implements OnInit, OnDestroy {
 			params.search_os = this.platform.id;
 			params.app_id = this.service.getAppId();
 		}
+
 		if (this.source.source != '-1')
 			params.search_source = this.source.source;
+
 		if (this.currentAudience._id != -1)
 			params.ad_id = this.currentAudience._id;
+
+		if (this.currentCampaign._id != -1)
+			params.search_compaign_id = this.currentCampaign._id;
+
 		this.service.armAnalysis(params, data => {
 			this.data = [];
 			for (let item of data) {
@@ -285,6 +299,7 @@ export class ArmComponent implements OnInit, OnDestroy {
 			'ad_id': null,
 			'app_group_id': this.service.getGroupId(),
 			'search_os': null,
+			'search_compaign_id': null,
 			'search_source': null,
 			'startdate': Math.round(this.dFrom.getTime() / 1000),
 			'enddate': Math.round(this.dTo.getTime() / 1000)
@@ -299,6 +314,9 @@ export class ArmComponent implements OnInit, OnDestroy {
 		if (this.currentAudience._id != -1)
 			params.ad_id = this.currentAudience._id;
 
+		if (this.currentCampaign._id != -1)
+			params.search_compaign_id = this.currentCampaign._id;
+
 		this.service.armChartAnalysis(params, data => {
 			this.makeChart(data);
 		});
@@ -306,6 +324,7 @@ export class ArmComponent implements OnInit, OnDestroy {
 	onVersionChanged(event) {
 		this.service.setAppId(event.app_id);
 	}
+
 	onSourceChanged(selectedSource: any) {
 		if (selectedSource.source == -1) {
 			this.isAudienceHidden = true;
@@ -325,6 +344,18 @@ export class ArmComponent implements OnInit, OnDestroy {
 				this.audiences = data;
 				this.audiences.splice(0, 0, { _id: -1, name: 'All' });
 				this.currentAudience = this.audiences[0];
+			});
+			this.campaignService.getCampaigns({
+				'pg_page': 1,
+				'pg_size': 1000,
+				'search_source_id': selectedSource._id,
+				'search_app_id': this.service.getAppId(),
+				'app_group_id': this.service.getGroupId(),
+				'search_agency_id': '5aa0ee42b887cb6691ed5b43'
+			}, data => {
+				this.campaigns = data;
+				if (this.campaigns)
+					this.currentCampaign = this.campaigns[0];
 			});
 		}
 	}

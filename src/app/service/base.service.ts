@@ -186,7 +186,12 @@ export class BaseService {
 		Cookie.set(this.KEY_AUTH, auth);
 	}
 	protected getAuth(): any {
-		return JSON.parse(Cookie.get(this.KEY_AUTH));
+		try {
+			return JSON.parse(Cookie.get(this.KEY_AUTH));
+		} catch (e) {
+			console.log(e);
+		}
+		return "";
 	}
 	protected setCookie(key: any, value: any) {
 		Cookie.set(key, value);

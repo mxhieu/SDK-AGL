@@ -27,7 +27,7 @@ export class CampaignComponent extends BaseComponent implements OnInit {
 		this.getSources();
 	}
 	ngOnInit() {
-		
+
 	}
 	jumpPage(_page) {
 		_page = (_page <= 0) ? 1 : _page;
