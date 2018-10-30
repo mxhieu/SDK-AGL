@@ -24,6 +24,9 @@ export class RoipdComponent implements OnInit {
 	versionDisplay = [{ 'version': '', 'os': '' }];
 	isVersionHidden: boolean;
 
+	// Campaigns
+	campaigns = [{ _id: -1, name: 'Tất cả' }]; currentCampaign: any;
+
 	// Audiences
 	audiences = [{ _id: -1, name: 'All' }]; isAudienceHidden: boolean = true; currentAudience: any;
 
@@ -35,7 +38,7 @@ export class RoipdComponent implements OnInit {
 		this.currentAudience = this.audiences[0];
 		this.platforms = this.service.defaultPlatforms();
 		this.platform = this.platforms[0];
-
+		this.currentCampaign = this.campaigns[0];
 		this.dFrom = this.service.fromDate(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate(), 30);
 		this.dMin = this.service.fromDate(this.dMax.getFullYear(), this.dMax.getMonth(), this.dMax.getDate(), 365);
 
@@ -106,6 +109,7 @@ export class RoipdComponent implements OnInit {
 			'app_id': null,
 			'app_group_id': this.service.getGroupId(),
 			'search_os': null,
+			'search_compaign_id': null,
 			'startdate': Math.round(this.dFrom.getTime() / 1000),
 			'enddate': Math.round(this.dTo.getTime() / 1000),
 			'st_type': this.paging.st_type,
@@ -121,6 +125,9 @@ export class RoipdComponent implements OnInit {
 
 		if (this.currentAudience._id != -1)
 			params.ad_id = this.currentAudience._id;
+		
+		if (this.currentCampaign._id != -1)
+			params.search_compaign_id = this.currentCampaign._id;
 
 		this.service.roiPdAnalysis(params, data => {
 			this.data = data;
@@ -158,6 +165,18 @@ export class RoipdComponent implements OnInit {
 				this.audiences = data;
 				this.audiences.splice(0, 0, { _id: -1, name: 'All' });
 				this.currentAudience = this.audiences[0];
+			});
+			this.campaignService.getCampaigns({
+				'pg_page': 1,
+				'pg_size': 1000,
+				'search_source_id': selectedSource._id,
+				'search_app_id': this.service.getAppId(),
+				'app_group_id': this.service.getGroupId(),
+				'search_agency_id': '5aa0ee42b887cb6691ed5b43'
+			}, data => {
+				this.campaigns = data;
+				if (this.campaigns)
+					this.currentCampaign = this.campaigns[0];
 			});
 		}
 	}
