@@ -7,13 +7,15 @@
             <div class="row col-md-12 form-group">
                 <div class="col-md-4">
                     <span class="input-group-text">Source</span>
-                    <select class="form-control" [(ngModel)]="source" (ngModelChange)="onSourceChanged($event)">
+                    <select class="form-control" [(ngModel)]="source" 
+                    (ngModelChange)="onSourceChanged($event)">
                         <option *ngFor="let s of sources" [ngValue]="s"> {{s.source_group}} </option>
                     </select>
                 </div>
                 <div class="col-md-4">
                     <span class="input-group-text">Campaign</span>
-                    <select class="form-control" [(ngModel)]="currentCampaign">
+                    <select class="form-control" [(ngModel)]="currentCampaign" [disabled] = "isCampaignHidden"
+                    (ngModelChange)="onCampaignChanged($event)">
                         <option *ngFor="let campaign of campaigns" [ngValue]="campaign"> {{campaign.name}}</option>
                     </select>
                 </div>
