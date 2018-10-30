@@ -144,7 +144,7 @@ export class AdsPerformanceComponent extends BaseComponent implements OnInit, On
 			'pg_size': this.paging.pg_size,
 			'search_type': 'banner_ad',
 			'app_group_id': this.service.getGroupId(),
-			'search_app_id': this.service.getAppId(),
+			'app_id': this.service.getAppId(),
 			['search_' + this.search.field]: this.search.term
 			/*'search_campaign_id': this.cp._id*/
 		};
@@ -157,7 +157,7 @@ export class AdsPerformanceComponent extends BaseComponent implements OnInit, On
 			'pg_page': this.fbPaging.pg_page,
 			'pg_size': this.fbPaging.pg_size,
 			'search_type': 'facebook_ad',
-			'search_app_id': this.service.getAppId(),
+			'app_id': this.service.getAppId(),
 			['search_' + this.search.field]: this.search.term
 		};
 		this.service.getAds(params, data => { this.facebookAds = data; });
@@ -169,7 +169,7 @@ export class AdsPerformanceComponent extends BaseComponent implements OnInit, On
 			'pg_page': this.ggPaging.pg_page,
 			'pg_size': this.ggPaging.pg_size,
 			'search_type': 'google_ad',
-			'search_app_id': this.service.getAppId(),
+			'app_id': this.service.getAppId(),
 			['search_' + this.search.field]: this.search.term
 		};
 		this.service.getAds(params, data => { this.googleAds = data; });
@@ -179,7 +179,8 @@ export class AdsPerformanceComponent extends BaseComponent implements OnInit, On
 			'pg_page': 1,
 			'pg_size': 100,
 			'search_source': null,
-			'search_app_id': this.service.getAppId(),
+			'app_id': this.service.getAppId(),
+			'app_group_id': this.service.getGroupId(),
 			'search_agency_id': '5aa0ee42b887cb6691ed5b43'
 		};
 		this.service.getCampaigns(params, data => {

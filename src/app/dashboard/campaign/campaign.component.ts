@@ -85,7 +85,7 @@ export class CampaignComponent extends BaseComponent implements OnInit {
 			'st_type': this.paging.st_type,
 			'pg_page': this.paging.pg_page,
 			'pg_size': this.paging.pg_size,
-			'search_app_id': this.service.getAppId(),
+			'app_id': this.service.getAppId(),
 			'search_agency_id': '5aa0ee42b887cb6691ed5b43',
 			['search_' + this.search.field]: this.search.term
 		}, data => {
