@@ -124,7 +124,7 @@ export class AdsReportComponent extends BaseComponent implements OnInit, OnDestr
 			['search_' + this.search.field]: this.search.term,
 			'search_campaign_id': this.cp._id
 		};
-		this.service.getAds(params, data => { this.ads = data; });
+		this.service.getAdsList(params, data => { this.ads = data; });
 	}
 
 	getFacebookAd() {

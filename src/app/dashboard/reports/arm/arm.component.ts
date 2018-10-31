@@ -273,7 +273,7 @@ export class ArmComponent implements OnInit, OnDestroy {
 			this.versions = data.os.settings;
 			this.versionDisplay = this.versions;
 			this.version = this.versionDisplay[0];
-		});
+		}, 'report-arm/listsource');
 	}
 	getChart() {
 		var params = {

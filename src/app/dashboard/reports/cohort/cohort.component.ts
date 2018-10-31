@@ -108,7 +108,7 @@ export class CohortComponent implements OnInit {
 			this.versionDisplay = this.versions;
 			this.version = this.versionDisplay[0];
 
-		});
+		}, 'report-cohort/listsource');
 	}
 
 	changeHeader(index) {

@@ -19,86 +19,142 @@ import { AdsReportComponent } from './reports/ads-report/ads-report.component';
 import { CardComponent } from './reports/card/card.component';
 import { AdsPerformanceComponent } from './reports/ads-performance/ads-performance.component';
 
-const routes: Routes = [
+const routestmp = [
   {
     path: '',
     redirectTo: 'report-arm',
-    pathMatch: 'full'
-  },
-  {
-    path: 'report-armpd',
-    component: ArmpdComponent
+    pathMatch: 'full',
+    subpath: ''
   },
   {
     path: 'report-arm',
-    component: ArmComponent
+    component: ArmComponent,
+    subpath: 'report-arm'
   },
   {
-    path: 'report-kpi',
-    component: KpireportComponent
-  },
-  {
-    path: 'adslist',
-    component: AdsPerformanceComponent
+    path: 'report-armpd',
+    component: ArmpdComponent,
+    subpath: 'report-armPd'
   },
   {
     path: 'report-roi',
-    component: RoiComponent
-  },
-  {
-    path: 'transaction',
-    component: TransactionComponent
+    component: RoiComponent,
+    subpath: 'report-roi'
   },
   {
     path: 'report-roipd',
-    component: RoipdComponent
-  },
-  {
-    path: 'player',
-    component: PlayerComponent
-  },
-  {
-    path: 'setting',
-    component: AppSettingComponent
-  }
-  ,
-  {
-    path: 'report-ads',
-    component: AdsReportComponent
-  },
-  {
-    path: 'in-app',
-    component: InAppComponent
-  },
-  {
-    path: 'telco',
-    component: TelcoComponent
-  },
-  {
-    path: 'campaign',
-    component: CampaignComponent
-  },
-  {
-    path: 'notification',
-    component: NotificationComponent
-  },
-  {
-    path: 'sourceslist',
-    component: SourceslistComponent
-  },
-  {
-    path: 'metric',
-    component: MetricComponent
+    component: RoipdComponent,
+    subpath: 'report-roiPd'
   },
   {
     path: 'report-cohort',
-    component: CohortComponent
+    component: CohortComponent,
+    subpath: 'report-cohort'
+  },
+  {
+    path: 'report-kpi',
+    component: KpireportComponent,
+    subpath: 'report-kpi'
+  },
+  {
+    path: 'report-ads',
+    component: AdsReportComponent,
+    subpath: 'report-ads'
   },
   {
     path: 'report-cards',
-    component: CardComponent
+    component: CardComponent,
+    subpath: 'report-card'
+  },
+  {
+    path: 'transaction',
+    component: TransactionComponent,
+    subpath: 'iap-transaction'
+  },
+  {
+    path: 'adslist',
+    component: AdsPerformanceComponent,
+    subpath: 'campaign-ad'
+  },
+  {
+    path: 'campaign',
+    component: CampaignComponent,
+    subpath: 'campaign'
+  },
+  {
+    path: 'sourceslist',
+    component: SourceslistComponent,
+    subpath: 'listsource'
+  },
+  {
+    path: 'metric',
+    component: MetricComponent,
+    subpath: 'metric'
+  },
+  {
+    path: 'setting',
+    component: AppSettingComponent,
+    subpath: 'app'
+  },
+  {
+    path: 'player',
+    component: PlayerComponent,
+    subpath: 'player'
+  },
+  {
+    path: 'in-app',
+    component: InAppComponent,
+    subpath: 'inapp-item'
+  },
+  {
+    path: 'telco',
+    component: TelcoComponent,
+    subpath: 'card-item'
+  },
+  {
+    path: 'notification',
+    component: NotificationComponent,
+    subpath: 'notification'
   }
-];
+]
+
+function rxgetLocal(cname, cdefault) {
+  if (typeof window !== 'undefined') {
+    return localStorage.getItem(cname)
+  } else {
+    return cdefault
+  }
+}
+
+function checkpermission(strcheck) {
+  let strper = rxgetLocal('arrper', '')
+  let arrper = []
+  if (strper && strper.length > 0 && strper.indexOf(',') !== -1) {
+    arrper = strper.split(',')
+  }
+  if (arrper.length !== 0) {
+    if (arrper.indexOf(strcheck) !== -1) {
+      return true
+    } else {
+      return false
+    }
+  } else {
+    return true
+  }
+}
+
+function changearr(arr) {
+  for (let i in  arr) {
+    let obj = arr[i]
+    if (checkpermission(obj.subpath)) {
+      arr[0]['redirectTo'] = obj.path
+      break;
+    }
+  } 
+  return arr
+}
+
+const routes: Routes = routestmp;
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

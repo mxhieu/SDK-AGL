@@ -24,14 +24,14 @@
                 <div class="row">
                   <div class="form-group col-lg-3 col-md-3 show-select">
                     <label class="col-form-label">Product</label>
-                    <div class="form-control form-min-height" (click)="showSelect()">
+                    <div class="form-control form-box-height" (click)="showSelect()">
                       <div *ngFor="let groupitem of groupsselect; let i = index" (click)="deleteGroup(groupitem)" class="item-inform-parent">
                         <div class="item-inform-text">
                           <div>{{groupitem.name}}</div>
                           <div class="item-inform-remove">x</div>
                         </div>
                       </div>
-                      <div [ngClass]="(!showmultiselect)?'icon-arrow-down icon-right show-select':'icon-arrow-up icon-right'"></div>
+                  
                     </div>
                     
                     <div class="dropdown-list" [hidden]="!showmultiselect">
@@ -66,7 +66,7 @@
                 </div>
 
                 <div class="row">
-                  <div class="form-group col-md-3 col-lg-3">
+                  <div class="form-group col-md-3 col-lg-3 margin-footer-card">
                     <button class="btn btn-default" type="submit" (click)="addPermission()" [hidden]="!onerow.id">Sửa chi tiết vai trò</button>
                     <button class="btn btn-default" type="submit" (click)="addPermission()" [hidden]="onerow.id">Thêm chi tiết vai trò</button>
                   </div>
@@ -84,7 +84,7 @@
             <div class="card-footer">
                 <button class="btn btn-sm btn-primary" (click)=(save()) [hidden]="isEdit"><i class="icon-plus"></i> Create </button>
                 <button class="btn btn-sm btn-primary" (click)=(update(onerow)) [hidden]="!isEdit"><i class="icon-check"></i> Save</button>
-                <button class="btn btn-sm btn-secondary tright" (click)="refresh()"><i class="icon-close"></i> Cancel</button>
+                <button class="btn btn-sm btn-secondary tright" (click)="refresh(); resetState()"><i class="icon-close"></i> Cancel</button>
             </div>
         </div>
     </div>
@@ -132,9 +132,14 @@
                 <div class="col-md-4 col-lg-4">
                     <h5 class="card-title">Role</h5>
                 </div>
+                <div class="col-md-8 col-lg-8">
+                    <div class="btn-group tright" dropdown>
+                        <button class="btn btn-sm btn-primary" (click)="createPermission()">  Create Permission </button>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="card-block">
+        <div class="card-block" [hidden]="!isShowPopupPermission">
             <div class="card-tools">
                 <select class="sel-search" [(ngModel)]="search.field">
                     <option *ngFor="let perheader of headers" [hidden]="!perheader.is_search" value="{{perheader.id}}">{{perheader.name}}</option>
@@ -189,6 +194,29 @@
                     </tr>
                 </tbody>
             </table>
+        </div>
+
+        <div class="card-block" [hidden]="isShowPopupPermission">
+
+          <table class="table mb-0 table-striped table-responsive-sm table-bordered">
+              <thead class="thead-inverse">
+                  <tr>
+                      <th class="text-center">Permission/Name</th>
+                      <th *ngFor="let cp of roles" class="text-center">{{cp.name}}</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let roleper of arrrolepermission; let i = index">
+                      <td> {{roleper.name}} </td>
+                      <td *ngFor="let keyrole of arrkeyrole"><span class="" [ngClass]="(roleper[keyrole]) ? 'rs-checkbox-group-center lk_checkall': 'rs-checkbox-group-center'" (click)="checkPermissionAll(keyrole, i)">{{count}}</span></td>
+                  </tr>
+              </tbody>
+          </table>
+
+          <div class="margin-footer-card">
+            <button class="btn btn-sm btn-primary" type="submit" (click)="savePerRole()" ><i class="fa fa-dot-circle-o"></i> Cập nhật</button>
+          </div>
+
         </div>
     </div>
 </div>

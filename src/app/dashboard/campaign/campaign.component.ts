@@ -77,7 +77,7 @@ export class CampaignComponent extends BaseComponent implements OnInit {
 			this.sources = data.source;
 			if (this.sources.length > 0)
 				this.onerow.source_id = this.sources[0]._id;
-		});
+		}, 'campaign/listsource');
 	}
 	getCampaigns() {
 		this.service.getCampaigns({

@@ -260,8 +260,9 @@ export class BaseService {
 		return PrivateService.BASE_RESOURCE_URL + icon;
 	}
 
-	public getSources(callback) {
-		this.get(this.baseUrl() + SourceApiUrls.get,
+	public getSources(callback, link) {
+		let strlink = (link) ? link : SourceApiUrls.get 
+		this.get(this.baseUrl() + strlink,
 			{
 				'app_id': this.getAppId(),
 				'pg_page': 1,

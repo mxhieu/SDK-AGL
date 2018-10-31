@@ -137,7 +137,7 @@ export class RoipdComponent implements OnInit {
 			this.versions = data.os.settings;
 			this.versionDisplay = this.versions;
 			this.version = this.versionDisplay[0];
-		});
+		}, 'report-roiPd/listsource');
 	}
 	onSourceChanged(selectedSource: any) {
 		if (selectedSource.source == -1) {
