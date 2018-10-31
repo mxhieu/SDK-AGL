@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Router, Routes, RouterModule, PreloadAllModules, RouteConfigLoadEnd } from '@angular/router';
 import { PlayerComponent } from './player/player.component';
 import { AppSettingComponent } from './app-setting/app-setting.component';
 import { InAppComponent } from './in-app/in-app.component';
@@ -18,14 +18,9 @@ import { TransactionComponent } from './transaction/transaction.component';
 import { AdsReportComponent } from './reports/ads-report/ads-report.component';
 import { CardComponent } from './reports/card/card.component';
 import { AdsPerformanceComponent } from './reports/ads-performance/ads-performance.component';
+import { BaseService } from '../service/base.service';
 
 const routestmp = [
-  {
-    path: '',
-    redirectTo: 'report-arm',
-    pathMatch: 'full',
-    subpath: ''
-  },
   {
     path: 'report-arm',
     component: ArmComponent,
@@ -118,46 +113,39 @@ const routestmp = [
   }
 ]
 
-function rxgetLocal(cname, cdefault) {
-  if (typeof window !== 'undefined') {
-    return localStorage.getItem(cname)
-  } else {
-    return cdefault
-  }
-}
-
-function checkpermission(strcheck) {
-  let strper = rxgetLocal('arrper', '')
-  let arrper = []
-  if (strper && strper.length > 0 && strper.indexOf(',') !== -1) {
-    arrper = strper.split(',')
-  }
-  if (arrper.length !== 0) {
-    if (arrper.indexOf(strcheck) !== -1) {
-      return true
-    } else {
-      return false
-    }
-  } else {
-    return true
-  }
-}
-
-function changearr(arr) {
-  for (let i in  arr) {
-    let obj = arr[i]
-    if (checkpermission(obj.subpath)) {
-      arr[0]['redirectTo'] = obj.path
-      break;
-    }
-  } 
-  return arr
-}
-
 const routes: Routes = routestmp;
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class DashboardRoutingModule { }
+export class DashboardRoutingModule {
+  constructor(private router: Router, public service: BaseService) {
+    setTimeout(() => {
+      this.router.config.forEach(objchild => {
+        if(objchild.path == 'apps' && objchild.children) {
+          const foundChild: any = objchild.children.find(child => (child as any)._loadedConfig);  
+          if (foundChild && foundChild._loadedConfig.routes.length > 0) {
+            let jsonredirect = this.changearr(foundChild._loadedConfig.routes)
+            foundChild._loadedConfig.routes.push(jsonredirect)
+          }
+        }
+      })
+    })
+  }
+
+  changearr(arr) {
+    let jsontmp = {
+      path: '', redirectTo: 'metric', pathMatch: 'full', subpath: ''
+    }
+    for (let i in  arr) {
+      let obj = arr[i]
+      if (this.service.checkpermission(obj.subpath)) {
+        jsontmp['redirectTo'] = obj.path
+        break;
+      }
+    } 
+    return jsontmp
+  }
+
+}
