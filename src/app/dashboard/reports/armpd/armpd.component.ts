@@ -269,7 +269,7 @@ export class ArmpdComponent implements OnInit, OnDestroy {
 			'st_col': this.paging.st_col,
 			'st_type': this.paging.st_type,
 			'app_group_id': this.service.getGroupId(),
-			'compaign_id': null,
+			'campaign_id': null,
 			'startdate': Math.round(this.dFrom.getTime() / 1000),
 			'enddate': Math.round(this.dTo.getTime() / 1000),
 			['search_' + this.search.field]: this.search.term
@@ -285,7 +285,7 @@ export class ArmpdComponent implements OnInit, OnDestroy {
 			params.ad_id = this.currentAudience._id;
 
 		if (this.currentCampaign._id != -1)
-			params.compaign_id = this.currentCampaign._id;
+			params.campaign_id = this.currentCampaign._id;
 
 		this.service.armPdAnalysis(params, data => {
 			this.data = [];
@@ -323,7 +323,7 @@ export class ArmpdComponent implements OnInit, OnDestroy {
 			'ad_id': null,
 			'st_col': 'date',
 			'st_type': 1,
-			'compaign_id': null,
+			'campaign_id': null,
 			'app_group_id':this.service.getGroupId(),
 			'startdate': Math.round(this.dFrom.getTime() / 1000),
 			'enddate': Math.round(this.dTo.getTime() / 1000)
@@ -340,7 +340,7 @@ export class ArmpdComponent implements OnInit, OnDestroy {
 			params.ad_id = this.currentAudience._id;
 
 		if (this.currentCampaign._id != -1)
-			params.compaign_id = this.currentCampaign._id;
+			params.campaign_id = this.currentCampaign._id;
 
 		this.service.armPdChartAnalysis(params, data => { this.makeChart(data); });
 	}
@@ -360,7 +360,7 @@ export class ArmpdComponent implements OnInit, OnDestroy {
 				'pg_page': this.paging.pg_page,
 				'pg_size': this.paging.pg_size,
 				'search_type': this.source.source,
-				'search_compaign_id': selectedCampaign._id,
+				'search_campaign_id': selectedCampaign._id,
 				'app_group_id': this.service.getGroupId()
 			}, data => {
 				this.audiences = data;

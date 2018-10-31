@@ -113,7 +113,7 @@ export class RoiComponent implements OnInit {
 			'app_id': null,
 			'app_group_id': this.service.getGroupId(),
 			'search_os': null,
-			'compaign_id': null,
+			'campaign_id': null,
 			'startdate': Math.round(this.dFrom.getTime() / 1000),
 			'enddate': Math.round(this.dTo.getTime() / 1000),
 			'st_type': this.paging.st_type,
@@ -131,7 +131,7 @@ export class RoiComponent implements OnInit {
 			params.ad_id = this.currentAudience._id;
 		
 		if (this.currentCampaign._id != -1)
-			params.compaign_id = this.currentCampaign._id;
+			params.campaign_id = this.currentCampaign._id;
 
 		this.service.roiAnalysis(params, data => {
 			this.data = data;
@@ -163,7 +163,7 @@ export class RoiComponent implements OnInit {
 				'pg_page': this.paging.pg_page,
 				'pg_size': this.paging.pg_size,
 				'search_type': this.source.source,
-				'search_compaign_id': selectedCampaign._id,
+				'search_campaign_id': selectedCampaign._id,
 				'app_group_id': this.service.getGroupId()
 			}, data => {
 				this.audiences = data;

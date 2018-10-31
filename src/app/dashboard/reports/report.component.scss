@@ -2,12 +2,15 @@
     max-width: 100%;
     overflow-y: auto;
 }
-th{
-	text-align: center;
+
+th {
+    text-align: center;
 }
+
 tr > td {
-	text-align: right;	
+    text-align: right;
 }
+
 .input-group-text {
     display: flex;
     align-items: center;
@@ -21,4 +24,8 @@ tr > td {
     background-color: #e9ecef;
     border: 1px solid #ced4da;
     border-radius: .25rem 0 0 .25rem;
+}
+
+.style-middle {
+    vertical-align: middle
 }

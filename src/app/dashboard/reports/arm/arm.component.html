@@ -7,15 +7,15 @@
             <div class="row col-md-12 form-group">
                 <div class="col-md-4">
                     <span class="input-group-text">Source</span>
-                    <select class="form-control" [(ngModel)]="source" 
-                    (ngModelChange)="onSourceChanged($event)">
+                    <select class="form-control" [(ngModel)]="source"
+                        (ngModelChange)="onSourceChanged($event)">
                         <option *ngFor="let s of sources" [ngValue]="s"> {{s.source_group}} </option>
                     </select>
                 </div>
                 <div class="col-md-4">
                     <span class="input-group-text">Campaign</span>
                     <select class="form-control" [(ngModel)]="currentCampaign" [disabled] = "isCampaignHidden"
-                    (ngModelChange)="onCampaignChanged($event)">
+                        (ngModelChange)="onCampaignChanged($event)">
                         <option *ngFor="let campaign of campaigns" [ngValue]="campaign"> {{campaign.name}}</option>
                     </select>
                 </div>
@@ -95,26 +95,38 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let d of data">
-                                <td class="text-center">{{d._id * 1000 | date:'dd/MM/yyyy'}} </td>
-                                <td> {{d.source}}</td>
-                                <td> {{d.os}}</td>
-                                <td> {{d.campaign_name}}</td>
-                                <td> {{d.ad_name}}</td>
-                                <td> {{d.install | number:'1.0-2'}} </td>
-                                <td> {{d.nru0    | number:'1.0-2'}}</td>
-                                <td> {{d.nru     | number:'1.0-2'}}</td>
-                                <td> {{d.nru0_install == null ? 0 : d.nru0_install | number:'1.0-2' }}% </td>
-                                <td> {{d.cost    | number:'1.0-2'}}</td>
-                                <td> {{d.cpi     | number:'1.0-2'}}</td>
-                                <td> {{d.rr1     | number:'1.0-2'}}%</td>
-                                <td> {{d.rr7     | number:'1.0-2'}}%</td>
-                                <td> {{d.rr30    | number:'1.0-2'}}%</td>
-                                <td> {{d.uv30    | number:'1.0-2'}}</td>
-                                <td> {{d.cr7     | number:'1.0-2'}}%</td>
-                                <td> {{d.rev0    | number:'1.0-2'}}</td>
-                                <td> {{d.rev7    | number:'1.0-2'}}</td>
-                                <td> {{d.cr30    | number:'1.0-2'}}%</td>
-                                <td> {{d.rev30   | number:'1.0-2'}}</td>
+                                <td class="text-center style-middle">{{d._id * 1000 | date:'dd/MM/yyyy'}} </td>
+                                <td class="style-middle"> {{d.source}}</td>
+                                <td class="style-middle"> {{d.os}}</td>
+                                <td class="style-middle"> {{d.campaign_name}}</td>
+                                <td class="style-middle"> {{d.ad_name}}</td>
+                                <td class="style-middle"> {{d.install | number:'1.0-2'}} </td>
+                                <td class="style-middle"> {{d.nru0    | number:'1.0-2'}}</td>
+                                <td class="style-middle"> {{d.nru     | number:'1.0-2'}}</td>
+                                <td class="style-middle"> {{d.nru0_install == null ? 0 : d.nru0_install | number:'1.0-0' }}% </td>
+                                <td class="style-middle"> {{d.cost    | number:'1.0-0'}}</td>
+                                <td class="style-middle"> {{d.cpi     | number:'1.0-0'}}</td>
+                                <td class="text-center style-middle">
+                                    {{d.rr1     | number:'1.0-0'}}%
+                                    <br/>
+                                    ({{ (d.rr1 * d.nru0 / 100)  | number:'1.0-0'}})
+                                </td>
+                                <td class="text-center style-middle">
+                                    {{d.rr7     | number:'1.0-0'}}%
+                                    <br/>
+                                    ({{ (d.rr7 * d.nru0 / 100)  | number:'1.0-0'}})
+                                </td>
+                                <td class="text-center style-middle"> 
+                                    {{d.rr30     | number:'1.0-0'}}%
+                                    <br/>
+                                    ({{ (d.rr30 * d.nru0 / 100)  | number:'1.0-0'}})
+                                </td>
+                                <td class="style-middle"> {{d.uv30    | number:'1.0-2'}}</td>
+                                <td class="style-middle"> {{d.cr7     | number:'1.0-0'}}%</td>
+                                <td class="style-middle"> {{d.rev0    | number:'1.0-2'}}</td>
+                                <td class="style-middle"> {{d.rev7    | number:'1.0-2'}}</td>
+                                <td class="style-middle"> {{d.cr30    | number:'1.0-0'}}%</td>
+                                <td class="style-middle"> {{d.rev30   | number:'1.0-2'}}</td>
                             </tr>
                             <tr>
                                 <td colspan="100%" class="rx-pagin">

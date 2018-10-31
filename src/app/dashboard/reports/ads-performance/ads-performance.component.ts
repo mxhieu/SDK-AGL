@@ -179,6 +179,8 @@ export class AdsPerformanceComponent extends BaseComponent implements OnInit, On
 			'pg_page': 1,
 			'pg_size': 100,
 			'search_source': null,
+			'source_type':'banner_ad',
+			'search_source_id': '5bd685aae739255969321bca',
 			'app_id': this.service.getAppId(),
 			'app_group_id': this.service.getGroupId(),
 			'search_agency_id': '5aa0ee42b887cb6691ed5b43'
