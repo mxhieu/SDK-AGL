@@ -146,7 +146,6 @@ export class AdsPerformanceComponent extends BaseComponent implements OnInit, On
 			'app_group_id': this.service.getGroupId(),
 			'app_id': this.service.getAppId(),
 			['search_' + this.search.field]: this.search.term
-			/*'search_campaign_id': this.cp._id*/
 		};
 		this.service.getAds(params, data => { this.ads = data; });
 	}
@@ -234,7 +233,7 @@ export class AdsPerformanceComponent extends BaseComponent implements OnInit, On
 		}
 	}
 	show() {
-		this.campaigns.splice(-1, 1);
+		// this.campaigns.splice(-1, 1);
 		this.isHidden = false;
 		this.isEdit = false;
 	}
@@ -245,10 +244,10 @@ export class AdsPerformanceComponent extends BaseComponent implements OnInit, On
 		this.onerow.app_id = this.service.getAppId();
 		this.service.createAd(this.onerow, data => { this.refresh(); });
 	}
-	onItemClick(ad: any) {
-		this.campaigns.splice(-1, 1);
+	onItemClicked(ad: any) {
+		// this.campaigns.splice(-1, 1);
 		this.onerow = ad;
-		this.cp = this.getCampaign(ad.campaign_id);
+		this.cp = this.getCampaign(ad['campaign_id']);
 		this.startDate = new Date(this.onerow.start_date * 1000);
 		this.endDate = new Date(this.onerow.end_date * 1000);
 		this.isEdit = true;
@@ -259,6 +258,7 @@ export class AdsPerformanceComponent extends BaseComponent implements OnInit, On
 			if (cp._id == id)
 				return cp;
 		}
+		return "";
 	}
 	update() {
 		this.onerow.start_date = Math.round(this.startDate.getTime() / 1000);

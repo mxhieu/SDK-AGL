@@ -39,7 +39,7 @@
                         <input class="form-control" name="cost" type="number" [(ngModel)]="onerow.cost">
                     </div>
                     <div class="form-group col-md-3 col-lg-3">
-                        <label >Utm campaign</label>
+                        <label>Utm campaign</label>
                         <input class="form-control" type="text" [(ngModel)]="onerow.utm_campaign">
                     </div>
                     <div class="form-group col-md-3 col-lg-3">
@@ -47,21 +47,21 @@
                         <input class="form-control" name="name" type="text" [(ngModel)]="onerow.utm_source">
                     </div>
                     <div class="form-group col-md-3 col-lg-3">
-                        <label >Utm Medium</label>
+                        <label>Utm Medium</label>
                         <input class="form-control" name="name" type="text" [(ngModel)]="onerow.utm_medium">
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-md-3 col-lg-3">
-                        <label >Utm Term</label>
+                        <label>Utm Term</label>
                         <input class="form-control" name="name" type="text" [(ngModel)]="onerow.utm_term">
                     </div>
                     <div class="form-group col-md-3 col-lg-3">
-                        <label >Utm content</label>
+                        <label>Utm content</label>
                         <input class="form-control" name="description" type="text" [(ngModel)]="onerow.utm_content">
                     </div>
                     <div class="form-group col-md-6 col-lg-6">
-                        <label >Link</label>
+                        <label>Link</label>
                         <input class="form-control" name="name" type="text" [(ngModel)]="onerow.link">
                     </div>
                 </div>
@@ -124,27 +124,27 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let ad of ads" class="tpointer" (click)="onItemClick(ad)">
-                            <td>
+                        <tr *ngFor="let ad of ads" class="tpointer" (click)="onItemClicked(ad)">
+                            <td class="style-middle">
                                 {{ad.name}}
                             </td>
-                            <td>
+                            <td class="style-middle">
                                 {{ad.desc}}
                             </td>
-                            <td class="tTextRight">
+                            <td class="style-middle tTextRight">
                                 <strong> {{ ad.cost | currency:'USD':symbol:'1.0-3'}}</strong>
                             </td>
-                            <td>{{ad.utm_source}}</td>
-                            <td>{{ad.utm_medium}}</td>
-                            <td>{{ad.utm_campaign}}</td>
-                            <td>{{ad.link}}</td>
-                            <td align="center" class="text-center tMiddle">
+                            <td class="style-middle">{{ad.utm_source}}</td>
+                            <td class="style-middle">{{ad.utm_medium}}</td>
+                            <td class="style-middle">{{ad.utm_campaign}}</td>
+                            <td class="style-middle">{{ad.link}}</td>
+                            <td class="text-center style-middle">
                                 <div>{{ad.start_date * 1000 | date:'dd/MM/yyyy'}}</div>
                             </td>
-                            <td align="center" class="text-center tMiddle">
+                            <td class="text-center style-middle">
                                 <div>{{ad.end_date * 1000 | date:'dd/MM/yyyy'}}</div>
                             </td>
-                            <td class="text-center tMiddle">
+                            <td class="text-center style-middle">
                                 <button class="btn btn-sm btn-danger" type="button" (click)="delete($event, ad)">
                                 <i class="icon-trash "></i>
                                 </button>
@@ -232,17 +232,17 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let ad of googleAds">
-                            <td>{{ad.gg_campaign_name}}</td>
-                            <td class="tTextRight">
+                            <td class="style-middle">{{ad.gg_campaign_name}}</td>
+                            <td class="tTextRight style-middle">
                                 <strong> {{ ad.cost | currency:'USD':symbol:'1.0-3'}}</strong>
                             </td>
-                            <td class="tTextRight">
+                            <td class="tTextRight style-middle">
                                 <strong> {{ ad.cost_vnd | currency:'VND':symbol:'1.0-3'}}</strong>
                             </td>
-                            <td align="center" class="text-center tMiddle">
+                            <td class="text-center style-middle">
                                 <div>{{ad.start_date * 1000 | date:'dd/MM/yyyy'}}</div>
                             </td>
-                            <td align="center" class="text-center tMiddle">
+                            <td class="text-center style-middle">
                                 <div>{{ad.end_date * 1000 | date:'dd/MM/yyyy'}}</div>
                             </td>
                         </tr>
