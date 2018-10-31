@@ -6,6 +6,7 @@ enum UserApiUrls {
 	new = 'user',
 	delete = 'user/delete',
 	update = 'user/edit',
+	getroleall = 'user/roleall',
 }
 
 enum RoleApiUrls {
@@ -14,6 +15,7 @@ enum RoleApiUrls {
 	getall = 'role/all',
 	delete = 'role/delete',
 	update = 'role/edit',
+	permissionall = 'role/permissionall',
 }
 
 enum PermissionApiUrls {
@@ -44,6 +46,10 @@ export class RbacService extends BaseService {
 		this.get(this.getRestUrl(UserApiUrls.delete), params, data => { callback(data); });
 	}
 
+	getUsersRole(params, callback) {
+		this.get(this.getRestUrl(UserApiUrls.getroleall), params, data => { callback(Array.isArray(data) ? data : []); });
+	}
+
 	// ROLE
 	getRoles(params, callback) {
 		this.get(this.getRestUrl(RoleApiUrls.get), params, data => { callback(Array.isArray(data) ? data : []); });
@@ -63,6 +69,10 @@ export class RbacService extends BaseService {
 
 	deleteRole(params, callback) {
 		this.get(this.getRestUrl(RoleApiUrls.delete), params, data => { callback(data); });
+	}
+
+	getRolePermission(params, callback) {
+		this.get(this.getRestUrl(RoleApiUrls.permissionall), params, data => { callback(Array.isArray(data) ? data : []); });
 	}
 
 	// PERMISSION

@@ -17,7 +17,8 @@
                     </div>
                     <div class="form-group col-md-3 col-lg-3">
                         <label class="col-form-label-none">Password</label>
-                        <input class="form-control"  placeholder="Password" type="password" [hidden]="isEdit" [(ngModel)]="onerow.password">
+                        <span class="{{(isChangePass)? 'lk_checkchangepass lk_checkall' : 'lk_checkchangepass'}}" (click)=(changePass(onerow)) title="{{(isChangePass)? 'Change Pass' : 'Not Change Pass'}}"></span>
+                        <input class="form-control"  placeholder="Password" type="password" [disabled]="isChangePass" [(ngModel)]="onerow.password">
                     </div>
                     <div class="form-group col-md-3 col-lg-3">
                         <label class="col-form-label-none">Email</label>
@@ -39,6 +40,49 @@
                             <option *ngFor="let role of roles" [value]="role._id"> {{role.name}}</option>
                         </select>
                     </div>
+                </div>
+                <div class="row">
+                  <div class="form-group col-lg-3 col-md-3 show-select">
+                    <label class="col-form-label">Product</label>
+                    <div class="form-control form-box-height" (click)="showSelect()">
+                      <div *ngFor="let groupitem of groupsselect; let i = index" (click)="deleteGroup(groupitem)" class="item-inform-parent">
+                        <div class="item-inform-text">
+                          <div>{{groupitem.name}}</div>
+                          <div class="item-inform-remove">x</div>
+                        </div>
+                      </div>
+                  
+                    </div>
+                    
+                    <div class="dropdown-list" [hidden]="!showmultiselect">
+                      <div class="arrow-2 arrow-up" ></div>
+                      <div class="arrow-up"></div>
+                      <div class="list-area">
+                        <div class="pure-checkbox select-all show-select">
+                          <span [ngClass]="(checkmultiall)?'rs-checkbox-group-one lk_checkall':'rs-checkbox-group-one'" (click)="checkMultiAll()"></span>
+                          <label>
+                            <span [hidden]="checkmultiall">Select All</span>
+                            <span [hidden]="!checkmultiall">UnSelect All</span>
+                          </label>
+                        </div>
+                        
+                        <div class="list-filter show-select">
+                          <span class="c-search icon-magnifier"></span>    
+                          <input class="c-input" type="text" placeholder="Search" [(ngModel)]="psearch" (ngModelChange)="searchGroup()">
+                        </div>
+
+                        <div class="filter-select-all"></div>
+                        <ul>
+                          <div *ngFor="let group of groups; let i = index" class="show-select">
+                            <li [ngClass]="(group.checked)?'pure-checkbox selected-item show-select':'pure-checkbox show-select'" (click)="chooseGroup(i)">
+                              <span [ngClass]="(group.checked)?'rs-checkbox-group-one lk_checkall':'rs-checkbox-group-one'"></span>
+                              <label>{{group.name}}</label>
+                            </li>  
+                          </div>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
                 </div>
             </div>
             <div class="card-footer">

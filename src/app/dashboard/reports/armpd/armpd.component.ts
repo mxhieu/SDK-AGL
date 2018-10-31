@@ -310,7 +310,7 @@ export class ArmpdComponent implements OnInit, OnDestroy {
 			this.versions = data.os.settings;
 			this.versionDisplay = this.versions;
 			this.version = this.versionDisplay[0];
-		});
+		},'report-armPd/listsource');
 	}
 
 	getChart() {

@@ -66,7 +66,7 @@
                         </a>
                     </li>
                 </div>
-                <div >
+                <div *ngIf="service.checkpermission('report-card')">
                    <li class="nav-item">
                         <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/report-cards']">
                             <i class="icon-wallet"></i> 

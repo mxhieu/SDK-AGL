@@ -55,7 +55,7 @@ export class KpireportComponent implements OnInit {
 			this.versions = data.os.settings;
 			this.versionDisplay = this.versions;
 			this.version = this.versionDisplay[0];
-		});
+		}, 'report-cohort/listsource');
 	}
 
 	onVersionChanged(event) {

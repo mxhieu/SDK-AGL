@@ -16,7 +16,8 @@ enum AdsApiUrls {
 }
 
 enum AdsReportUrls {
-	get = 'report-ads'
+	get = 'report-ads',
+	getlistads = 'report-ads/campaignAds'
 }
 
 @Injectable()
@@ -40,6 +41,9 @@ export class CampaignService extends BaseService {
 
 	getAds(params, callback) {
 		this.get(this.getRestUrl(AdsApiUrls.get), params, data => { callback(Array.isArray(data) ? data : []); });
+	}
+	getAdsList(params, callback) {
+		this.get(this.getRestUrl(AdsReportUrls.getlistads), params, data => { callback(Array.isArray(data) ? data : []); });
 	}
 	getAdsReport(params, callback) {
 		this.get(this.getRestUrl(AdsReportUrls.get), params, data => { callback(Array.isArray(data) ? data : []); });

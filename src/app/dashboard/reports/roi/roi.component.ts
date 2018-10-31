@@ -148,7 +148,7 @@ export class RoiComponent implements OnInit {
 			this.versions = data.os.settings;
 			this.versionDisplay = this.versions;
 			this.version = this.versionDisplay[0];
-		});
+		}, 'report-roi/listsource');
 	}
 	onCampaignChanged(selectedCampaign: any) {
 		if (selectedCampaign._id == -1) {

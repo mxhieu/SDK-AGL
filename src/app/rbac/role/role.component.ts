@@ -43,6 +43,10 @@ export class RoleComponent extends BaseComponent implements OnInit {
   pagin: any;
   connect: any;
 
+  isShowPopupPermission: any;
+  arrrolepermission = [];
+  arrkeyrole = [];
+
   constructor(private service: RbacService, private gservice: GroupService) {
     super();
     this.paging = this.service.defaultPaging('id');
@@ -61,9 +65,34 @@ export class RoleComponent extends BaseComponent implements OnInit {
     this.isView = false
     this.onerow  = {};
     this.dataopt     = {page: [1, 2, 3]};
+
+    this.isShowPopupPermission = true;
+    this.arrrolepermission = [
+      {name: 'List Group App', key: 'groupApp', keyid: [], arrchild: []},
+      {name: 'ARM Report', key: 'report-arm', keyid: [], arrchild: []},
+      {name: 'ARM PD Report', key: 'report-armPd', keyid: [], arrchild: []},
+      {name: 'ROI Report', key: 'report-roi', keyid: [], arrchild: []},
+      {name: 'ROI PD Report', key: 'report-roiPd', keyid: [], arrchild: []},
+      {name: 'Cohort Report', key: 'report-cohort', keyid: [], arrchild: []},
+      {name: 'KPI Report', key: 'report-kpi', keyid: [], arrchild: []},
+      {name: 'Ads Report', key: 'report-ads', keyid: [], arrchild: []},
+      {name: 'Card Report', key: 'report-card', keyid: [], arrchild: []},
+      {name: 'IAP Transaction', key: 'iap-transaction', keyid: [], arrchild: []},
+      {name: 'Campaign Ads', key: 'campaign-ad', keyid: [], arrchild: []},
+      {name: 'Campaign', key: 'campaign', keyid: [], arrchild: []},
+      {name: 'Source List', key: 'listsource', keyid: [], arrchild: []},
+      {name: 'Config Setting', key: 'app', keyid: [], arrchild: []},
+      {name: 'Config Player', key: 'player', keyid: [], arrchild: []},
+      {name: 'Config In-App', key: 'inapp-item', keyid: [], arrchild: []},
+      {name: 'Config Telco', key: 'card-item', keyid: [], arrchild: []},
+      {name: 'Config Push notification', key: 'notification', keyid: [], arrchild: []},
+      {name: 'Rbac-User', key: 'user', keyid: [], arrchild: []},
+      {name: 'Rbac-Role', key: 'role', keyid: [], arrchild: []},
+      {name: 'Rbac-Permission', key: 'permission', keyid: [], arrchild: []}
+    ]
+    this.arrkeyrole = []
     
     this.refresh();
-    this.getAllPermissions();
     this.getGroups();
 
     document.addEventListener('click', this.offClickHandler.bind(this));
@@ -109,6 +138,7 @@ export class RoleComponent extends BaseComponent implements OnInit {
     }, data => {
       this.roles = data;
       this.isnext = (data.length >= this.paging.pg_size) ? true : false;
+      this.getAllPermissions();
     });
   }
 
@@ -124,7 +154,7 @@ export class RoleComponent extends BaseComponent implements OnInit {
   }
 
   getAllPermissions() {
-    this.service.getallPermissions({}, data => {
+    this.service.getRolePermission({}, data => {
       this.permission_array = []
       this.data_permission = data
       let per_array = this.groupBy(this.data_permission)
@@ -134,6 +164,42 @@ export class RoleComponent extends BaseComponent implements OnInit {
         keys.push(array_parse[key])
       } 
       this.permission_array = keys
+
+      this.arrrolepermission.forEach(obj => {
+        let objkey = this.permission_array.find(objcontroll => objcontroll.key == obj.key)
+        if (objkey) {
+          objkey.value.forEach(perid => {
+            obj.keyid.push(perid.id)
+          })
+        }
+
+        obj.arrchild.forEach(strchild => {
+          let objkeychild = this.permission_array.find(objcontchild => objcontchild.key == strchild)
+          if (objkeychild) {
+            objkeychild.value.forEach(perchildid => {
+              obj.keyid.push(perchildid.id)
+            })
+          }
+        })
+
+      })
+
+      for (let i in this.roles) {
+        let obj = this.roles[i]
+        
+        this.arrrolepermission.forEach(objcontroll => {
+          if(this.checkedPerAll(objcontroll.keyid, obj.permission)) {
+            objcontroll[obj.name] = true
+          } else {
+            objcontroll[obj.name] = false
+          }
+        })
+      }
+
+      this.roles.forEach(obj => {
+        this.arrkeyrole.push(obj.name)
+      })
+
     })
   }
 
@@ -164,12 +230,12 @@ export class RoleComponent extends BaseComponent implements OnInit {
       paramrole.products.push(objtmp._id)
     }
     
-    this.service.updateRole(paramrole, data => { this.refresh(); });
+    this.service.updateRole(paramrole, data => { this.refresh(); this.resetState(); });
   }
 
   delete(e: any, cp: any) {
     e.stopPropagation();
-    this.service.deleteRole({ 'id': cp._id }, data => { this.refresh(); });
+    this.service.deleteRole({ 'id': cp._id }, data => { this.refresh(); this.resetState();});
   }
 
   // View 
@@ -354,6 +420,7 @@ export class RoleComponent extends BaseComponent implements OnInit {
     this.onerow = {};
     this.groupsselect = [];
     this.groups = this.groupsorigin;
+    this.arrkeyrole = [];
   }
 
   checkedExist(data) {
@@ -476,6 +543,47 @@ export class RoleComponent extends BaseComponent implements OnInit {
     this.isEdit = false;
     this.isView = false;
     this.onerow = event;
+  }
+
+  createPermission() {
+    this.isShowPopupPermission = !this.isShowPopupPermission
+  }
+
+  checkedPerAll(data, strcheck) {
+    var checkper = false;
+    for (let key in data) {
+      let value = data[key]
+      if (strcheck.indexOf(value) == -1){ checkper = false; break;}
+      else { checkper = true}
+    }
+    return checkper;
+  }
+
+  checkPermissionAll(key, index) {
+    this.arrrolepermission[index][key] = !this.arrrolepermission[index][key]
+  }
+
+  savePerRole(){
+    this.roles.forEach(obj => {
+      let arrpermission = []
+      let keyname = obj.name
+      this.arrrolepermission.forEach(objper => {
+        if (objper[keyname]) {
+          arrpermission = arrpermission.concat(objper.keyid)
+        }
+      })   
+      obj.permission = arrpermission.join()
+      this.service.updateRole(obj, data=> {
+        if (data.success == 1) {
+          this.refresh(); 
+          this.resetState();
+          this.getGroups();
+        }
+      });
+    })
+    
+    
+    
   }
 
 }

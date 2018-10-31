@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Router, Routes, RouterModule, PreloadAllModules, RouteConfigLoadEnd } from '@angular/router';
 import { PlayerComponent } from './player/player.component';
 import { AppSettingComponent } from './app-setting/app-setting.component';
 import { InAppComponent } from './in-app/in-app.component';
@@ -18,90 +18,134 @@ import { TransactionComponent } from './transaction/transaction.component';
 import { AdsReportComponent } from './reports/ads-report/ads-report.component';
 import { CardComponent } from './reports/card/card.component';
 import { AdsPerformanceComponent } from './reports/ads-performance/ads-performance.component';
+import { BaseService } from '../service/base.service';
 
-const routes: Routes = [
+const routestmp = [
   {
-    path: '',
-    redirectTo: 'report-arm',
-    pathMatch: 'full'
+    path: 'report-arm',
+    component: ArmComponent,
+    subpath: 'report-arm'
   },
   {
     path: 'report-armpd',
-    component: ArmpdComponent
-  },
-  {
-    path: 'report-arm',
-    component: ArmComponent
-  },
-  {
-    path: 'report-kpi',
-    component: KpireportComponent
-  },
-  {
-    path: 'adslist',
-    component: AdsPerformanceComponent
+    component: ArmpdComponent,
+    subpath: 'report-armPd'
   },
   {
     path: 'report-roi',
-    component: RoiComponent
-  },
-  {
-    path: 'transaction',
-    component: TransactionComponent
+    component: RoiComponent,
+    subpath: 'report-roi'
   },
   {
     path: 'report-roipd',
-    component: RoipdComponent
-  },
-  {
-    path: 'player',
-    component: PlayerComponent
-  },
-  {
-    path: 'setting',
-    component: AppSettingComponent
-  }
-  ,
-  {
-    path: 'report-ads',
-    component: AdsReportComponent
-  },
-  {
-    path: 'in-app',
-    component: InAppComponent
-  },
-  {
-    path: 'telco',
-    component: TelcoComponent
-  },
-  {
-    path: 'campaign',
-    component: CampaignComponent
-  },
-  {
-    path: 'notification',
-    component: NotificationComponent
-  },
-  {
-    path: 'sourceslist',
-    component: SourceslistComponent
-  },
-  {
-    path: 'metric',
-    component: MetricComponent
+    component: RoipdComponent,
+    subpath: 'report-roiPd'
   },
   {
     path: 'report-cohort',
-    component: CohortComponent
+    component: CohortComponent,
+    subpath: 'report-cohort'
+  },
+  {
+    path: 'report-kpi',
+    component: KpireportComponent,
+    subpath: 'report-kpi'
+  },
+  {
+    path: 'report-ads',
+    component: AdsReportComponent,
+    subpath: 'report-ads'
   },
   {
     path: 'report-cards',
-    component: CardComponent
+    component: CardComponent,
+    subpath: 'report-card'
+  },
+  {
+    path: 'transaction',
+    component: TransactionComponent,
+    subpath: 'iap-transaction'
+  },
+  {
+    path: 'adslist',
+    component: AdsPerformanceComponent,
+    subpath: 'campaign-ad'
+  },
+  {
+    path: 'campaign',
+    component: CampaignComponent,
+    subpath: 'campaign'
+  },
+  {
+    path: 'sourceslist',
+    component: SourceslistComponent,
+    subpath: 'listsource'
+  },
+  {
+    path: 'metric',
+    component: MetricComponent,
+    subpath: 'metric'
+  },
+  {
+    path: 'setting',
+    component: AppSettingComponent,
+    subpath: 'app'
+  },
+  {
+    path: 'player',
+    component: PlayerComponent,
+    subpath: 'player'
+  },
+  {
+    path: 'in-app',
+    component: InAppComponent,
+    subpath: 'inapp-item'
+  },
+  {
+    path: 'telco',
+    component: TelcoComponent,
+    subpath: 'card-item'
+  },
+  {
+    path: 'notification',
+    component: NotificationComponent,
+    subpath: 'notification'
   }
-];
+]
+
+const routes: Routes = routestmp;
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class DashboardRoutingModule { }
+export class DashboardRoutingModule {
+  constructor(private router: Router, public service: BaseService) {
+    setTimeout(() => {
+      this.router.config.forEach(objchild => {
+        if(objchild.path == 'apps' && objchild.children) {
+          const foundChild: any = objchild.children.find(child => (child as any)._loadedConfig);  
+          if (foundChild && foundChild._loadedConfig.routes.length > 0) {
+            let jsonredirect = this.changearr(foundChild._loadedConfig.routes)
+            foundChild._loadedConfig.routes.push(jsonredirect)
+          }
+        }
+      })
+    })
+  }
+
+  changearr(arr) {
+    let jsontmp = {
+      path: '', redirectTo: 'metric', pathMatch: 'full', subpath: ''
+    }
+    for (let i in  arr) {
+      let obj = arr[i]
+      if (this.service.checkpermission(obj.subpath)) {
+        jsontmp['redirectTo'] = obj.path
+        break;
+      }
+    } 
+    return jsontmp
+  }
+
+}
