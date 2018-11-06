@@ -13,7 +13,7 @@ export class RoipdComponent implements OnInit {
 	dFrom: Date; dMin: Date;
 	dTo: Date = new Date(); dMax: Date = new Date();
 	data = []; paging: any; isnext = true; header: any;
-	search = { field: 'source', term: '' };
+	search = { field: 'os', term: '' };
 
 	platform: any; platforms = [];
 
@@ -121,7 +121,7 @@ export class RoipdComponent implements OnInit {
 			params.app_id = this.service.getAppId();
 		}
 		if (this.source.source != '-1')
-			params.search_source = this.source.source;
+			params.source_type = this.source.source;
 
 		if (this.currentAudience._id != -1)
 			params.ad_id = this.currentAudience._id;

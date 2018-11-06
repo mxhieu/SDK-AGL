@@ -12,7 +12,7 @@ export class ArmComponent implements OnInit, OnDestroy {
 	chart: AmChart;
 	dFrom: Date; dMin: Date; dTo: Date = new Date(); dMax: Date = new Date();
 	data = []; paging: any; isnext = true; header: any;
-	search = { field: 'source', term: '' };
+	search = { field: 'os', term: '' };
 	platform: any; platforms = [];
 
 	// Source
@@ -258,7 +258,7 @@ export class ArmComponent implements OnInit, OnDestroy {
 		}
 
 		if (this.source.source != '-1')
-			params.search_source = this.source.source;
+			params.source_type = this.source.source;
 
 		if (this.currentAudience._id != -1)
 			params.ad_id = this.currentAudience._id;
@@ -300,7 +300,7 @@ export class ArmComponent implements OnInit, OnDestroy {
 			'app_group_id': this.service.getGroupId(),
 			'search_os': null,
 			'campaign_id': null,
-			'search_source': null,
+			'source_type': null,
 			'startdate': Math.round(this.dFrom.getTime() / 1000),
 			'enddate': Math.round(this.dTo.getTime() / 1000)
 		};
@@ -309,7 +309,7 @@ export class ArmComponent implements OnInit, OnDestroy {
 			params.app_id = this.service.getAppId();
 		}
 		if (this.source.source != '-1')
-			params.search_source = this.source.source;
+			params.source_type = this.source.source;
 
 		if (this.currentAudience._id != -1)
 			params.ad_id = this.currentAudience._id;

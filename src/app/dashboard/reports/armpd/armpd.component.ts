@@ -16,7 +16,7 @@ export class ArmpdComponent implements OnInit, OnDestroy {
 
 	dFrom: Date; dMin: Date; dTo: Date = new Date(); dMax: Date = new Date();
 	data = []; paging: any; isnext = true; header: any;
-	search = { field: 'source', term: '' };
+	search = { field: 'os', term: '' };
 	
 	platform: any; platforms = [];
 
@@ -279,7 +279,7 @@ export class ArmpdComponent implements OnInit, OnDestroy {
 			params.app_id = this.service.getAppId();
 		}
 		if (this.source.source != '-1')
-			params.search_source = this.source.source;
+			params.source_type = this.source.source;
 
 		if (this.currentAudience._id != -1)
 			params.ad_id = this.currentAudience._id;
@@ -317,7 +317,7 @@ export class ArmpdComponent implements OnInit, OnDestroy {
 		var params = {
 			'app_id': null,
 			'search_os': null,
-			'search_source': null,
+			'source_type': null,
 			'pg_page': 1,
 			'pg_size': 100,
 			'ad_id': null,
@@ -334,7 +334,7 @@ export class ArmpdComponent implements OnInit, OnDestroy {
 			params.app_id = this.service.getAppId();
 		}
 		if (this.source.source != '-1')
-			params.search_source = this.source.source;
+			params.source_type = this.source.source;
 
 		if (this.currentAudience._id != -1)
 			params.ad_id = this.currentAudience._id;
