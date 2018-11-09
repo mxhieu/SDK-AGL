@@ -55,7 +55,7 @@ export class ArmpdComponent implements OnInit, OnDestroy {
 			{ id: '_id', name: 'Date', is_search: 1, st_col: '_id', st_type: 1 },
 			{ id: 'source', name: 'Source', is_search: 1, st_col: 'source', st_type: 1 },
 			{ id: 'os', name: 'Device Os', is_search: 1, st_col: 'os', st_type: 1 },
-			{ id: 'campain_name', name: 'Campain Name', is_search: 1, st_col: 'campain_name', st_type: 0 },
+			{ id: 'campaign_name', name: 'Campain Name', is_search: 1, st_col: 'campaign_name', st_type: 0 },
 			{ id: 'ad_name', name: 'Ad Name', is_search: 1, st_col: 'ad_name', st_type: 0 },
 			{ id: 'install', name: 'Install', is_search: 1, st_col: 'install', st_type: 1 },
 			{ id: 'nru0', name: 'NRU0', is_search: 1, st_col: 'nru0', st_type: 1 },
