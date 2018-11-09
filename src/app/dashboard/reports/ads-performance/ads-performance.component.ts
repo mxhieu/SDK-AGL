@@ -19,12 +19,12 @@ export class AdsPerformanceComponent extends BaseComponent implements OnInit, On
 	apps: any; app = { 'app_id': '', 'os': '', 'version': '' };
 	facebookHeaders: any; facebookAds: any; googleAds = []; googleHeaders: any;
 
-	paging: any; fbPaging: any; ggPaging: any;
+	paging: any; fbPaging: any; ggPaging: any; currentLink: any;
 
 	constructor(private gService: GroupService, private service: CampaignService) {
 
 		super();
-		
+
 		this.paging = this.service.defaultPaging('start_date');
 		this.fbPaging = this.service.defaultPaging('start_date');
 		this.ggPaging = this.service.defaultPaging('start_date');
@@ -178,7 +178,7 @@ export class AdsPerformanceComponent extends BaseComponent implements OnInit, On
 			'pg_page': 1,
 			'pg_size': 100,
 			'search_source': null,
-			'source_type':'banner_ad',
+			'source_type': 'banner_ad',
 			'search_source_id': '5bd685aae739255969321bca',
 			'app_id': this.service.getAppId(),
 			'app_group_id': this.service.getGroupId(),
@@ -233,11 +233,11 @@ export class AdsPerformanceComponent extends BaseComponent implements OnInit, On
 		}
 	}
 	show() {
-		// this.campaigns.splice(-1, 1);
 		this.isHidden = false;
 		this.isEdit = false;
 	}
 	createAd() {
+		this.onerow.link = this.currentLink;
 		this.onerow.start_date = Math.round(this.startDate.getTime() / 1000);
 		this.onerow.end_date = Math.round(this.endDate.getTime() / 1000);
 		this.onerow.campaign_id = this.cp._id;
@@ -245,7 +245,6 @@ export class AdsPerformanceComponent extends BaseComponent implements OnInit, On
 		this.service.createAd(this.onerow, data => { this.refresh(); });
 	}
 	onItemClicked(ad: any) {
-		// this.campaigns.splice(-1, 1);
 		this.onerow = ad;
 		this.cp = this.getCampaign(ad['campaign_id']);
 		this.startDate = new Date(this.onerow.start_date * 1000);
@@ -260,7 +259,30 @@ export class AdsPerformanceComponent extends BaseComponent implements OnInit, On
 		}
 		return "";
 	}
+	onLinkChanged(link: any) {
+		this.currentLink = link;
+		var data = link.split("&");
+		var item;
+		for (var i = 0; i < data.length; ++i) {
+			if (data[i].includes("utm_medium")) {
+				item = data[i].split("=");
+				if (item && item.length >= 2)
+					this.onerow.utm_medium = item[1];
+			}
+			if (data[i].includes("utm_campaign")) {
+				item = data[i].split("=");
+				if (item && item.length >= 2)
+					this.onerow.utm_campaign = item[1];
+			}
+			if (data[i].includes("utm_source")) {
+				item = data[i].split("=");
+				if (item && item.length >= 2)
+					this.onerow.utm_source = item[1];
+			}
+		}
+	}
 	update() {
+		this.onerow.link = this.currentLink;
 		this.onerow.start_date = Math.round(this.startDate.getTime() / 1000);
 		this.onerow.end_date = Math.round(this.endDate.getTime() / 1000);
 		this.onerow.campaign_id = this.cp._id;
