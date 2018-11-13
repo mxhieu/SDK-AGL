@@ -107,7 +107,7 @@ export class BaseService {
 						if (json['success'] && (json['success'] == 1 || json['success'] == 100)) {
 							callback(json['data']);
 							this.successful(json['msg'], json['success']);
-						} else if (json['success'] && json['success'] == -3) {
+						} else if (json['success'] && [-3, -111].indexOf(json['success']) !== -1) {
 							this.logout();
 						}
 						else this.failure(json['msg']);
@@ -143,7 +143,7 @@ export class BaseService {
 						if (json['success'] && (json['success'] == 1 || json['success'] == 100)) {
 							callback(json['data']);
 							this.successful(json['msg'], json['success']);
-						} else if (json['success'] && json['success'] == -3) {
+						} else if (json['success'] && [-3, -111].indexOf(json['success']) !== -1) {
 							this.logout();
 						}
 						else this.failure(json['msg']);
