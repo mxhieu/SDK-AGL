@@ -22,6 +22,15 @@
                     </li>
                 </div>
 
+                <div *ngIf="!service.checkpermission('report-realtime')">
+                    <li class="nav-item">
+                        <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/report-realtime']">
+                            <i class="icon-graph"></i> 
+                            Realtime Report
+                        </a>
+                    </li>
+                </div>
+
                 <div *ngIf="service.checkpermission('report-roi')">
                     <li class="nav-item">
                         <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/report-roi']">

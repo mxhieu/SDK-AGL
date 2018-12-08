@@ -19,6 +19,7 @@ import { AdsReportComponent } from './reports/ads-report/ads-report.component';
 import { CardComponent } from './reports/card/card.component';
 import { AdsPerformanceComponent } from './reports/ads-performance/ads-performance.component';
 import { BaseService } from '../service/base.service';
+import { RealtimeComponent } from './reports/realtime/realtime.component';
 
 const routestmp = [
   {
@@ -30,6 +31,11 @@ const routestmp = [
     path: 'report-armpd',
     component: ArmpdComponent,
     subpath: 'report-armPd'
+  },
+  {
+    path: 'report-realtime',
+    component: RealtimeComponent,
+    subpath: 'report-realtime'
   },
   {
     path: 'report-roi',
