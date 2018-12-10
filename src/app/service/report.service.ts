@@ -12,7 +12,8 @@ enum ChartApiUrls {
 	analyze_kpi = 'report-kpi',
 	analyze_card = 'report-card',
 	analyze_cardChart = 'report-card/chart',
-	analyze_realtime = 'report-realtime'
+	analyze_realtime = 'report-realtime',
+	analyze_realtimeChart = 'report-realtime/chart'
 }
 
 @Injectable()
@@ -45,6 +46,12 @@ export class ReportService extends BaseService {
 	armChartAnalysis(params, callback) {
 		this.get(this.getRestUrl(ChartApiUrls.analyze_armChart), params, data => {
 			callback(data);
+		});
+	}
+
+	realtimeChartAnalysis(params, callback) {
+		this.get(this.getRestUrl(ChartApiUrls.analyze_realtimeChart), params, data => {
+			callback(Array.isArray(data) ? data : []);
 		});
 	}
 

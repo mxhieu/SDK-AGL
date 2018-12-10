@@ -60,15 +60,15 @@ export class RealtimeComponent implements OnInit, OnDestroy {
 	ngOnInit(): void {
 	}
 	makeChart(chartData: any[]) {
-		chartData.sort((l, r): number => {
-			var date1 = Date.parse(l.date);
-			var date2 = Date.parse(r.date);
-			if (date1 > date2)
-				return 1;
-			if (date1 < date2)
-				return -1;
-			return 0;
-		});
+		chartData.forEach((obj, index) => {
+			if(index != 0 && chartData[index + 1]) {
+				obj.active = chartData[index + 1]['active'] - obj.active
+				obj.nru = chartData[index + 1]['nru'] - obj.nru
+			} else {
+				obj.active = 0
+				obj.nru = 0
+			}
+		})
 		this.chart = this.AmCharts.makeChart("chartdiv", {
 			"type": "serial",
 			"theme": "light",
@@ -91,50 +91,24 @@ export class RealtimeComponent implements OnInit, OnDestroy {
 				"position": "right"
 			}],
 			"graphs": [{
-				"alphaField": "alpha",
-				"balloonText": "INSTALL:[[value]]",
-				"dashLengthField": "dashLength",
-				"fillAlphas": 0.7,
-				"legendPeriodValueText": "total: [[value.sum]]",
-				"legendValueText": "[[value]]",
-				"title": "INSTALL",
-				"type": "column",
-				"valueField": "install",
-				"valueAxis": "leftAxis",
-				'fillColors': "#7bc0f7",
-				'lineColor': '#64b5f6'
-			}, {
-				"alphaField": "alpha",
 				"balloonText": "NRU:[[value]]",
+				"bullet": "round",
+				"bulletBorderAlpha": 1,
+				"useLineColorForBulletBorder": true,
+				"bulletColor": "#FFFFFF",
+				"bulletSizeField": "townSize",
 				"dashLengthField": "dashLength",
-				"fillAlphas": 0.7,
-				"legendPeriodValueText": "total: [[value.sum]]",
+				"descriptionField": "",
+				"labelPosition": "right",
+				"labelText": "[[]]",
 				"legendValueText": "[[value]]",
 				"title": "NRU",
-				"type": "column",
+				"fillAlphas": 0,
 				"valueField": "nru",
-				"valueAxis": "leftAxis",
-				'fillColors': "#3b8ad9",
-				'lineColor': '#1976d2'
-			}, {
-				"balloonText": "RR1:[[value]]",
-				"bullet": "round",
-				"bulletBorderAlpha": 1,
-				"useLineColorForBulletBorder": true,
-				"bulletColor": "#FFFFFF",
-				"bulletSizeField": "townSize",
-				"dashLengthField": "dashLength",
-				"descriptionField": "",
-				"labelPosition": "right",
-				"labelText": "[[]]",
-				"legendValueText": "[[value]]",
-				"title": "RR1",
-				"fillAlphas": 0,
-				"valueField": "rr1",
-				'lineColor': '#ffdb69',
+				'lineColor': '#1976d2',
 				"valueAxis": "rightAxis"
 			}, {
-				"balloonText": "RR7:[[value]]",
+				"balloonText": "Active:[[value]]",
 				"bullet": "round",
 				"bulletBorderAlpha": 1,
 				"useLineColorForBulletBorder": true,
@@ -145,59 +119,29 @@ export class RealtimeComponent implements OnInit, OnDestroy {
 				"labelPosition": "right",
 				"labelText": "[[]]",
 				"legendValueText": "[[value]]%",
-				"title": "RR7",
+				"title": "Active",
 				"fillAlphas": 0,
-				"valueField": "rr7",
+				"valueField": "active",
 				"valueAxis": "rightAxis"
-			}, {
-				"balloonText": "RR30:[[value]]",
-				"bullet": "round",
-				"bulletBorderAlpha": 1,
-				"useLineColorForBulletBorder": true,
-				"bulletColor": "#FFFFFF",
-				"bulletSizeField": "townSize",
-				"dashLengthField": "dashLength",
-				"descriptionField": "",
-				"labelPosition": "right",
-				"labelText": "[[]]",
-				"legendValueText": "[[value]]%",
-				"title": "RR30",
-				"fillAlphas": 0,
-				"valueField": "rr30",
-				"valueAxis": "rightAxis",
-				'lineColor': '#ef6c00'
 			}],
 			"chartCursor": {
-				"categoryBalloonDateFormat": "DD",
+				"categoryBalloonDateFormat": "mm",
 				"cursorAlpha": 0.1,
 				"cursorColor": "#000000",
 				"fullWidth": true,
 				"valueBalloonsEnabled": false,
 				"zoomable": false
 			},
-			"dataDateFormat": "YYYY-MM-DD",
-			"categoryField": "date",
+			"categoryField": "timenow",
 			"categoryAxis": {
-				"dateFormats": [{
-					"period": "DD",
-					"format": "DD"
-				}, {
-					"period": "WW",
-					"format": "MMM DD"
-				}, {
-					"period": "MM",
-					"format": "MMM"
-				}, {
-					"period": "YYYY",
-					"format": "YYYY"
-				}],
-				"parseDates": true,
-				"autoGridCount": false,
+		    "parseDates": true,
+		    "minPeriod": "mm",
+		    "autoGridCount": false,
 				"axisColor": "#555555",
 				"gridAlpha": 0.1,
 				"gridColor": "#FFFFFF",
 				"gridCount": 50
-			},
+		  },
 			"export": {
 				"enabled": true
 			}
@@ -256,13 +200,37 @@ export class RealtimeComponent implements OnInit, OnDestroy {
 		if (this.currentCampaign._id != -1)
 			params.campaign_id = this.currentCampaign._id;
 
+
+
 		this.service.realtimeAnalysis(params, data => {
 			this.data = [];
+			this.data.push({active: this.getSumData(data, 'active'), nru: this.getSumData(data, 'nru'), pu: this.getSumData(data, 'pu'), rev: this.getSumData(data, 'rev')})
 			for (let item of data) {
 				this.data.push(item);
 			}
 		});
+		this.getChart();
+		setInterval(() => {
+	    this.service.realtimeAnalysis(params, data => {
+				this.data = [];
+				this.data.push({active: this.getSumData(data, 'active'), nru: this.getSumData(data, 'nru'), pu: this.getSumData(data, 'pu'), rev: this.getSumData(data, 'rev')})
+				for (let item of data) {
+					this.data.push(item);
+				}
+			});
+			this.getChart(); 
+	  }, 300000);
 	}
+	getSumData(data, key) {
+		let result = 0
+		for(let i in data) {
+			if (data[i] && data[i][key]) {
+				result += data[i][key]	
+			}
+		}
+		return result
+	}
+
 	getSources() {
 		this.service.getSources(data => {
 			// Sources
@@ -302,9 +270,9 @@ export class RealtimeComponent implements OnInit, OnDestroy {
 		if (this.currentCampaign._id != -1)
 			params.campaign_id = this.currentCampaign._id;
 
-		// this.service.armChartAnalysis(params, data => {
-		// 	this.makeChart(data);
-		// });
+		this.service.realtimeChartAnalysis(params, data => {
+			this.makeChart(data);
+		});
 	}
 	onVersionChanged(event) {
 		this.service.setAppId(event.app_id);
