@@ -16,6 +16,7 @@ import { NotificationComponent } from './notification/notification.component';
 import { TelcoComponent } from './telco/telco.component';
 import { ArmpdComponent } from './reports/armpd/armpd.component';
 import { ArmComponent } from './reports/arm/arm.component';
+import { RetentionComponent } from './reports/retention/retention.component';
 import { RealtimeComponent } from './reports/realtime/realtime.component';
 import { RoiComponent } from './reports/roi/roi.component';
 import { RoipdComponent } from './reports/roipd/roipd.component';
@@ -44,7 +45,7 @@ import { AdsPerformanceComponent } from './reports/ads-performance/ads-performan
     NotificationComponent, TelcoComponent, ArmpdComponent, ArmComponent,
     RoiComponent, RoipdComponent, SourceslistComponent, MetricComponent, 
     CohortComponent, CampaignComponent, KpireportComponent,
-    AdsReportComponent, TransactionComponent, CardComponent, AdsPerformanceComponent, RealtimeComponent]
+    AdsReportComponent, TransactionComponent, CardComponent, AdsPerformanceComponent, RealtimeComponent, RetentionComponent]
 
 })
 export class DashboardModule { }

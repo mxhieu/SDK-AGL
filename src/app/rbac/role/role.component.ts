@@ -71,6 +71,8 @@ export class RoleComponent extends BaseComponent implements OnInit {
       {name: 'List Group App', key: 'groupApp', keyid: [], arrchild: []},
       {name: 'ARM Report', key: 'report-arm', keyid: [], arrchild: []},
       {name: 'ARM PD Report', key: 'report-armPd', keyid: [], arrchild: []},
+      {name: 'Realtime Report', key: 'report-realtime', keyid: [], arrchild: []},
+      {name: 'Retention Report', key: 'report-retention', keyid: [], arrchild: []},
       {name: 'ROI Report', key: 'report-roi', keyid: [], arrchild: []},
       {name: 'ROI PD Report', key: 'report-roiPd', keyid: [], arrchild: []},
       {name: 'Cohort Report', key: 'report-cohort', keyid: [], arrchild: []},

@@ -1,0 +1,136 @@
+<div class="animated fadeIn rx-relative">
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">Retention Report from {{dFrom | date: 'dd/MM/yyyy' }} to {{dTo |  date:'dd/MM/yyyy'}}</h5>
+        </div>
+        <div class="card-block">
+            <div class="row col-md-12 form-group">
+                <div class="col-md-4">
+                    <span class="input-group-text">Source</span>
+                    <select class="form-control" [(ngModel)]="source"
+                        (ngModelChange)="onSourceChanged($event)">
+                        <option *ngFor="let s of sources" [ngValue]="s"> {{s.source_group}} </option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <span class="input-group-text">Campaign</span>
+                    <select class="form-control" [(ngModel)]="currentCampaign" [disabled] = "isCampaignHidden"
+                        (ngModelChange)="onCampaignChanged($event)">
+                        <option *ngFor="let campaign of campaigns" [ngValue]="campaign"> {{campaign.name}}</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <span class="input-group-text">Audience</span>
+                    <select class="form-control" [(ngModel)]="currentAudience" [disabled] = "isAudienceHidden">
+                        <option *ngFor="let audience of audiences" [ngValue]="audience"> {{audience.name}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row col-md-12 form-group">
+                <div class="col-md-3">
+                    <span class="input-group-text">From</span>
+                    <input type="text" class="form-control" [minDate]="dMin" [maxDate]="dMax" #dp="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }"
+                    [(ngModel)]="dFrom">
+                </div>
+                <div class="col-md-3">
+                    <span class="input-group-text">To</span>
+                    <input type="text" class="form-control" [minDate]="dMin" [maxDate]="dMax" #dp="bsDatepicker" bsDatepicker
+                    [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }"
+                    [(ngModel)]="dTo">
+                </div>
+                <div class="col-md-3">
+                    <span class="input-group-text">OS</span>
+                    <select class="form-control" [(ngModel)]="platform" (ngModelChange)="osPickerChanged($event)">
+                        <option *ngFor="let p of platforms" [ngValue]="p"> {{p.name}} </option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <div [hidden]="!isVersionHidden">
+                        <span class="input-group-text">Version</span>
+                        <select class="form-control" [(ngModel)]="version"
+                            (ngModelChange)="onVersionChanged($event)">
+                            <option *ngFor="let v of versionDisplay" [ngValue]="v"> {{v.version}} </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row col-md-12 form-group">
+                <div class="col-md-12">
+                    <button class="btn btn-success tright" (click)="doAnalysis()"><i class="icon-magic-wand"></i> Analytic</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">Acquisition Retention </h5>
+        </div>
+        <div class="card-body">
+            <div id="chartdiv" [style.width.%]="100" [style.height.px]="500"></div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-block">
+            <div class="clearfix">
+                <div class="card-tools">
+                    <select class="sel-search" [(ngModel)]="search.field">
+                        <option *ngFor="let perheader of header" [hidden]="!perheader.is_search" value="{{perheader.id}}">{{perheader.name}}</option>
+                    </select><i class="icon-arrow-down sel-ico"></i>
+                    <input type="text" class="rx-cur input-search" [(ngModel)]="search.term">
+                    <button class="btn btn-sm btn-default btn-search" (click)="jumpPage(1)"><i class="icon-magnifier"></i></button>
+                    <button class="btn btn-sm btn-success"> <i class="icon-cloud-download"></i></button>
+                </div>
+            </div>
+            <div class="tTableWraper">
+                <table class="table mb-0 table-striped table-responsive-sm table-bordered">
+                    <thead class="thead-default">
+                        <tr>
+                            <th colspan="5" class="rx-table-head-border"></th>
+                            <th colspan="2" class="rx-table-head-border">Acquisition</th>
+                            <th colspan="5" class="rx-table-head-border">Retention</th>
+                            <th colspan="5" class="rx-table-head-border">Retention-Percent</th>
+                            <tr>
+                                <th *ngFor="let perheader of header" (click)="sort($event)" [attr.rxdata]="perheader.id" class="{{(perheader.id == paging.st_col)? 'rxsorting' : ''}} {{(paging.st_type == 1)? 'rxup' : 'rxdown'}}">{{perheader.name}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let d of data">
+                                <td class="text-center style-middle">{{d._id * 1000 | date:'dd/MM/yyyy'}} </td>
+                                <td class="style-middle"> {{d.source}}</td>
+                                <td class="style-middle"> {{d.os}}</td>
+                                <td class="style-middle"> {{d.campaign_name}}</td>
+                                <td class="style-middle"> {{d.ad_name}}</td>
+                                <td class="style-middle"> {{d.install | number:'1.0-2'}} </td>
+                                <td class="style-middle"> {{d.nru     | number:'1.0-2'}}</td>
+                                <td class="text-center style-middle"> {{d.rr1_num     | number:'1.0-0'}} </td>
+                                <td class="text-center style-middle"> {{d.rr3_num     | number:'1.0-0'}} </td>
+                                <td class="text-center style-middle"> {{d.rr7_num     | number:'1.0-0'}} </td>
+                                <td class="text-center style-middle"> {{d.rr15_num     | number:'1.0-0'}} </td>
+                                <td class="text-center style-middle"> {{d.rr30_num     | number:'1.0-0'}} </td>
+
+                                <td class="text-center style-middle"> {{d.rr1     | number:'1.0-0'}} %</td>
+                                <td class="text-center style-middle"> {{d.rr3     | number:'1.0-0'}} %</td>
+                                <td class="text-center style-middle"> {{d.rr7     | number:'1.0-0'}} %</td>
+                                <td class="text-center style-middle"> {{d.rr15     | number:'1.0-0'}} %</td>
+                                <td class="text-center style-middle"> {{d.rr30     | number:'1.0-0'}} %</td>
+                            </tr>
+                            <tr>
+                                <td colspan="100%" class="rx-pagin">
+                                    <button class="rx-back" [disabled]="paging.pg_page <= 1" (click)="jumpPage(paging.pg_page - 1)">
+                                    <</button>
+                                    <input type="number" class="rx-cur" [(ngModel)]="paging.pg_page">
+                                    <button class="rx-next" [disabled]="!isnext" (click)="jumpPage(paging.pg_page + 1)">></button>
+                                    <span class="rx-jump" (click)="jumpPage(paging.pg_page)"><i class="icon-rocket"></i></span>
+                                    <select type="number" class="rx-pg-size" (ngModelChange)="resizePage($event)" [(ngModel)]="paging.pg_size">
+                                        <option value="10" selected>10</option>
+                                        <option value="50" selected>50</option>
+                                        <option value="100" selected>100</option>
+                                    </select> / page
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>

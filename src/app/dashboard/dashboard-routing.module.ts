@@ -7,6 +7,7 @@ import { NotificationComponent } from './notification/notification.component';
 import { TelcoComponent } from './telco/telco.component';
 import { ArmpdComponent } from './reports/armpd/armpd.component';
 import { ArmComponent } from './reports/arm/arm.component';
+import { RetentionComponent } from './reports/retention/retention.component';
 import { RoiComponent } from './reports/roi/roi.component';
 import { RoipdComponent } from './reports/roipd/roipd.component';
 import { SourceslistComponent } from './sourceslist/sourceslist.component';
@@ -36,6 +37,11 @@ const routestmp = [
     path: 'report-realtime',
     component: RealtimeComponent,
     subpath: 'report-realtime'
+  },
+  {
+    path: 'report-retention',
+    component: RetentionComponent,
+    subpath: 'report-retention'
   },
   {
     path: 'report-roi',
