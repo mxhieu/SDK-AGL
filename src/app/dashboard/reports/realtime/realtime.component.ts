@@ -49,7 +49,7 @@ export class RealtimeComponent implements OnInit, OnDestroy {
 			{ id: 'os', name: 'Device Os', is_search: 1, st_col: 'os', st_type: 1 },
 			{ id: 'campaign_name', name: 'Campain Name', is_search: 1, st_col: 'campaign_name', st_type: 0 },
 			{ id: 'ad_name', name: 'Ad Name', is_search: 1, st_col: 'ad_name', st_type: 0 },
-			{ id: 'install', name: 'Active', is_search: 1, st_col: 'install', st_type: 1 },
+			{ id: 'active', name: 'Active', is_search: 1, st_col: 'active', st_type: 1 },
 			{ id: 'nru', name: 'NRU', is_search: 1, st_col: 'nru', st_type: 1 },
 			{ id: 'pu', name: 'PU', is_search: 1, st_col: 'rev', st_type: 1 },
 			{ id: 'rev', name: 'REV0', is_search: 1, st_col: 'rev', st_type: 1 }
@@ -288,7 +288,7 @@ export class RealtimeComponent implements OnInit, OnDestroy {
 				'st_col': this.paging.st_col,
 				'st_type': this.paging.st_type,
 				'pg_page': this.paging.pg_page,
-				'pg_size': this.paging.pg_size,
+				'pg_size': 1000,
 				'search_type': this.source.source,
 				'search_campaign_id': selectedCampaign._id,
 				'app_group_id': this.service.getGroupId()

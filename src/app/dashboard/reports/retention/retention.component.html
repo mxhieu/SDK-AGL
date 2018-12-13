@@ -22,7 +22,7 @@
                 <div class="col-md-4">
                     <span class="input-group-text">Audience</span>
                     <select class="form-control" [(ngModel)]="currentAudience" [disabled] = "isAudienceHidden">
-                        <option *ngFor="let audience of audiences" [ngValue]="audience"> {{audience.name}}</option>
+                        <option *ngFor="let audience of audiences" [ngValue]="audience"> {{audience.utm_campaign || audience.name}}</option>
                     </select>
                 </div>
             </div>
