@@ -18,6 +18,7 @@ import { AppRoutingModule } from './app.routing';
 import { PrivateService } from './service/service.private';
 import { ConfigService } from './service/service.config';
 import { RoutingService } from './service/routing.service';
+import { ExcelService } from './service/excel.service';
 
 // Layouts
 import { FullLayoutComponent } from './dashboard/full-layout.component';
@@ -80,6 +81,7 @@ import { ToastrModule } from 'ngx-toastr';
         ConfigService,
         RoutingService,
         PrivateService,
+        ExcelService,
         {
             provide: LocationStrategy,
             useClass: HashLocationStrategy

@@ -3,12 +3,15 @@ import { AmChartsService, AmChart } from "@amcharts/amcharts3-angular";
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { ReportService } from '../../../service/report.service';
 import { CampaignService } from '../../../service/campaign.service';
+import { ExcelService } from '../../../service/excel.service';
+
 @Component({
 	selector: 'app-realtime',
 	templateUrl: './realtime.component.html',
 	styleUrls: ['../report.component.scss']
 })
 export class RealtimeComponent implements OnInit, OnDestroy {
+
 	chart: AmChart;
 	dFrom: Date; dMin: Date; dTo: Date = new Date(); dMax: Date = new Date();
 	data = []; paging: any; isnext = true; header: any;
@@ -32,6 +35,7 @@ export class RealtimeComponent implements OnInit, OnDestroy {
 	constructor(
 		private service: ReportService,
 		private AmCharts: AmChartsService,
+		private excelService: ExcelService,
 		private campaignService: CampaignService) {
 		this.source = this.sources[0];
 		this.currentAudience = this.audiences[0];
@@ -61,7 +65,7 @@ export class RealtimeComponent implements OnInit, OnDestroy {
 	}
 	makeChart(chartData: any[]) {
 		chartData.forEach((obj, index) => {
-			if(index != 0 && chartData[index + 1]) {
+			if (index != 0 && chartData[index + 1]) {
 				obj.active = chartData[index + 1]['active'] - obj.active
 				obj.nru = chartData[index + 1]['nru'] - obj.nru
 			} else {
@@ -134,14 +138,14 @@ export class RealtimeComponent implements OnInit, OnDestroy {
 			},
 			"categoryField": "timenow",
 			"categoryAxis": {
-		    "parseDates": true,
-		    "minPeriod": "mm",
-		    "autoGridCount": false,
+				"parseDates": true,
+				"minPeriod": "mm",
+				"autoGridCount": false,
 				"axisColor": "#555555",
 				"gridAlpha": 0.1,
 				"gridColor": "#FFFFFF",
 				"gridCount": 50
-		  },
+			},
 			"export": {
 				"enabled": true
 			}
@@ -200,32 +204,30 @@ export class RealtimeComponent implements OnInit, OnDestroy {
 		if (this.currentCampaign._id != -1)
 			params.campaign_id = this.currentCampaign._id;
 
-
-
 		this.service.realtimeAnalysis(params, data => {
 			this.data = [];
-			this.data.push({active: this.getSumData(data, 'active'), nru: this.getSumData(data, 'nru'), pu: this.getSumData(data, 'pu'), rev: this.getSumData(data, 'rev')})
+			this.data.push({ active: this.getSumData(data, 'active'), nru: this.getSumData(data, 'nru'), pu: this.getSumData(data, 'pu'), rev: this.getSumData(data, 'rev') })
 			for (let item of data) {
 				this.data.push(item);
 			}
 		});
 		this.getChart();
 		setInterval(() => {
-	    this.service.realtimeAnalysis(params, data => {
+			this.service.realtimeAnalysis(params, data => {
 				this.data = [];
-				this.data.push({active: this.getSumData(data, 'active'), nru: this.getSumData(data, 'nru'), pu: this.getSumData(data, 'pu'), rev: this.getSumData(data, 'rev')})
+				this.data.push({ active: this.getSumData(data, 'active'), nru: this.getSumData(data, 'nru'), pu: this.getSumData(data, 'pu'), rev: this.getSumData(data, 'rev') })
 				for (let item of data) {
 					this.data.push(item);
 				}
 			});
-			this.getChart(); 
-	  }, 300000);
+			this.getChart();
+		}, 300000);
 	}
 	getSumData(data, key) {
 		let result = 0
-		for(let i in data) {
+		for (let i in data) {
 			if (data[i] && data[i][key]) {
-				result += data[i][key]	
+				result += data[i][key]
 			}
 		}
 		return result
@@ -335,6 +337,26 @@ export class RealtimeComponent implements OnInit, OnDestroy {
 			}
 			this.version = this.versionDisplay[0];
 			this.service.setAppId(this.version.app_id);
+		}
+	}
+	export() {
+		var exportData = [];
+		for (var item of this.data){
+			exportData.push(
+				{
+					Date: new Date(item.date * 1000).toLocaleString(),
+					Source: item.source,
+					DeviceOs: item.device_type,
+					CampainName: item.campaign_name,
+					AdName: item.ad_name,
+					Active: item.active,
+					NRU: item.nru,
+					PU: item.pu,
+					REV0: item.rev
+				}
+			);
+		}
+		this.excelService.exportAsExcelFile(exportData, 'realtime');
 		}
 	}
 }
