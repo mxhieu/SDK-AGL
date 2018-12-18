@@ -4,6 +4,29 @@
             <h5 class="card-title">Ad Report from {{dFrom | date: 'dd/MM/yyyy' }} to {{dTo |  date:'dd/MM/yyyy'}}</h5>
         </div>
         <div class="card-block">
+            <div class="row col-md-12 form-group">
+                <div class="col-md-4">
+                    <span class="input-group-text">Source</span>
+                    <select class="form-control" [(ngModel)]="source"
+                        (ngModelChange)="onSourceChanged($event)">
+                        <option *ngFor="let s of sources" [ngValue]="s"> {{s.source_group}} </option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <span class="input-group-text">Campaign</span>
+                    <select class="form-control" [(ngModel)]="currentCampaign" [disabled] = "isCampaignHidden"
+                        (ngModelChange)="onCampaignChanged($event)">
+                        <option *ngFor="let campaign of campaigns" [ngValue]="campaign"> {{campaign.name}}</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <span class="input-group-text">Audience</span>
+                    <select class="form-control" [(ngModel)]="currentAudience" [disabled] = "isAudienceHidden" 
+                        (ngModelChange)="onAudienceChanged($event)">
+                        <option *ngFor="let audience of audiences" [ngValue]="audience"> {{audience.utm_campaign || audience.name}}</option>
+                    </select>
+                </div>
+            </div>
             <div class="row col-md-12">
                 <div class="col-md-3">
                     <span class="input-group-text">Application</span>

@@ -13,19 +13,32 @@ export class AdsReportComponent extends BaseComponent implements OnInit, OnDestr
 
 	headers: any; paging: any; search = { field: 'name', term: '' };
 	ads = []; onerow: any; isEdit: boolean; isHidden: boolean;
-	cp: any; campaigns = []; isnext: any;
+	cp: any; isnext: any;
 	endDate: Date = new Date();
 	dFrom: Date; dMin: Date; dTo: Date = new Date(); dMax: Date = new Date();
 
 	apps: any; app = { 'app_id': '', 'os': '', 'version': '' };
 	facebookHeaders: any; facebookAds: any;
 
+	// Source
+	source: any; sources = [{ 'source_group': "All", 'source': '-1' }];
+
+	// Campaigns
+	campaigns = [{ _id: -1, name: 'All' }]; currentCampaign: any; isCampaignHidden: boolean = true;
+
+	// Audiences
+	audiences = [{ _id: -1, name: 'All' }]; isAudienceHidden: boolean = true; currentAudience: any;
+
 	constructor(private gService: GroupService, private service: CampaignService) {
 
 		super();
 		this.paging = this.service.defaultPaging('date');
-		this.dFrom = this.service.fromDate(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate(), 30);
+		this.dFrom = this.service.fromDate(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate(), 90);
 		this.dMin = this.service.fromDate(this.dMax.getFullYear(), this.dMax.getMonth(), this.dMax.getDate(), 365);
+
+		this.source = this.sources[0];
+		this.currentAudience = this.audiences[0];
+		this.currentCampaign = this.campaigns[0];
 
 		this.isnext = true;
 		this.headers = [
@@ -73,10 +86,12 @@ export class AdsReportComponent extends BaseComponent implements OnInit, OnDestr
 		this.getApps();
 		this.getFacebookAd();
 		this.doAnalysis();
+		this.getSources();
 	}
 
 	doAnalysis() {
 		this.getFacebookAd();
+		console.log(this.paging)
 		this.getBanner();
 	}
 
@@ -113,18 +128,15 @@ export class AdsReportComponent extends BaseComponent implements OnInit, OnDestr
 	}
 
 	getBanner() {
-		var params = {
-			'st_col': this.paging.st_col,
-			'st_type': this.paging.st_type,
-			'pg_page': this.paging.pg_page,
-			'pg_size': this.paging.pg_size,
-			'search_type': 'banner_ad',
-			'app_group_id': this.service.getGroupId(),
-			'search_app_id': this.service.getAppId(),
-			['search_' + this.search.field]: this.search.term,
-			'search_campaign_id': this.cp._id
-		};
-		this.service.getAdsList(params, data => { this.ads = data; });
+		var params = this.paging
+
+		params.search_type = 'banner_ad'
+		params.app_group_id = this.service.getGroupId()
+		params.search_app_id = this.service.getAppId()
+		params.startdate = Math.round(this.dFrom.getTime() / 1000) 
+		params.enddate = Math.round(this.dTo.getTime() / 1000)
+
+		this.service.getAdsList(this.paging, data => { this.ads = data; });
 	}
 
 	getFacebookAd() {
@@ -177,13 +189,6 @@ export class AdsReportComponent extends BaseComponent implements OnInit, OnDestr
 		this.campaigns.splice(-1, 1);
 		this.isHidden = false;
 		this.isEdit = false;
-	}
-
-	getCampaign(id: string) {
-		for (var cp of this.campaigns) {
-			if (cp._id == id)
-				return cp;
-		}
 	}
 
 	calAdgroup(arradgroup) {
@@ -248,6 +253,80 @@ export class AdsReportComponent extends BaseComponent implements OnInit, OnDestr
 					jadgroup++;
 				}
 			}
+		}
+	}
+
+	getSources() {
+		this.service.getSources(data => {
+			// Sources
+			this.sources = this.sources.concat(data.source);
+			this.source = this.sources[0];
+
+		}, 'report-arm/listsource');
+	}
+
+	onAudienceChanged(selectedCampaign: any) {
+		if (selectedCampaign._id == -1) {
+			if (this.paging.ad_id) {
+				delete(this.paging.ad_id)	
+			}
+		} else {
+			this.paging.ad_id = selectedCampaign._id
+		}
+	}
+	onCampaignChanged(selectedCampaign: any) {
+		if (selectedCampaign._id == -1) {
+			this.isAudienceHidden = true;
+			this.currentAudience = this.audiences[0];
+			if (this.paging.campaign_id) {
+				delete(this.paging.campaign_id)	
+			}
+		}
+		else {
+			this.paging.campaign_id = selectedCampaign._id
+			this.isAudienceHidden = false;
+			this.service.getAds({
+				'st_col': this.paging.st_col,
+				'st_type': this.paging.st_type,
+				'pg_page': this.paging.pg_page,
+				'pg_size': 1000,
+				'search_type': this.source.source,
+				'search_campaign_id': selectedCampaign._id,
+				'app_group_id': this.service.getGroupId()
+			}, data => {
+				this.audiences = data;
+				this.audiences.splice(0, 0, { _id: -1, name: 'All' });
+				this.currentAudience = this.audiences[0];
+			});
+		}
+	}
+	onSourceChanged(selectedSource: any) {
+		if (selectedSource.source == -1) {
+			this.isCampaignHidden = true;
+			this.currentCampaign = this.campaigns[0];
+			if (this.paging.source_id) {
+				delete(this.paging.source_id)	
+			}
+		}
+		else {
+			this.paging.source_id = selectedSource._id
+			this.isCampaignHidden = false;
+			this.service.getCampaigns({
+				'pg_page': 1,
+				'pg_size': 1000,
+				'search_source_id': selectedSource._id,
+				'search_app_id': this.service.getAppId(),
+				'app_group_id': this.service.getGroupId(),
+				'search_agency_id': '5aa0ee42b887cb6691ed5b43'
+			}, data => {
+				this.campaigns = data;
+				if (this.campaigns) {
+					this.currentCampaign = data;
+					this.campaigns.splice(0, 0, { _id: -1, name: 'All' });
+					this.currentCampaign = this.campaigns[0];
+					
+				}
+			});
 		}
 	}
 }
