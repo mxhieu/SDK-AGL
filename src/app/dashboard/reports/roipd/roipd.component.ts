@@ -244,4 +244,5 @@ export class RoipdComponent implements OnInit {
 			);
 		}
 		this.excelService.exportAsExcelFile(exportData, 'roipd');
+	}
 }
