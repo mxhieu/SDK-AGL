@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ReportService } from '../../../service/report.service';
 import { AmChartsService, AmChart } from "@amcharts/amcharts3-angular";
 import { CampaignService } from '../../../service/campaign.service';
+import { ExcelService } from '../../../service/excel.service';
 
 @Component({
 	selector: 'app-roipd',
@@ -31,7 +32,9 @@ export class RoipdComponent implements OnInit {
 	audiences = [{ _id: -1, name: 'All' }]; isAudienceHidden: boolean = true; currentAudience: any;
 
 
-	constructor(private service: ReportService, private AmCharts: AmChartsService,
+	constructor(private service: ReportService, 
+		private excelService: ExcelService,
+		private AmCharts: AmChartsService,
 		private campaignService: CampaignService) {
 
 		this.source = this.sources[0];
@@ -211,4 +214,34 @@ export class RoipdComponent implements OnInit {
 		this.version = this.versionDisplay[0];
 		this.service.setAppId(this.version.app_id)
 	}
+	export() {
+		var exportData = [];
+		
+		for (var item of this.data) {
+			exportData.push(
+				{
+					Date: new Date(item.date * 1000).toLocaleString(),
+					Source: item.source,
+					DeviceOs: item.os,
+					Install: item.install,
+					Cost: item.cost,
+					ROI: item.cpi,
+					RR3: item.rr3,
+					PD1: item.pd1,
+					REV0: item.rev0,
+					REV1: item.rev1,
+					PD3: item.pd3,
+					REV3: item.rev3,
+					PD7: item.pd7,
+					REV7: item.rev7,
+					PD14: item.pd14,
+					REV14: item.rev14,
+					PD21: item.pd21,
+					REV21: item.rev21,
+					PD30: item.pd30,
+					REV30: item.rev30
+				}
+			);
+		}
+		this.excelService.exportAsExcelFile(exportData, 'roipd');
 }

@@ -341,7 +341,7 @@ export class RealtimeComponent implements OnInit, OnDestroy {
 	}
 	export() {
 		var exportData = [];
-		for (var item of this.data){
+		for (var item of this.data) {
 			exportData.push(
 				{
 					Date: new Date(item.date * 1000).toLocaleString(),
@@ -357,6 +357,5 @@ export class RealtimeComponent implements OnInit, OnDestroy {
 			);
 		}
 		this.excelService.exportAsExcelFile(exportData, 'realtime');
-		}
 	}
 }

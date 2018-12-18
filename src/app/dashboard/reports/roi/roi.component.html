@@ -72,7 +72,8 @@
                         </select><i class="icon-arrow-down sel-ico"></i>
                         <input type="text" class="rx-cur input-search" [(ngModel)]="search.term">
                         <button class="btn btn-sm btn-default btn-search" (click)="jumpPage(1)"><i class="icon-magnifier"></i></button>
-                        <button class="btn btn-sm btn-success"> <i class="icon-cloud-download"></i></button>
+                        <button class="btn btn-sm btn-success" (click)="export()">
+                        <i class="icon-cloud-download"></i></button>
                     </div>
                 </div>
             </div>

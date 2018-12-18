@@ -3,6 +3,8 @@ import { AmChartsService, AmChart } from "@amcharts/amcharts3-angular";
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { ReportService } from '../../../service/report.service';
 import { CampaignService } from '../../../service/campaign.service';
+import { ExcelService } from '../../../service/excel.service';
+
 @Component({
 	selector: 'app-retention',
 	templateUrl: './retention.component.html',
@@ -32,6 +34,7 @@ export class RetentionComponent implements OnInit, OnDestroy {
 	constructor(
 		private service: ReportService,
 		private AmCharts: AmChartsService,
+		private excelService: ExcelService,
 		private campaignService: CampaignService) {
 		this.source = this.sources[0];
 		this.currentAudience = this.audiences[0];
@@ -413,5 +416,32 @@ export class RetentionComponent implements OnInit, OnDestroy {
 			this.version = this.versionDisplay[0];
 			this.service.setAppId(this.version.app_id);
 		}
+	}
+	export() {
+		var exportData = [];
+		for (var item of this.data) {
+			exportData.push(
+				{
+					Date: new Date(item.date * 1000).toLocaleString(),
+					Source: item.source,
+					DeviceOs: item.os,
+					CampainName: item.campaign_name,
+					AdName: item.ad_name,
+					Install: item.install,
+					NRU: item.nru,
+					RR1: item.rr1_num,
+					RR3: item.rr3_num,
+					RR7: item.rr7_num,
+					RR15: item.rr15_num,
+					RR30: item.rr30_num,
+					"RR1(%)": item.rr1,
+					"RR3(%)": item.rr3,
+					"RR4(%)": item.rr7,
+					"RR15(%)": item.rr15,
+					"RR30(%)": item.rr30
+				}
+			);
+		}
+		this.excelService.exportAsExcelFile(exportData, 'retention');
 	}
 }

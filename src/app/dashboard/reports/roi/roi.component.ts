@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ReportService } from '../../../service/report.service';
 import { AmChartsService, AmChart } from "@amcharts/amcharts3-angular";
 import { CampaignService } from '../../../service/campaign.service';
+import { ExcelService } from '../../../service/excel.service';
 
 @Component({
 	selector: 'app-roi',
@@ -33,6 +34,7 @@ export class RoiComponent implements OnInit {
 
 	constructor(private service: ReportService,
 		private AmCharts: AmChartsService,
+		private excelService: ExcelService,
 		private campaignService: CampaignService) {
 
 		this.source = this.sources[0];
@@ -214,5 +216,38 @@ export class RoiComponent implements OnInit {
 
 		this.version = this.versionDisplay[0];
 		this.service.setAppId(this.version.app_id)
+	}
+	export() {
+		var exportData = [];
+		
+		for (var item of this.data) {
+			exportData.push(
+				{
+					Date: new Date(item.date * 1000).toLocaleString(),
+					Source: item.source,
+					DeviceOs: item.os,
+					Install: item.install,
+					NRU: item.nru,
+					Cost: item.cost,
+					ROI: item.cpi,
+					RR3: item.rr3,
+					PU1: item.pu1,
+					REV0: item.rev0,
+					REV1: item.rev1,
+					PU3: item.pu3,
+					REV3: item.rev3,
+					PU7: item.pu7,
+					REV7: item.rev7,
+					PU14: item.pu14,
+					REV14: item.rev14,
+					PU21: item.pu21,
+					REV21: item.rev21,
+					PU30: item.pu30,
+					REV30: item.rev30,
+					PU60: item.pu60
+				}
+			);
+		}
+		this.excelService.exportAsExcelFile(exportData, 'roi');
 	}
 }
