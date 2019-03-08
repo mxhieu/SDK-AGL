@@ -60,7 +60,8 @@ export class CardComponent implements OnInit, OnDestroy {
 			"valueAxes": [{
 				"stackType": "regular",
 				"axisAlpha": 0.3,
-				"gridAlpha": 0
+				"gridAlpha": 0,
+				"totalText": "[[total]]"
 			}],
 			"graphs": [{
 				"balloonText": "<b>[[title]]</b><br><span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>",

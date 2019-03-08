@@ -44,6 +44,19 @@ export class KpireportComponent implements OnInit {
 			this.data = data;
 		});
 	}
+
+	numberWithCommas(x) {
+		if (typeof x === 'string' || x instanceof String) {
+			return x
+		} else {
+			if (typeof x === 'undefined') {
+				return 0
+			} else {
+				return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+			}
+		}
+	}
+
 	getSources() {
 		this.service.getSources(data => {
 

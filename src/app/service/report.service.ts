@@ -94,11 +94,19 @@ export class ReportService extends BaseService {
 				'a7': 'A7',
 				'a30':'A30',
 				'nru0':'NRU0',
-				'gross_rev':'Gross Rev',
+				'nru30':'NRU30',
+				'npu1':'NPU1',
+				'npu30':'NPU30',
 				'pu':'PU',
 				'pu1':'PU1',
+				'pu30':'PU30',
+				'gross_rev':'Gross Rev',
+				'rev30':'Gross Rev 30',
+				'revnpu1':'Gross Rev NPU1',
+				'revnpu30':'Gross Rev NPU30',
 				'arpu':'ARPU',
-				'arppu':'ARPPU'};
+				'arppu':'ARPPU',
+				'arppu30':'ARPPU30'};
 			data.splice(0, 0, keys);
 			callback(data);
 		});

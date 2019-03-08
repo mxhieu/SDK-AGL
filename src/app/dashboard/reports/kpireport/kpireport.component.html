@@ -43,15 +43,23 @@
                 </div>
                 <div class="tbody-default">
                     <div class="tbody-col" *ngFor="let d of data">
-                        <div> {{d.a1}} </div>
-                        <div> {{d.a7}} </div>
-                        <div> {{d.a30}} </div>
-                        <div> {{d.nru0}} </div>
-                        <div> {{d.gross_rev}} </div>
-                        <div> {{d.pu}} </div>
-                        <div> {{d.pu1}} </div>
-                        <div> {{d.arpu}} </div>
-                        <div> {{d.arppu}} </div>
+                        <div> {{numberWithCommas(d.a1)}} </div>
+                        <div> {{numberWithCommas(d.a7)}} </div>
+                        <div> {{numberWithCommas(d.a30)}} </div>
+                        <div> {{numberWithCommas(d.nru0)}} </div>
+                        <div> {{numberWithCommas(d.nru30)}} </div>
+                        <div> {{numberWithCommas(d.npu1)}} </div>
+                        <div> {{numberWithCommas(d.npu30)}} </div>
+                        <div> {{numberWithCommas(d.pu)}} </div>
+                        <div> {{numberWithCommas(d.pu1)}} </div>
+                        <div> {{numberWithCommas(d.pu30)}} </div>
+                        <div> {{numberWithCommas(d.gross_rev)}} đ</div>
+                        <div> {{numberWithCommas(d.rev30)}} đ</div>
+                        <div> {{numberWithCommas(d.revnpu1)}} đ</div>
+                        <div> {{numberWithCommas(d.revnpu30)}} đ</div>
+                        <div> {{numberWithCommas(d.arpu)}} </div>
+                        <div> {{numberWithCommas(d.arppu)}} </div>
+                        <div> {{numberWithCommas(d.arppu30)}} </div>
                     </div>
                 </div>
                 
