@@ -296,7 +296,7 @@ export class ArmPackageComponent implements OnInit, OnDestroy {
       for (let j in data.os.settings) {       
         let platform = data.os.settings[j]
         if (platform) {
-          this.platforms.push({id: platform._id, name: platform.os + '-' + platform.bundle_id + '-' +platform.version})
+          this.platforms.push({id: platform._id, name: platform.os + '-' +platform.version})
         } 
       }
       this.platform = this.platforms[0]
