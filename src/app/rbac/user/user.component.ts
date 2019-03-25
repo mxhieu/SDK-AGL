@@ -11,7 +11,7 @@ export class UserComponent extends BaseComponent implements OnInit {
   headers: any; paging: any; search = { field: 'username', term: '' };
   apps: any; app = { 'app_id': '', 'os': '', 'version': '' }; users = []; groups: any; psearch: any;
   groups_tmp: any[]; arrgroupschoose = [];  onerow: any; isEdit: boolean; isChangePass: boolean; isHidden: boolean; isnext: any;  roles = []; showmultiselect: any; checkmultiall: any;
-  groupstmp = []; groupsorigin = []; groupsselect = []; 
+  groupstmp = []; groupsorigin = []; groupsselect = []; groupspackage = []; 
   constructor(private service: RbacService,private gservice: GroupService) {
     super();
     this.paging = this.service.defaultPaging('created_at');
@@ -55,9 +55,15 @@ export class UserComponent extends BaseComponent implements OnInit {
   refresh() {
     this.reset();
     this.getUsers();
+    this.getGroups();
   }
   reset() {
     this.users = [];
+    this.groups = [];
+    this.groupsorigin = [];
+    this.groupstmp = [];
+    this.groupspackage = [];
+    this.groupsselect = [];
     this.isHidden = true;
     this.isEdit = false;
     this.isChangePass = false;
@@ -101,8 +107,18 @@ export class UserComponent extends BaseComponent implements OnInit {
     this.isEdit = false;
     this.isChangePass = false;
     this.groupsselect = [];
+    this.groupspackage = [];
     this.groups = this.groupsorigin;
-    this.groups.forEach(obj => { delete (obj.checked) });
+    this.groups.forEach(obj => { 
+      delete (obj.checked)
+      delete (obj.checkall)
+      if (obj.settings) {
+        for (let j in obj.settings) {
+          delete (obj.settings[j]['checked'])
+        }
+      }
+    });
+
     this.groupstmp = this.groups; 
     this.checkmultiall = false;
     if (this.roles && this.roles.length > 0) {
@@ -112,9 +128,14 @@ export class UserComponent extends BaseComponent implements OnInit {
 
   save(onerow) {
     onerow['products'] = []
+    onerow['packages'] = []
     for (let i in this.groupsselect) {
       let objtmp = this.groupsselect[i]
       onerow['products'].push(objtmp._id)
+    }
+    for (let i in this.groupspackage) {
+      let objpackage = this.groupspackage[i]
+      onerow['packages'].push(objpackage.app_id)
     }
 
     this.service.insertUser(onerow, data => { this.refresh(); });
@@ -131,28 +152,89 @@ export class UserComponent extends BaseComponent implements OnInit {
     // add multi select
     let arrmulti = []
     this.groupsselect = []
+    this.groupspackage = []
+    this.groups = []
     this.groups = this.groupstmp = this.groupsorigin;
+    
     for (let i in this.groups) {
       let objtmp = this.groups[i]
       if (this.onerow.products.indexOf(objtmp._id) != -1) {
         this.groupsselect.push(objtmp)
-        objtmp.checked = true
-        arrmulti.push(true)
+      
+        if (this.onerow.packages && this.onerow.packages.length == 0) {
+          objtmp.checked = true
+          objtmp.checkall = true
+          for (let k in objtmp.settings) {
+            objtmp.settings[k].checked = true
+          }
+          arrmulti.push(true)   
+        } else {
+          if (objtmp.settings && objtmp.settings.constructor == Array && objtmp.settings.length > 1) {
+            let arrchecksetting = []
+            for (let j in objtmp.settings) {
+              let objsetting = objtmp.settings[j]
+              if ( this.onerow.packages.indexOf(objsetting.app_id) != -1) {
+                objsetting.checked = true
+                arrchecksetting.push(true)
+              } else {
+                objsetting.checked = false
+                arrchecksetting.push(false)
+              }
+            }  
+            if (arrchecksetting.indexOf(false) !== -1) {
+              objtmp.checked = false
+              if (arrchecksetting.indexOf(true) !== -1) {
+                objtmp.checkall = true
+                arrmulti.push(true)
+              } else {
+                arrmulti.push(true) 
+                objtmp.checked = true
+                objtmp.checkall = true 
+                for (let k in objtmp.settings) {
+                  objtmp.settings[k].checked = true
+                } 
+              }     
+            } else {
+              objtmp.checked = true
+              objtmp.checkall = true
+              arrmulti.push(true)
+            }
+          } else {
+            objtmp.checked = true
+            objtmp.checkall = true 
+            arrmulti.push(true)
+          }
+        }
+
       } else {
         arrmulti.push(false)
       }
     }
+    for (let igroup in this.groups) {
+      if (this.groups[igroup] && this.groups[igroup]['settings'] && this.groups[igroup]['settings'].length > 1) {
+        for (let ksetting in this.groups[igroup]['settings']) {
+          if (this.groups[igroup]['settings'][ksetting]['checked']) {
+            this.groupspackage.push(this.groups[igroup]['settings'][ksetting])   
+          }
+        }
+      }
+    }
+    
     this.checkmultiall = (arrmulti.constructor == Array && arrmulti.indexOf(false) != -1) ? false : true 
   }
 
   update() {
     let params = this.onerow
     params['products'] = []
+    params['packages'] = []
     for (let i in this.groupsselect) {
       let objtmp = this.groupsselect[i]
       params['products'].push(objtmp._id)
     }
-
+    for (let i in this.groupspackage) {
+      let objpackage = this.groupspackage[i]
+      params['packages'].push(objpackage.app_id)
+    }
     this.service.updateUser(this.onerow, data => { this.refresh(); });
   }
 
@@ -181,13 +263,51 @@ export class UserComponent extends BaseComponent implements OnInit {
     this.showmultiselect = !this.showmultiselect;
   }
 
-  chooseGroup(index) {
+  chooseGroup(index, arr) {
+    this.groups = []
+    this.groups = arr
     let objtmp = this.groups[index]
-    let objfind = this.groupsselect.find(obj => obj._id == objtmp._id)
+    let objfind = this.groupsselect.find(obj => obj._id == this.groups[index]._id)
     if (!objfind) {
-      this.groupsselect.push(objtmp)  
+      this.groupsselect.push(this.groups[index])  
     } else {
-      this.groupsselect = this.groupsselect.filter(function( obj ) {return obj._id !== objtmp._id})
+      this.groupsselect = this.groupsselect.filter(( obj ) => {return obj._id !== this.groups[index]._id})
+    }
+    if (!this.groups[index].checked) {
+      this.groups[index].checked = true
+      this.groups[index].checkall = true
+    } else {
+      this.groups[index].checked = false
+      this.groups[index].checkall = false
+    }
+    
+    if (this.groups[index]['settings'] && this.groups[index]['settings'].length > 1) {
+      this.groups[index]['settings'].forEach(objsetting => {
+        objsetting.checked = this.groups[index].checked
+        if (this.groups[index].checked) {
+          this.groupspackage.push(objsetting) 
+          // this.deleteGroup(this.groups[index])
+          this.groupsselect = this.groupsselect.filter(( obj ) => {return obj._id !== this.groups[index]._id})
+          this.groupsselect.push(this.groups[index]); 
+          // this.groups[index].checked = true
+        } else {
+          this.groupspackage = this.groupspackage.filter(function(el) { return el.app_id != objsetting.app_id }); 
+          this.deleteGroup(this.groups[index])
+        }
+      } )
+    }
+
+    let objcheck = this.groups.find(obj => (obj.checked == false || typeof(obj.checked) == 'undefined'))
+    this.checkmultiall = (typeof(objcheck) == 'undefined' && this.groups.length == this.groupstmp.length) ? true : false
+  }
+
+  choosePackage(index, jdex) {
+    let objtmp = this.groups[index]['settings'][jdex]
+    let objfind = this.groupspackage.find(obj => obj.app_id == objtmp.app_id)
+    if (!objfind) {
+      this.groupspackage.push(objtmp)  
+    } else {
+      this.groupspackage = this.groupspackage.filter(function( obj ) {return obj.app_id !== objtmp.app_id})
     }
 
     if (!objtmp.checked) {
@@ -196,8 +316,26 @@ export class UserComponent extends BaseComponent implements OnInit {
       objtmp.checked = false
     }
 
-    let objcheck = this.groups.find(obj => (obj.checked == false || typeof(obj.checked) == 'undefined'))
-    this.checkmultiall = (typeof(objcheck) == 'undefined' && this.groups.length == this.groupstmp.length) ? true : false
+    let objcheck = this.groups[index]['settings'].find(obj => (obj.checked == false || typeof(obj.checked) == 'undefined'))
+    if (typeof(objcheck) == 'undefined') {
+      this.groups[index]['checked'] = true 
+      this.groups[index]['checkall'] = true
+    } else {
+      this.groups[index]['checked'] = false
+      this.groups[index]['checkall'] = false
+      for(let i in this.groups[index]['settings']) {
+        let objsetting = this.groups[index]['settings'][i]
+        if (objsetting.checked == true) {
+          this.groups[index]['checkall'] = true; 
+          this.groupsselect = this.groupsselect.filter(( obj ) => {return obj._id !== this.groups[index]._id})
+          this.groupsselect.push(this.groups[index]);
+          break;
+        }
+      }
+      if (!this.groups[index]['checkall']) {
+        this.groupsselect = this.groupsselect.filter(( obj ) => {return obj._id !== this.groups[index]._id})
+      }
+    }
   }
 
   deleteGroup(objtmp) {
@@ -221,10 +359,28 @@ export class UserComponent extends BaseComponent implements OnInit {
     this.checkmultiall = !this.checkmultiall
     if (this.checkmultiall) {
       this.groupsselect = this.groups
-      this.groups.forEach(obj => obj.checked = true)
+      this.groups.forEach((obj, igroup) => {
+        obj.checked = true
+        obj.checkall = true
+        if (obj.settings && obj.settings.constructor == Array && obj.settings.length > 1) {
+          this.groups[igroup]['settings'].forEach((objsetting, jsetting) => {
+            this.groups[igroup]['settings'][jsetting].checked = true
+          })
+        }
+      })
     } else {
       this.groupsselect = []
-      this.groups.forEach(obj => obj.checked = false)
+      this.groupspackage = []
+      this.groups.forEach((obj, igroup) => {
+        obj.checked = false
+        obj.checkall = false
+        if (obj.settings && obj.settings.constructor == Array && obj.settings.length > 1) {
+          this.groups[igroup]['settings'].forEach((objsetting, jsetting) => {
+            this.groups[igroup]['settings'][jsetting].checked = true
+          })
+        }
+      })
     }
+    return false
   }
 }

@@ -79,6 +79,8 @@ export class RoleComponent extends BaseComponent implements OnInit {
       {name: 'KPI Report', key: 'report-kpi', keyid: [], arrchild: []},
       {name: 'Ads Report', key: 'report-ads', keyid: [], arrchild: []},
       {name: 'Card Report', key: 'report-card', keyid: [], arrchild: []},
+      {name: 'ARM Package Report', key: 'report-armpackage', keyid: [], arrchild: []},
+      {name: 'Card Package Report', key: 'report-cardpackage', keyid: [], arrchild: []},
       {name: 'IAP Transaction', key: 'iap-transaction', keyid: [], arrchild: []},
       {name: 'Campaign Ads', key: 'campaign-ad', keyid: [], arrchild: []},
       {name: 'Campaign', key: 'campaign', keyid: [], arrchild: []},

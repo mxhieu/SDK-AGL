@@ -7,6 +7,7 @@ import { NotificationComponent } from './notification/notification.component';
 import { TelcoComponent } from './telco/telco.component';
 import { ArmpdComponent } from './reports/armpd/armpd.component';
 import { ArmComponent } from './reports/arm/arm.component';
+import { ArmPackageComponent } from './reports/armpackage/armpackage.component';
 import { RetentionComponent } from './reports/retention/retention.component';
 import { RoiComponent } from './reports/roi/roi.component';
 import { RoipdComponent } from './reports/roipd/roipd.component';
@@ -18,6 +19,7 @@ import { KpireportComponent } from './reports/kpireport/kpireport.component';
 import { TransactionComponent } from './transaction/transaction.component';
 import { AdsReportComponent } from './reports/ads-report/ads-report.component';
 import { CardComponent } from './reports/card/card.component';
+import { CardPackageComponent } from './reports/cardpackage/cardpackage.component';
 import { AdsPerformanceComponent } from './reports/ads-performance/ads-performance.component';
 import { BaseService } from '../service/base.service';
 import { RealtimeComponent } from './reports/realtime/realtime.component';
@@ -32,6 +34,11 @@ const routestmp = [
     path: 'report-armpd',
     component: ArmpdComponent,
     subpath: 'report-armPd'
+  },
+  {
+    path: 'report-armpackage',
+    component: ArmPackageComponent,
+    subpath: 'report-armpackage'
   },
   {
     path: 'report-realtime',
@@ -72,6 +79,11 @@ const routestmp = [
     path: 'report-cards',
     component: CardComponent,
     subpath: 'report-card'
+  },
+  {
+    path: 'report-cardpackage',
+    component: CardPackageComponent,
+    subpath: 'report-cardpackage'
   },
   {
     path: 'transaction',

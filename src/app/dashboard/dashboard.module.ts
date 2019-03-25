@@ -16,6 +16,7 @@ import { NotificationComponent } from './notification/notification.component';
 import { TelcoComponent } from './telco/telco.component';
 import { ArmpdComponent } from './reports/armpd/armpd.component';
 import { ArmComponent } from './reports/arm/arm.component';
+import { ArmPackageComponent } from './reports/armpackage/armpackage.component';
 import { RetentionComponent } from './reports/retention/retention.component';
 import { RealtimeComponent } from './reports/realtime/realtime.component';
 import { RoiComponent } from './reports/roi/roi.component';
@@ -28,6 +29,7 @@ import { KpireportComponent } from './reports/kpireport/kpireport.component';
 import { AdsReportComponent } from './reports/ads-report/ads-report.component';
 import { TransactionComponent } from './transaction/transaction.component';
 import { CardComponent } from './reports/card/card.component';
+import { CardPackageComponent } from './reports/cardpackage/cardpackage.component';
 import { AdsPerformanceComponent } from './reports/ads-performance/ads-performance.component';
 
 @NgModule({
@@ -42,10 +44,10 @@ import { AdsPerformanceComponent } from './reports/ads-performance/ads-performan
   ],
   declarations: [
     PlayerComponent, AppSettingComponent, InAppComponent,
-    NotificationComponent, TelcoComponent, ArmpdComponent, ArmComponent,
+    NotificationComponent, TelcoComponent, ArmpdComponent, ArmComponent, ArmPackageComponent,
     RoiComponent, RoipdComponent, SourceslistComponent, MetricComponent, 
     CohortComponent, CampaignComponent, KpireportComponent,
-    AdsReportComponent, TransactionComponent, CardComponent, AdsPerformanceComponent, RealtimeComponent, RetentionComponent]
+    AdsReportComponent, TransactionComponent, CardComponent, CardPackageComponent, AdsPerformanceComponent, RealtimeComponent, RetentionComponent]
 
 })
 export class DashboardModule { }

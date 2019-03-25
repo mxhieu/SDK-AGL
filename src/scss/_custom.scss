@@ -1044,7 +1044,11 @@ span.rs-checkbox-group-all .lk-ch{
 .list-filter{
     border-bottom:1px solid #ccc;
 }
-
+.filter-select-box {
+  height: 500px;
+  position: relative;
+  overflow-y: scroll;
+}
 .selected-item{
     background:#e9f4ff;
 }

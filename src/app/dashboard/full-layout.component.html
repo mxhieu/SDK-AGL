@@ -100,6 +100,22 @@
                         </a>
                     </li>
                 </div>
+                <div *ngIf="service.checkpermission('report-armpackage')">
+                    <li class="nav-item">
+                        <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/report-armpackage']">
+                            <i class="icon-graph"></i> 
+                            ARM Package Report
+                        </a>
+                    </li>
+                </div>
+                <div *ngIf="service.checkpermission('report-cardpackage')">
+                   <li class="nav-item">
+                        <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/report-cardpackage']">
+                            <i class="icon-wallet"></i> 
+                            Card Package Report
+                        </a>
+                    </li>
+                </div>
                 <li class="divider"></li>
                 <li class="nav-title"> Admin </li>
                 <div *ngIf="service.checkpermission('campaign-ad')">

@@ -72,11 +72,20 @@
                         </div>
 
                         <div class="filter-select-all"></div>
-                        <ul>
+                        <ul class="filter-select-box">
                           <div *ngFor="let group of groups; let i = index" class="show-select">
-                            <li [ngClass]="(group.checked)?'pure-checkbox selected-item show-select':'pure-checkbox show-select'" (click)="chooseGroup(i)">
-                              <span [ngClass]="(group.checked)?'rs-checkbox-group-one lk_checkall':'rs-checkbox-group-one'"></span>
+                            <li [ngClass]="(group.checked)?'pure-checkbox selected-item show-select':'pure-checkbox show-select'">
+                              <span [ngClass]="(group.checked && group.checkall)?'rs-checkbox-group-one lk_checkall':(group.checkall)?'rs-checkbox-group-one lk_checkexist':'rs-checkbox-group-one'" (click)="chooseGroup(i, groups)"></span>
                               <label>{{group.name}}</label>
+                              
+                              <div *ngIf="(group.settings && group.settings.length > 1)">
+                                <div *ngFor="let setting of group.settings; let j = index" class="show-select">
+                                  <li [ngClass]="(setting.checked)?'pure-checkbox selected-item show-select':'pure-checkbox show-select'">
+                                    <span [ngClass]="(setting.checked)?'rs-checkbox-group-one lk_checkall':'rs-checkbox-group-one'" (click)="choosePackage(i, j)"></span>
+                                    <label>{{setting.os}} - {{setting.version}}</label>
+                                  </li>  
+                                </div>  
+                              </div>
                             </li>  
                           </div>
                         </ul>

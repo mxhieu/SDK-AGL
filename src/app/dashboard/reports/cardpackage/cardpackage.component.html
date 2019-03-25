@@ -1,0 +1,83 @@
+<div class="animated fadeIn rx-relative">
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">Card Report from {{dFrom | date: 'dd/MM/yyyy' }} to {{dTo |  date:'dd/MM/yyyy'}}</h5>
+        </div>
+        <div class="card-block">
+            <div class="row col-md-12">
+                <div class="col-md-3">
+                    <span class="input-group-text">From</span>
+                    <input type="text" class="form-control" [minDate]="dMin" [maxDate]="dMax" #dp="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }"
+                    [(ngModel)]="dFrom" >
+                </div>
+                <div class="col-md-3">
+                    <span class="input-group-text">To</span>
+                    <input type="text" class="form-control" [minDate]="dMin" [maxDate]="dMax" #dp="bsDatepicker" bsDatepicker
+                    [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }"
+                    [(ngModel)]="dTo" >
+                </div>
+                <div class="col-md-3">
+                    <span class="input-group-text">CardType</span>
+                    <select class="form-control" [(ngModel)]="cardType">
+                        <option value="all">All</option>
+                        <option *ngFor="let cardtype of cardTypes" [ngValue]="cardtype.name"> {{cardtype.name}} </option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <button class="btn btn-success tright" (click)="doAnalysis()"><i class="icon-magic-wand"></i> Analytic</button>
+                </div>
+            </div>
+            <br>
+            <div class="row col-md-12">
+              <div class="col-md-3">
+                  <span class="input-group-text">Package</span>
+                  <select class="form-control" [(ngModel)]="platform" (ngModelChange)="osPickerChanged($event)">
+                      <option *ngFor="let p of platforms" [ngValue]="p"> {{p.name}} </option>
+                  </select>
+              </div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">Revenue {{titlechart}}</h5>
+        </div>
+        <div class="card-body">
+            <div id="chartdiv" [style.width.%]="100" [style.height.px]="500"></div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-block">
+            <table class="table mb-0 table-striped table-responsive-sm table-bordered">
+                <thead class="thead-default">
+                    <tr>
+                        <th *ngFor="let perheader of header" (click)="sort($event)" [attr.rxdata]="perheader.id" class="{{(perheader.id == paging.st_col)? 'rxsorting' : ''}} {{(paging.st_type == 1)? 'rxup' : 'rxdown'}}">{{perheader.name}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let d of data">
+                        <td class="text-center">{{d.date * 1000 | date:'dd/MM/yyyy'}} </td>
+                        <td> {{d.agent}}</td>
+                        <td> {{d.cardType}}</td>
+                        <td> {{d.user_pay}} </td>
+                        <td> {{d.rev_user | number : '1.0'}} vnđ</td>
+                    </tr>
+                    <tr>
+                        <td colspan="100%" class="rx-pagin">
+                            <button class="rx-back" [disabled]="paging.pg_page <= 1" (click)="jumpPage(paging.pg_page - 1)">
+                            <</button>
+                            <input type="number" class="rx-cur" [(ngModel)]="paging.pg_page">
+                            <button class="rx-next" [disabled]="!isnext" (click)="jumpPage(paging.pg_page + 1)">></button>
+                            <span class="rx-jump" (click)="jumpPage(paging.pg_page)"><i class="icon-rocket"></i></span>
+                            <select type="number" class="rx-pg-size" (ngModelChange)="resizePage($event)" [(ngModel)]="paging.pg_size">
+                                <option value="10" selected>10</option>
+                                <option value="50" selected>50</option>
+                                <option value="100" selected>100</option>
+                            </select> / page
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
