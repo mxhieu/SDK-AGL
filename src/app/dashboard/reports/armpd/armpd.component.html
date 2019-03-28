@@ -120,12 +120,12 @@
                                     <br/>
                                     ({{ (d.rr30 * d.nru0 / 100)  | number:'1.0-0'}})
                                 </td>
-                                <td class="style-middle"> {{d.uv30           | number:'1.0-2'}} </td>
-                                <td class="style-middle"> {{d.cr7            | number:'1.0-0'}}% </td>
-                                <td class="style-middle"> {{d.rev0           | number:'1.0-2'}}</td>
-                                <td class="style-middle"> {{d.rev7           | number:'1.0-2'}} </td>
-                                <td class="style-middle"> {{d.cr30           | number:'1.0-0'}}%</td>
-                                <td class="style-middle"> {{d.rev30          | number:'1.0-2'}} </td>
+                                <td class="style-middle"> {{d.uv30 || 0          | number:'1.0-2'}} </td>
+                                <td class="style-middle"> {{d.cr7  || 0           | number:'1.0-0'}}% </td>
+                                <td class="style-middle"> {{d.rev0 || 0          | number:'1.0-2'}}</td>
+                                <td class="style-middle"> {{d.rev7 || 0          | number:'1.0-2'}} </td>
+                                <td class="style-middle"> {{d.cr30 || 0          | number:'1.0-0'}}%</td>
+                                <td class="style-middle"> {{d.rev30 || 0         | number:'1.0-2'}} </td>
                             </tr>
                             <!-- Pagination -->
                             <tr>
