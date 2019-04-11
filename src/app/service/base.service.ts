@@ -163,6 +163,9 @@ export class BaseService {
 		/*if(code == 1)
 			this.flash.show(msg, { cssClass: 'alert-success' });*/
 	}
+  public requestsuccess() {
+    this.toastr.success('Request Processed successfully.', 'Success!');
+  }
 
 	protected request(url, params, callback) {
 		this.get(this.getRestUrl(url), params, data => {

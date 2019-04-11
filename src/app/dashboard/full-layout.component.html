@@ -4,6 +4,15 @@
         <nav class="sidebar-nav">
             <ul class="nav">
                 <li class="nav-title"> Report </li>
+                <div *ngIf="service.checkpermission('report-overview')">
+                    <li class="nav-item">
+                        <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/report-overview']">
+                            <i class="icon-graph"></i> 
+                            Overview Report
+                        </a>
+                    </li>
+                </div>
+
                 <div *ngIf="service.checkpermission('report-arm')">
                     <li class="nav-item">
                         <a class="nav-link" routerLinkActive="active" [routerLink]="['/apps/admin/report-arm']">

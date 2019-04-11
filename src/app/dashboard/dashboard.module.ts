@@ -31,6 +31,7 @@ import { TransactionComponent } from './transaction/transaction.component';
 import { CardComponent } from './reports/card/card.component';
 import { CardPackageComponent } from './reports/cardpackage/cardpackage.component';
 import { AdsPerformanceComponent } from './reports/ads-performance/ads-performance.component';
+import { OverviewComponent } from './reports/overview/overview.component';
 
 @NgModule({
   imports: [
@@ -47,7 +48,7 @@ import { AdsPerformanceComponent } from './reports/ads-performance/ads-performan
     NotificationComponent, TelcoComponent, ArmpdComponent, ArmComponent, ArmPackageComponent,
     RoiComponent, RoipdComponent, SourceslistComponent, MetricComponent, 
     CohortComponent, CampaignComponent, KpireportComponent,
-    AdsReportComponent, TransactionComponent, CardComponent, CardPackageComponent, AdsPerformanceComponent, RealtimeComponent, RetentionComponent]
+    AdsReportComponent, TransactionComponent, CardComponent, CardPackageComponent, OverviewComponent, AdsPerformanceComponent, RealtimeComponent, RetentionComponent]
 
 })
 export class DashboardModule { }

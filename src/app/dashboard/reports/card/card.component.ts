@@ -26,7 +26,7 @@ export class CardComponent implements OnInit, OnDestroy {
 		this.cardTypes = [{ name: 'VTT' }, { name: 'VMS' }, { name: 'VNP' }, { name: 'VTC' }, { name: 'HPC' }, { name: 'ATM' }, { name: 'GATE' }, { name: 'IAP' }] 
 		this.cardType = 'all';
 
-		this.dFrom = this.service.fromDate(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate(), 30);
+		this.dFrom = this.service.fromDate(this.dTo.getFullYear(), this.dTo.getMonth(), this.dTo.getDate(), 15);
 		this.dMin = this.service.fromDate(this.dMax.getFullYear(), this.dMax.getMonth(), this.dMax.getDate(), 365);
 
 		this.paging = this.service.defaultPaging('date');

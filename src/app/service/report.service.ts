@@ -21,6 +21,9 @@ enum ChartApiUrls {
   analyze_armPackageChart = 'report-armpackage/chart',
   analyze_cardPackage = 'report-cardpackage',
   analyze_cardPackageChart = 'report-cardpackage/chart',
+
+  analyze_overview = 'report-overview',
+  analyze_overviewChart = 'report-overview/chart',
 }
 
 @Injectable()
@@ -62,7 +65,19 @@ export class ReportService extends BaseService {
 		});
 	}
 
-	armChartAnalysis(params, callback) {
+  overviewAnalysis(params, callback) {
+    this.get(this.getRestUrl(ChartApiUrls.analyze_overview), params, data => {
+      callback(Array.isArray(data) ? data : []);
+    });
+  }
+
+	overviewChartAnalysis(params, callback) {
+    this.get(this.getRestUrl(ChartApiUrls.analyze_overviewChart), params, data => {
+      callback(data);
+    });
+  }
+
+  armChartAnalysis(params, callback) {
 		this.get(this.getRestUrl(ChartApiUrls.analyze_armChart), params, data => {
 			callback(data);
 		});

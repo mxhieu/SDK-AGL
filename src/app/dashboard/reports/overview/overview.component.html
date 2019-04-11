@@ -1,0 +1,41 @@
+<div class="animated fadeIn rx-relative">
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">Overview Report</h5>
+        </div>
+        <div class="card-block">
+            <div class="row col-md-12">
+                <div class="col-md-3">
+                    <span class="input-group-text">From</span>
+                    <input type="text" class="form-control" [minDate]="dMin" [maxDate]="dMax" #dp="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }"
+                    [(ngModel)]="dFrom" >
+                </div>
+                <div class="col-md-3">
+                    <span class="input-group-text">To</span>
+                    <input type="text" class="form-control" [minDate]="dMin" [maxDate]="dMax" #dp="bsDatepicker" bsDatepicker
+                    [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue' }"
+                    [(ngModel)]="dTo" >
+                </div>
+                <div class="col-md-3">
+                    <button class="btn btn-success tright" (click)="doAnalysis()"><i class="icon-magic-wand"></i> Analytic</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">Revenue</h5>
+        </div>
+        <div class="card-body">
+            <div id="chartdiv1" [style.width.%]="100" [style.height.px]="500"></div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">Average Revenue Per User</h5>
+        </div>
+        <div class="card-body">
+            <div id="chartdiv2" [style.width.%]="100" [style.height.px]="500"></div>
+        </div>
+    </div>
+</div>

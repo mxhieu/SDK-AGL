@@ -23,8 +23,14 @@ import { CardPackageComponent } from './reports/cardpackage/cardpackage.componen
 import { AdsPerformanceComponent } from './reports/ads-performance/ads-performance.component';
 import { BaseService } from '../service/base.service';
 import { RealtimeComponent } from './reports/realtime/realtime.component';
+import { OverviewComponent } from './reports/overview/overview.component';
 
 const routestmp = [
+  {
+    path: 'report-overview',
+    component: OverviewComponent,
+    subpath: 'report-overview'
+  },
   {
     path: 'report-arm',
     component: ArmComponent,

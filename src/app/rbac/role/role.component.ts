@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { BaseComponent } from '../../service/base.component';
 import { RbacService } from '../../service/rbac.service';
 import { GroupService } from '../../service/group.service';
+import { BaseService } from '../../service/base.service';
 @Component({
   selector: 'app-role',
   templateUrl: './role.component.html',
@@ -47,7 +48,7 @@ export class RoleComponent extends BaseComponent implements OnInit {
   arrrolepermission = [];
   arrkeyrole = [];
 
-  constructor(private service: RbacService, private gservice: GroupService) {
+  constructor(private service: RbacService, private gservice: GroupService, private bservice: BaseService) {
     super();
     this.paging = this.service.defaultPaging('id');
     this.headers = [
@@ -69,6 +70,7 @@ export class RoleComponent extends BaseComponent implements OnInit {
     this.isShowPopupPermission = true;
     this.arrrolepermission = [
       {name: 'List Group App', key: 'groupApp', keyid: [], arrchild: []},
+      {name: 'Overview Report', key: 'report-overview', keyid: [], arrchild: []},
       {name: 'ARM Report', key: 'report-arm', keyid: [], arrchild: []},
       {name: 'ARM PD Report', key: 'report-armPd', keyid: [], arrchild: []},
       {name: 'Realtime Report', key: 'report-realtime', keyid: [], arrchild: []},
@@ -585,9 +587,7 @@ export class RoleComponent extends BaseComponent implements OnInit {
         }
       });
     })
-    
-    
-    
+    this.bservice.requestsuccess()
   }
 
 }
