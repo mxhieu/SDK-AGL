@@ -44,3 +44,4 @@ Thumbs.db
 sdk-admin
 sdk-admin/
 /sdk-admin
+package-lock.json
