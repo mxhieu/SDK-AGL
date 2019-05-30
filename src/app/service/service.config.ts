@@ -6,6 +6,7 @@ import { Cookie } from 'ng2-cookies';
 export class ConfigService {
 
   API_LOGIN = PrivateService.BASE_URL + 'authorize';
+  API_CHANGEPASS = PrivateService.BASE_URL  + 'authorize/changepass';
   
   // Tracking
   api_tracking_get = PrivateService.BASE_URL + 'tracking';

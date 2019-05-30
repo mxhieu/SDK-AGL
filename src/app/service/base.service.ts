@@ -256,6 +256,14 @@ export class BaseService {
 		});
 	}
 
+	public changpass(params, callback) {
+		this.post(this.config.API_CHANGEPASS, null, params, data => {
+			if (data.success === 1) {
+				callback()
+			}
+		});
+	}
+
 	public register(params, callback) {
 		this.post(this.config.api_user_register, params, null, data => { callback(data); });
 	}

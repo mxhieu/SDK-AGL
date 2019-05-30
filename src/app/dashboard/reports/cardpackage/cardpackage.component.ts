@@ -82,6 +82,8 @@ export class CardPackageComponent implements OnInit, OnDestroy {
         "lineAlpha": 0.3,
         "title": "Rev IAP",
         "type": "column",
+        "legendPeriodValueText": ": [[value.sum]]",
+				"legendValueText": "[[value]]",
         "valueField": "rev_IAP"
       },{
 				"balloonText": "<b>[[title]]</b><br><span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>",
@@ -89,6 +91,8 @@ export class CardPackageComponent implements OnInit, OnDestroy {
 				"lineAlpha": 0.3,
 				"title": "Rev VMS",
 				"type": "column",
+				"legendPeriodValueText": ": [[value.sum]]",
+				"legendValueText": "[[value]]",
 				"valueField": "rev_VMS"
 			}, {
 				"balloonText": "<b>[[title]]</b><br><span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>",
@@ -96,6 +100,8 @@ export class CardPackageComponent implements OnInit, OnDestroy {
 				"lineAlpha": 0.3,
 				"title": "Rev VNP",
 				"type": "column",
+				"legendPeriodValueText": ": [[value.sum]]",
+				"legendValueText": "[[value]]",
 				"valueField": "rev_VNP"
 			}, {
 				"balloonText": "<b>[[title]]</b><br><span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>",
@@ -103,6 +109,8 @@ export class CardPackageComponent implements OnInit, OnDestroy {
 				"lineAlpha": 0.3,
 				"title": "Rev VTC",
 				"type": "column",
+				"legendPeriodValueText": ": [[value.sum]]",
+				"legendValueText": "[[value]]",
 				"valueField": "rev_VTC"
 			}, {
 				"balloonText": "<b>[[title]]</b><br><span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>",
@@ -110,6 +118,8 @@ export class CardPackageComponent implements OnInit, OnDestroy {
 				"lineAlpha": 0.3,
 				"title": "Rev VTT",
 				"type": "column",
+				"legendPeriodValueText": ": [[value.sum]]",
+				"legendValueText": "[[value]]",
 				"valueField": "rev_VTT"
 			},
 			{
@@ -118,6 +128,8 @@ export class CardPackageComponent implements OnInit, OnDestroy {
 				"lineAlpha": 0.3,
 				"title": "Rev HPC",
 				"type": "column",
+				"legendPeriodValueText": ": [[value.sum]]",
+				"legendValueText": "[[value]]",
 				"valueField": "rev_HPC"
 			},
 			{
@@ -126,6 +138,8 @@ export class CardPackageComponent implements OnInit, OnDestroy {
 				"lineAlpha": 0.3,
 				"title": "Rev ATM",
 				"type": "column",
+				"legendPeriodValueText": ": [[value.sum]]",
+				"legendValueText": "[[value]]",
 				"valueField": "rev_ATM"
 			},
 			{
@@ -135,6 +149,8 @@ export class CardPackageComponent implements OnInit, OnDestroy {
 				"title": "Rev GATE",
 				"type": "column",
 				'color': "#000000",
+				"legendPeriodValueText": ": [[value.sum]]",
+				"legendValueText": "[[value]]",
 				"valueField": "rev_GATE"
 			}],
 			"categoryField": "date",
